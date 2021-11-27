@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+    supertutor-mssqlserver:
+        container_name: supertutor-mssqlserver
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=devPass123!
+        volumes: 
+            - supertutor-mssqlserver-volume:/var/opt/mssql
+        networks: 
+            - supertutor-network
+        ports:
+            - "1433:1433"
+
+    supertutor-identity:
+        container_name: supertutor-identity
+        image: zdraffko/supertutor:identity
+        build:
+            context: .
+            dockerfile: ./Contexts/Identity/SuperTutor.Contexts.Identity.Startup/Dockerfile
+        environment:
+            - ConnectionStrings__DefaultConnection=Server=supertutor-mssqlserver;Database=SuperTutorIdentity;User Id=sa; Password=devPass123!;MultipleActiveResultSets=true
+        volumes:
+            - ./.aspnet/identity/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+        networks: 
+            - supertutor-network
+        ports: 
+            - 5001:80
+        restart: on-failure
+        depends_on:
+            - supertutor-mssqlserver
+
+volumes:
+    supertutor-mssqlserver-volume:
+
+networks:
+    supertutor-network:

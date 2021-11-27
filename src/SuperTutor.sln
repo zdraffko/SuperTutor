@@ -21,11 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Identit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Identity.Persistence", "Contexts\Identity\SuperTutor.Contexts.Identity.Persistence\SuperTutor.Contexts.Identity.Persistence.csproj", "{9BBF6BCD-D69F-462D-B431-5B42000C6D66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Identity.Api", "Contexts\Identity\SuperTutor.Contexts.Identity.Api\SuperTutor.Contexts.Identity.Api.csproj", "{8EC19012-8FFA-4CA7-B9B8-F8D146EF02CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Identity.Api", "Contexts\Identity\SuperTutor.Contexts.Identity.Api\SuperTutor.Contexts.Identity.Api.csproj", "{8EC19012-8FFA-4CA7-B9B8-F8D146EF02CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.SharedLibraries.BuildingBlocks.Api", "SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Api\SuperTutor.SharedLibraries.BuildingBlocks.Api.csproj", "{A8041A5D-B224-40EA-BBC7-3E840DAE0969}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.SharedLibraries.BuildingBlocks.Api", "SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Api\SuperTutor.SharedLibraries.BuildingBlocks.Api.csproj", "{A8041A5D-B224-40EA-BBC7-3E840DAE0969}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Identity.Startup", "Contexts\Identity\SuperTutor.Contexts.Identity.Startup\SuperTutor.Contexts.Identity.Startup.csproj", "{07EE0F60-B01A-4AA1-B964-6DC71838A5F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Identity.Startup", "Contexts\Identity\SuperTutor.Contexts.Identity.Startup\SuperTutor.Contexts.Identity.Startup.csproj", "{07EE0F60-B01A-4AA1-B964-6DC71838A5F8}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CBB3DF2C-9FE6-4B93-9842-DA42E11FD31E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,10 @@ Global
 		{07EE0F60-B01A-4AA1-B964-6DC71838A5F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07EE0F60-B01A-4AA1-B964-6DC71838A5F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07EE0F60-B01A-4AA1-B964-6DC71838A5F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBB3DF2C-9FE6-4B93-9842-DA42E11FD31E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBB3DF2C-9FE6-4B93-9842-DA42E11FD31E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBB3DF2C-9FE6-4B93-9842-DA42E11FD31E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBB3DF2C-9FE6-4B93-9842-DA42E11FD31E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,6 +8,12 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Contexts/Identity/SuperTutor.Contexts.Identity.Startup/SuperTutor.Contexts.Identity.Startup.csproj", "Contexts/Identity/SuperTutor.Contexts.Identity.Startup/"]
+COPY ["Contexts/Identity/SuperTutor.Contexts.Identity.Infrastructure/SuperTutor.Contexts.Identity.Infrastructure.csproj", "Contexts/Identity/SuperTutor.Contexts.Identity.Infrastructure/"]
+COPY ["Contexts/Identity/SuperTutor.Contexts.Identity.Application/SuperTutor.Contexts.Identity.Application.csproj", "Contexts/Identity/SuperTutor.Contexts.Identity.Application/"]
+COPY ["SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.Application/SuperTutor.SharedLibraries.BuildingBlocks.Application.csproj", "SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.Application/"]
+COPY ["Contexts/Identity/SuperTutor.Contexts.Identity.Persistence/SuperTutor.Contexts.Identity.Persistence.csproj", "Contexts/Identity/SuperTutor.Contexts.Identity.Persistence/"]
+COPY ["Contexts/Identity/SuperTutor.Contexts.Identity.Api/SuperTutor.Contexts.Identity.Api.csproj", "Contexts/Identity/SuperTutor.Contexts.Identity.Api/"]
+COPY ["SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.Api/SuperTutor.SharedLibraries.BuildingBlocks.Api.csproj", "SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.Api/"]
 RUN dotnet restore "Contexts/Identity/SuperTutor.Contexts.Identity.Startup/SuperTutor.Contexts.Identity.Startup.csproj"
 COPY . .
 WORKDIR "/src/Contexts/Identity/SuperTutor.Contexts.Identity.Startup"
