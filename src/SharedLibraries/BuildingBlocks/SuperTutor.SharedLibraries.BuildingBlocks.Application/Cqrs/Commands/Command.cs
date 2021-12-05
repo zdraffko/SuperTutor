@@ -11,3 +11,12 @@ public abstract class Command : IRequest<Result>
 
     public Guid Id { get; }
 }
+
+public abstract class Command<TPayload> : IRequest<Result<TPayload>>
+{
+    protected Command() => Id = Guid.NewGuid();
+
+    protected Command(Guid id) => Id = id;
+
+    public Guid Id { get; }
+}

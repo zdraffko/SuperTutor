@@ -24,6 +24,13 @@ public abstract class ApiController : ControllerBase
         return commandResult.ToActionResult();
     }
 
+    protected async Task<ActionResult<TPayload>> Handle<TPayload>(Command<TPayload> command, CancellationToken cancellationToken)
+    {
+        var commandResult = await mediator.Send(command, cancellationToken);
+
+        return commandResult.ToActionResult();
+    }
+
     protected async Task<ActionResult<TPayload>> Handle<TPayload>(Query<TPayload> query, CancellationToken cancellationToken)
     {
         var queryResult = await mediator.Send(query, cancellationToken);
