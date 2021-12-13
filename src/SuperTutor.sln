@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Identit
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CBB3DF2C-9FE6-4B93-9842-DA42E11FD31E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.SharedLibraries.BuildingBlocks.Persistence", "SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Persistence\SuperTutor.SharedLibraries.BuildingBlocks.Persistence.csproj", "{F86740FD-8B7D-44EA-8991-D26F49F15DBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.SharedLibraries.BuildingBlocks.Persistence", "SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Persistence\SuperTutor.SharedLibraries.BuildingBlocks.Persistence.csproj", "{F86740FD-8B7D-44EA-8991-D26F49F15DBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

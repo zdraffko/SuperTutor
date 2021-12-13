@@ -10,13 +10,13 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services
     .AddControllers()
     .AddApplicationPart(typeof(UsersController).Assembly)
     .AddControllersAsServices();
 
-builder.Services.AddDbContext<IdentityDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<IdentityDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services
     .AddIdentity<User, IdentityRole<int>>()
