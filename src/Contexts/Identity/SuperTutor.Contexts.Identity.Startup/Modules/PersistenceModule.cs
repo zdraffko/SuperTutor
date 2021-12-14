@@ -3,7 +3,7 @@ using SuperTutor.Contexts.Identity.Persistence;
 using SuperTutor.Contexts.Identity.Startup.Startables.Persistence;
 using SuperTutor.SharedLibraries.BuildingBlocks.Persistence.Initializers;
 
-namespace SuperTutor.Contexts.Identity.Startup.IocContainerModules;
+namespace SuperTutor.Contexts.Identity.Startup.Modules;
 
 internal class PersistenceModule : Module
 {

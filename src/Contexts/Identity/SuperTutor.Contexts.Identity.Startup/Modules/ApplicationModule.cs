@@ -5,7 +5,7 @@ using SuperTutor.Contexts.Identity.Application.Features.Users.Commands.Register;
 using SuperTutor.Contexts.Identity.Infrastructure.Tokens;
 using SuperTutor.Contexts.Identity.Infrastructure.Users;
 
-namespace SuperTutor.Contexts.Identity.Startup.IocContainerModules;
+namespace SuperTutor.Contexts.Identity.Startup.Modules;
 
 internal class ApplicationModule : Module
 {
