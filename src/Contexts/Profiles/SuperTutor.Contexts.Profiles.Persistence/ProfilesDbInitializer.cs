@@ -1,5 +1,10 @@
-﻿namespace SuperTutor.Contexts.Profiles.Persistence;
+﻿using SuperTutor.SharedLibraries.BuildingBlocks.Persistence.Initializers;
 
-internal class ProfilesDbInitializer
+namespace SuperTutor.Contexts.Profiles.Persistence;
+
+public class ProfilesDbInitializer : DefaultDbInitializer
 {
+    public ProfilesDbInitializer(ProfilesDbContext dbContext) : base(dbContext)
+    {
+    }
 }
