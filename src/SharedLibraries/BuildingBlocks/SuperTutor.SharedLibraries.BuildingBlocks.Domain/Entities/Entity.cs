@@ -1,4 +1,6 @@
-﻿using SuperTutor.SharedLibraries.BuildingBlocks.Domain.ValueObjects.Identifiers;
+﻿using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Exceptions;
+using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Invariants;
+using SuperTutor.SharedLibraries.BuildingBlocks.Domain.ValueObjects.Identifiers;
 
 namespace SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities;
 
@@ -12,6 +14,14 @@ public abstract class Entity<TIdentifier, TIdentifierValue> : IEquatable<Entity<
     }
 
     public TIdentifier Id { get; }
+
+    protected void CheckInvariant(DomainInvariant invariant)
+    {
+        if (!invariant.IsValid())
+        {
+            throw new DomainInvariantValidationException(invariant);
+        }
+    }
 
     public bool Equals(Entity<TIdentifier, TIdentifierValue>? otherEntity) => otherEntity is not null && EntityEquals(otherEntity);
 
