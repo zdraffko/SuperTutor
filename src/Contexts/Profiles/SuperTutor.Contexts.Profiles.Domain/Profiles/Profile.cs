@@ -59,6 +59,7 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
         CheckInvariant(new ProfileStatusTransitionMustBeValidInvariant(Status, newStatus));
 
         Status = newStatus;
+        LastUpdateDate = DateTime.UtcNow;
     }
 
     public void RequestRedaction()
@@ -68,6 +69,7 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
         CheckInvariant(new ProfileStatusTransitionMustBeValidInvariant(Status, newStatus));
 
         Status = newStatus;
+        LastUpdateDate = DateTime.UtcNow;
     }
 
     public void SubmitForReview()
@@ -77,6 +79,7 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
         CheckInvariant(new ProfileStatusTransitionMustBeValidInvariant(Status, newStatus));
 
         Status = newStatus;
+        LastUpdateDate = DateTime.UtcNow;
     }
 
     public void Activate()
@@ -86,6 +89,7 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
         CheckInvariant(new ProfileStatusTransitionMustBeValidInvariant(Status, newStatus));
 
         Status = newStatus;
+        LastUpdateDate = DateTime.UtcNow;
     }
 
     public void Deactivate()
@@ -95,6 +99,7 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
         CheckInvariant(new ProfileStatusTransitionMustBeValidInvariant(Status, newStatus));
 
         Status = newStatus;
+        LastUpdateDate = DateTime.UtcNow;
     }
 
     public void UpdateAbout(string newAbout)
@@ -102,6 +107,7 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
         CheckInvariant(new ProfileAboutMustNotBeAboveTheMaxLenghtInvariant(newAbout));
 
         About = newAbout;
+        LastUpdateDate = DateTime.UtcNow;
     }
 
     public void AddTutoringGrades(HashSet<TutoringGrade> newTutoringGrades)
@@ -112,6 +118,7 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
         }
 
         tutoringGrades.UnionWith(newTutoringGrades);
+        LastUpdateDate = DateTime.UtcNow;
     }
 
     public void RemoveTutoringGrades(HashSet<TutoringGrade> tutoringGradesForRemoval)
@@ -122,6 +129,7 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
         CheckInvariant(new ProfileMustHaveAtLeastOneTutoringGradeInvariant(tutoringGradesCopy));
 
         tutoringGrades.RemoveWhere(tutoringGrade => tutoringGradesForRemoval.Contains(tutoringGrade));
+        LastUpdateDate = DateTime.UtcNow;
     }
 
     public void IncreaseRateForOneHour(decimal increaseAmount)
@@ -131,6 +139,7 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
         CheckInvariant(new ProfileRateForOneHourMustNotBeLessThanTheMinAmountInvariant(newRateForOneHour));
 
         RateForOneHour = newRateForOneHour;
+        LastUpdateDate = DateTime.UtcNow;
     }
 
     public void DecreaseRateForOneHour(decimal decreaseAmount)
@@ -140,5 +149,6 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
         CheckInvariant(new ProfileRateForOneHourMustNotBeLessThanTheMinAmountInvariant(newRateForOneHour));
 
         RateForOneHour = newRateForOneHour;
+        LastUpdateDate = DateTime.UtcNow;
     }
 }
