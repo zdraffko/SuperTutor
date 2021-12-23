@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using SuperTutor.Contexts.Profiles.Domain.Profiles;
 using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Enumerations;
+using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
@@ -23,13 +24,13 @@ internal class CreateProfileCommandHandler : ICommandHandler<CreateProfileComman
             return Result.Fail($"A tutoring subject with value '{command.TutoringSubject}' does not exist.");
         }
 
-        var tutoringGrades = Enumeration.FromValues<TutoringGrade>(command.TutoringGrades);
+        var tutoringGrades = Enumeration.FromValues<TutoringGrade>(command.TutoringGrades).ToHashSet();
         if (!tutoringGrades.Any())
         {
             return Result.Fail("At least one tutoring grade must be selected.");
         }
 
-        var profile = new Profile(command.About, tutoringSubject, tutoringGrades, command.RateForOneHour);
+        var profile = new Profile(new UserId(command.UserId), command.About, tutoringSubject, tutoringGrades, command.RateForOneHour);
 
         profileRepository.Add(profile);
 

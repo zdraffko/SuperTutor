@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using MediatR;
 using MediatR.Extensions.Autofac.DependencyInjection;
-using SuperTutor.Contexts.Profiles.Application.Features;
 using SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Create;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Common.Commands.Decorators;
 
 namespace SuperTutor.Contexts.Profiles.Startup.Modules;
 

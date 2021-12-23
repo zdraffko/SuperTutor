@@ -27,6 +27,24 @@ services:
         networks: 
             - supertutor-network
         ports: 
+            - 5000:80
+        restart: on-failure
+        depends_on:
+            - supertutor-mssqlserver
+
+    supertutor-profiles:
+        container_name: supertutor-profiles
+        image: zdraffko/supertutor:profiles
+        build:
+            context: .
+            dockerfile: ./Contexts/Profiles/SuperTutor.Contexts.Profiles.Startup/Dockerfile
+        environment:
+            - ConnectionStrings__DefaultConnection=Server=supertutor-mssqlserver;Database=SuperTutorProfiles;User Id=sa; Password=devPass123!;MultipleActiveResultSets=true
+        volumes:
+            - ./.aspnet/identity/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+        networks: 
+            - supertutor-network
+        ports: 
             - 5001:80
         restart: on-failure
         depends_on:

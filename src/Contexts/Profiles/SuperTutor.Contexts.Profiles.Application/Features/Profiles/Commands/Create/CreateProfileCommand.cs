@@ -4,13 +4,16 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Cr
 
 public class CreateProfileCommand : Command
 {
-    public CreateProfileCommand(string about, int tutoringSubject, IEnumerable<int> tutoringGrades, decimal rateForOneHour)
+    public CreateProfileCommand(int userId, string about, int tutoringSubject, IEnumerable<int> tutoringGrades, decimal rateForOneHour)
     {
+        UserId = userId;
         About = about;
         TutoringSubject = tutoringSubject;
         TutoringGrades = tutoringGrades;
         RateForOneHour = rateForOneHour;
     }
+
+    public int UserId { get; }
 
     public string About { get; }
 

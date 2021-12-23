@@ -1,5 +1,6 @@
 ﻿using SuperTutor.Contexts.Profiles.Domain.Profiles.Invariants;
 using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Enumerations;
+using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Contracts;
 
@@ -7,71 +8,77 @@ namespace SuperTutor.Contexts.Profiles.Domain.Profiles;
 
 public class Profile : Entity<ProfileId, int>, IAggregateRoot
 {
-    private string about;
-
-    private TutoringSubject tutoringSubject;
-
-    private List<TutoringGrade> tutoringGrades;
-
-    private decimal rateForOneHour;
-
-    private Status status;
+    private readonly HashSet<TutoringGrade> tutoringGrades;
 
     public Profile(
+        UserId userId,
         string about,
         TutoringSubject tutoringSubject,
-        IEnumerable<TutoringGrade> tutoringGrades,
+        HashSet<TutoringGrade> tutoringGrades,
         decimal rateForOneHour) : base(new ProfileId(0))
     {
-        this.tutoringSubject = tutoringSubject;
-        this.about = about;
-        this.tutoringGrades = tutoringGrades.ToList();
-        this.rateForOneHour = rateForOneHour;
-        status = Status.ForReview;
+        UserId = userId;
+        About = about;
+        TutoringSubject = tutoringSubject;
+        this.tutoringGrades = tutoringGrades;
+        RateForOneHour = rateForOneHour;
+        Status = Status.ForReview;
     }
+
+    public UserId UserId { get; private set; }
+
+    public string About { get; private set; }
+
+    public TutoringSubject TutoringSubject { get; private set; }
+
+    public IReadOnlyCollection<TutoringGrade> TutoringGrades => tutoringGrades;
+
+    public decimal RateForOneHour { get; private set; }
+
+    public Status Status { get; private set; }
 
     public void Approve()
     {
         var newStatus = Status.Active;
 
-        CheckInvariant(new ProfileStatusTransitionMustBeValid(status, newStatus));
+        CheckInvariant(new ProfileStatusTransitionMustBeValid(Status, newStatus));
 
-        status = newStatus;
+        Status = newStatus;
     }
 
     public void RequestRedaction()
     {
         var newStatus = Status.ForRedaction;
 
-        CheckInvariant(new ProfileStatusTransitionMustBeValid(status, newStatus));
+        CheckInvariant(new ProfileStatusTransitionMustBeValid(Status, newStatus));
 
-        status = newStatus;
+        Status = newStatus;
     }
 
     public void SubmitForReview()
     {
         var newStatus = Status.ForReview;
 
-        CheckInvariant(new ProfileStatusTransitionMustBeValid(status, newStatus));
+        CheckInvariant(new ProfileStatusTransitionMustBeValid(Status, newStatus));
 
-        status = newStatus;
+        Status = newStatus;
     }
 
     public void Activate()
     {
         var newStatus = Status.Active;
 
-        CheckInvariant(new ProfileStatusTransitionMustBeValid(status, newStatus));
+        CheckInvariant(new ProfileStatusTransitionMustBeValid(Status, newStatus));
 
-        status = newStatus;
+        Status = newStatus;
     }
 
     public void Deactivate()
     {
         var newStatus = Status.Inactive;
 
-        CheckInvariant(new ProfileStatusTransitionMustBeValid(status, newStatus));
+        CheckInvariant(new ProfileStatusTransitionMustBeValid(Status, newStatus));
 
-        status = newStatus;
+        Status = newStatus;
     }
 }
