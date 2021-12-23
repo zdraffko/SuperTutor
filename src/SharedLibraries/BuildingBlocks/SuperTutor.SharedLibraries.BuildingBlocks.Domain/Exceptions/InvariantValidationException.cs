@@ -2,14 +2,14 @@
 
 namespace SuperTutor.SharedLibraries.BuildingBlocks.Domain.Exceptions;
 
-public class DomainInvariantValidationException : Exception
+public class InvariantValidationException : Exception
 {
-    public DomainInvariantValidationException(DomainInvariant brokenInvariant) : base(brokenInvariant.ErrorMessage)
+    public InvariantValidationException(Invariant brokenInvariant) : base(brokenInvariant.ErrorMessage)
     {
         BrokenInvariant = brokenInvariant;
     }
 
-    public DomainInvariant BrokenInvariant { get; }
+    public Invariant BrokenInvariant { get; }
 
     public override string ToString() => $"{BrokenInvariant.GetType().FullName}: {BrokenInvariant.ErrorMessage}";
 }

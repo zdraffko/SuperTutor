@@ -1,8 +1,8 @@
 ﻿namespace SuperTutor.SharedLibraries.BuildingBlocks.Domain.Invariants;
 
-public abstract class DomainInvariant
+public abstract class Invariant
 {
-    public DomainInvariant(string errorMessage)
+    public Invariant(string errorMessage)
     {
         ErrorMessage = errorMessage;
     }

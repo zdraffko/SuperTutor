@@ -15,11 +15,11 @@ public abstract class Entity<TIdentifier, TIdentifierValue> : IEquatable<Entity<
 
     public TIdentifier Id { get; }
 
-    protected void CheckInvariant(DomainInvariant invariant)
+    protected void CheckInvariant(Invariant invariant)
     {
         if (!invariant.IsValid())
         {
-            throw new DomainInvariantValidationException(invariant);
+            throw new InvariantValidationException(invariant);
         }
     }
 

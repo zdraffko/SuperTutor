@@ -41,7 +41,7 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
     {
         var newStatus = Status.Active;
 
-        CheckInvariant(new ProfileStatusTransitionMustBeValid(Status, newStatus));
+        CheckInvariant(new ProfileStatusTransitionMustBeValidInvariant(Status, newStatus));
 
         Status = newStatus;
     }
@@ -50,7 +50,7 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
     {
         var newStatus = Status.ForRedaction;
 
-        CheckInvariant(new ProfileStatusTransitionMustBeValid(Status, newStatus));
+        CheckInvariant(new ProfileStatusTransitionMustBeValidInvariant(Status, newStatus));
 
         Status = newStatus;
     }
@@ -59,7 +59,7 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
     {
         var newStatus = Status.ForReview;
 
-        CheckInvariant(new ProfileStatusTransitionMustBeValid(Status, newStatus));
+        CheckInvariant(new ProfileStatusTransitionMustBeValidInvariant(Status, newStatus));
 
         Status = newStatus;
     }
@@ -68,7 +68,7 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
     {
         var newStatus = Status.Active;
 
-        CheckInvariant(new ProfileStatusTransitionMustBeValid(Status, newStatus));
+        CheckInvariant(new ProfileStatusTransitionMustBeValidInvariant(Status, newStatus));
 
         Status = newStatus;
     }
@@ -77,7 +77,7 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
     {
         var newStatus = Status.Inactive;
 
-        CheckInvariant(new ProfileStatusTransitionMustBeValid(Status, newStatus));
+        CheckInvariant(new ProfileStatusTransitionMustBeValidInvariant(Status, newStatus));
 
         Status = newStatus;
     }
