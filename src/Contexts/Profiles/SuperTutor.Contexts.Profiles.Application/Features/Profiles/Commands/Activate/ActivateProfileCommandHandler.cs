@@ -2,18 +2,18 @@
 using SuperTutor.Contexts.Profiles.Domain.Profiles;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
 
-namespace SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.SubmitForReview;
+namespace SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Activate;
 
-internal class SubmitProfileForReviewCommandHandler : ICommandHandler<SubmitProfileForReviewCommand>
+internal class ActivateProfileCommandHandler : ICommandHandler<ActivateProfileCommand>
 {
     private readonly IProfileRepository profileRepository;
 
-    public SubmitProfileForReviewCommandHandler(IProfileRepository profileRepository)
+    public ActivateProfileCommandHandler(IProfileRepository profileRepository)
     {
         this.profileRepository = profileRepository;
     }
 
-    public async Task<Result> Handle(SubmitProfileForReviewCommand command, CancellationToken cancellationToken)
+    public async Task<Result> Handle(ActivateProfileCommand command, CancellationToken cancellationToken)
     {
         var profile = await profileRepository.GetById(new ProfileId(command.ProfileId), cancellationToken);
         if (profile is null)
@@ -21,7 +21,7 @@ internal class SubmitProfileForReviewCommandHandler : ICommandHandler<SubmitProf
             return Result.Fail("Profile not found.");
         }
 
-        profile.SubmitForReview();
+        profile.Activate();
 
         return Result.Ok();
     }

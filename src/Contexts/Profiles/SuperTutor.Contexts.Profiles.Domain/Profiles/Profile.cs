@@ -8,7 +8,7 @@ namespace SuperTutor.Contexts.Profiles.Domain.Profiles;
 
 public class Profile : Entity<ProfileId, int>, IAggregateRoot
 {
-    private readonly HashSet<TutoringGrade> tutoringGrades;
+    private HashSet<TutoringGrade> tutoringGrades;
 
     public Profile(
         UserId userId,
@@ -18,9 +18,16 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
         decimal rateForOneHour) : base(new ProfileId(0))
     {
         UserId = userId;
+
+        CheckInvariant(new ProfileAboutMustNotBeAboveTheMaxLenghtInvariant(about));
         About = about;
+
         TutoringSubject = tutoringSubject;
+
+        CheckInvariant(new ProfileMustHaveAtLeastOneTutoringGradeInvariant(tutoringGrades));
         this.tutoringGrades = tutoringGrades;
+
+        CheckInvariant(new ProfileRateForOneHourMustNotBeLessThanTheMinAmountInvariant(rateForOneHour));
         RateForOneHour = rateForOneHour;
 
         Status = Status.ForReview;
@@ -88,5 +95,50 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
         CheckInvariant(new ProfileStatusTransitionMustBeValidInvariant(Status, newStatus));
 
         Status = newStatus;
+    }
+
+    public void UpdateAbout(string newAbout)
+    {
+        CheckInvariant(new ProfileAboutMustNotBeAboveTheMaxLenghtInvariant(newAbout));
+
+        About = newAbout;
+    }
+
+    public void AddTutoringGrades(HashSet<TutoringGrade> newTutoringGrades)
+    {
+        if (newTutoringGrades.Count == 0)
+        {
+            return;
+        }
+
+        tutoringGrades.UnionWith(newTutoringGrades);
+    }
+
+    public void RemoveTutoringGrades(HashSet<TutoringGrade> tutoringGradesForRemoval)
+    {
+        var tutoringGradesCopy = new HashSet<TutoringGrade>(tutoringGrades);
+        tutoringGradesCopy.RemoveWhere(tutoringGrade => tutoringGradesForRemoval.Contains(tutoringGrade));
+
+        CheckInvariant(new ProfileMustHaveAtLeastOneTutoringGradeInvariant(tutoringGradesCopy));
+
+        tutoringGrades.RemoveWhere(tutoringGrade => tutoringGradesForRemoval.Contains(tutoringGrade));
+    }
+
+    public void IncreaseRateForOneHour(decimal increaseAmount)
+    {
+        var newRateForOneHour = RateForOneHour + increaseAmount;
+
+        CheckInvariant(new ProfileRateForOneHourMustNotBeLessThanTheMinAmountInvariant(newRateForOneHour));
+
+        RateForOneHour = newRateForOneHour;
+    }
+
+    public void DecreaseRateForOneHour(decimal decreaseAmount)
+    {
+        var newRateForOneHour = RateForOneHour - decreaseAmount;
+
+        CheckInvariant(new ProfileRateForOneHourMustNotBeLessThanTheMinAmountInvariant(newRateForOneHour));
+
+        RateForOneHour = newRateForOneHour;
     }
 }

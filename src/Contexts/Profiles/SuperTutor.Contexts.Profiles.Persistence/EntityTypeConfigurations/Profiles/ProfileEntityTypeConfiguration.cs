@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SuperTutor.Contexts.Profiles.Domain.Profiles;
+using SuperTutor.Contexts.Profiles.Domain.Profiles.Constants;
 using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Enumerations;
 using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
@@ -32,7 +33,7 @@ internal class ProfileEntityTypeConfiguration : IEntityTypeConfiguration<Profile
             .IsRequired();
 
         builder.Property(profile => profile.About)
-            .HasMaxLength(500)
+            .HasMaxLength(ProfileConstants.AboutMaxLenght)
             .IsRequired();
 
         builder.Property(profile => profile.TutoringSubject)
