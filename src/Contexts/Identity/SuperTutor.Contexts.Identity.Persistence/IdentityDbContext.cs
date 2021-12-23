@@ -14,6 +14,7 @@ public class IdentityDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.HasDefaultSchema("identity");
 
         modelBuilder.Entity<IdentityRoleClaim<int>>(roleClaimBuilder => { roleClaimBuilder.ToTable("RoleClaims"); });
         modelBuilder.Entity<IdentityRole<int>>(roleBuilder => { roleBuilder.ToTable(name: "Roles"); });
