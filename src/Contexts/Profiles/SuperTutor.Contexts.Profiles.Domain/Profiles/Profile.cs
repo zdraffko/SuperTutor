@@ -22,7 +22,11 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
         TutoringSubject = tutoringSubject;
         this.tutoringGrades = tutoringGrades;
         RateForOneHour = rateForOneHour;
+
         Status = Status.ForReview;
+        var currentDate = DateTime.UtcNow;
+        CreationDate = currentDate;
+        LastUpdateDate = currentDate;
     }
 
     public UserId UserId { get; private set; }
@@ -36,6 +40,10 @@ public class Profile : Entity<ProfileId, int>, IAggregateRoot
     public decimal RateForOneHour { get; private set; }
 
     public Status Status { get; private set; }
+
+    public DateTime CreationDate { get; private set; }
+
+    public DateTime LastUpdateDate { get; private set; }
 
     public void Approve()
     {

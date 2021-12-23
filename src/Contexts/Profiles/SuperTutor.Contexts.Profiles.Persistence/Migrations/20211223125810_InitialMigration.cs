@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -23,6 +24,8 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                     TutoringSubject = table.Column<int>(type: "int", nullable: false),
                     RateForOneHour = table.Column<decimal>(type: "decimal(19,4)", precision: 19, scale: 4, nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TutoringGrades = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

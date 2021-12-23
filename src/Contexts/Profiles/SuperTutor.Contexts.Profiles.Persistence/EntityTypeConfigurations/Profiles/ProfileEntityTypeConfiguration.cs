@@ -70,5 +70,9 @@ internal class ProfileEntityTypeConfiguration : IEntityTypeConfiguration<Profile
                 status => status.Value,
                 statusValue => Enumeration.FromValue<Status>(statusValue)!)
             .IsRequired();
+
+        builder.Property(profile => profile.CreationDate).IsRequired();
+
+        builder.Property(profile => profile.LastUpdateDate).IsRequired();
     }
 }
