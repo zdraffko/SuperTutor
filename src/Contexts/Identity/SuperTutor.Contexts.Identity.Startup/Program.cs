@@ -19,7 +19,7 @@ builder.Services
 builder.Services.AddDbContext<IdentityDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services
-    .AddIdentity<User, IdentityRole<int>>()
+    .AddIdentity<User, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<IdentityDbContext>();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
