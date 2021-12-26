@@ -4,10 +4,10 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.De
 
 public class DeactivateProfileCommand : Command
 {
-    public DeactivateProfileCommand(int profileId)
+    public DeactivateProfileCommand(Guid profileId)
     {
         ProfileId = profileId;
     }
 
-    public int ProfileId { get; }
+    public Guid ProfileId { get; }
 }

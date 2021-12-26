@@ -4,10 +4,13 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Ap
 
 public class ApproveProfileCommand : Command
 {
-    public ApproveProfileCommand(int profileId)
+    public ApproveProfileCommand(Guid profileId, Guid adminId)
     {
         ProfileId = profileId;
+        AdminId = adminId;
     }
 
-    public int ProfileId { get; }
+    public Guid ProfileId { get; }
+
+    public Guid AdminId { get; }
 }

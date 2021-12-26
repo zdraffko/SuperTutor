@@ -20,7 +20,7 @@ internal class ProfileStatusTransitionMustBeValidInvariant : Invariant
     {
         if (newStatus == oldStatus)
         {
-            return true;
+            return false;
         }
 
         return oldStatus.CanTransitionTo(newStatus);

@@ -4,13 +4,13 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Re
 
 public class RemoveTutoringGradesFromProfileCommand : Command
 {
-    public RemoveTutoringGradesFromProfileCommand(int profileId, IEnumerable<int> tutoringGradesForRemoval)
+    public RemoveTutoringGradesFromProfileCommand(Guid profileId, IEnumerable<int> tutoringGradesForRemoval)
     {
         ProfileId = profileId;
         TutoringGradesForRemoval = tutoringGradesForRemoval;
     }
 
-    public int ProfileId { get; }
+    public Guid ProfileId { get; }
 
     public IEnumerable<int> TutoringGradesForRemoval { get; }
 }

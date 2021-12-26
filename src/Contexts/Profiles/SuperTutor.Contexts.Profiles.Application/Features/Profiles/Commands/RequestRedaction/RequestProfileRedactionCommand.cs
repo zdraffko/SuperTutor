@@ -4,10 +4,16 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Re
 
 public class RequestProfileRedactionCommand : Command
 {
-    public RequestProfileRedactionCommand(int profileId)
+    public RequestProfileRedactionCommand(Guid profileId, Guid adminId, string comment)
     {
         ProfileId = profileId;
+        AdminId = adminId;
+        Comment = comment;
     }
 
-    public int ProfileId { get; }
+    public Guid ProfileId { get; }
+
+    public Guid AdminId { get; }
+
+    public string Comment { get; }
 }

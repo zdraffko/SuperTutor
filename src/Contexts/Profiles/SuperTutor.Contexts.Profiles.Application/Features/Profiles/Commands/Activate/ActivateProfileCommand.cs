@@ -4,10 +4,10 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Ac
 
 public class ActivateProfileCommand : Command
 {
-    public ActivateProfileCommand(int profileId)
+    public ActivateProfileCommand(Guid profileId)
     {
         ProfileId = profileId;
     }
 
-    public int ProfileId { get; }
+    public Guid ProfileId { get; }
 }

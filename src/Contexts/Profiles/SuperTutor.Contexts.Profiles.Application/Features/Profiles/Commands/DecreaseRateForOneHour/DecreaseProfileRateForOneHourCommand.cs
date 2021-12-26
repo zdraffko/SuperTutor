@@ -4,13 +4,13 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.De
 
 public class DecreaseProfileRateForOneHourCommand : Command
 {
-    public DecreaseProfileRateForOneHourCommand(int profileId, decimal decreaseAmount)
+    public DecreaseProfileRateForOneHourCommand(Guid profileId, decimal decreaseAmount)
     {
         ProfileId = profileId;
         DecreaseAmount = decreaseAmount;
     }
 
-    public int ProfileId { get; }
+    public Guid ProfileId { get; }
 
     public decimal DecreaseAmount { get; }
 }

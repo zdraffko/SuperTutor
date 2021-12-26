@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using SuperTutor.Contexts.Profiles.Domain.Profiles;
+using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Approve;
@@ -21,7 +22,7 @@ internal class ApproveProfileCommandHandler : ICommandHandler<ApproveProfileComm
             return Result.Fail("Profile not found.");
         }
 
-        profile.Approve();
+        profile.Approve(new AdminId(command.AdminId));
 
         return Result.Ok();
     }

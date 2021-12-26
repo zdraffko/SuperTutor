@@ -1,5 +1,7 @@
 ﻿using FluentResults;
 using SuperTutor.Contexts.Profiles.Domain.Profiles;
+using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Entities.RedactionComments;
+using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.RequestRedaction;
@@ -21,7 +23,8 @@ internal class RequestProfileRedactionCommandHandler : ICommandHandler<RequestPr
             return Result.Fail("Profile not found.");
         }
 
-        profile.RequestRedaction();
+        var redactionComment = new RedactionComment(profile.Id, new AdminId(command.AdminId), command.Comment);
+        profile.RequestRedaction(redactionComment);
 
         return Result.Ok();
     }

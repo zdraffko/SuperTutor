@@ -4,10 +4,10 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Su
 
 public class SubmitProfileForReviewCommand : Command
 {
-    public SubmitProfileForReviewCommand(int profileId)
+    public SubmitProfileForReviewCommand(Guid profileId)
     {
         ProfileId = profileId;
     }
 
-    public int ProfileId { get; }
+    public Guid ProfileId { get; }
 }

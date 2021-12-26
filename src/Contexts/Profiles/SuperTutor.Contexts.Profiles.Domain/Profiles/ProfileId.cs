@@ -2,9 +2,9 @@
 
 namespace SuperTutor.Contexts.Profiles.Domain.Profiles;
 
-public class ProfileId : Identifier<int>
+public class ProfileId : GuidIdentifier
 {
-    public ProfileId(int value) : base(value)
+    public ProfileId(Guid value) : base(value)
     {
     }
 }

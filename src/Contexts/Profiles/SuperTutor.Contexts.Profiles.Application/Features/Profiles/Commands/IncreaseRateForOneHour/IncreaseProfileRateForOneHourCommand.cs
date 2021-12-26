@@ -4,13 +4,13 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.In
 
 public class IncreaseProfileRateForOneHourCommand : Command
 {
-    public IncreaseProfileRateForOneHourCommand(int profileId, decimal increaseAmount)
+    public IncreaseProfileRateForOneHourCommand(Guid profileId, decimal increaseAmount)
     {
         ProfileId = profileId;
         IncreaseAmount = increaseAmount;
     }
 
-    public int ProfileId { get; }
+    public Guid ProfileId { get; }
 
     public decimal IncreaseAmount { get; }
 }

@@ -4,13 +4,13 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Ad
 
 public class AddTutoringGradesToProfileCommand : Command
 {
-    public AddTutoringGradesToProfileCommand(int profileId, IEnumerable<int> newTutoringGrades)
+    public AddTutoringGradesToProfileCommand(Guid profileId, IEnumerable<int> newTutoringGrades)
     {
         ProfileId = profileId;
         NewTutoringGrades = newTutoringGrades;
     }
 
-    public int ProfileId { get; }
+    public Guid ProfileId { get; }
 
     public IEnumerable<int> NewTutoringGrades { get; }
 }

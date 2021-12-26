@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SuperTutor.Contexts.Profiles.Domain.Profiles;
 using SuperTutor.Contexts.Profiles.Domain.Profiles.Constants;
@@ -16,15 +15,15 @@ internal class ProfileEntityTypeConfiguration : IEntityTypeConfiguration<Profile
 
     public void Configure(EntityTypeBuilder<Profile> builder)
     {
+        builder.ToTable("Profiles");
+
         builder.HasKey(profile => profile.Id);
 
         builder.Property(profile => profile.Id)
-            .ValueGeneratedOnAdd()
             .HasConversion(
                 profileId => profileId.Value,
                 profileIdValue => new ProfileId(profileIdValue))
-            .IsRequired()
-            .Metadata.SetBeforeSaveBehavior(PropertySaveBehavior.Ignore);
+            .IsRequired();
 
         builder.Property(profile => profile.UserId)
             .HasConversion(
@@ -33,7 +32,7 @@ internal class ProfileEntityTypeConfiguration : IEntityTypeConfiguration<Profile
             .IsRequired();
 
         builder.Property(profile => profile.About)
-            .HasMaxLength(ProfileConstants.AboutMaxLenght)
+            .HasMaxLength(ProfileConstants.AboutMaxLength)
             .IsRequired();
 
         builder.Property(profile => profile.TutoringSubject)
@@ -75,5 +74,19 @@ internal class ProfileEntityTypeConfiguration : IEntityTypeConfiguration<Profile
         builder.Property(profile => profile.CreationDate).IsRequired();
 
         builder.Property(profile => profile.LastUpdateDate).IsRequired();
+
+        builder.Property(profile => profile.ApprovedDate);
+
+        builder.Property(profile => profile.ApprovedByAdminId)
+            .HasConversion(
+                adminId => adminId!.Value,
+                adminIdValue => new AdminId(adminIdValue));
+
+        builder.HasMany(profile => profile.RedactionComments)
+            .WithOne()
+            .HasForeignKey(redactionComment => redactionComment.ProfileId)
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+        builder.Navigation(profile => profile.RedactionComments).HasField("redactionComments");
     }
 }

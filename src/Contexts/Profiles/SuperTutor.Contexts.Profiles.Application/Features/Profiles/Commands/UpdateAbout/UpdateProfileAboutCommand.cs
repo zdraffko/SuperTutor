@@ -4,13 +4,13 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Up
 
 public class UpdateProfileAboutCommand : Command
 {
-    public UpdateProfileAboutCommand(int profileId, string newAbout)
+    public UpdateProfileAboutCommand(Guid profileId, string newAbout)
     {
         ProfileId = profileId;
         NewAbout = newAbout;
     }
 
-    public int ProfileId { get; }
+    public Guid ProfileId { get; }
 
     public string NewAbout { get; }
 }

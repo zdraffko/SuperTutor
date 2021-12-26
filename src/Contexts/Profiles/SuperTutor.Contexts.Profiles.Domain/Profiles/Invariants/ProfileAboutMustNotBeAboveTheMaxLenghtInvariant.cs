@@ -5,22 +5,22 @@ namespace SuperTutor.Contexts.Profiles.Domain.Profiles.Invariants;
 
 internal class ProfileAboutMustNotBeAboveTheMaxLenghtInvariant : Invariant
 {
-    private readonly string newAbout;
+    private readonly string about;
 
-    public ProfileAboutMustNotBeAboveTheMaxLenghtInvariant(string newAbout)
-        : base($"About field is required and it cannot have more than {ProfileConstants.AboutMaxLenght} characters.")
+    public ProfileAboutMustNotBeAboveTheMaxLenghtInvariant(string about)
+        : base($"The 'about' field is required and it cannot have more than {ProfileConstants.AboutMaxLength} characters.")
     {
-        this.newAbout = newAbout;
+        this.about = about;
     }
 
     public override bool IsValid()
     {
-        if (string.IsNullOrWhiteSpace(newAbout))
+        if (string.IsNullOrWhiteSpace(about))
         {
             return false;
         }
 
-        if (newAbout.Length > ProfileConstants.AboutMaxLenght)
+        if (about.Length > ProfileConstants.AboutMaxLength)
         {
             return false;
         }

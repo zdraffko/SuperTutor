@@ -38,8 +38,4 @@ public abstract class Entity<TIdentifier, TIdentifierValue> : IEquatable<Entity<
 
         return GetType() == otherEntity.GetType() && Id == otherEntity.Id;
     }
-
-    public static bool operator ==(Entity<TIdentifier, TIdentifierValue> firstEntity, Entity<TIdentifier, TIdentifierValue> secondEntity) => firstEntity.EntityEquals(secondEntity);
-
-    public static bool operator !=(Entity<TIdentifier, TIdentifierValue> firstEntity, Entity<TIdentifier, TIdentifierValue> secondEntity) => !(firstEntity == secondEntity);
 }
