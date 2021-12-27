@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SuperTutor.Contexts.Profiles.Domain.Profiles;
 using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Entities.RedactionComments;
 using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Entities.RedactionComments.Constants;
+using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Entities.RedactionComments.Enumerations;
 using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.ValueObjects.Identifiers;
+using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
 namespace SuperTutor.Contexts.Profiles.Persistence.EntityTypeConfigurations.Profiles;
 
@@ -41,8 +41,6 @@ internal class RedactionCommentEntityTypeConfiguration : IEntityTypeConfiguratio
             .HasMaxLength(RedactionCommentConstants.ContentMaxLength)
             .IsRequired();
 
-        builder.Property(redactionComment => redactionComment.IsSettled).IsRequired();
-
         builder.Property(redactionComment => redactionComment.SettledDate);
 
         builder.Property(redactionComment => redactionComment.SettledByAdminId)
@@ -50,6 +48,14 @@ internal class RedactionCommentEntityTypeConfiguration : IEntityTypeConfiguratio
                 adminId => adminId!.Value,
                 adminIdValue => new AdminId(adminIdValue));
 
+        builder.Property(profile => profile.Status)
+            .HasConversion(
+                status => status.Value,
+                statusValue => Enumeration.FromValue<Status>(statusValue)!)
+            .IsRequired();
+
         builder.Property(redactionComment => redactionComment.LastUpdateDate).IsRequired();
+
+        builder.Ignore(redactionComment => redactionComment.IsSettled);
     }
 }

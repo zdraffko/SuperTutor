@@ -71,10 +71,10 @@ public class Profile : Entity<ProfileId, Guid>, IAggregateRoot
     {
         CheckInvariant(new ProfileCanBeApprovedOnlyWhenItIsMarkedAsForReviewInvariant(Status));
 
-        var unsettledRedactionComment = redactionComments.SingleOrDefault(redactionComment => redactionComment.IsSettled == false);
+        var unsettledRedactionComment = redactionComments.SingleOrDefault(redactionComment => !redactionComment.IsSettled);
         if (unsettledRedactionComment != null)
         {
-            unsettledRedactionComment.Settle(adminId);
+            unsettledRedactionComment.SettleWithApprovement(adminId);
         }
 
         var currentDate = DateTime.UtcNow;
@@ -89,10 +89,10 @@ public class Profile : Entity<ProfileId, Guid>, IAggregateRoot
     {
         CheckInvariant(new ProfileCanBeRedactionRequestedOnlyWhenItIsMarkedAsForReviewInvariant(Status));
 
-        var unsettledRedactionComment = redactionComments.SingleOrDefault(redactionComment => redactionComment.IsSettled == false);
+        var unsettledRedactionComment = redactionComments.SingleOrDefault(redactionComment => !redactionComment.IsSettled);
         if (unsettledRedactionComment != null)
         {
-            unsettledRedactionComment.Settle(redactionComment.CreatedByAdminId);
+            unsettledRedactionComment.SettleWithNewRedactionRequest(redactionComment.CreatedByAdminId);
         }
 
         redactionComments.Add(redactionComment);

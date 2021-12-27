@@ -15,7 +15,7 @@ internal class ProfileCanHaveOnlyOneActiveRedactionCommentInvariant : Invariant
 
     public override bool IsValid()
     {
-        var nonAddressedRedactionComments = redactionComments.Where(redactionComment => redactionComment.IsSettled == false);
+        var nonAddressedRedactionComments = redactionComments.Where(redactionComment => !redactionComment.IsSettled);
         if (nonAddressedRedactionComments.Count() > 1)
         {
             return false;

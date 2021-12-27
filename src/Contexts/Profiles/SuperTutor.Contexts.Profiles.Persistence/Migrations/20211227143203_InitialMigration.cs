@@ -47,9 +47,9 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                     CreatedByAdminId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    IsSettled = table.Column<bool>(type: "bit", nullable: false),
                     SettledDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     SettledByAdminId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     LastUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>

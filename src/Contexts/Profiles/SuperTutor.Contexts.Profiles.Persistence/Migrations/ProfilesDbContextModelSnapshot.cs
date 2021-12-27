@@ -39,9 +39,6 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsSettled")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
@@ -53,6 +50,9 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
 
                     b.Property<DateTime?>("SettledDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

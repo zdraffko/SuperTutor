@@ -12,7 +12,7 @@ using SuperTutor.Contexts.Profiles.Persistence;
 namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
 {
     [DbContext(typeof(ProfilesDbContext))]
-    [Migration("20211227104143_InitialMigration")]
+    [Migration("20211227143203_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,9 +41,6 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsSettled")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
@@ -55,6 +52,9 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
 
                     b.Property<DateTime?>("SettledDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

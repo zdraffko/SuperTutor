@@ -2,7 +2,7 @@
 
 namespace SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Enumerations;
 
-public class TutoringGrade : Enumeration
+public sealed class TutoringGrade : Enumeration
 {
     private TutoringGrade(int value, string name) : base(value, name) { }
 

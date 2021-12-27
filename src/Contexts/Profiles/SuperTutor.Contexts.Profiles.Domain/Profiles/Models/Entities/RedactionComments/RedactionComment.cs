@@ -1,4 +1,5 @@
-﻿using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Entities.RedactionComments.Invariants;
+﻿using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Entities.RedactionComments.Enumerations;
+using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Entities.RedactionComments.Invariants;
 using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities;
 
@@ -14,7 +15,7 @@ public class RedactionComment : Entity<RedactionCommentId, Guid>
         CheckInvariant(new RedactionCommentContentMustNotBeAboveTheMaxLenghtInvariant(content));
         Content = content;
 
-        IsSettled = false;
+        Status = Status.Active;
         var currentDate = DateTime.UtcNow;
         CreationDate = currentDate;
         LastUpdateDate = currentDate;
@@ -28,21 +29,38 @@ public class RedactionComment : Entity<RedactionCommentId, Guid>
 
     public string Content { get; private set; }
 
-    public bool IsSettled { get; private set; }
-
     public DateTime? SettledDate { get; private set; }
 
     public AdminId? SettledByAdminId { get; private set; }
 
+    public Status Status { get; private set; }
+
     public DateTime LastUpdateDate { get; private set; }
 
-    public void Settle(AdminId settledByAdminId)
+    public bool IsSettled => Status != Status.Active;
+
+    public void SettleWithApprovement(AdminId settledByAdminId)
     {
-        IsSettled = true;
-        SettledByAdminId = settledByAdminId;
+        CheckInvariant(new RedactionCommentCannotBeSettledMoreThanOnceInvariant(Status));
 
         var currentDate = DateTime.UtcNow;
+
         SettledDate = currentDate;
+        SettledByAdminId = settledByAdminId;
+        Status = Status.SettledWithApprovement;
+
+        LastUpdateDate = currentDate;
+    }
+
+    public void SettleWithNewRedactionRequest(AdminId settledByAdminId)
+    {
+        CheckInvariant(new RedactionCommentCannotBeSettledMoreThanOnceInvariant(Status));
+
+        var currentDate = DateTime.UtcNow;
+
+        SettledDate = currentDate;
+        SettledByAdminId = settledByAdminId;
+        Status = Status.SettledWithNewRedactionRequest;
 
         LastUpdateDate = currentDate;
     }
