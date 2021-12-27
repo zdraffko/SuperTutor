@@ -75,9 +75,18 @@ internal class ProfileEntityTypeConfiguration : IEntityTypeConfiguration<Profile
 
         builder.Property(profile => profile.LastUpdateDate).IsRequired();
 
-        builder.Property(profile => profile.ApprovedDate);
+        builder.Property(profile => profile.LastApprovalDate);
 
-        builder.Property(profile => profile.ApprovedByAdminId)
+        builder.Property(profile => profile.LastApprovalAdminId)
+            .HasConversion(
+                adminId => adminId!.Value,
+                adminIdValue => new AdminId(adminIdValue));
+
+        builder.Property(profile => profile.LastModificationDate);
+
+        builder.Property(profile => profile.LastRedactionRequestDate);
+
+        builder.Property(profile => profile.LastRedactionRequestAdminId)
             .HasConversion(
                 adminId => adminId!.Value,
                 adminIdValue => new AdminId(adminIdValue));

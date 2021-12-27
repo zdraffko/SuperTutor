@@ -71,13 +71,22 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<Guid?>("ApprovedByAdminId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("ApprovedDate")
+                    b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("CreationDate")
+                    b.Property<Guid?>("LastApprovalAdminId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("LastApprovalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastModificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("LastRedactionRequestAdminId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("LastRedactionRequestDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("LastUpdateDate")

@@ -9,8 +9,8 @@ namespace SuperTutor.Contexts.Profiles.Domain.Profiles;
 
 public class Profile : Entity<ProfileId, Guid>, IAggregateRoot
 {
-    private HashSet<TutoringGrade> tutoringGrades;
-    private List<RedactionComment> redactionComments;
+    private readonly HashSet<TutoringGrade> tutoringGrades;
+    private readonly List<RedactionComment> redactionComments;
 
     public Profile(
         UserId userId,
@@ -55,20 +55,21 @@ public class Profile : Entity<ProfileId, Guid>, IAggregateRoot
 
     public DateTime CreationDate { get; }
 
-    public DateTime? ApprovedDate { get; private set; }
+    public DateTime? LastApprovalDate { get; private set; }
 
-    public AdminId? ApprovedByAdminId { get; private set; }
+    public AdminId? LastApprovalAdminId { get; private set; }
+
+    public DateTime? LastModificationDate { get; private set; }
+
+    public DateTime? LastRedactionRequestDate { get; private set; }
+
+    public AdminId? LastRedactionRequestAdminId { get; private set; }
 
     public DateTime LastUpdateDate { get; private set; }
 
     public void Approve(AdminId adminId)
     {
-        var newStatus = Status.Active;
-        CheckInvariant(new ProfileStatusTransitionMustBeValidInvariant(Status, newStatus));
-        Status = newStatus;
-
-        ApprovedDate = DateTime.UtcNow;
-        ApprovedByAdminId = adminId;
+        CheckInvariant(new ProfileCanBeApprovedOnlyWhenItIsMarkedAsForReviewInvariant(Status));
 
         var unsettledRedactionComment = redactionComments.SingleOrDefault(redactionComment => redactionComment.IsSettled == false);
         if (unsettledRedactionComment != null)
@@ -76,14 +77,17 @@ public class Profile : Entity<ProfileId, Guid>, IAggregateRoot
             unsettledRedactionComment.Settle(adminId);
         }
 
-        LastUpdateDate = DateTime.UtcNow;
+        var currentDate = DateTime.UtcNow;
+        LastApprovalDate = currentDate;
+        LastApprovalAdminId = adminId;
+        Status = Status.Active;
+
+        LastUpdateDate = currentDate;
     }
 
     public void RequestRedaction(RedactionComment redactionComment)
     {
-        var newStatus = Status.ForRedaction;
-        CheckInvariant(new ProfileStatusTransitionMustBeValidInvariant(Status, newStatus));
-        Status = newStatus;
+        CheckInvariant(new ProfileCanBeRedactionRequestedOnlyWhenItIsMarkedAsForReviewInvariant(Status));
 
         var unsettledRedactionComment = redactionComments.SingleOrDefault(redactionComment => redactionComment.IsSettled == false);
         if (unsettledRedactionComment != null)
@@ -94,46 +98,59 @@ public class Profile : Entity<ProfileId, Guid>, IAggregateRoot
         redactionComments.Add(redactionComment);
         CheckInvariant(new ProfileCanHaveOnlyOneActiveRedactionCommentInvariant(redactionComments));
 
-        LastUpdateDate = DateTime.UtcNow;
+        var currentDate = DateTime.UtcNow;
+        LastRedactionRequestDate = currentDate;
+        LastRedactionRequestAdminId = redactionComment.CreatedByAdminId;
+        Status = Status.ForRedaction;
+
+        LastUpdateDate = currentDate;
     }
 
     public void SubmitForReview()
     {
-        var newStatus = Status.ForReview;
-        CheckInvariant(new ProfileStatusTransitionMustBeValidInvariant(Status, newStatus));
-        Status = newStatus;
+        CheckInvariant(new ProfileCanBeSubmittedForReviewOnlyWhenItIsMarkedAsInactiveOrForRedactionInvariant(Status));
+        CheckInvariant(new ProfileCanBeSubmittedForReviewOnlyWhenItHasBeenModifiedSinceLastRedactionRequestInvariant(LastModificationDate, LastRedactionRequestDate));
+
+        Status = Status.ForReview;
 
         LastUpdateDate = DateTime.UtcNow;
     }
 
     public void Activate()
     {
-        var newStatus = Status.Active;
-        CheckInvariant(new ProfileStatusTransitionMustBeValidInvariant(Status, newStatus));
-        Status = newStatus;
+        CheckInvariant(new ProfileCanBeActivatedOnlyWhenItIsMarkedAsInactiveInvariant(Status));
+        CheckInvariant(new ProfileCanBeActivatedOnlyWhenItHasNotBeenModifiedSinceLastApprovalInvariant(LastModificationDate, LastApprovalDate));
+        
+        Status = Status.Active;
 
         LastUpdateDate = DateTime.UtcNow;
     }
 
     public void Deactivate()
     {
-        var newStatus = Status.Inactive;
-        CheckInvariant(new ProfileStatusTransitionMustBeValidInvariant(Status, newStatus));
-        Status = newStatus;
+        CheckInvariant(new ProfileCanBeDeactivatedOnlyWhenItIsMarkedAsActiveOrForReviewInvariant(Status));
+
+        Status = Status.Inactive;
 
         LastUpdateDate = DateTime.UtcNow;
     }
 
     public void UpdateAbout(string newAbout)
     {
+        CheckInvariant(new ProfileInformationCanOnlyBeUpdatedWhenItIsMarkedAsInactiveOrForRedactionInvariant(Status));
         CheckInvariant(new ProfileAboutMustNotBeAboveTheMaxLenghtInvariant(newAbout));
+
+        var currentDate = DateTime.UtcNow;
+        LastModificationDate = currentDate;
         About = newAbout;
 
-        LastUpdateDate = DateTime.UtcNow;
+        LastUpdateDate = currentDate;
     }
 
     public void AddTutoringGrades(HashSet<TutoringGrade> newTutoringGrades)
     {
+        CheckInvariant(new ProfileInformationCanOnlyBeUpdatedWhenItIsMarkedAsInactiveOrForRedactionInvariant(Status));
+
         if (newTutoringGrades.Count == 0)
         {
             return;
@@ -146,6 +163,8 @@ public class Profile : Entity<ProfileId, Guid>, IAggregateRoot
 
     public void RemoveTutoringGrades(HashSet<TutoringGrade> tutoringGradesForRemoval)
     {
+        CheckInvariant(new ProfileInformationCanOnlyBeUpdatedWhenItIsMarkedAsInactiveOrForRedactionInvariant(Status));
+
         tutoringGrades.RemoveWhere(tutoringGrade => tutoringGradesForRemoval.Contains(tutoringGrade));
         CheckInvariant(new ProfileMustHaveAtLeastOneTutoringGradeInvariant(tutoringGrades));
 
@@ -154,6 +173,8 @@ public class Profile : Entity<ProfileId, Guid>, IAggregateRoot
 
     public void IncreaseRateForOneHour(decimal increaseAmount)
     {
+        CheckInvariant(new ProfileInformationCanOnlyBeUpdatedWhenItIsMarkedAsInactiveOrForRedactionInvariant(Status));
+
         var newRateForOneHour = RateForOneHour + increaseAmount;
         CheckInvariant(new ProfileRateForOneHourMustNotBeLessThanTheMinAmountInvariant(newRateForOneHour));
         RateForOneHour = newRateForOneHour;
@@ -163,6 +184,8 @@ public class Profile : Entity<ProfileId, Guid>, IAggregateRoot
 
     public void DecreaseRateForOneHour(decimal decreaseAmount)
     {
+        CheckInvariant(new ProfileInformationCanOnlyBeUpdatedWhenItIsMarkedAsInactiveOrForRedactionInvariant(Status));
+
         var newRateForOneHour = RateForOneHour - decreaseAmount;
         CheckInvariant(new ProfileRateForOneHourMustNotBeLessThanTheMinAmountInvariant(newRateForOneHour));
         RateForOneHour = newRateForOneHour;

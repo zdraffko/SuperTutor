@@ -24,8 +24,11 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                     RateForOneHour = table.Column<decimal>(type: "decimal(19,4)", precision: 19, scale: 4, nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ApprovedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ApprovedByAdminId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LastApprovalDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastApprovalAdminId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LastModificationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastRedactionRequestDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastRedactionRequestAdminId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     LastUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TutoringGrades = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
