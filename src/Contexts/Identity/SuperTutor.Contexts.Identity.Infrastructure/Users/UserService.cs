@@ -8,8 +8,6 @@ namespace SuperTutor.Contexts.Identity.Infrastructure.Users;
 
 public class UserService : IUserService
 {
-    private const string InvalidLoginCredentialsErrorMessage = "Invalid login credentials.";
-
     private readonly UserManager<User> userManager;
     private readonly ITokenService tokenService;
 
@@ -21,17 +19,19 @@ public class UserService : IUserService
 
     public async Task<Result<string>> Login(string email, string password)
     {
+        var invalidLoginCredentialsErrorMessage = "Invalid login credentials.";
+
         var user = await userManager.FindByEmailAsync(email);
         if (user == null)
         {
-            return Result.Fail(InvalidLoginCredentialsErrorMessage);
+            return Result.Fail(invalidLoginCredentialsErrorMessage);
         }
 
         var isPasswordValid = await userManager.CheckPasswordAsync(user, password);
 
         if (!isPasswordValid)
         {
-            return Result.Fail(InvalidLoginCredentialsErrorMessage);
+            return Result.Fail(invalidLoginCredentialsErrorMessage);
         }
 
         var token = await tokenService.GenerateToken(user);
@@ -42,15 +42,30 @@ public class UserService : IUserService
     public async Task<Result> Register(string email, string username, string plainPassword)
     {
         var user = new User(email, username);
-        var identityResult = await userManager.CreateAsync(user, plainPassword);
+        var createUserResult = await userManager.CreateAsync(user, plainPassword);
 
-        if (!identityResult.Succeeded)
+        if (!createUserResult.Succeeded)
         {
-            var identityErrorDescriptions = identityResult.Errors.Select(identityError => identityError.Description);
+            var identityErrorDescriptions = createUserResult.Errors.Select(identityError => identityError.Description);
 
             return new Result().WithErrors(identityErrorDescriptions);
         }
 
         return Result.Ok();
+    }
+
+    public async Task<Result<Guid>> Delete(string email)
+    {
+        var user = await userManager.FindByEmailAsync(email);
+        var deleteUserResult = await userManager.DeleteAsync(user);
+
+        if (!deleteUserResult.Succeeded)
+        {
+            var identityErrorDescriptions = deleteUserResult.Errors.Select(identityError => identityError.Description);
+
+            return new Result().WithErrors(identityErrorDescriptions);
+        }
+
+        return Result.Ok(user.Id);
     }
 }
