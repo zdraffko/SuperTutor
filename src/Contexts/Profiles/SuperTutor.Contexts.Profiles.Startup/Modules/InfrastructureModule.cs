@@ -1,12 +1,10 @@
 ﻿using Autofac;
 using MassTransit;
-using SuperTutor.Contexts.Identity.Application.Contracts.Users;
-using SuperTutor.Contexts.Identity.Infrastructure.Tokens;
-using SuperTutor.Contexts.Identity.Infrastructure.Users;
+using SuperTutor.Contexts.Profiles.Application.IntegrationEventConsumers.Identity;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Contracts;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.IntegrationEvents;
 
-namespace SuperTutor.Contexts.Identity.Startup.Modules;
+namespace SuperTutor.Contexts.Profiles.Startup.Modules;
 
 internal class InfrastructureModule : Module
 {
@@ -18,8 +16,6 @@ internal class InfrastructureModule : Module
 
     private void RegisterServices(ContainerBuilder builder)
     {
-        builder.RegisterType<TokenService>().As<ITokenService>().InstancePerLifetimeScope();
-        builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
         builder.RegisterType<IntegrationEventsService>().As<IIntegrationEventsService>().InstancePerLifetimeScope();
     }
 
@@ -27,9 +23,16 @@ internal class InfrastructureModule : Module
     {
         builder.AddMassTransit(busConfigurator =>
         {
-            busConfigurator.UsingRabbitMq((context, rabbitmqConfigurator) =>
+            busConfigurator.AddConsumers(typeof(UserDeletedIntegrationEventConsumer).Assembly);
+
+            busConfigurator.UsingRabbitMq((busRegistrationContext, rabbitmqConfigurator) =>
             {
                 rabbitmqConfigurator.Host("amqp://devuser:devPass123!@supertutor-rabbitmq:5672");
+
+                rabbitmqConfigurator.ReceiveEndpoint("user-deleted-queue", endpointConfigurator =>
+                {
+                    endpointConfigurator.ConfigureConsumer<UserDeletedIntegrationEventConsumer>(busRegistrationContext);
+                });
             });
         });
     }

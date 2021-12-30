@@ -1,5 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using SuperTutor.Contexts.Profiles.Api.Controllers;
 using SuperTutor.Contexts.Profiles.Persistence;
@@ -15,6 +16,8 @@ builder.Services
     .AddControllersAsServices();
 
 builder.Services.AddDbContext<ProfilesDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddMassTransitHostedService();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterAssemblyModules(Assembly.GetExecutingAssembly()));

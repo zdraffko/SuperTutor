@@ -14,6 +14,21 @@ services:
         ports:
             - "1433:1433"
 
+    supertutor-rabbitmq:
+        container_name: supertutor-rabbitmq
+        image: rabbitmq:3-management
+        hostname: supertutor-rabbitmq
+        environment:
+            - RABBITMQ_DEFAULT_USER=devuser
+            - RABBITMQ_DEFAULT_PASS=devPass123!
+        volumes:
+            - supertutor-rabbitmq-valume:/var/lib/rabbitmq/mnesia
+        networks: 
+            - supertutor-network
+        ports:
+            - 5672:5672
+            - 15672:15672
+
     supertutor-identity:
         container_name: supertutor-identity
         image: zdraffko/supertutor:identity
@@ -31,6 +46,7 @@ services:
         restart: on-failure
         depends_on:
             - supertutor-mssqlserver
+            - supertutor-rabbitmq
 
     supertutor-profiles:
         container_name: supertutor-profiles
@@ -49,9 +65,11 @@ services:
         restart: on-failure
         depends_on:
             - supertutor-mssqlserver
+            - supertutor-rabbitmq
 
 volumes:
     supertutor-mssqlserver-volume:
+    supertutor-rabbitmq-valume:
 
 networks:
     supertutor-network:

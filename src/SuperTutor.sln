@@ -33,15 +33,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.SharedLibraries.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Profiles", "Profiles", "{FCFD1BE3-C52C-436B-BA5C-10C2D37F8EEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Profiles.Application", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Application\SuperTutor.Contexts.Profiles.Application.csproj", "{B5CD73DB-D2EC-436C-9679-220CA5FDAC9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.Application", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Application\SuperTutor.Contexts.Profiles.Application.csproj", "{B5CD73DB-D2EC-436C-9679-220CA5FDAC9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Profiles.Domain", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Domain\SuperTutor.Contexts.Profiles.Domain.csproj", "{B2495183-7E62-4E9E-9693-A10D93E20421}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.Domain", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Domain\SuperTutor.Contexts.Profiles.Domain.csproj", "{B2495183-7E62-4E9E-9693-A10D93E20421}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Profiles.Api", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Api\SuperTutor.Contexts.Profiles.Api.csproj", "{2F8681B5-97C8-4E5C-BB12-2ECD42F6C90E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.Api", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Api\SuperTutor.Contexts.Profiles.Api.csproj", "{2F8681B5-97C8-4E5C-BB12-2ECD42F6C90E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Profiles.Persistence", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Persistence\SuperTutor.Contexts.Profiles.Persistence.csproj", "{78757B2F-7EDC-4E2E-A2DF-147FEEFB638B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.Persistence", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Persistence\SuperTutor.Contexts.Profiles.Persistence.csproj", "{78757B2F-7EDC-4E2E-A2DF-147FEEFB638B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Profiles.Startup", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Startup\SuperTutor.Contexts.Profiles.Startup.csproj", "{A5C1BF1C-FA9E-4A25-9689-4D2EB509B9DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.Startup", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Startup\SuperTutor.Contexts.Profiles.Startup.csproj", "{A5C1BF1C-FA9E-4A25-9689-4D2EB509B9DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure", "SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.csproj", "{B00B7C03-CCE8-4843-9165-B785C4E387CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Identity.IntegrationEvents", "Contexts\Identity\SuperTutor.Contexts.Identity.IntegrationEvents\SuperTutor.Contexts.Identity.IntegrationEvents.csproj", "{42A904B6-1AA0-448A-ABDC-EF5A8CEEAD54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -109,6 +113,14 @@ Global
 		{A5C1BF1C-FA9E-4A25-9689-4D2EB509B9DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5C1BF1C-FA9E-4A25-9689-4D2EB509B9DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5C1BF1C-FA9E-4A25-9689-4D2EB509B9DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B00B7C03-CCE8-4843-9165-B785C4E387CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B00B7C03-CCE8-4843-9165-B785C4E387CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B00B7C03-CCE8-4843-9165-B785C4E387CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B00B7C03-CCE8-4843-9165-B785C4E387CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42A904B6-1AA0-448A-ABDC-EF5A8CEEAD54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42A904B6-1AA0-448A-ABDC-EF5A8CEEAD54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42A904B6-1AA0-448A-ABDC-EF5A8CEEAD54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42A904B6-1AA0-448A-ABDC-EF5A8CEEAD54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -131,6 +143,8 @@ Global
 		{2F8681B5-97C8-4E5C-BB12-2ECD42F6C90E} = {FCFD1BE3-C52C-436B-BA5C-10C2D37F8EEF}
 		{78757B2F-7EDC-4E2E-A2DF-147FEEFB638B} = {FCFD1BE3-C52C-436B-BA5C-10C2D37F8EEF}
 		{A5C1BF1C-FA9E-4A25-9689-4D2EB509B9DE} = {FCFD1BE3-C52C-436B-BA5C-10C2D37F8EEF}
+		{B00B7C03-CCE8-4843-9165-B785C4E387CE} = {C9E90C08-FD6E-407F-A33F-0B2C05DC2E49}
+		{42A904B6-1AA0-448A-ABDC-EF5A8CEEAD54} = {DB167D28-A138-4B9C-B3D3-14F93D999CC3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4CB9FFAA-0741-40AA-BFA6-60CC8D6EC98F}

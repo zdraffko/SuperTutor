@@ -12,6 +12,9 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.3.0" />
+    <PackageReference Include="MassTransit.Autofac" Version="7.3.0" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="7.3.0" />
     <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="7.4.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
       <PrivateAssets>all</PrivateAssets>
@@ -22,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Identity.Api\SuperTutor.Contexts.Identity.Api.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Identity.Infrastructure\SuperTutor.Contexts.Identity.Infrastructure.csproj" />
   </ItemGroup>
