@@ -7,4 +7,6 @@ public interface IProfileRepository : IAggregateRootRepository<Profile>
     void Add(Profile profile);
 
     Task<Profile?> GetById(ProfileId profileId, CancellationToken cancellationToken);
+
+    void Remove(Profile profile);
 }

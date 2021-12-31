@@ -18,4 +18,6 @@ public  class ProfileRepository : IProfileRepository
         => await profilesDbContext.Profiles
         .Include(profile => profile.RedactionComments)
         .SingleOrDefaultAsync(profile => profile.Id == profileId, cancellationToken);
+
+    public void Remove(Profile profile) => profilesDbContext.Profiles.Remove(profile);
 }

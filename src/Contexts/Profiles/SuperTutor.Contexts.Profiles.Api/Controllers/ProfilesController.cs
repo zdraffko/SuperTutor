@@ -6,6 +6,7 @@ using SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Approv
 using SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Create;
 using SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Deactivate;
 using SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.DecreaseRateForOneHour;
+using SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Delete;
 using SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.IncreaseRateForOneHour;
 using SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.RemoveTutoringGrades;
 using SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.RequestRedaction;
@@ -21,6 +22,10 @@ public class ProfilesController : ApiController
 
     [HttpPost]
     public async Task<ActionResult> Create(CreateProfileCommand command, CancellationToken cancellationToken)
+        => await Handle(command, cancellationToken);
+
+    [HttpPost]
+    public async Task<ActionResult> Delete(DeleteProfileCommand command, CancellationToken cancellationToken)
         => await Handle(command, cancellationToken);
 
     [HttpPost]
