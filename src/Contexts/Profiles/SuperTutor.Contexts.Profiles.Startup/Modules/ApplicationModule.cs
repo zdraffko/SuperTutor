@@ -1,8 +1,7 @@
 ﻿using Autofac;
-using MediatR;
-using MediatR.Extensions.Autofac.DependencyInjection;
 using SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Create;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Common.Commands.Decorators;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.IntegrationEvents.Commands.Decorators;
 
 namespace SuperTutor.Contexts.Profiles.Startup.Modules;
@@ -16,8 +15,13 @@ internal class ApplicationModule : Module
 
     private void RegisterCommandHandlers(ContainerBuilder builder)
     {
-        builder.RegisterMediatR(typeof(CreateProfileCommand).Assembly);
-        builder.RegisterGenericDecorator(typeof(UnitOfWorkCommandHandlerDecorator<>), typeof(IRequestHandler<,>));
-        builder.RegisterGenericDecorator(typeof(IntegrationEventsCommandHandlerDecorator<>), typeof(IRequestHandler<,>));
+        builder.RegisterAssemblyTypes(typeof(CreateProfileCommand).Assembly).AsClosedTypesOf(typeof(ICommandHandler<>)).InstancePerLifetimeScope();
+        builder.RegisterAssemblyTypes(typeof(CreateProfileCommand).Assembly).AsClosedTypesOf(typeof(ICommandHandler<,>)).InstancePerLifetimeScope();
+
+        builder.RegisterGenericDecorator(typeof(UnitOfWorkCommandHandlerDecorator<>), typeof(ICommandHandler<>));
+        builder.RegisterGenericDecorator(typeof(UnitOfWorkCommandHandlerDecorator<,>), typeof(ICommandHandler<,>));
+
+        builder.RegisterGenericDecorator(typeof(IntegrationEventsCommandHandlerDecorator<>), typeof(ICommandHandler<>));
+        builder.RegisterGenericDecorator(typeof(IntegrationEventsCommandHandlerDecorator<,>), typeof(ICommandHandler<,>));
     }
 }

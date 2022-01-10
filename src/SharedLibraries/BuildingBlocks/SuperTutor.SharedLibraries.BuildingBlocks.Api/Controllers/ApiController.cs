@@ -1,7 +1,8 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Extensions;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Queries;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Queries;
 
 namespace SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
@@ -10,30 +11,32 @@ namespace SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
 [Route("api/[controller]/[action]")]
 public abstract class ApiController : ControllerBase
 {
-    private readonly IMediator mediator;
-
-    protected ApiController(IMediator mediator)
+    protected async Task<ActionResult> Handle<TCommand>(
+        ICommandHandler<TCommand> commandHandler,
+        TCommand command,
+        CancellationToken cancellationToken) where TCommand : Command
     {
-        this.mediator = mediator;
-    }
-
-    protected async Task<ActionResult> Handle(Command command, CancellationToken cancellationToken)
-    {
-        var commandResult = await mediator.Send(command, cancellationToken);
+        var commandResult = await commandHandler.Handle(command, cancellationToken);
 
         return commandResult.ToActionResult();
     }
 
-    protected async Task<ActionResult<TPayload>> Handle<TPayload>(Command<TPayload> command, CancellationToken cancellationToken)
+    protected async Task<ActionResult<TPayload>> Handle<TCommand, TPayload>(
+        ICommandHandler<TCommand, TPayload> commandHandler,
+        TCommand command,
+        CancellationToken cancellationToken) where TCommand : Command<TPayload>
     {
-        var commandResult = await mediator.Send(command, cancellationToken);
+        var commandResult = await commandHandler.Handle(command, cancellationToken);
 
         return commandResult.ToActionResult();
     }
 
-    protected async Task<ActionResult<TPayload>> Handle<TPayload>(Query<TPayload> query, CancellationToken cancellationToken)
+    protected async Task<ActionResult<TPayload>> Handle<TQuery, TPayload>(
+        IQueryHandler<TQuery, TPayload> queryHandler,
+        TQuery query,
+        CancellationToken cancellationToken) where TQuery : Query<TPayload>
     {
-        var queryResult = await mediator.Send(query, cancellationToken);
+        var queryResult = await queryHandler.Handle(query, cancellationToken);
 
         return queryResult.ToActionResult();
     }

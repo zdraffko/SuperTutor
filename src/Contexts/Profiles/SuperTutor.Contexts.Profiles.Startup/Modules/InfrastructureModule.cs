@@ -29,10 +29,17 @@ internal class InfrastructureModule : Module
             {
                 rabbitmqConfigurator.Host("amqp://devuser:devPass123!@supertutor-rabbitmq:5672");
 
-                rabbitmqConfigurator.ReceiveEndpoint("user-deleted-queue", endpointConfigurator =>
+                var consumers = typeof(UserDeletedIntegrationEventConsumer).Assembly
+                    .GetTypes()
+                    .Where(type => type.IsAssignableTo(typeof(IConsumer)));
+
+                foreach (var consumer in consumers)
                 {
-                    endpointConfigurator.ConfigureConsumer<UserDeletedIntegrationEventConsumer>(busRegistrationContext);
-                });
+                    rabbitmqConfigurator.ReceiveEndpoint(consumer.FullName, endpointConfigurator =>
+                    {
+                        endpointConfigurator.ConfigureConsumer(busRegistrationContext, consumer);
+                    });
+                }
             });
         });
     }

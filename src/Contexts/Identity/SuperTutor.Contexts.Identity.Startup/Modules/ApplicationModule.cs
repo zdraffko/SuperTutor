@@ -1,7 +1,6 @@
 ﻿using Autofac;
-using MediatR;
-using MediatR.Extensions.Autofac.DependencyInjection;
 using SuperTutor.Contexts.Identity.Application.Features.Users.Commands.Register;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.IntegrationEvents.Commands.Decorators;
 
 namespace SuperTutor.Contexts.Identity.Startup.Modules;
@@ -15,7 +14,10 @@ internal class ApplicationModule : Module
 
     private void RegisterCommandHandlers(ContainerBuilder builder)
     {
-        builder.RegisterMediatR(typeof(RegisterUserCommand).Assembly);
-        builder.RegisterGenericDecorator(typeof(IntegrationEventsCommandHandlerDecorator<>), typeof(IRequestHandler<,>));
+        builder.RegisterAssemblyTypes(typeof(RegisterUserCommand).Assembly).AsClosedTypesOf(typeof(ICommandHandler<>)).InstancePerLifetimeScope();
+        builder.RegisterAssemblyTypes(typeof(RegisterUserCommand).Assembly).AsClosedTypesOf(typeof(ICommandHandler<,>)).InstancePerLifetimeScope();
+
+        builder.RegisterGenericDecorator(typeof(IntegrationEventsCommandHandlerDecorator<>), typeof(ICommandHandler<>));
+        builder.RegisterGenericDecorator(typeof(IntegrationEventsCommandHandlerDecorator<,>), typeof(ICommandHandler<,>));
     }
 }

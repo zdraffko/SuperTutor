@@ -1,5 +1,4 @@
 ﻿using FluentResults;
-using MassTransit;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Contracts;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;

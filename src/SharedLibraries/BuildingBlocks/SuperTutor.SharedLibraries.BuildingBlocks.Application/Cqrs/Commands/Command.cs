@@ -1,9 +1,8 @@
 ﻿using FluentResults;
-using MediatR;
 
 namespace SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
 
-public abstract class Command : IRequest<Result>
+public abstract class Command
 {
     protected Command() => Id = Guid.NewGuid();
 
@@ -12,7 +11,7 @@ public abstract class Command : IRequest<Result>
     public Guid Id { get; }
 }
 
-public abstract class Command<TPayload> : IRequest<Result<TPayload>>
+public abstract class Command<TPayload>
 {
     protected Command() => Id = Guid.NewGuid();
 

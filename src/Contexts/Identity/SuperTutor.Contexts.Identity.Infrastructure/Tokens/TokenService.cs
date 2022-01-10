@@ -11,7 +11,7 @@ public class TokenService : ITokenService
     public async Task<string> GenerateToken(User user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var secret = Encoding.ASCII.GetBytes("TEMP_SECRET");
+        var secret = Encoding.ASCII.GetBytes("TEMP_SECRET_TEMP_TEMP_TEMP_TEMP_TEMP_TEMP_TEMP");
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {

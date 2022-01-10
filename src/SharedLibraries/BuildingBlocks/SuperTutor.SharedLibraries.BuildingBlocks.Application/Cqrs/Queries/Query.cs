@@ -1,9 +1,8 @@
 ﻿using FluentResults;
-using MediatR;
 
 namespace SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Queries;
 
-public abstract class Query<TPayload> : IRequest<Result<TPayload>>
+public abstract class Query<TPayload>
 {
     protected Query() => Id = Guid.NewGuid();
 
