@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Application\SuperTutor.SharedLibraries.BuildingBlocks.Application.csproj" />
-    <ProjectReference Include="..\..\Identity\SuperTutor.Contexts.Identity.IntegrationEvents\SuperTutor.Contexts.Identity.IntegrationEvents.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Profiles.Domain\SuperTutor.Contexts.Profiles.Domain.csproj" />
   </ItemGroup>
 

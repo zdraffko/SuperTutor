@@ -43,9 +43,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profile
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.Startup", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Startup\SuperTutor.Contexts.Profiles.Startup.csproj", "{A5C1BF1C-FA9E-4A25-9689-4D2EB509B9DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure", "SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.csproj", "{B00B7C03-CCE8-4843-9165-B785C4E387CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure", "SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.csproj", "{B00B7C03-CCE8-4843-9165-B785C4E387CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Identity.IntegrationEvents", "Contexts\Identity\SuperTutor.Contexts.Identity.IntegrationEvents\SuperTutor.Contexts.Identity.IntegrationEvents.csproj", "{42A904B6-1AA0-448A-ABDC-EF5A8CEEAD54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Identity.IntegrationEvents", "Contexts\Identity\SuperTutor.Contexts.Identity.IntegrationEvents\SuperTutor.Contexts.Identity.IntegrationEvents.csproj", "{42A904B6-1AA0-448A-ABDC-EF5A8CEEAD54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Profiles.Infrastructure", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Infrastructure\SuperTutor.Contexts.Profiles.Infrastructure.csproj", "{7229DA70-49C9-4C32-85F2-1C3788D6EEDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +123,10 @@ Global
 		{42A904B6-1AA0-448A-ABDC-EF5A8CEEAD54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42A904B6-1AA0-448A-ABDC-EF5A8CEEAD54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42A904B6-1AA0-448A-ABDC-EF5A8CEEAD54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7229DA70-49C9-4C32-85F2-1C3788D6EEDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7229DA70-49C9-4C32-85F2-1C3788D6EEDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7229DA70-49C9-4C32-85F2-1C3788D6EEDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7229DA70-49C9-4C32-85F2-1C3788D6EEDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -145,6 +151,7 @@ Global
 		{A5C1BF1C-FA9E-4A25-9689-4D2EB509B9DE} = {FCFD1BE3-C52C-436B-BA5C-10C2D37F8EEF}
 		{B00B7C03-CCE8-4843-9165-B785C4E387CE} = {C9E90C08-FD6E-407F-A33F-0B2C05DC2E49}
 		{42A904B6-1AA0-448A-ABDC-EF5A8CEEAD54} = {DB167D28-A138-4B9C-B3D3-14F93D999CC3}
+		{7229DA70-49C9-4C32-85F2-1C3788D6EEDE} = {FCFD1BE3-C52C-436B-BA5C-10C2D37F8EEF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4CB9FFAA-0741-40AA-BFA6-60CC8D6EC98F}
