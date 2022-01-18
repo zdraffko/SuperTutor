@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using MassTransit;
-using SuperTutor.Contexts.Profiles.Application.IntegrationEventConsumers.Identity;
+using SuperTutor.Contexts.Profiles.Infrastructure.IntegrationEvents.Consumers.Identity;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Contracts;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.IntegrationEvents;
 

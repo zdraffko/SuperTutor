@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Identity\SuperTutor.Contexts.Identity.IntegrationEvents\SuperTutor.Contexts.Identity.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\SuperTutor.Contexts.Profiles.Application\SuperTutor.Contexts.Profiles.Application.csproj" />
   </ItemGroup>
 
 </Project>
