@@ -2,18 +2,18 @@
 using SuperTutor.Contexts.Profiles.Domain.Profiles;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
 
-namespace SuperTutor.Contexts.Profiles.Application.Integration.Identity.Commands.DeleteProfiles;
+namespace SuperTutor.Contexts.Profiles.Application.Integration.Identity.Commands.DeleteProfilesForUser;
 
-internal class DeleteProfilesCommandHandler : ICommandHandler<DeleteProfilesCommand>
+internal class DeleteProfilesForUserCommandHandler : ICommandHandler<DeleteProfilesForUserCommand>
 {
     private readonly IProfileRepository profileRepository;
 
-    public DeleteProfilesCommandHandler(IProfileRepository profileRepository)
+    public DeleteProfilesForUserCommandHandler(IProfileRepository profileRepository)
     {
         this.profileRepository = profileRepository;
     }
 
-    public async Task<Result> Handle(DeleteProfilesCommand command, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeleteProfilesForUserCommand command, CancellationToken cancellationToken)
     {
         var allUserProfiles = await profileRepository.GetAllForUser(command.UserId, cancellationToken);
 

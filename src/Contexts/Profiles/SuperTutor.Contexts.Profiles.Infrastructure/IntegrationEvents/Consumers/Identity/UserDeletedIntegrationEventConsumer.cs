@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 using SuperTutor.Contexts.Identity.IntegrationEvents.Users;
-using SuperTutor.Contexts.Profiles.Application.Integration.Identity.Commands.DeleteProfiles;
+using SuperTutor.Contexts.Profiles.Application.Integration.Identity.Commands.DeleteProfilesForUser;
 using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
 
@@ -8,13 +8,13 @@ namespace SuperTutor.Contexts.Profiles.Infrastructure.IntegrationEvents.Consumer
 
 public class UserDeletedIntegrationEventConsumer : IConsumer<UserDeletedIntegrationEvent>
 {
-    private readonly ICommandHandler<DeleteProfilesCommand> deleteProfilesCommandHandler;
+    private readonly ICommandHandler<DeleteProfilesForUserCommand> deleteProfilesForUserCommandHandler;
 
-    public UserDeletedIntegrationEventConsumer(ICommandHandler<DeleteProfilesCommand> deleteProfilesCommandHandler)
+    public UserDeletedIntegrationEventConsumer(ICommandHandler<DeleteProfilesForUserCommand> deleteProfilesForUserCommandHandler)
     {
-        this.deleteProfilesCommandHandler = deleteProfilesCommandHandler;
+        this.deleteProfilesForUserCommandHandler = deleteProfilesForUserCommandHandler;
     }
 
     public async Task Consume(ConsumeContext<UserDeletedIntegrationEvent> context)
-        => await deleteProfilesCommandHandler.Handle(new DeleteProfilesCommand(new UserId(context.Message.UserId)), context.CancellationToken);
+        => await deleteProfilesForUserCommandHandler.Handle(new DeleteProfilesForUserCommand(new UserId(context.Message.UserId)), context.CancellationToken);
 }

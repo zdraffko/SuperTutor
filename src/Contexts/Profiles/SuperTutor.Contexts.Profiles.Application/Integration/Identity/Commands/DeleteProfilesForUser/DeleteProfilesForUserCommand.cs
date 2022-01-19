@@ -1,11 +1,11 @@
 ﻿using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
 
-namespace SuperTutor.Contexts.Profiles.Application.Integration.Identity.Commands.DeleteProfiles;
+namespace SuperTutor.Contexts.Profiles.Application.Integration.Identity.Commands.DeleteProfilesForUser;
 
-public class DeleteProfilesCommand : Command
+public class DeleteProfilesForUserCommand : Command
 {
-    public DeleteProfilesCommand(UserId userId)
+    public DeleteProfilesForUserCommand(UserId userId)
     {
         UserId = userId;
     }
