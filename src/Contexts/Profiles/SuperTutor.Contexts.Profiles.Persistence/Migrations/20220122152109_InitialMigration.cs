@@ -13,7 +13,24 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                 name: "profiles");
 
             migrationBuilder.CreateTable(
-                name: "TutorProfile",
+                name: "StudentProfiles",
+                schema: "profiles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StudyGrade = table.Column<int>(type: "int", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StudySubjects = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentProfiles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TutorProfiles",
                 schema: "profiles",
                 columns: table => new
                 {
@@ -34,7 +51,7 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TutorProfile", x => x.Id);
+                    table.PrimaryKey("PK_TutorProfiles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,10 +73,10 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_TutorProfileRedactionComments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TutorProfileRedactionComments_TutorProfile_TutorProfileId",
+                        name: "FK_TutorProfileRedactionComments_TutorProfiles_TutorProfileId",
                         column: x => x.TutorProfileId,
                         principalSchema: "profiles",
-                        principalTable: "TutorProfile",
+                        principalTable: "TutorProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -74,11 +91,15 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "StudentProfiles",
+                schema: "profiles");
+
+            migrationBuilder.DropTable(
                 name: "TutorProfileRedactionComments",
                 schema: "profiles");
 
             migrationBuilder.DropTable(
-                name: "TutorProfile",
+                name: "TutorProfiles",
                 schema: "profiles");
         }
     }

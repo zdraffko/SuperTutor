@@ -1,28 +1,28 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SuperTutor.Contexts.Profiles.Domain.Common.Models.Enumerations;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Constants;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Enumerations;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.ValueObjects.Identifiers;
+using SuperTutor.Contexts.Profiles.Persistence.EntityTypeConfigurations.Common.Constants;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
 namespace SuperTutor.Contexts.Profiles.Persistence.EntityTypeConfigurations.Profiles;
 
 internal class TutorProfileEntityTypeConfiguration : IEntityTypeConfiguration<TutorProfile>
 {
-    private const string Comma = ",";
-
     public void Configure(EntityTypeBuilder<TutorProfile> builder)
     {
-        builder.ToTable("TutorProfile");
+        builder.ToTable("TutorProfiles");
 
         builder.HasKey(tutorProfile => tutorProfile.Id);
 
         builder.Property(tutorProfile => tutorProfile.Id)
             .HasConversion(
                 tutorProfileId => tutorProfileId.Value,
-                profileIdValue => new TutorProfileId(profileIdValue))
+                tutorProfileIdValue => new TutorProfileId(tutorProfileIdValue))
             .IsRequired();
 
         builder.Property(tutorProfile => tutorProfile.UserId)
@@ -38,22 +38,22 @@ internal class TutorProfileEntityTypeConfiguration : IEntityTypeConfiguration<Tu
         builder.Property(tutorProfile => tutorProfile.TutoringSubject)
             .HasConversion(
                 tutoringSubject => tutoringSubject.Value,
-                tutoringSubjectValue => Enumeration.FromValue<TutoringSubject>(tutoringSubjectValue)!)
+                tutoringSubjectValue => Enumeration.FromValue<Subject>(tutoringSubjectValue)!)
             .IsRequired();
 
-        var tutoringGradesValueComparer = new ValueComparer<HashSet<TutoringGrade>>(
+        var tutoringGradesValueComparer = new ValueComparer<HashSet<Grade>>(
                     (tutoringGradesOne, tutoringGradesTwo) => tutoringGradesOne!.SequenceEqual(tutoringGradesTwo!),
                     tutoringGrades => tutoringGrades.Aggregate(0, (accumulatorValue, tutoringGrade) => HashCode.Combine(accumulatorValue, tutoringGrade.GetHashCode())),
                     tutoringGrades => tutoringGrades.ToHashSet());
         builder.Ignore(tutorProfile => tutorProfile.TutoringGrades);
-        builder.Property<HashSet<TutoringGrade>>("tutoringGrades")
+        builder.Property<HashSet<Grade>>("tutoringGrades")
             .HasColumnName("TutoringGrades")
             .HasConversion(
-                tutoringGrades => string.Join(Comma, tutoringGrades.Select(tutoringGrade => tutoringGrade.Value)),
+                tutoringGrades => string.Join(EntityTypeConfigurationConstants.ConversionValueSeparator, tutoringGrades.Select(tutoringGrade => tutoringGrade.Value)),
                 commaSeparatedTutoringGradeValues => Enumeration
-                    .FromValues<TutoringGrade>(
+                    .FromValues<Grade>(
                         commaSeparatedTutoringGradeValues
-                            .Split(Comma, StringSplitOptions.RemoveEmptyEntries)
+                            .Split(EntityTypeConfigurationConstants.ConversionValueSeparator, StringSplitOptions.RemoveEmptyEntries)
                             .Select(stringTutoringGradeValue => int.Parse(stringTutoringGradeValue))
                      )
                     .ToHashSet()

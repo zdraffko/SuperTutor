@@ -1,6 +1,6 @@
 ﻿using FluentResults;
+using SuperTutor.Contexts.Profiles.Domain.Common.Models.Enumerations;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
-using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Enumerations;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
@@ -18,13 +18,13 @@ internal class CreateTutorProfileCommandHandler : ICommandHandler<CreateTutorPro
 
     public async Task<Result> Handle(CreateTutorProfileCommand command, CancellationToken cancellationToken)
     {
-        var tutoringSubject = Enumeration.FromValue<TutoringSubject>(command.TutoringSubject);
+        var tutoringSubject = Enumeration.FromValue<Subject>(command.TutoringSubject);
         if (tutoringSubject == null)
         {
             return Result.Fail($"A tutoring subject with value '{command.TutoringSubject}' does not exist.");
         }
 
-        var tutoringGrades = Enumeration.FromValues<TutoringGrade>(command.TutoringGrades).ToHashSet();
+        var tutoringGrades = Enumeration.FromValues<Grade>(command.TutoringGrades).ToHashSet();
         if (!tutoringGrades.Any())
         {
             return Result.Fail("At least one tutoring grade must be selected.");

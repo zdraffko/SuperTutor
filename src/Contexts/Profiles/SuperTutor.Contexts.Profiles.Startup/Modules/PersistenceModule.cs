@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Microsoft.EntityFrameworkCore;
+using SuperTutor.Contexts.Profiles.Domain.StudentProfiles;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
 using SuperTutor.Contexts.Profiles.Persistence;
 using SuperTutor.Contexts.Profiles.Persistence.Repositories;
@@ -25,5 +26,6 @@ internal class PersistenceModule : Module
     private void RegisterRepositories(ContainerBuilder builder)
     {
         builder.RegisterType<TutorProfileRepository>().As<ITutorProfileRepository>();
+        builder.RegisterType<StudentProfileRepository>().As<IStudentProfileRepository>();
     }
 }

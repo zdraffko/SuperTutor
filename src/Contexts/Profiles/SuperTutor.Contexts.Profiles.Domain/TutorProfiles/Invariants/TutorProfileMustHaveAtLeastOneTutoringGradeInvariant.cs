@@ -1,25 +1,17 @@
-﻿using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Enumerations;
+﻿using SuperTutor.Contexts.Profiles.Domain.Common.Models.Enumerations;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Invariants;
 
 namespace SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Invariants;
 
 internal class TutorProfileMustHaveAtLeastOneTutoringGradeInvariant : Invariant
 {
-    private readonly HashSet<TutoringGrade> newTutoringGrades;
+    private readonly HashSet<Grade> newTutoringGrades;
 
-    public TutorProfileMustHaveAtLeastOneTutoringGradeInvariant(HashSet<TutoringGrade> newTutoringGrades)
+    public TutorProfileMustHaveAtLeastOneTutoringGradeInvariant(HashSet<Grade> newTutoringGrades)
         : base("The tutor profile must have at least one tutoring grade.")
     {
         this.newTutoringGrades = newTutoringGrades;
     }
 
-    public override bool IsValid()
-    {
-        if (newTutoringGrades.Count == 0)
-        {
-            return false;
-        }
-
-        return true;
-    }
+    public override bool IsValid() => newTutoringGrades.Count > 0;
 }

@@ -13,13 +13,5 @@ internal class TutorProfileRateForOneHourMustNotBeLessThanTheMinAmountInvariant 
         this.newRateForOneHour = newRateForOneHour;
     }
 
-    public override bool IsValid()
-    {
-        if (newRateForOneHour < TutorProfileConstants.RateForOneHourMinAmount)
-        {
-            return false;
-        }
-
-        return true;
-    }
+    public override bool IsValid() => newRateForOneHour >= TutorProfileConstants.RateForOneHourMinAmount;
 }

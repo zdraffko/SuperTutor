@@ -23,6 +23,33 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("SuperTutor.Contexts.Profiles.Domain.StudentProfiles.StudentProfile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("StudyGrade")
+                        .HasColumnType("int");
+
+                    b.Property<string>("studySubjects")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("StudySubjects");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StudentProfiles", "profiles");
+                });
+
             modelBuilder.Entity("SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.RedactionComments.TutorProfileRedactionComment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -112,7 +139,7 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TutorProfile", "profiles");
+                    b.ToTable("TutorProfiles", "profiles");
                 });
 
             modelBuilder.Entity("SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.RedactionComments.TutorProfileRedactionComment", b =>

@@ -1,4 +1,5 @@
-﻿using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Invariants;
+﻿using SuperTutor.Contexts.Profiles.Domain.Common.Models.Enumerations;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Invariants;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.RedactionComments;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Enumerations;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.ValueObjects.Identifiers;
@@ -9,14 +10,14 @@ namespace SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
 
 public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
 {
-    private readonly HashSet<TutoringGrade> tutoringGrades;
+    private readonly HashSet<Grade> tutoringGrades;
     private readonly List<TutorProfileRedactionComment> redactionComments;
 
     public TutorProfile(
         UserId userId,
         string about,
-        TutoringSubject tutoringSubject,
-        HashSet<TutoringGrade> tutoringGrades,
+        Subject tutoringSubject,
+        HashSet<Grade> tutoringGrades,
         decimal rateForOneHour) : base(new TutorProfileId(Guid.NewGuid()))
     {
         UserId = userId;
@@ -33,7 +34,9 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
         RateForOneHour = rateForOneHour;
 
         redactionComments = new List<TutorProfileRedactionComment>();
+
         Status = TutorProfileStatus.ForReview;
+
         var currentDate = DateTime.UtcNow;
         CreationDate = currentDate;
         LastUpdateDate = currentDate;
@@ -43,9 +46,9 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
 
     public string About { get; private set; }
 
-    public TutoringSubject TutoringSubject { get; }
+    public Subject TutoringSubject { get; }
 
-    public IReadOnlyCollection<TutoringGrade> TutoringGrades => tutoringGrades;
+    public IReadOnlyCollection<Grade> TutoringGrades => tutoringGrades;
 
     public decimal RateForOneHour { get; private set; }
 
@@ -147,7 +150,7 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
         LastUpdateDate = currentDate;
     }
 
-    public void AddTutoringGrades(HashSet<TutoringGrade> newTutoringGrades)
+    public void AddTutoringGrades(HashSet<Grade> newTutoringGrades)
     {
         CheckInvariant(new TutorProfileInformationCanOnlyBeUpdatedWhenItIsMarkedAsInactiveOrForRedactionInvariant(Status));
 
@@ -161,7 +164,7 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
         LastUpdateDate = DateTime.UtcNow;
     }
 
-    public void RemoveTutoringGrades(HashSet<TutoringGrade> tutoringGradesForRemoval)
+    public void RemoveTutoringGrades(HashSet<Grade> tutoringGradesForRemoval)
     {
         CheckInvariant(new TutorProfileInformationCanOnlyBeUpdatedWhenItIsMarkedAsInactiveOrForRedactionInvariant(Status));
 

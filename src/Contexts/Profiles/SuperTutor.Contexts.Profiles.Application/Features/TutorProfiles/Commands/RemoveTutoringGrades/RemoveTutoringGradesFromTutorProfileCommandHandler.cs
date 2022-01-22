@@ -1,6 +1,6 @@
 ﻿using FluentResults;
+using SuperTutor.Contexts.Profiles.Domain.Common.Models.Enumerations;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
-using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Enumerations;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
@@ -23,7 +23,7 @@ internal class RemoveTutoringGradesFromTutorProfileCommandHandler : ICommandHand
             return Result.Fail("Tutor profile not found.");
         }
 
-        var tutoringGradesForRemoval = Enumeration.FromValues<TutoringGrade>(command.TutoringGradesForRemoval).ToHashSet();
+        var tutoringGradesForRemoval = Enumeration.FromValues<Grade>(command.TutoringGradesForRemoval).ToHashSet();
         if (!tutoringGradesForRemoval.Any())
         {
             return Result.Fail("At least one tutoring grade must be selected for removal.");
