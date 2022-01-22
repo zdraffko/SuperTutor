@@ -16,7 +16,7 @@ internal class DeleteTutorProfileCommandHandler : ICommandHandler<DeleteTutorPro
     public async Task<Result> Handle(DeleteTutorProfileCommand command, CancellationToken cancellationToken)
     {
         var tutorProfile = await tutorProfileRepository.GetById(new TutorProfileId(command.TutorProfileId), cancellationToken);
-        if (tutorProfile == null)
+        if (tutorProfile is null)
         {
             return Result.Fail("Tutor profile not found.");
         }

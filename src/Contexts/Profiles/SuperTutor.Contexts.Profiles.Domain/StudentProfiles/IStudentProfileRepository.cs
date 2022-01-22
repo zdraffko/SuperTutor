@@ -8,7 +8,7 @@ public interface IStudentProfileRepository
 
     Task<StudentProfile?> GetById(StudentProfileId studentProfileId, CancellationToken cancellationToken);
 
-    Task<IEnumerable<StudentProfile>> GetAllForStudent(StudentId studentId, CancellationToken cancellationToken);
+    Task<StudentProfile?> GetByStudentId(StudentId studentId, CancellationToken cancellationToken);
 
     void Remove(StudentProfile studentProfile);
 }

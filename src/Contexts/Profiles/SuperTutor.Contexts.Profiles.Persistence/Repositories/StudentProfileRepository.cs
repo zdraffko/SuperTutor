@@ -18,8 +18,8 @@ public class StudentProfileRepository : IStudentProfileRepository
     public async Task<StudentProfile?> GetById(StudentProfileId studentProfileId, CancellationToken cancellationToken)
         => await profilesDbContext.StudentProfiles.SingleOrDefaultAsync(studentProfile => studentProfile.Id == studentProfileId, cancellationToken);
 
-    public async Task<IEnumerable<StudentProfile>> GetAllForStudent(StudentId studentId, CancellationToken cancellationToken)
-        => await profilesDbContext.StudentProfiles.Where(studentProfile => studentProfile.StudentId == studentId).ToListAsync(cancellationToken);
+    public async Task<StudentProfile?> GetByStudentId(StudentId studentId, CancellationToken cancellationToken)
+        => await profilesDbContext.StudentProfiles.SingleOrDefaultAsync(studentProfile => studentProfile.StudentId == studentId, cancellationToken);
 
     public void Remove(StudentProfile studentProfile) => profilesDbContext.StudentProfiles.Remove(studentProfile);
 }

@@ -22,7 +22,7 @@ public class UserService : IUserService
         var invalidLoginCredentialsErrorMessage = "Invalid login credentials.";
 
         var user = await userManager.FindByEmailAsync(email);
-        if (user == null)
+        if (user is null)
         {
             return Result.Fail(invalidLoginCredentialsErrorMessage);
         }

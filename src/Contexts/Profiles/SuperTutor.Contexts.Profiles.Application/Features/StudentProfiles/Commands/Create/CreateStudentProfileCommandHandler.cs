@@ -25,7 +25,7 @@ internal class CreateStudentProfileCommandHandler : ICommandHandler<CreateStuden
         }
 
         var studyGrade = Enumeration.FromValue<Grade>(command.StudyGrade);
-        if (studyGrade == null)
+        if (studyGrade is null)
         {
             return Result.Fail($"A study grade with value '{command.StudyGrade}' does not exist.");
         }
