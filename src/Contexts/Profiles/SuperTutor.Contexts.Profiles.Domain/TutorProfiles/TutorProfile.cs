@@ -1,5 +1,4 @@
-﻿using SuperTutor.Contexts.Profiles.Domain.Profiles.Invariants;
-using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Invariants;
+﻿using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Invariants;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.RedactionComments;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Enumerations;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.ValueObjects.Identifiers;

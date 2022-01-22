@@ -44,7 +44,7 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                     b.Property<DateTime>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ProfileId")
+                    b.Property<Guid>("TutorProfileId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("SettledByAdminId")
@@ -58,7 +58,7 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProfileId");
+                    b.HasIndex("TutorProfileId");
 
                     b.ToTable("RedactionComments", "profiles");
                 });
@@ -121,7 +121,7 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                 {
                     b.HasOne("SuperTutor.Contexts.Profiles.Domain.Profiles.Profile", null)
                         .WithMany("RedactionComments")
-                        .HasForeignKey("ProfileId")
+                        .HasForeignKey("TutorProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -17,25 +17,25 @@ internal class ProfileEntityTypeConfiguration : IEntityTypeConfiguration<TutorPr
     {
         builder.ToTable("Profiles");
 
-        builder.HasKey(profile => profile.Id);
+        builder.HasKey(tutorProfile => tutorProfile.Id);
 
-        builder.Property(profile => profile.Id)
+        builder.Property(tutorProfile => tutorProfile.Id)
             .HasConversion(
-                profileId => profileId.Value,
+                tutorProfileId => tutorProfileId.Value,
                 profileIdValue => new TutorProfileId(profileIdValue))
             .IsRequired();
 
-        builder.Property(profile => profile.UserId)
+        builder.Property(tutorProfile => tutorProfile.UserId)
             .HasConversion(
                 userId => userId.Value,
                 userIdValue => new UserId(userIdValue))
             .IsRequired();
 
-        builder.Property(profile => profile.About)
+        builder.Property(tutorProfile => tutorProfile.About)
             .HasMaxLength(TutorProfileConstants.AboutMaxLength)
             .IsRequired();
 
-        builder.Property(profile => profile.TutoringSubject)
+        builder.Property(tutorProfile => tutorProfile.TutoringSubject)
             .HasConversion(
                 tutoringSubject => tutoringSubject.Value,
                 tutoringSubjectValue => Enumeration.FromValue<TutoringSubject>(tutoringSubjectValue)!)
@@ -45,7 +45,7 @@ internal class ProfileEntityTypeConfiguration : IEntityTypeConfiguration<TutorPr
                     (tutoringGradesOne, tutoringGradesTwo) => tutoringGradesOne!.SequenceEqual(tutoringGradesTwo!),
                     tutoringGrades => tutoringGrades.Aggregate(0, (accumulatorValue, tutoringGrade) => HashCode.Combine(accumulatorValue, tutoringGrade.GetHashCode())),
                     tutoringGrades => tutoringGrades.ToHashSet());
-        builder.Ignore(profile => profile.TutoringGrades);
+        builder.Ignore(tutorProfile => tutorProfile.TutoringGrades);
         builder.Property<HashSet<TutoringGrade>>("tutoringGrades")
             .HasColumnName("TutoringGrades")
             .HasConversion(
@@ -61,41 +61,41 @@ internal class ProfileEntityTypeConfiguration : IEntityTypeConfiguration<TutorPr
             .IsRequired()
             .Metadata.SetValueComparer(tutoringGradesValueComparer);
             
-        builder.Property(profile => profile.RateForOneHour)
+        builder.Property(tutorProfile => tutorProfile.RateForOneHour)
             .HasPrecision(19, 4)
             .IsRequired();
 
-        builder.Property(profile => profile.Status)
+        builder.Property(tutorProfile => tutorProfile.Status)
             .HasConversion(
                 status => status.Value,
                 statusValue => Enumeration.FromValue<TutorProfileStatus>(statusValue)!)
             .IsRequired();
 
-        builder.Property(profile => profile.CreationDate).IsRequired();
+        builder.Property(tutorProfile => tutorProfile.CreationDate).IsRequired();
 
-        builder.Property(profile => profile.LastUpdateDate).IsRequired();
+        builder.Property(tutorProfile => tutorProfile.LastUpdateDate).IsRequired();
 
-        builder.Property(profile => profile.LastApprovalDate);
+        builder.Property(tutorProfile => tutorProfile.LastApprovalDate);
 
-        builder.Property(profile => profile.LastApprovalAdminId)
+        builder.Property(tutorProfile => tutorProfile.LastApprovalAdminId)
             .HasConversion(
                 adminId => adminId!.Value,
                 adminIdValue => new AdminId(adminIdValue));
 
-        builder.Property(profile => profile.LastModificationDate);
+        builder.Property(tutorProfile => tutorProfile.LastModificationDate);
 
-        builder.Property(profile => profile.LastRedactionRequestDate);
+        builder.Property(tutorProfile => tutorProfile.LastRedactionRequestDate);
 
-        builder.Property(profile => profile.LastRedactionRequestAdminId)
+        builder.Property(tutorProfile => tutorProfile.LastRedactionRequestAdminId)
             .HasConversion(
                 adminId => adminId!.Value,
                 adminIdValue => new AdminId(adminIdValue));
 
-        builder.HasMany(profile => profile.RedactionComments)
+        builder.HasMany(tutorProfile => tutorProfile.RedactionComments)
             .WithOne()
             .HasForeignKey(redactionComment => redactionComment.TutorProfileId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
-        builder.Navigation(profile => profile.RedactionComments).HasField("redactionComments");
+        builder.Navigation(tutorProfile => tutorProfile.RedactionComments).HasField("redactionComments");
     }
 }

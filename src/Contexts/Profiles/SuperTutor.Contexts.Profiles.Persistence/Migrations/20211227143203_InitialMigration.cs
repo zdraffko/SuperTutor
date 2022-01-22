@@ -43,7 +43,7 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProfileId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TutorProfileId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedByAdminId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
@@ -57,7 +57,7 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                     table.PrimaryKey("PK_RedactionComments", x => x.Id);
                     table.ForeignKey(
                         name: "FK_RedactionComments_Profiles_ProfileId",
-                        column: x => x.ProfileId,
+                        column: x => x.TutorProfileId,
                         principalSchema: "profiles",
                         principalTable: "Profiles",
                         principalColumn: "Id",
@@ -68,7 +68,7 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                 name: "IX_RedactionComments_ProfileId",
                 schema: "profiles",
                 table: "RedactionComments",
-                column: "ProfileId");
+                column: "TutorProfileId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

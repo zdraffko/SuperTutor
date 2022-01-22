@@ -6,20 +6,20 @@ namespace SuperTutor.Contexts.Profiles.Application.Integration.Identity.Commands
 
 internal class DeleteProfilesForUserCommandHandler : ICommandHandler<DeleteProfilesForUserCommand>
 {
-    private readonly ITutorProfileRepository profileRepository;
+    private readonly ITutorProfileRepository tutorProfileRepository;
 
-    public DeleteProfilesForUserCommandHandler(ITutorProfileRepository profileRepository)
+    public DeleteProfilesForUserCommandHandler(ITutorProfileRepository tutorProfileRepository)
     {
-        this.profileRepository = profileRepository;
+        this.tutorProfileRepository = tutorProfileRepository;
     }
 
     public async Task<Result> Handle(DeleteProfilesForUserCommand command, CancellationToken cancellationToken)
     {
-        var allUserProfiles = await profileRepository.GetAllForUser(command.UserId, cancellationToken);
+        var allTutorProfilesForUser = await tutorProfileRepository.GetAllForUser(command.UserId, cancellationToken);
 
-        foreach (var profile in allUserProfiles)
+        foreach (var tutorProfile in allTutorProfilesForUser)
         {
-            profileRepository.Remove(profile);
+            tutorProfileRepository.Remove(tutorProfile);
         }
 
         return Result.Ok();

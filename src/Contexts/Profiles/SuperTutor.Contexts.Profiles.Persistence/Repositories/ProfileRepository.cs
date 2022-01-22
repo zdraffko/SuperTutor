@@ -13,18 +13,18 @@ public  class ProfileRepository : ITutorProfileRepository
         this.profilesDbContext = profilesDbContext;
     }
 
-    public void Add(TutorProfile profile) => profilesDbContext.Profiles.Add(profile);
+    public void Add(TutorProfile tutorProfile) => profilesDbContext.Profiles.Add(tutorProfile);
 
-    public async Task<TutorProfile?> GetById(TutorProfileId profileId, CancellationToken cancellationToken)
+    public async Task<TutorProfile?> GetById(TutorProfileId tutorProfileId, CancellationToken cancellationToken)
         => await profilesDbContext.Profiles
-            .Include(profile => profile.RedactionComments)
-            .SingleOrDefaultAsync(profile => profile.Id == profileId, cancellationToken);
+            .Include(tutorProfile => tutorProfile.RedactionComments)
+            .SingleOrDefaultAsync(tutorProfile => tutorProfile.Id == tutorProfileId, cancellationToken);
 
     public async Task<IEnumerable<TutorProfile>> GetAllForUser(UserId userId, CancellationToken cancellationToken)
         => await profilesDbContext.Profiles
-            .Include(profile => profile.RedactionComments)
-            .Where(profile => profile.UserId == userId)
+            .Include(tutorProfile => tutorProfile.RedactionComments)
+            .Where(tutorProfile => tutorProfile.UserId == userId)
             .ToListAsync(cancellationToken);
 
-    public void Remove(TutorProfile profile) => profilesDbContext.Profiles.Remove(profile);
+    public void Remove(TutorProfile tutorProfile) => profilesDbContext.Profiles.Remove(tutorProfile);
 }

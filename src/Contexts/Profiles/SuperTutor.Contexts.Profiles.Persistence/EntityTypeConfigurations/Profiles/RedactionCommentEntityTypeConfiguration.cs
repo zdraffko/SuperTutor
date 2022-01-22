@@ -25,7 +25,7 @@ internal class RedactionCommentEntityTypeConfiguration : IEntityTypeConfiguratio
 
         builder.Property(redactionComment => redactionComment.TutorProfileId)
             .HasConversion(
-                profileId => profileId.Value,
+                tutorProfileId => tutorProfileId.Value,
                 profileIdValue => new TutorProfileId(profileIdValue))
             .IsRequired();
 
@@ -48,7 +48,7 @@ internal class RedactionCommentEntityTypeConfiguration : IEntityTypeConfiguratio
                 adminId => adminId!.Value,
                 adminIdValue => new AdminId(adminIdValue));
 
-        builder.Property(profile => profile.Status)
+        builder.Property(redactionComment => redactionComment.Status)
             .HasConversion(
                 status => status.Value,
                 statusValue => Enumeration.FromValue<RedactionCommentStatus>(statusValue)!)

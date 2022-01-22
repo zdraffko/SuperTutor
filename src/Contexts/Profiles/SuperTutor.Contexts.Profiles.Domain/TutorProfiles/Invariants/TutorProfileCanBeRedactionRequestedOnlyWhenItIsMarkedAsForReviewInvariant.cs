@@ -1,7 +1,7 @@
 ﻿using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Enumerations;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Invariants;
 
-namespace SuperTutor.Contexts.Profiles.Domain.Profiles.Invariants;
+namespace SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Invariants;
 
 internal class TutorProfileCanBeRedactionRequestedOnlyWhenItIsMarkedAsForReviewInvariant : Invariant
 {
