@@ -1,19 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SuperTutor.Contexts.Profiles.Domain.Profiles;
-using SuperTutor.Contexts.Profiles.Domain.Profiles.Constants;
-using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Enumerations;
-using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.ValueObjects.Identifiers;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Constants;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Enumerations;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
 namespace SuperTutor.Contexts.Profiles.Persistence.EntityTypeConfigurations.Profiles;
 
-internal class ProfileEntityTypeConfiguration : IEntityTypeConfiguration<Profile>
+internal class ProfileEntityTypeConfiguration : IEntityTypeConfiguration<TutorProfile>
 {
     private const string Comma = ",";
 
-    public void Configure(EntityTypeBuilder<Profile> builder)
+    public void Configure(EntityTypeBuilder<TutorProfile> builder)
     {
         builder.ToTable("Profiles");
 
@@ -22,7 +22,7 @@ internal class ProfileEntityTypeConfiguration : IEntityTypeConfiguration<Profile
         builder.Property(profile => profile.Id)
             .HasConversion(
                 profileId => profileId.Value,
-                profileIdValue => new ProfileId(profileIdValue))
+                profileIdValue => new TutorProfileId(profileIdValue))
             .IsRequired();
 
         builder.Property(profile => profile.UserId)
@@ -32,7 +32,7 @@ internal class ProfileEntityTypeConfiguration : IEntityTypeConfiguration<Profile
             .IsRequired();
 
         builder.Property(profile => profile.About)
-            .HasMaxLength(ProfileConstants.AboutMaxLength)
+            .HasMaxLength(TutorProfileConstants.AboutMaxLength)
             .IsRequired();
 
         builder.Property(profile => profile.TutoringSubject)
@@ -68,7 +68,7 @@ internal class ProfileEntityTypeConfiguration : IEntityTypeConfiguration<Profile
         builder.Property(profile => profile.Status)
             .HasConversion(
                 status => status.Value,
-                statusValue => Enumeration.FromValue<Status>(statusValue)!)
+                statusValue => Enumeration.FromValue<TutorProfileStatus>(statusValue)!)
             .IsRequired();
 
         builder.Property(profile => profile.CreationDate).IsRequired();
@@ -93,7 +93,7 @@ internal class ProfileEntityTypeConfiguration : IEntityTypeConfiguration<Profile
 
         builder.HasMany(profile => profile.RedactionComments)
             .WithOne()
-            .HasForeignKey(redactionComment => redactionComment.ProfileId)
+            .HasForeignKey(redactionComment => redactionComment.TutorProfileId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
         builder.Navigation(profile => profile.RedactionComments).HasField("redactionComments");

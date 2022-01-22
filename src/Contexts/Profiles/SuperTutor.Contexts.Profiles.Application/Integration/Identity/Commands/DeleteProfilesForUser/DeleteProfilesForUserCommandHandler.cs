@@ -1,14 +1,14 @@
 ﻿using FluentResults;
-using SuperTutor.Contexts.Profiles.Domain.Profiles;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Application.Integration.Identity.Commands.DeleteProfilesForUser;
 
 internal class DeleteProfilesForUserCommandHandler : ICommandHandler<DeleteProfilesForUserCommand>
 {
-    private readonly IProfileRepository profileRepository;
+    private readonly ITutorProfileRepository profileRepository;
 
-    public DeleteProfilesForUserCommandHandler(IProfileRepository profileRepository)
+    public DeleteProfilesForUserCommandHandler(ITutorProfileRepository profileRepository)
     {
         this.profileRepository = profileRepository;
     }

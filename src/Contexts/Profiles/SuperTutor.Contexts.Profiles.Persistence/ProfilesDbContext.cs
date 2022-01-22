@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SuperTutor.Contexts.Profiles.Domain.Profiles;
-using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Entities.RedactionComments;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.RedactionComments;
 
 namespace SuperTutor.Contexts.Profiles.Persistence;
 
@@ -10,7 +10,7 @@ public class ProfilesDbContext : DbContext
     {
     }
 
-    public DbSet<Profile> Profiles { get; set; } = default!;
+    public DbSet<TutorProfile> Profiles { get; set; } = default!;
 
     public DbSet<RedactionComment> RedactionComments { get; set; } = default!;
 

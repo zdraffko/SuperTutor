@@ -1,7 +1,7 @@
 ﻿using FluentResults;
-using SuperTutor.Contexts.Profiles.Domain.Profiles;
-using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Enumerations;
-using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.ValueObjects.Identifiers;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Enumerations;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
@@ -9,9 +9,9 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.Profiles.Commands.Cr
 
 internal class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
 {
-    private readonly IProfileRepository profileRepository;
+    private readonly ITutorProfileRepository profileRepository;
 
-    public CreateProfileCommandHandler(IProfileRepository profileRepository)
+    public CreateProfileCommandHandler(ITutorProfileRepository profileRepository)
     {
         this.profileRepository = profileRepository;
     }
@@ -30,7 +30,7 @@ internal class CreateProfileCommandHandler : ICommandHandler<CreateProfileComman
             return Result.Fail("At least one tutoring grade must be selected.");
         }
 
-        var profile = new Profile(new UserId(command.UserId), command.About, tutoringSubject, tutoringGrades, command.RateForOneHour);
+        var profile = new TutorProfile(new UserId(command.UserId), command.About, tutoringSubject, tutoringGrades, command.RateForOneHour);
 
         profileRepository.Add(profile);
 

@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SuperTutor.Contexts.Profiles.Domain.Profiles;
-using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Entities.RedactionComments;
-using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Entities.RedactionComments.Constants;
-using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Entities.RedactionComments.Enumerations;
-using SuperTutor.Contexts.Profiles.Domain.Profiles.Models.ValueObjects.Identifiers;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.RedactionComments;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.RedactionComments.Constants;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.RedactionComments.Enumerations;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
 namespace SuperTutor.Contexts.Profiles.Persistence.EntityTypeConfigurations.Profiles;
@@ -23,10 +23,10 @@ internal class RedactionCommentEntityTypeConfiguration : IEntityTypeConfiguratio
                 redactionCommentIdValue => new RedactionCommentId(redactionCommentIdValue))
             .IsRequired();
 
-        builder.Property(redactionComment => redactionComment.ProfileId)
+        builder.Property(redactionComment => redactionComment.TutorProfileId)
             .HasConversion(
                 profileId => profileId.Value,
-                profileIdValue => new ProfileId(profileIdValue))
+                profileIdValue => new TutorProfileId(profileIdValue))
             .IsRequired();
 
         builder.Property(redactionComment => redactionComment.CreatedByAdminId)
@@ -51,7 +51,7 @@ internal class RedactionCommentEntityTypeConfiguration : IEntityTypeConfiguratio
         builder.Property(profile => profile.Status)
             .HasConversion(
                 status => status.Value,
-                statusValue => Enumeration.FromValue<Status>(statusValue)!)
+                statusValue => Enumeration.FromValue<RedactionCommentStatus>(statusValue)!)
             .IsRequired();
 
         builder.Property(redactionComment => redactionComment.LastUpdateDate).IsRequired();
