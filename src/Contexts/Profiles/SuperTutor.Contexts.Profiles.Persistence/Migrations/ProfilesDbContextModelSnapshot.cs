@@ -126,11 +126,11 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("TutorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("TutoringSubject")
                         .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("tutoringGrades")
                         .IsRequired()

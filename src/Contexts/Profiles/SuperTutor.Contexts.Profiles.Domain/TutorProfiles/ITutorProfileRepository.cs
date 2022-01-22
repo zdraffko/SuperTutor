@@ -9,7 +9,7 @@ public interface ITutorProfileRepository : IAggregateRootRepository<TutorProfile
 
     Task<TutorProfile?> GetById(TutorProfileId tutorProfileId, CancellationToken cancellationToken);
 
-    Task<IEnumerable<TutorProfile>> GetAllForUser(UserId userId, CancellationToken cancellationToken);
+    Task<IEnumerable<TutorProfile>> GetAllForTutor(TutorId tutorId, CancellationToken cancellationToken);
 
     void Remove(TutorProfile tutorProfile);
 }

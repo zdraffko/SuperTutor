@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
+using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Application.Integration.Identity.Commands.DeleteProfilesForUser;
@@ -15,9 +16,9 @@ internal class DeleteProfilesForUserCommandHandler : ICommandHandler<DeleteProfi
 
     public async Task<Result> Handle(DeleteProfilesForUserCommand command, CancellationToken cancellationToken)
     {
-        var allTutorProfilesForUser = await tutorProfileRepository.GetAllForUser(command.UserId, cancellationToken);
+        var allTutorProfilesForTutor = await tutorProfileRepository.GetAllForTutor(new TutorId(command.UserId), cancellationToken);
 
-        foreach (var tutorProfile in allTutorProfilesForUser)
+        foreach (var tutorProfile in allTutorProfilesForTutor)
         {
             tutorProfileRepository.Remove(tutorProfile);
         }

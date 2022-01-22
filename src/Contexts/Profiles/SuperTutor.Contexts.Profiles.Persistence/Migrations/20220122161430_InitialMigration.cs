@@ -35,7 +35,7 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TutorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     About = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     TutoringSubject = table.Column<int>(type: "int", nullable: false),
                     RateForOneHour = table.Column<decimal>(type: "decimal(19,4)", precision: 19, scale: 4, nullable: false),

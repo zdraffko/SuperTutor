@@ -5,10 +5,10 @@ namespace SuperTutor.Contexts.Profiles.Application.Integration.Identity.Commands
 
 public class DeleteProfilesForUserCommand : Command
 {
-    public DeleteProfilesForUserCommand(UserId userId)
+    public DeleteProfilesForUserCommand(Guid userId)
     {
         UserId = userId;
     }
 
-    public UserId UserId { get; }
+    public Guid UserId { get; }
 }

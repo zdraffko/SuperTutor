@@ -20,10 +20,10 @@ public  class TutorProfileRepository : ITutorProfileRepository
             .Include(tutorProfile => tutorProfile.RedactionComments)
             .SingleOrDefaultAsync(tutorProfile => tutorProfile.Id == tutorProfileId, cancellationToken);
 
-    public async Task<IEnumerable<TutorProfile>> GetAllForUser(UserId userId, CancellationToken cancellationToken)
+    public async Task<IEnumerable<TutorProfile>> GetAllForTutor(TutorId tutorId, CancellationToken cancellationToken)
         => await profilesDbContext.TutorProfiles
             .Include(tutorProfile => tutorProfile.RedactionComments)
-            .Where(tutorProfile => tutorProfile.UserId == userId)
+            .Where(tutorProfile => tutorProfile.TutorId == tutorId)
             .ToListAsync(cancellationToken);
 
     public void Remove(TutorProfile tutorProfile) => profilesDbContext.TutorProfiles.Remove(tutorProfile);

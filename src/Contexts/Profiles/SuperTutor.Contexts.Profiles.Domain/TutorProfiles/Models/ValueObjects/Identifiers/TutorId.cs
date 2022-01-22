@@ -2,9 +2,9 @@
 
 namespace SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.ValueObjects.Identifiers;
 
-public class UserId : GuidIdentifier
+public class TutorId : GuidIdentifier
 {
-    public UserId(Guid value) : base(value)
+    public TutorId(Guid value) : base(value)
     {
     }
 }

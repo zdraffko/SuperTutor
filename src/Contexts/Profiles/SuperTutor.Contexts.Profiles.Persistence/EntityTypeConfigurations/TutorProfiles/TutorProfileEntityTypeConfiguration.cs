@@ -25,10 +25,10 @@ internal class TutorProfileEntityTypeConfiguration : IEntityTypeConfiguration<Tu
                 tutorProfileIdValue => new TutorProfileId(tutorProfileIdValue))
             .IsRequired();
 
-        builder.Property(tutorProfile => tutorProfile.UserId)
+        builder.Property(tutorProfile => tutorProfile.TutorId)
             .HasConversion(
-                userId => userId.Value,
-                userIdValue => new UserId(userIdValue))
+                tutorId => tutorId.Value,
+                tutorIdValue => new TutorId(tutorIdValue))
             .IsRequired();
 
         builder.Property(tutorProfile => tutorProfile.About)

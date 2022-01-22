@@ -12,7 +12,7 @@ using SuperTutor.Contexts.Profiles.Persistence;
 namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
 {
     [DbContext(typeof(ProfilesDbContext))]
-    [Migration("20220122152109_InitialMigration")]
+    [Migration("20220122161430_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -128,11 +128,11 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("TutorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("TutoringSubject")
                         .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("tutoringGrades")
                         .IsRequired()

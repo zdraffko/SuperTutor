@@ -30,7 +30,7 @@ internal class CreateTutorProfileCommandHandler : ICommandHandler<CreateTutorPro
             return Result.Fail("At least one tutoring grade must be selected.");
         }
 
-        var tutorProfile = new TutorProfile(new UserId(command.UserId), command.About, tutoringSubject, tutoringGrades, command.RateForOneHour);
+        var tutorProfile = new TutorProfile(new TutorId(command.TutorId), command.About, tutoringSubject, tutoringGrades, command.RateForOneHour);
 
         tutorProfileRepository.Add(tutorProfile);
 

@@ -14,13 +14,13 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
     private readonly List<TutorProfileRedactionComment> redactionComments;
 
     public TutorProfile(
-        UserId userId,
+        TutorId tutorId,
         string about,
         Subject tutoringSubject,
         HashSet<Grade> tutoringGrades,
         decimal rateForOneHour) : base(new TutorProfileId(Guid.NewGuid()))
     {
-        UserId = userId;
+        TutorId = tutorId;
 
         CheckInvariant(new TutorProfileAboutMustNotBeAboveTheMaxLenghtInvariant(about));
         About = about;
@@ -42,7 +42,7 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
         LastUpdateDate = currentDate;
     }
 
-    public UserId UserId { get; }
+    public TutorId TutorId { get; }
 
     public string About { get; private set; }
 

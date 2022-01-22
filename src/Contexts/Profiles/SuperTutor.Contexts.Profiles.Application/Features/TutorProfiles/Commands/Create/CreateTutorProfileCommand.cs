@@ -4,16 +4,16 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Comman
 
 public class CreateTutorProfileCommand : Command
 {
-    public CreateTutorProfileCommand(Guid userId, string about, int tutoringSubject, IEnumerable<int> tutoringGrades, decimal rateForOneHour)
+    public CreateTutorProfileCommand(Guid tutorId, string about, int tutoringSubject, IEnumerable<int> tutoringGrades, decimal rateForOneHour)
     {
-        UserId = userId;
+        TutorId = tutorId;
         About = about;
         TutoringSubject = tutoringSubject;
         TutoringGrades = tutoringGrades;
         RateForOneHour = rateForOneHour;
     }
 
-    public Guid UserId { get; }
+    public Guid TutorId { get; }
 
     public string About { get; }
 
