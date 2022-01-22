@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddControllers()
-    .AddApplicationPart(typeof(ProfilesController).Assembly)
+    .AddApplicationPart(typeof(TutorProfilesController).Assembly)
     .AddControllersAsServices();
 
 builder.Services.AddDbContext<ProfilesDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

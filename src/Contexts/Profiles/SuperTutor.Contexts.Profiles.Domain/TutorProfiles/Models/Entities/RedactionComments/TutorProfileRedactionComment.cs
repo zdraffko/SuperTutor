@@ -5,17 +5,17 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities;
 
 namespace SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.RedactionComments;
 
-public class RedactionComment : Entity<RedactionCommentId, Guid>
+public class TutorProfileRedactionComment : Entity<TutorProfileRedactionCommentId, Guid>
 {
-    public RedactionComment(TutorProfileId tutorProfileId, AdminId createdByAdminId, string content) : base(new RedactionCommentId(Guid.NewGuid()))
+    public TutorProfileRedactionComment(TutorProfileId tutorProfileId, AdminId createdByAdminId, string content) : base(new TutorProfileRedactionCommentId(Guid.NewGuid()))
     {
         TutorProfileId = tutorProfileId;
         CreatedByAdminId = createdByAdminId;
 
-        CheckInvariant(new RedactionCommentContentMustNotBeAboveTheMaxLenghtInvariant(content));
+        CheckInvariant(new TutorProfileRedactionCommentContentMustNotBeAboveTheMaxLenghtInvariant(content));
         Content = content;
 
-        Status = RedactionCommentStatus.Active;
+        Status = TutorProfileRedactionCommentStatus.Active;
         var currentDate = DateTime.UtcNow;
         CreationDate = currentDate;
         LastUpdateDate = currentDate;
@@ -33,34 +33,34 @@ public class RedactionComment : Entity<RedactionCommentId, Guid>
 
     public AdminId? SettledByAdminId { get; private set; }
 
-    public RedactionCommentStatus Status { get; private set; }
+    public TutorProfileRedactionCommentStatus Status { get; private set; }
 
     public DateTime LastUpdateDate { get; private set; }
 
-    public bool IsSettled => Status != RedactionCommentStatus.Active;
+    public bool IsSettled => Status != TutorProfileRedactionCommentStatus.Active;
 
     public void SettleWithApprovement(AdminId settledByAdminId)
     {
-        CheckInvariant(new RedactionCommentCannotBeSettledMoreThanOnceInvariant(Status));
+        CheckInvariant(new TutorProfileRedactionCommentCannotBeSettledMoreThanOnceInvariant(Status));
 
         var currentDate = DateTime.UtcNow;
 
         SettledDate = currentDate;
         SettledByAdminId = settledByAdminId;
-        Status = RedactionCommentStatus.SettledWithApprovement;
+        Status = TutorProfileRedactionCommentStatus.SettledWithApprovement;
 
         LastUpdateDate = currentDate;
     }
 
     public void SettleWithNewRedactionRequest(AdminId settledByAdminId)
     {
-        CheckInvariant(new RedactionCommentCannotBeSettledMoreThanOnceInvariant(Status));
+        CheckInvariant(new TutorProfileRedactionCommentCannotBeSettledMoreThanOnceInvariant(Status));
 
         var currentDate = DateTime.UtcNow;
 
         SettledDate = currentDate;
         SettledByAdminId = settledByAdminId;
-        Status = RedactionCommentStatus.SettledWithNewRedactionRequest;
+        Status = TutorProfileRedactionCommentStatus.SettledWithNewRedactionRequest;
 
         LastUpdateDate = currentDate;
     }

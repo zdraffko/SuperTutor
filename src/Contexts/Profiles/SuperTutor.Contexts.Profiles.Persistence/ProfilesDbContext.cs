@@ -10,9 +10,9 @@ public class ProfilesDbContext : DbContext
     {
     }
 
-    public DbSet<TutorProfile> Profiles { get; set; } = default!;
+    public DbSet<TutorProfile> TutorProfiles { get; set; } = default!;
 
-    public DbSet<RedactionComment> RedactionComments { get; set; } = default!;
+    public DbSet<TutorProfileRedactionComment> RedactionComments { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

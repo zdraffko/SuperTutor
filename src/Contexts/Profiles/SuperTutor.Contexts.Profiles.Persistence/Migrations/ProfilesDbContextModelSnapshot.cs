@@ -23,7 +23,7 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Entities.RedactionComments.RedactionComment", b =>
+            modelBuilder.Entity("SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.RedactionComments.TutorProfileRedactionComment", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -42,9 +42,6 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                     b.Property<DateTime>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("TutorProfileId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("SettledByAdminId")
                         .HasColumnType("uniqueidentifier");
 
@@ -54,14 +51,17 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("TutorProfileId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TutorProfileId");
 
-                    b.ToTable("RedactionComments", "profiles");
+                    b.ToTable("TutorProfileRedactionComments", "profiles");
                 });
 
-            modelBuilder.Entity("SuperTutor.Contexts.Profiles.Domain.Profiles.Profile", b =>
+            modelBuilder.Entity("SuperTutor.Contexts.Profiles.Domain.TutorProfiles.TutorProfile", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -112,19 +112,19 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Profiles", "profiles");
+                    b.ToTable("TutorProfile", "profiles");
                 });
 
-            modelBuilder.Entity("SuperTutor.Contexts.Profiles.Domain.Profiles.Models.Entities.RedactionComments.RedactionComment", b =>
+            modelBuilder.Entity("SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.RedactionComments.TutorProfileRedactionComment", b =>
                 {
-                    b.HasOne("SuperTutor.Contexts.Profiles.Domain.Profiles.Profile", null)
+                    b.HasOne("SuperTutor.Contexts.Profiles.Domain.TutorProfiles.TutorProfile", null)
                         .WithMany("RedactionComments")
                         .HasForeignKey("TutorProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SuperTutor.Contexts.Profiles.Domain.Profiles.Profile", b =>
+            modelBuilder.Entity("SuperTutor.Contexts.Profiles.Domain.TutorProfiles.TutorProfile", b =>
                 {
                     b.Navigation("RedactionComments");
                 });

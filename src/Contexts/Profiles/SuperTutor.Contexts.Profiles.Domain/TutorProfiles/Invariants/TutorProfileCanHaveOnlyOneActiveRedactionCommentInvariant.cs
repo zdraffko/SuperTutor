@@ -5,9 +5,9 @@ namespace SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Invariants;
 
 internal class TutorProfileCanHaveOnlyOneActiveRedactionCommentInvariant : Invariant
 {
-    private readonly List<RedactionComment> redactionComments;
+    private readonly List<TutorProfileRedactionComment> redactionComments;
 
-    public TutorProfileCanHaveOnlyOneActiveRedactionCommentInvariant(List<RedactionComment> redactionComments)
+    public TutorProfileCanHaveOnlyOneActiveRedactionCommentInvariant(List<TutorProfileRedactionComment> redactionComments)
         : base("The tutor profile can have only one active redaction comment.")
     {
         this.redactionComments = redactionComments;

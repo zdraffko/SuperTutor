@@ -3,12 +3,12 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Invariants;
 
 namespace SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.RedactionComments.Invariants;
 
-internal class RedactionCommentContentMustNotBeAboveTheMaxLenghtInvariant : Invariant
+internal class TutorProfileRedactionCommentContentMustNotBeAboveTheMaxLenghtInvariant : Invariant
 {
     private readonly string content;
 
-    public RedactionCommentContentMustNotBeAboveTheMaxLenghtInvariant(string content)
-        : base($"The 'content' field is required and it cannot have more than {RedactionCommentConstants.ContentMaxLength} characters.")
+    public TutorProfileRedactionCommentContentMustNotBeAboveTheMaxLenghtInvariant(string content)
+        : base($"The 'content' field is required and it cannot have more than {TutorProfileRedactionCommentConstants.ContentMaxLength} characters.")
     {
         this.content = content;
     }
@@ -20,7 +20,7 @@ internal class RedactionCommentContentMustNotBeAboveTheMaxLenghtInvariant : Inva
             return false;
         }
 
-        if (content.Length > RedactionCommentConstants.ContentMaxLength)
+        if (content.Length > TutorProfileRedactionCommentConstants.ContentMaxLength)
         {
             return false;
         }

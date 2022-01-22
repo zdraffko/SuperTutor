@@ -23,8 +23,8 @@ internal class RequestTutorProfileRedactionCommandHandler : ICommandHandler<Requ
             return Result.Fail("Tutor profile not found.");
         }
 
-        var redactionComment = new RedactionComment(tutorProfile.Id, new AdminId(command.AdminId), command.Comment);
-        tutorProfile.RequestRedaction(redactionComment);
+        var tutorProfileRedactionComment = new TutorProfileRedactionComment(tutorProfile.Id, new AdminId(command.AdminId), command.Comment);
+        tutorProfile.RequestRedaction(tutorProfileRedactionComment);
 
         return Result.Ok();
     }

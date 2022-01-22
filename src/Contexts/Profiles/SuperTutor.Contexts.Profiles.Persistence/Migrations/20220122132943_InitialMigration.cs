@@ -13,7 +13,7 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                 name: "profiles");
 
             migrationBuilder.CreateTable(
-                name: "Profiles",
+                name: "TutorProfile",
                 schema: "profiles",
                 columns: table => new
                 {
@@ -34,11 +34,11 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Profiles", x => x.Id);
+                    table.PrimaryKey("PK_TutorProfile", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "RedactionComments",
+                name: "TutorProfileRedactionComments",
                 schema: "profiles",
                 columns: table => new
                 {
@@ -54,31 +54,31 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RedactionComments", x => x.Id);
+                    table.PrimaryKey("PK_TutorProfileRedactionComments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RedactionComments_Profiles_ProfileId",
+                        name: "FK_TutorProfileRedactionComments_TutorProfile_TutorProfileId",
                         column: x => x.TutorProfileId,
                         principalSchema: "profiles",
-                        principalTable: "Profiles",
+                        principalTable: "TutorProfile",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_RedactionComments_ProfileId",
+                name: "IX_TutorProfileRedactionComments_TutorProfileId",
                 schema: "profiles",
-                table: "RedactionComments",
+                table: "TutorProfileRedactionComments",
                 column: "TutorProfileId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "RedactionComments",
+                name: "TutorProfileRedactionComments",
                 schema: "profiles");
 
             migrationBuilder.DropTable(
-                name: "Profiles",
+                name: "TutorProfile",
                 schema: "profiles");
         }
     }

@@ -9,13 +9,13 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
 namespace SuperTutor.Contexts.Profiles.Persistence.EntityTypeConfigurations.Profiles;
 
-internal class ProfileEntityTypeConfiguration : IEntityTypeConfiguration<TutorProfile>
+internal class TutorProfileEntityTypeConfiguration : IEntityTypeConfiguration<TutorProfile>
 {
     private const string Comma = ",";
 
     public void Configure(EntityTypeBuilder<TutorProfile> builder)
     {
-        builder.ToTable("Profiles");
+        builder.ToTable("TutorProfile");
 
         builder.HasKey(tutorProfile => tutorProfile.Id);
 

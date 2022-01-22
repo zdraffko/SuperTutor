@@ -10,7 +10,7 @@ namespace SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
 public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
 {
     private readonly HashSet<TutoringGrade> tutoringGrades;
-    private readonly List<RedactionComment> redactionComments;
+    private readonly List<TutorProfileRedactionComment> redactionComments;
 
     public TutorProfile(
         UserId userId,
@@ -32,7 +32,7 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
         CheckInvariant(new TutorProfileRateForOneHourMustNotBeLessThanTheMinAmountInvariant(rateForOneHour));
         RateForOneHour = rateForOneHour;
 
-        redactionComments = new List<RedactionComment>();
+        redactionComments = new List<TutorProfileRedactionComment>();
         Status = TutorProfileStatus.ForReview;
         var currentDate = DateTime.UtcNow;
         CreationDate = currentDate;
@@ -49,7 +49,7 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
 
     public decimal RateForOneHour { get; private set; }
 
-    public IReadOnlyCollection<RedactionComment> RedactionComments => redactionComments;
+    public IReadOnlyCollection<TutorProfileRedactionComment> RedactionComments => redactionComments;
 
     public TutorProfileStatus Status { get; private set; }
 
@@ -85,7 +85,7 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
         LastUpdateDate = currentDate;
     }
 
-    public void RequestRedaction(RedactionComment redactionComment)
+    public void RequestRedaction(TutorProfileRedactionComment redactionComment)
     {
         CheckInvariant(new TutorProfileCanBeRedactionRequestedOnlyWhenItIsMarkedAsForReviewInvariant(Status));
 

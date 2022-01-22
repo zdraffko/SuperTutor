@@ -24,6 +24,6 @@ internal class PersistenceModule : Module
 
     private void RegisterRepositories(ContainerBuilder builder)
     {
-        builder.RegisterType<ProfileRepository>().As<ITutorProfileRepository>();
+        builder.RegisterType<TutorProfileRepository>().As<ITutorProfileRepository>();
     }
 }
