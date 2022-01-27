@@ -3,15 +3,15 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Invariants;
 
 namespace SuperTutor.Contexts.Profiles.Domain.StudentProfiles.Invariants;
 
-internal class StudentProfileMustHaveAtLeastOneStudySubjectInvariant : Invariant
+public class StudentProfileMustHaveAtLeastOneStudySubjectInvariant : Invariant
 {
-    private readonly HashSet<Subject> newStudySubject;
+    private readonly HashSet<Subject> studySubjects;
 
-    public StudentProfileMustHaveAtLeastOneStudySubjectInvariant(HashSet<Subject> newStudySubject)
+    public StudentProfileMustHaveAtLeastOneStudySubjectInvariant(HashSet<Subject> studySubjects)
         : base("The student profile must have at least one study subject.")
     {
-        this.newStudySubject = newStudySubject;
+        this.studySubjects = studySubjects;
     }
 
-    public override bool IsValid() => newStudySubject.Count > 0;
+    public override bool IsValid() => studySubjects.Count > 0;
 }

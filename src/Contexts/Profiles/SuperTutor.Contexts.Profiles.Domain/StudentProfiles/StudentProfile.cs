@@ -52,7 +52,7 @@ public class StudentProfile : Entity<StudentProfileId, Guid>, IAggregateRoot
     public void RemoveStudySubjects(HashSet<Subject> studySubjectsForRemoval)
     {
         studySubjects.RemoveWhere(studySubject => studySubjectsForRemoval.Contains(studySubject));
-        CheckInvariant(new StudentProfileMustHaveAtLeastOneStudySubjectInvariant(studySubjectsForRemoval));
+        CheckInvariant(new StudentProfileMustHaveAtLeastOneStudySubjectInvariant(studySubjects));
 
         LastUpdateDate = DateTime.UtcNow;
     }
