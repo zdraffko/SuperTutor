@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using MassTransit;
-using SuperTutor.Contexts.Profiles.Infrastructure.IntegrationEvents.Consumers.Identity;
+using SuperTutor.Contexts.Profiles.Infrastructure;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Contracts;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.IntegrationEvents;
 
@@ -23,13 +23,13 @@ internal class InfrastructureModule : Module
     {
         builder.AddMassTransit(busConfigurator =>
         {
-            busConfigurator.AddConsumers(typeof(UserDeletedIntegrationEventConsumer).Assembly);
+            busConfigurator.AddConsumers(typeof(IProfilesInfrastructureAssemblyMarker).Assembly);
 
             busConfigurator.UsingRabbitMq((busRegistrationContext, rabbitmqConfigurator) =>
             {
                 rabbitmqConfigurator.Host("amqp://devuser:devPass123!@supertutor-rabbitmq:5672");
 
-                var consumers = typeof(UserDeletedIntegrationEventConsumer).Assembly
+                var consumers = typeof(IProfilesInfrastructureAssemblyMarker).Assembly
                     .GetTypes()
                     .Where(type => type.IsAssignableTo(typeof(IConsumer)));
 

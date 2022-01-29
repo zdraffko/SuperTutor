@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.Create;
+using SuperTutor.Contexts.Profiles.Application;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Common.Commands.Decorators;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.IntegrationEvents.Commands.Decorators;
@@ -15,8 +15,8 @@ internal class ApplicationModule : Module
 
     private void RegisterCommandHandlers(ContainerBuilder builder)
     {
-        builder.RegisterAssemblyTypes(typeof(CreateTutorProfileCommand).Assembly).AsClosedTypesOf(typeof(ICommandHandler<>)).InstancePerLifetimeScope();
-        builder.RegisterAssemblyTypes(typeof(CreateTutorProfileCommand).Assembly).AsClosedTypesOf(typeof(ICommandHandler<,>)).InstancePerLifetimeScope();
+        builder.RegisterAssemblyTypes(typeof(IProfilesApplicationAssemblyMarker).Assembly).AsClosedTypesOf(typeof(ICommandHandler<>)).InstancePerLifetimeScope();
+        builder.RegisterAssemblyTypes(typeof(IProfilesApplicationAssemblyMarker).Assembly).AsClosedTypesOf(typeof(ICommandHandler<,>)).InstancePerLifetimeScope();
 
         builder.RegisterGenericDecorator(typeof(UnitOfWorkCommandHandlerDecorator<>), typeof(ICommandHandler<>));
         builder.RegisterGenericDecorator(typeof(UnitOfWorkCommandHandlerDecorator<,>), typeof(ICommandHandler<,>));
