@@ -1,17 +1,18 @@
-﻿using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
+﻿using SuperTutor.Contexts.Profiles.Domain.StudentProfiles.Models.ValueObjects.Identifiers;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.StudentProfiles.Commands.Create;
 
 public class CreateStudentProfileCommand : Command
 {
-    public CreateStudentProfileCommand(Guid studentId, IEnumerable<int> studySubjects, int studyGrade)
+    public CreateStudentProfileCommand(StudentId studentId, IEnumerable<int> studySubjects, int studyGrade)
     {
         StudentId = studentId;
         StudySubjects = studySubjects;
         StudyGrade = studyGrade;
     }
 
-    public Guid StudentId { get; }
+    public StudentId StudentId { get; }
 
     public IEnumerable<int> StudySubjects { get; }
 

@@ -16,13 +16,13 @@ internal class ApproveTutorProfileCommandHandler : ICommandHandler<ApproveTutorP
 
     public async Task<Result> Handle(ApproveTutorProfileCommand command, CancellationToken cancellationToken)
     {
-        var tutorProfile = await tutorProfileRepository.GetById(new TutorProfileId(command.TutorProfileId), cancellationToken);
+        var tutorProfile = await tutorProfileRepository.GetById(command.TutorProfileId, cancellationToken);
         if (tutorProfile is null)
         {
             return Result.Fail("Tutor profile not found.");
         }
 
-        tutorProfile.Approve(new AdminId(command.AdminId));
+        tutorProfile.Approve(command.AdminId);
 
         return Result.Ok();
     }

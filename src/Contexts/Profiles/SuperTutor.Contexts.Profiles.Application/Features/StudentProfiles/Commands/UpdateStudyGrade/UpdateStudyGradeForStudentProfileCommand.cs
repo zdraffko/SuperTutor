@@ -1,16 +1,17 @@
-﻿using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
+﻿using SuperTutor.Contexts.Profiles.Domain.StudentProfiles;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.StudentProfiles.Commands.UpdateStudyGrade;
 
 public class UpdateStudyGradeForStudentProfileCommand : Command
 {
-    public UpdateStudyGradeForStudentProfileCommand(Guid studentProfileId, int newStudyGrade)
+    public UpdateStudyGradeForStudentProfileCommand(StudentProfileId studentProfileId, int newStudyGrade)
     {
         StudentProfileId = studentProfileId;
         NewStudyGrade = newStudyGrade;
     }
 
-    public Guid StudentProfileId { get; }
+    public StudentProfileId StudentProfileId { get; }
 
     public int NewStudyGrade { get; }
 }

@@ -1,5 +1,4 @@
-﻿using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.ValueObjects.Identifiers;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
+﻿using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Application.Integration.Identity.Commands.DeleteProfilesForUser;
 

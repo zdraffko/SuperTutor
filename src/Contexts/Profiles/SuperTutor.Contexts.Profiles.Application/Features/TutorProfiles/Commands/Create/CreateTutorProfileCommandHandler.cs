@@ -1,7 +1,6 @@
 ﻿using FluentResults;
 using SuperTutor.Contexts.Profiles.Domain.Common.Models.Enumerations;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
-using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
@@ -30,7 +29,7 @@ internal class CreateTutorProfileCommandHandler : ICommandHandler<CreateTutorPro
             return Result.Fail("At least one tutoring grade must be selected.");
         }
 
-        var tutorProfile = new TutorProfile(new TutorId(command.TutorId), command.About, tutoringSubject, tutoringGrades, command.RateForOneHour);
+        var tutorProfile = new TutorProfile(command.TutorId, command.About, tutoringSubject, tutoringGrades, command.RateForOneHour);
 
         tutorProfileRepository.Add(tutorProfile);
 

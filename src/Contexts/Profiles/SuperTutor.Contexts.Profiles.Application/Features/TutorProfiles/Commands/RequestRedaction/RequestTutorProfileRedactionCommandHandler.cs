@@ -17,13 +17,13 @@ internal class RequestTutorProfileRedactionCommandHandler : ICommandHandler<Requ
 
     public async Task<Result> Handle(RequestTutorProfileRedactionCommand command, CancellationToken cancellationToken)
     {
-        var tutorProfile = await tutorProfileRepository.GetById(new TutorProfileId(command.TutorProfileId), cancellationToken);
+        var tutorProfile = await tutorProfileRepository.GetById(command.TutorProfileId, cancellationToken);
         if (tutorProfile is null)
         {
             return Result.Fail("Tutor profile not found.");
         }
 
-        var tutorProfileRedactionComment = new TutorProfileRedactionComment(tutorProfile.Id, new AdminId(command.AdminId), command.Comment);
+        var tutorProfileRedactionComment = new TutorProfileRedactionComment(tutorProfile.Id, command.AdminId, command.Comment);
         tutorProfile.RequestRedaction(tutorProfileRedactionComment);
 
         return Result.Ok();

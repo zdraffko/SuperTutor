@@ -17,7 +17,7 @@ internal class AddTutoringGradesToTutorProfileCommandHandler : ICommandHandler<A
 
     public async Task<Result> Handle(AddTutoringGradesToTutorProfileCommand command, CancellationToken cancellationToken)
     {
-        var tutorProfile = await tutorProfileRepository.GetById(new TutorProfileId(command.TutorProfileId), cancellationToken);
+        var tutorProfile = await tutorProfileRepository.GetById(command.TutorProfileId, cancellationToken);
         if (tutorProfile is null)
         {
             return Result.Fail("Tutor profile not found.");

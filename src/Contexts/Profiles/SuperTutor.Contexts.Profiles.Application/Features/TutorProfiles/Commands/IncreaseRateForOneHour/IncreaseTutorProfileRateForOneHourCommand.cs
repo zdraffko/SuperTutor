@@ -1,16 +1,17 @@
-﻿using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
+﻿using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.IncreaseRateForOneHour;
 
 public class IncreaseTutorProfileRateForOneHourCommand : Command
 {
-    public IncreaseTutorProfileRateForOneHourCommand(Guid tutorProfileId, decimal increaseAmount)
+    public IncreaseTutorProfileRateForOneHourCommand(TutorProfileId tutorProfileId, decimal increaseAmount)
     {
         TutorProfileId = tutorProfileId;
         IncreaseAmount = increaseAmount;
     }
 
-    public Guid TutorProfileId { get; }
+    public TutorProfileId TutorProfileId { get; }
 
     public decimal IncreaseAmount { get; }
 }

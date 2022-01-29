@@ -1,13 +1,14 @@
-﻿using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
+﻿using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.Deactivate;
 
 public class DeactivateTutorProfileCommand : Command
 {
-    public DeactivateTutorProfileCommand(Guid tutorProfileId)
+    public DeactivateTutorProfileCommand(TutorProfileId tutorProfileId)
     {
         TutorProfileId = tutorProfileId;
     }
 
-    public Guid TutorProfileId { get; }
+    public TutorProfileId TutorProfileId { get; }
 }

@@ -1,16 +1,17 @@
-﻿using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
+﻿using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.AddTutoringGrades;
 
 public class AddTutoringGradesToTutorProfileCommand : Command
 {
-    public AddTutoringGradesToTutorProfileCommand(Guid tutorProfileId, IEnumerable<int> newTutoringGrades)
+    public AddTutoringGradesToTutorProfileCommand(TutorProfileId tutorProfileId, IEnumerable<int> newTutoringGrades)
     {
         TutorProfileId = tutorProfileId;
         NewTutoringGrades = newTutoringGrades;
     }
 
-    public Guid TutorProfileId { get; }
+    public TutorProfileId TutorProfileId { get; }
 
     public IEnumerable<int> NewTutoringGrades { get; }
 }

@@ -30,7 +30,7 @@ internal class CreateStudentProfileCommandHandler : ICommandHandler<CreateStuden
             return Result.Fail($"A study grade with value '{command.StudyGrade}' does not exist.");
         }
 
-        var studentProfile = new StudentProfile(new StudentId(command.StudentId), studySubjects, studyGrade);
+        var studentProfile = new StudentProfile(command.StudentId, studySubjects, studyGrade);
 
         studentProfileRepository.Add(studentProfile);
 

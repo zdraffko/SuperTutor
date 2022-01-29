@@ -17,7 +17,7 @@ internal class RemoveStudySubjectsFromStudentProfileCommandHandler : ICommandHan
 
     public async Task<Result> Handle(RemoveStudySubjectsFromStudentProfileCommand command, CancellationToken cancellationToken)
     {
-        var studentProfile = await studentProfileRepository.GetById(new StudentProfileId(command.StudentProfileId), cancellationToken);
+        var studentProfile = await studentProfileRepository.GetById(command.StudentProfileId, cancellationToken);
         if (studentProfile is null)
         {
             return Result.Fail("Student profile not found.");
