@@ -2,7 +2,7 @@
 
 namespace SuperTutor.Contexts.Profiles.Domain.StudentProfiles;
 
-public class StudentProfileId : GuidIdentifier
+public class StudentProfileId : Identifier<Guid>
 {
     public StudentProfileId(Guid value) : base(value)
     {

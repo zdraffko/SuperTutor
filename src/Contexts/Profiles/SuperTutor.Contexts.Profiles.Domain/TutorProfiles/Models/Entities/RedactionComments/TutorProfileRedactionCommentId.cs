@@ -2,7 +2,7 @@
 
 namespace SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.RedactionComments;
 
-public class TutorProfileRedactionCommentId : GuidIdentifier
+public class TutorProfileRedactionCommentId : Identifier<Guid>
 {
     public TutorProfileRedactionCommentId(Guid value) : base(value)
     {
