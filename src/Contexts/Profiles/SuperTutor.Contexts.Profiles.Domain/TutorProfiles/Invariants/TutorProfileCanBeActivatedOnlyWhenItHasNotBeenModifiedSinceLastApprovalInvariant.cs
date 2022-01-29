@@ -2,12 +2,12 @@
 
 namespace SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Invariants;
 
-internal class TutorProfileCanBeActivatedOnlyWhenItHasNotBeenModifiedSinceLastApprovalInvariant : Invariant
+public class TutorProfileCanBeActivatedOnlyWhenItHasNotBeenModifiedSinceLastApprovalInvariant : Invariant
 {
     private readonly DateTime? lastModificationDate;
-    private readonly DateTime? lastApprovalDate;
+    private readonly DateTime lastApprovalDate;
 
-    public TutorProfileCanBeActivatedOnlyWhenItHasNotBeenModifiedSinceLastApprovalInvariant(DateTime? lastModificationDate, DateTime? lastApprovalDate)
+    public TutorProfileCanBeActivatedOnlyWhenItHasNotBeenModifiedSinceLastApprovalInvariant(DateTime? lastModificationDate, DateTime lastApprovalDate)
         : base("The tutor profile can only be activated when there are no pending modifications for review.")
     {
         this.lastModificationDate = lastModificationDate;
@@ -16,16 +16,11 @@ internal class TutorProfileCanBeActivatedOnlyWhenItHasNotBeenModifiedSinceLastAp
 
     public override bool IsValid()
     {
-        if (!lastApprovalDate.HasValue)
-        {
-            return false;
-        }
-
         if (!lastModificationDate.HasValue)
         {
             return true;
         }
 
-        return lastModificationDate.Value < lastApprovalDate.Value;
+        return lastModificationDate.Value < lastApprovalDate;
     }
 }

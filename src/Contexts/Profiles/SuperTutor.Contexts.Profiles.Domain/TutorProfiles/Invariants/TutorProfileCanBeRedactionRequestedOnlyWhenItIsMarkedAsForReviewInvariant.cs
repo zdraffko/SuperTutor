@@ -3,7 +3,7 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Invariants;
 
 namespace SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Invariants;
 
-internal class TutorProfileCanBeRedactionRequestedOnlyWhenItIsMarkedAsForReviewInvariant : Invariant
+public class TutorProfileCanBeRedactionRequestedOnlyWhenItIsMarkedAsForReviewInvariant : Invariant
 {
     private readonly TutorProfileStatus status;
 

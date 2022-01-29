@@ -13,21 +13,31 @@ namespace SuperTutor.Contexts.Profiles.Tests.Domain.Unit.StudentProfiles;
 
 public class StudentProfileTests
 {
+    private readonly StudentId DefaultStudentId;
+    private readonly HashSet<Subject> DefaultStudySubjects;
+    private readonly Grade DefaultStudyGrade;
+
+    public StudentProfileTests()
+    {
+        DefaultStudentId = new StudentId(Guid.Parse("3E514647-E8B9-4EAB-7447-08D9DDDCD723"));
+        DefaultStudySubjects = new HashSet<Subject> { Subject.Math, Subject.Bulgarian };
+        DefaultStudyGrade = Grade.Tenth;
+    }
+
+    #region Constructor Tests
+
     [Fact]
     public void Constructor_WhenAllArgumentsAreProvided_ShouldCreateAValidInstance()
     {
         // Arrange
-        var studentId = new StudentId(Guid.Parse("3E514647-E8B9-4EAB-7447-08D9DDDCD723"));
-        var studySubjects = new HashSet<Subject> { Subject.Math, Subject.Bulgarian };
-        var studyGrade = Grade.Tenth;
 
         // Act
-        var studentProfile = new StudentProfile(studentId, studySubjects, studyGrade);
+        var studentProfile = new StudentProfile(DefaultStudentId, DefaultStudySubjects, DefaultStudyGrade);
 
         // Assert
-        studentProfile.StudentId.Should().BeEquivalentTo(studentId);
-        studentProfile.StudySubjects.Should().BeEquivalentTo(studySubjects);
-        studentProfile.StudyGrade.Should().BeEquivalentTo(studyGrade);
+        studentProfile.StudentId.Should().BeEquivalentTo(DefaultStudentId);
+        studentProfile.StudySubjects.Should().BeEquivalentTo(DefaultStudySubjects);
+        studentProfile.StudyGrade.Should().BeEquivalentTo(DefaultStudyGrade);
     }
 
     [Fact]
@@ -44,6 +54,10 @@ public class StudentProfileTests
         // Assert
         action.ShouldBrakeInvariant<StudentProfileMustHaveAtLeastOneStudySubjectInvariant>();
     }
+
+    #endregion Constructor Tests
+
+    #region AddStudySubjects Method Tests
 
     [Fact]
     public void AddStudySubjects_WhenThereAreNoNewStudySubjectsToBeAdded_ShouldNotModifyThePresentStudySubjects()
@@ -103,6 +117,10 @@ public class StudentProfileTests
         studentProfile.StudySubjects.Should().OnlyHaveUniqueItems();
     }
 
+    #endregion AddStudySubjects Method Tests
+
+    #region RemoveStudySubjects Method Tests
+
     [Fact]
     public void RemoveStudySubjects_WhenThereAreNoStudySubjectsForRemoval_ShouldNotModifyThePresentStudySubjects()
     {
@@ -146,6 +164,10 @@ public class StudentProfileTests
         action.ShouldBrakeInvariant<StudentProfileMustHaveAtLeastOneStudySubjectInvariant>();
     }
 
+    #endregion RemoveStudySubjects Method Tests
+
+    #region UpdateStudyGrade Method Tests
+
     [Theory, MemberData(nameof(StudyGradeTestData))]
     public void UpdateStudyGrade_WhenGivenANewStudyGrade_ShouldUpdateTheStudyGradeToTheNewOne(Grade newStudyGrade)
     {
@@ -159,16 +181,15 @@ public class StudentProfileTests
         studentProfile.StudyGrade.Should().BeEquivalentTo(newStudyGrade);
     }
 
-    private StudentProfile CreateDefaultStudentProfile()
-    {
-        var defaultStudentId = new StudentId(Guid.Parse("3E514647-E8B9-4EAB-7447-08D9DDDCD723"));
-        var defaultStudySubjects = new HashSet<Subject> { Subject.Math, Subject.Bulgarian };
-        var defaultStudyGrade = Grade.Tenth;
+    #endregion UpdateStudyGrade Method Tests
 
-        var defaultStudentProfile = new StudentProfile(defaultStudentId, defaultStudySubjects, defaultStudyGrade);
+    #region Helper Methods
 
-        return defaultStudentProfile;
-    }
+    private StudentProfile CreateDefaultStudentProfile() => new StudentProfile(DefaultStudentId, DefaultStudySubjects, DefaultStudyGrade);
+
+    #endregion
+
+    #region Test Data
 
     public static IEnumerable<object[]> StudySubjectsTestData = new List<object[]>
     {
@@ -183,4 +204,6 @@ public class StudentProfileTests
         new object[] { Grade.Ninth },
         new object[] { Grade.Sixth }
     };
+
+    #endregion
 }

@@ -3,7 +3,7 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Invariants;
 
 namespace SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Invariants;
 
-internal class TutorProfileMustHaveAtLeastOneTutoringGradeInvariant : Invariant
+public class TutorProfileMustHaveAtLeastOneTutoringGradeInvariant : Invariant
 {
     private readonly HashSet<Grade> newTutoringGrades;
 

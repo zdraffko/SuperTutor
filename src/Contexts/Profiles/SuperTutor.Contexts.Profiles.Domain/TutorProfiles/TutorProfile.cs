@@ -22,7 +22,7 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
     {
         TutorId = tutorId;
 
-        CheckInvariant(new TutorProfileAboutMustNotBeAboveTheMaxLenghtInvariant(about));
+        CheckInvariant(new TutorProfileAboutMustNotBeEmptyOrAboveTheMaxLenghtInvariant(about));
         About = about;
 
         TutoringSubject = tutoringSubject;
@@ -75,7 +75,7 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
         CheckInvariant(new TutorProfileCanBeApprovedOnlyWhenItIsMarkedAsForReviewInvariant(Status));
 
         var unsettledRedactionComment = redactionComments.SingleOrDefault(redactionComment => !redactionComment.IsSettled);
-        if (unsettledRedactionComment != null)
+        if (unsettledRedactionComment is not null)
         {
             unsettledRedactionComment.SettleWithApprovement(adminId);
         }
@@ -93,13 +93,12 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
         CheckInvariant(new TutorProfileCanBeRedactionRequestedOnlyWhenItIsMarkedAsForReviewInvariant(Status));
 
         var unsettledRedactionComment = redactionComments.SingleOrDefault(redactionComment => !redactionComment.IsSettled);
-        if (unsettledRedactionComment != null)
+        if (unsettledRedactionComment is not null)
         {
             unsettledRedactionComment.SettleWithNewRedactionRequest(redactionComment.CreatedByAdminId);
         }
 
         redactionComments.Add(redactionComment);
-        CheckInvariant(new TutorProfileCanHaveOnlyOneActiveRedactionCommentInvariant(redactionComments));
 
         var currentDate = DateTime.UtcNow;
         LastRedactionRequestDate = currentDate;
@@ -122,7 +121,8 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
     public void Activate()
     {
         CheckInvariant(new TutorProfileCanBeActivatedOnlyWhenItIsMarkedAsInactiveInvariant(Status));
-        CheckInvariant(new TutorProfileCanBeActivatedOnlyWhenItHasNotBeenModifiedSinceLastApprovalInvariant(LastModificationDate, LastApprovalDate));
+        CheckInvariant(new TutorProfileCanNotBeActivatedWhenItHasNeverBeenApprovedInvariant(LastApprovalDate));
+        CheckInvariant(new TutorProfileCanBeActivatedOnlyWhenItHasNotBeenModifiedSinceLastApprovalInvariant(LastModificationDate, LastApprovalDate!.Value));
 
         Status = TutorProfileStatus.Active;
 
@@ -141,7 +141,7 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
     public void UpdateAbout(string newAbout)
     {
         CheckInvariant(new TutorProfileInformationCanOnlyBeUpdatedWhenItIsMarkedAsInactiveOrForRedactionInvariant(Status));
-        CheckInvariant(new TutorProfileAboutMustNotBeAboveTheMaxLenghtInvariant(newAbout));
+        CheckInvariant(new TutorProfileAboutMustNotBeEmptyOrAboveTheMaxLenghtInvariant(newAbout));
 
         var currentDate = DateTime.UtcNow;
         LastModificationDate = currentDate;
@@ -177,10 +177,9 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
     public void IncreaseRateForOneHour(decimal increaseAmount)
     {
         CheckInvariant(new TutorProfileInformationCanOnlyBeUpdatedWhenItIsMarkedAsInactiveOrForRedactionInvariant(Status));
+        CheckInvariant(new TutorProfileRateForOneHourCanOnlyBeModifiedWithAmountsAboveZeroInvariant(increaseAmount));
 
-        var newRateForOneHour = RateForOneHour + increaseAmount;
-        CheckInvariant(new TutorProfileRateForOneHourMustNotBeLessThanTheMinAmountInvariant(newRateForOneHour));
-        RateForOneHour = newRateForOneHour;
+        RateForOneHour += increaseAmount;
 
         LastUpdateDate = DateTime.UtcNow;
     }
@@ -188,6 +187,7 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
     public void DecreaseRateForOneHour(decimal decreaseAmount)
     {
         CheckInvariant(new TutorProfileInformationCanOnlyBeUpdatedWhenItIsMarkedAsInactiveOrForRedactionInvariant(Status));
+        CheckInvariant(new TutorProfileRateForOneHourCanOnlyBeModifiedWithAmountsAboveZeroInvariant(decreaseAmount));
 
         var newRateForOneHour = RateForOneHour - decreaseAmount;
         CheckInvariant(new TutorProfileRateForOneHourMustNotBeLessThanTheMinAmountInvariant(newRateForOneHour));

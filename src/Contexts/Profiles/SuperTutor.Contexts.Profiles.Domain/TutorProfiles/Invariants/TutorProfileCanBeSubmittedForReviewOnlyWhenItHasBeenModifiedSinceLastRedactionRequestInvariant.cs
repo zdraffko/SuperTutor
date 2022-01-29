@@ -2,7 +2,7 @@
 
 namespace SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Invariants;
 
-internal class TutorProfileCanBeSubmittedForReviewOnlyWhenItHasBeenModifiedSinceLastRedactionRequestInvariant : Invariant
+public class TutorProfileCanBeSubmittedForReviewOnlyWhenItHasBeenModifiedSinceLastRedactionRequestInvariant : Invariant
 {
     private readonly DateTime? lastModificationDate;
     private readonly DateTime? lastRedactionRequestDate;
