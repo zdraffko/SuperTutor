@@ -43,11 +43,11 @@ public class TutorProfileRedactionComment : Entity<TutorProfileRedactionCommentI
     {
         CheckInvariant(new TutorProfileRedactionCommentCannotBeSettledMoreThanOnceInvariant(Status));
 
-        var currentDate = DateTime.UtcNow;
+        TransitionStatus(TutorProfileRedactionCommentStatus.SettledWithApprovement);
 
+        var currentDate = DateTime.UtcNow;
         SettledDate = currentDate;
         SettledByAdminId = settledByAdminId;
-        Status = TutorProfileRedactionCommentStatus.SettledWithApprovement;
 
         LastUpdateDate = currentDate;
     }
@@ -56,12 +56,19 @@ public class TutorProfileRedactionComment : Entity<TutorProfileRedactionCommentI
     {
         CheckInvariant(new TutorProfileRedactionCommentCannotBeSettledMoreThanOnceInvariant(Status));
 
-        var currentDate = DateTime.UtcNow;
+        TransitionStatus(TutorProfileRedactionCommentStatus.SettledWithNewRedactionRequest);
 
+        var currentDate = DateTime.UtcNow;
         SettledDate = currentDate;
         SettledByAdminId = settledByAdminId;
-        Status = TutorProfileRedactionCommentStatus.SettledWithNewRedactionRequest;
 
         LastUpdateDate = currentDate;
+    }
+
+    private void TransitionStatus(TutorProfileRedactionCommentStatus newStatus)
+    {
+        CheckInvariant(new TutorProfileRedactionCommentNewStatusMustHaveAValidTransitionFromTheOldStatusInvariant(Status, newStatus));
+
+        Status = newStatus;
     }
 }

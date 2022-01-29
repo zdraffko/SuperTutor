@@ -80,10 +80,11 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
             unsettledRedactionComment.SettleWithApprovement(adminId);
         }
 
+        TransitionStatus(TutorProfileStatus.Active);
+
         var currentDate = DateTime.UtcNow;
         LastApprovalDate = currentDate;
         LastApprovalAdminId = adminId;
-        Status = TutorProfileStatus.Active;
 
         LastUpdateDate = currentDate;
     }
@@ -100,10 +101,11 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
 
         redactionComments.Add(redactionComment);
 
+        TransitionStatus(TutorProfileStatus.ForRedaction);
+
         var currentDate = DateTime.UtcNow;
         LastRedactionRequestDate = currentDate;
         LastRedactionRequestAdminId = redactionComment.CreatedByAdminId;
-        Status = TutorProfileStatus.ForRedaction;
 
         LastUpdateDate = currentDate;
     }
@@ -113,7 +115,7 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
         CheckInvariant(new TutorProfileCanBeSubmittedForReviewOnlyWhenItIsMarkedAsInactiveOrForRedactionInvariant(Status));
         CheckInvariant(new TutorProfileCanBeSubmittedForReviewOnlyWhenItHasBeenModifiedSinceLastRedactionRequestInvariant(LastModificationDate, LastRedactionRequestDate));
 
-        Status = TutorProfileStatus.ForReview;
+        TransitionStatus(TutorProfileStatus.ForReview);
 
         LastUpdateDate = DateTime.UtcNow;
     }
@@ -124,7 +126,7 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
         CheckInvariant(new TutorProfileCanNotBeActivatedWhenItHasNeverBeenApprovedInvariant(LastApprovalDate));
         CheckInvariant(new TutorProfileCanBeActivatedOnlyWhenItHasNotBeenModifiedSinceLastApprovalInvariant(LastModificationDate, LastApprovalDate!.Value));
 
-        Status = TutorProfileStatus.Active;
+        TransitionStatus(TutorProfileStatus.Active);
 
         LastUpdateDate = DateTime.UtcNow;
     }
@@ -133,7 +135,7 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
     {
         CheckInvariant(new TutorProfileCanBeDeactivatedOnlyWhenItIsMarkedAsActiveOrForReviewInvariant(Status));
 
-        Status = TutorProfileStatus.Inactive;
+        TransitionStatus(TutorProfileStatus.Inactive);
 
         LastUpdateDate = DateTime.UtcNow;
     }
@@ -194,5 +196,12 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
         RateForOneHour = newRateForOneHour;
 
         LastUpdateDate = DateTime.UtcNow;
+    }
+
+    private void TransitionStatus(TutorProfileStatus newStatus)
+    {
+        CheckInvariant(new TutorProfileNewStatusMustHaveAValidTransitionFromTheOldStatusInvariant(Status, newStatus));
+
+        Status = newStatus;
     }
 }

@@ -5,13 +5,13 @@ namespace SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.Reda
 
 public class TutorProfileRedactionCommentCannotBeSettledMoreThanOnceInvariant : Invariant
 {
-    private readonly TutorProfileRedactionCommentStatus status;
+    private readonly TutorProfileRedactionCommentStatus currentStatus;
 
-    public TutorProfileRedactionCommentCannotBeSettledMoreThanOnceInvariant(TutorProfileRedactionCommentStatus status)
-        : base($"The tutor profile redaction comment is already settled with status '{status.Name}'")
+    public TutorProfileRedactionCommentCannotBeSettledMoreThanOnceInvariant(TutorProfileRedactionCommentStatus currentStatus)
+        : base($"The tutor profile redaction comment is already settled with status '{currentStatus}'")
     {
-        this.status = status;
+        this.currentStatus = currentStatus;
     }
 
-    public override bool IsValid() => status == TutorProfileRedactionCommentStatus.Active;
+    public override bool IsValid() => currentStatus == TutorProfileRedactionCommentStatus.Active;
 }

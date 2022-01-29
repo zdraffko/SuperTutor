@@ -14,7 +14,7 @@ public abstract class TutorProfileStatus : Enumeration
 
     public static readonly TutorProfileStatus ForRedaction = new ForRedactionStatus();
 
-    public abstract bool CanTransitionTo(TutorProfileStatus nextStatus);
+    public abstract bool CanTransitionTo(TutorProfileStatus newStatus);
 
     private sealed class InactiveStatus : TutorProfileStatus
     {
