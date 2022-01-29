@@ -3,7 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SuperTutor.Contexts.Identity.Api.Controllers;
+using SuperTutor.Contexts.Identity.Api;
 using SuperTutor.Contexts.Identity.Persistence;
 using SuperTutor.Contexts.Identity.Persistence.Entities;
 using System.Reflection;
@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddControllers()
-    .AddApplicationPart(typeof(UsersController).Assembly)
+    .AddApplicationPart(typeof(IIdentityApiAssemblyMarker).Assembly)
     .AddControllersAsServices();
 
 builder.Services.AddDbContext<IdentityDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

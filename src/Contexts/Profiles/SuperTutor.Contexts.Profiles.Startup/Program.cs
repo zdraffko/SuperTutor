@@ -2,7 +2,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
-using SuperTutor.Contexts.Profiles.Api.Controllers;
+using SuperTutor.Contexts.Profiles.Api;
 using SuperTutor.Contexts.Profiles.Persistence;
 using System.Reflection;
 
@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddControllers()
-    .AddApplicationPart(typeof(TutorProfilesController).Assembly)
+    .AddApplicationPart(typeof(IProfilesApiAssemblyMarker).Assembly)
     .AddControllersAsServices();
 
 builder.Services.AddDbContext<ProfilesDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
