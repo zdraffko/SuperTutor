@@ -3,7 +3,7 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Invariants;
 
 namespace SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.RedactionComments.Invariants;
 
-internal class TutorProfileRedactionCommentCannotBeSettledMoreThanOnceInvariant : Invariant
+public class TutorProfileRedactionCommentCannotBeSettledMoreThanOnceInvariant : Invariant
 {
     private readonly TutorProfileRedactionCommentStatus status;
 

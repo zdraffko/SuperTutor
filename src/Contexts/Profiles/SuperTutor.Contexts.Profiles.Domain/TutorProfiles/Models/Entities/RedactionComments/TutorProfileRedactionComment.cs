@@ -12,7 +12,7 @@ public class TutorProfileRedactionComment : Entity<TutorProfileRedactionCommentI
         TutorProfileId = tutorProfileId;
         CreatedByAdminId = createdByAdminId;
 
-        CheckInvariant(new TutorProfileRedactionCommentContentMustNotBeAboveTheMaxLenghtInvariant(content));
+        CheckInvariant(new TutorProfileRedactionCommentContentMustNotBeEmptyOrAboveTheMaxLenghtInvariant(content));
         Content = content;
 
         Status = TutorProfileRedactionCommentStatus.Active;

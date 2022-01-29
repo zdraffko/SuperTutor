@@ -50,6 +50,7 @@ public class TutorProfileTests
         tutorProfile.TutoringSubject.Should().BeEquivalentTo(DefaultTutoringSubject);
         tutorProfile.TutoringGrades.Should().BeEquivalentTo(DefaultTutoringGrades);
         tutorProfile.RateForOneHour.Should().Be(DefaultRateForOneHour);
+        tutorProfile.Status.Should().BeEquivalentTo(TutorProfileStatus.ForReview);
     }
 
     [Fact]
