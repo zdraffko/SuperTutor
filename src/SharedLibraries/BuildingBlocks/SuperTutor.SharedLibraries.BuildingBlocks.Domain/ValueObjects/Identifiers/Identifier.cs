@@ -1,5 +1,9 @@
-﻿namespace SuperTutor.SharedLibraries.BuildingBlocks.Domain.ValueObjects.Identifiers;
+﻿using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.TypeConverters;
+using System.ComponentModel;
 
+namespace SuperTutor.SharedLibraries.BuildingBlocks.Domain.ValueObjects.Identifiers;
+
+[TypeConverter(typeof(IdentifierTypeConverter))]
 public abstract class Identifier<TValue> : ValueObject
     where TValue : struct
 {
