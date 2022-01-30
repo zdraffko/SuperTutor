@@ -24,10 +24,6 @@ internal class UpdateStudyGradeForStudentProfileCommandHandler : ICommandHandler
         }
 
         var newStudyGrade = Enumeration.FromValue<Grade>(command.NewStudyGrade);
-        if (newStudyGrade is null)
-        {
-            return Result.Fail($"A study grade with value '{command.NewStudyGrade}' does not exist.");
-        }
 
         studentProfile.UpdateStudyGrade(newStudyGrade);
 

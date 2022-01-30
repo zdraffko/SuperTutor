@@ -17,7 +17,7 @@ public abstract class Entity<TIdentifier, TIdentifierValue> : IEquatable<Entity<
 
     protected void CheckInvariant(Invariant invariant)
     {
-        if (!invariant.IsValid())
+        if (invariant.IsBroken())
         {
             throw new InvariantValidationException(invariant);
         }

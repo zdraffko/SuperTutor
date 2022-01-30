@@ -18,18 +18,9 @@ internal class CreateTutorProfileCommandHandler : ICommandHandler<CreateTutorPro
     public async Task<Result> Handle(CreateTutorProfileCommand command, CancellationToken cancellationToken)
     {
         var tutoringSubject = Enumeration.FromValue<Subject>(command.TutoringSubject);
-        if (tutoringSubject is null)
-        {
-            return Result.Fail($"A tutoring subject with value '{command.TutoringSubject}' does not exist.");
-        }
-
         var tutoringGrades = Enumeration.FromValues<Grade>(command.TutoringGrades).ToHashSet();
-        if (!tutoringGrades.Any())
-        {
-            return Result.Fail("At least one tutoring grade must be selected.");
-        }
 
-        var tutorProfile = new TutorProfile(command.TutorId, command.About, tutoringSubject, tutoringGrades, command.RateForOneHour);
+        var tutorProfile = new TutorProfile(command.TutorId, command.About, tutoringSubject!, tutoringGrades, command.RateForOneHour);
 
         tutorProfileRepository.Add(tutorProfile);
 

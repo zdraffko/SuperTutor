@@ -19,18 +19,9 @@ internal class CreateStudentProfileCommandHandler : ICommandHandler<CreateStuden
     public async Task<Result> Handle(CreateStudentProfileCommand command, CancellationToken cancellationToken)
     {
         var studySubjects = Enumeration.FromValues<Subject>(command.StudySubjects).ToHashSet();
-        if (!studySubjects.Any())
-        {
-            return Result.Fail("At least one study subject must be selected.");
-        }
-
         var studyGrade = Enumeration.FromValue<Grade>(command.StudyGrade);
-        if (studyGrade is null)
-        {
-            return Result.Fail($"A study grade with value '{command.StudyGrade}' does not exist.");
-        }
 
-        var studentProfile = new StudentProfile(command.StudentId, studySubjects, studyGrade);
+        var studentProfile = new StudentProfile(command.StudentId, studySubjects, studyGrade!);
 
         studentProfileRepository.Add(studentProfile);
 

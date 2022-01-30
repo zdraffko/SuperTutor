@@ -10,4 +10,6 @@ public abstract class Invariant
     public string ErrorMessage { get; }
 
     public abstract bool IsValid();
+
+    public bool IsBroken() => !IsValid();
 }

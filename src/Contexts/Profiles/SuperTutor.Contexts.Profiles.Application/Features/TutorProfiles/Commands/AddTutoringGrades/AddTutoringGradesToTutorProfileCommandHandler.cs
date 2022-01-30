@@ -24,10 +24,6 @@ internal class AddTutoringGradesToTutorProfileCommandHandler : ICommandHandler<A
         }
 
         var newTutoringGrades = Enumeration.FromValues<Grade>(command.NewTutoringGrades).ToHashSet();
-        if (!newTutoringGrades.Any())
-        {
-            return Result.Fail("At least one tutoring grade must be selected to be added.");
-        }
 
         tutorProfile.AddTutoringGrades(newTutoringGrades);
 
