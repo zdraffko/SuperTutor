@@ -57,7 +57,7 @@ services:
         environment:
             - ConnectionStrings__DefaultConnection=Server=supertutor-mssqlserver;Database=SuperTutorProfiles;User Id=sa; Password=devPass123!;MultipleActiveResultSets=true
         volumes:
-            - ./.aspnet/identity/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+            - ./.aspnet/profiles/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
         networks: 
             - supertutor-network
         ports: 
