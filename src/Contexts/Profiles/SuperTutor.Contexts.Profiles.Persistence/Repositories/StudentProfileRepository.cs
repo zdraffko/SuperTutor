@@ -1,25 +1,26 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SuperTutor.Contexts.Profiles.Domain.StudentProfiles;
 using SuperTutor.Contexts.Profiles.Domain.StudentProfiles.Models.ValueObjects.Identifiers;
+using SuperTutor.Contexts.Profiles.Persistence.Contexts.Contracts;
 
 namespace SuperTutor.Contexts.Profiles.Persistence.Repositories;
 
 public class StudentProfileRepository : IStudentProfileRepository
 {
-    private readonly ProfilesDbContext profilesDbContext;
+    private readonly IStudentProfilesDbContext studentProfilesDbContext;
 
-    public StudentProfileRepository(ProfilesDbContext profilesDbContext)
+    public StudentProfileRepository(IStudentProfilesDbContext studentProfilesDbContext)
     {
-        this.profilesDbContext = profilesDbContext;
+        this.studentProfilesDbContext = studentProfilesDbContext;
     }
 
-    public void Add(StudentProfile studentProfile) => profilesDbContext.StudentProfiles.Add(studentProfile);
+    public void Add(StudentProfile studentProfile) => studentProfilesDbContext.StudentProfiles.Add(studentProfile);
 
     public async Task<StudentProfile?> GetById(StudentProfileId studentProfileId, CancellationToken cancellationToken)
-        => await profilesDbContext.StudentProfiles.SingleOrDefaultAsync(studentProfile => studentProfile.Id == studentProfileId, cancellationToken);
+        => await studentProfilesDbContext.StudentProfiles.SingleOrDefaultAsync(studentProfile => studentProfile.Id == studentProfileId, cancellationToken);
 
     public async Task<StudentProfile?> GetByStudentId(StudentId studentId, CancellationToken cancellationToken)
-        => await profilesDbContext.StudentProfiles.SingleOrDefaultAsync(studentProfile => studentProfile.StudentId == studentId, cancellationToken);
+        => await studentProfilesDbContext.StudentProfiles.SingleOrDefaultAsync(studentProfile => studentProfile.StudentId == studentId, cancellationToken);
 
-    public void Remove(StudentProfile studentProfile) => profilesDbContext.StudentProfiles.Remove(studentProfile);
+    public void Remove(StudentProfile studentProfile) => studentProfilesDbContext.StudentProfiles.Remove(studentProfile);
 }

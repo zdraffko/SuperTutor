@@ -1,8 +1,9 @@
 ﻿using SuperTutor.Contexts.Profiles.Domain.StudentProfiles.Models.ValueObjects.Identifiers;
+using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Repositories.Contracts;
 
 namespace SuperTutor.Contexts.Profiles.Domain.StudentProfiles;
 
-public interface IStudentProfileRepository
+public interface IStudentProfileRepository : IAggregateRootRepository<StudentProfile>
 {
     void Add(StudentProfile studentProfile);
 

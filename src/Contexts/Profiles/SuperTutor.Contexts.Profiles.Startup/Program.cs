@@ -3,7 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using SuperTutor.Contexts.Profiles.Api;
-using SuperTutor.Contexts.Profiles.Persistence;
+using SuperTutor.Contexts.Profiles.Persistence.Contexts;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
 using System.Reflection;
 

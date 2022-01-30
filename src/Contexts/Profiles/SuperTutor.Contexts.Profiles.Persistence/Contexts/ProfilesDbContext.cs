@@ -2,10 +2,11 @@
 using SuperTutor.Contexts.Profiles.Domain.StudentProfiles;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.RedactionComments;
+using SuperTutor.Contexts.Profiles.Persistence.Contexts.Contracts;
 
-namespace SuperTutor.Contexts.Profiles.Persistence;
+namespace SuperTutor.Contexts.Profiles.Persistence.Contexts;
 
-public class ProfilesDbContext : DbContext
+public class ProfilesDbContext : DbContext, ITutorProfilesDbContext, IStudentProfilesDbContext
 {
     public ProfilesDbContext(DbContextOptions<ProfilesDbContext> options) : base(options) { }
 

@@ -2,7 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using SuperTutor.Contexts.Profiles.Domain.StudentProfiles;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
-using SuperTutor.Contexts.Profiles.Persistence;
+using SuperTutor.Contexts.Profiles.Persistence.Contexts;
+using SuperTutor.Contexts.Profiles.Persistence.Contexts.Contracts;
 using SuperTutor.Contexts.Profiles.Persistence.Repositories;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.UnitOfWork;
 using SuperTutor.SharedLibraries.BuildingBlocks.Persistence.Services;
@@ -19,7 +20,12 @@ internal class PersistenceModule : Module
 
     private void RegisterDbComponents(ContainerBuilder builder)
     {
-        builder.RegisterType<ProfilesDbContext>().AsSelf().As<DbContext>().InstancePerLifetimeScope();
+        builder.RegisterType<ProfilesDbContext>()
+            .As<DbContext>()
+            .As<ITutorProfilesDbContext>()
+            .As<IStudentProfilesDbContext>()
+            .InstancePerLifetimeScope();
+
         builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
     }
 
