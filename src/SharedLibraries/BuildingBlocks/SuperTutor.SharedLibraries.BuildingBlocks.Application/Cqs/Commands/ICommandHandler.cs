@@ -1,7 +1,6 @@
 ﻿using FluentResults;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
 
-namespace SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
+namespace SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 public interface ICommandHandler<in TCommand>
     where TCommand : Command

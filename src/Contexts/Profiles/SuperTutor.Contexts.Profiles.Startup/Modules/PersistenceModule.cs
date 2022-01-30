@@ -4,7 +4,7 @@ using SuperTutor.Contexts.Profiles.Domain.StudentProfiles;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
 using SuperTutor.Contexts.Profiles.Persistence;
 using SuperTutor.Contexts.Profiles.Persistence.Repositories;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Contracts;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.UnitOfWork;
 using SuperTutor.SharedLibraries.BuildingBlocks.Persistence.Services;
 
 namespace SuperTutor.Contexts.Profiles.Startup.Modules;

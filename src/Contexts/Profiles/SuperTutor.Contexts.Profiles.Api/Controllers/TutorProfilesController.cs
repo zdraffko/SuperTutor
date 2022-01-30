@@ -12,7 +12,7 @@ using SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.R
 using SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.SubmitForReview;
 using SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.UpdateAbout;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Api.Controllers;
 

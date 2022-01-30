@@ -1,9 +1,7 @@
 ﻿using FluentResults;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Contracts;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
-namespace SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.IntegrationEvents.Commands.Decorators;
+namespace SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents.Commands.Decorators;
 
 public class IntegrationEventsCommandHandlerDecorator<TCommand> : ICommandHandler<TCommand>
     where TCommand : Command

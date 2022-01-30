@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Contracts;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.UnitOfWork;
 
 namespace SuperTutor.SharedLibraries.BuildingBlocks.Persistence.Services;
 

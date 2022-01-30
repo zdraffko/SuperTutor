@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using SuperTutor.Contexts.Identity.IntegrationEvents.Users;
 using SuperTutor.Contexts.Profiles.Application.Integration.Identity.Commands.DeleteProfilesForUser;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Infrastructure.IntegrationEvents.Consumers.Identity;
 

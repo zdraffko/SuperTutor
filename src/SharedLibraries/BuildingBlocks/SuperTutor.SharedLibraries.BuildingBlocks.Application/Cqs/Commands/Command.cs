@@ -1,6 +1,4 @@
-﻿using FluentResults;
-
-namespace SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
+﻿namespace SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 public abstract class Command
 {

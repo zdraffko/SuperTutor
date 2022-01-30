@@ -4,7 +4,7 @@ using SuperTutor.Contexts.Profiles.Application.Features.StudentProfiles.Commands
 using SuperTutor.Contexts.Profiles.Application.Features.StudentProfiles.Commands.RemoveStudySubject;
 using SuperTutor.Contexts.Profiles.Application.Features.StudentProfiles.Commands.UpdateStudyGrade;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Api.Controllers;
 

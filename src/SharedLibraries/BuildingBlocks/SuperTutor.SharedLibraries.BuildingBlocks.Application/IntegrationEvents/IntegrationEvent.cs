@@ -1,4 +1,4 @@
-﻿namespace SuperTutor.SharedLibraries.BuildingBlocks.Application.Common.IntegrationEvents;
+﻿namespace SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents;
 
 public abstract class IntegrationEvent
 {

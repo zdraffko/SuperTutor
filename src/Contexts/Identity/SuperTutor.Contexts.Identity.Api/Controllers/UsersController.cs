@@ -3,7 +3,7 @@ using SuperTutor.Contexts.Identity.Application.Features.Users.Commands.Delete;
 using SuperTutor.Contexts.Identity.Application.Features.Users.Commands.Login;
 using SuperTutor.Contexts.Identity.Application.Features.Users.Commands.Register;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Identity.Api.Controllers;
 

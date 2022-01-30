@@ -1,5 +1,5 @@
 ﻿using SuperTutor.Contexts.Profiles.Domain.StudentProfiles;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.StudentProfiles.Commands.AddStudySubjects;
 

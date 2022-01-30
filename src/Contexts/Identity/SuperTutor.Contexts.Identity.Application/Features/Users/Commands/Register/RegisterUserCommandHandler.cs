@@ -1,6 +1,6 @@
 ﻿using FluentResults;
 using SuperTutor.Contexts.Identity.Application.Contracts.Users;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Identity.Application.Features.Users.Commands.Register;
 

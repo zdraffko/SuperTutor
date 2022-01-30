@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Extensions;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Commands;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Queries;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Queries;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Queries;
 
 namespace SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
 

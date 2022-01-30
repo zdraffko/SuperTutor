@@ -1,6 +1,5 @@
 ﻿using MassTransit;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Common.IntegrationEvents;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Contracts;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents;
 
 namespace SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.IntegrationEvents;
 

@@ -1,8 +1,8 @@
 ﻿using FluentResults;
 using SuperTutor.Contexts.Identity.Application.Contracts.Users;
 using SuperTutor.Contexts.Identity.IntegrationEvents.Users;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Contracts;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents;
 
 namespace SuperTutor.Contexts.Identity.Application.Features.Users.Commands.Delete;
 

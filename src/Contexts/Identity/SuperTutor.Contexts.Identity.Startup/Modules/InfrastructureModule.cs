@@ -3,7 +3,7 @@ using MassTransit;
 using SuperTutor.Contexts.Identity.Application.Contracts.Users;
 using SuperTutor.Contexts.Identity.Infrastructure.Tokens;
 using SuperTutor.Contexts.Identity.Infrastructure.Users;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Contracts;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.IntegrationEvents;
 
 namespace SuperTutor.Contexts.Identity.Startup.Modules;

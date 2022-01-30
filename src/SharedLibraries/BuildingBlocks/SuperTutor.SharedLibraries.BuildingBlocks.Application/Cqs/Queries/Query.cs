@@ -1,6 +1,4 @@
-﻿using FluentResults;
-
-namespace SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Queries;
+﻿namespace SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Queries;
 
 public abstract class Query<TPayload>
 {

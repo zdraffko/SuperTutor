@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using MassTransit;
 using SuperTutor.Contexts.Profiles.Infrastructure;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Contracts;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.IntegrationEvents;
 
 namespace SuperTutor.Contexts.Profiles.Startup.Modules;

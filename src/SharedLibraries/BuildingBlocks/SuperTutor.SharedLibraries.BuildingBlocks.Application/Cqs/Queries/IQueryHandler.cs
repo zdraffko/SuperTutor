@@ -1,7 +1,6 @@
 ﻿using FluentResults;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Queries;
 
-namespace SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqrs.Contracts.Queries;
+namespace SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Queries;
 
 public interface IQueryHandler<in TQuery, TPayload>
     where TQuery : Query<TPayload>

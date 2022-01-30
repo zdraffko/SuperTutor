@@ -1,4 +1,4 @@
-﻿using SuperTutor.SharedLibraries.BuildingBlocks.Application.Common.IntegrationEvents;
+﻿using SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents;
 
 namespace SuperTutor.Contexts.Identity.IntegrationEvents.Users;
 

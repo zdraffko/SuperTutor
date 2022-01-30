@@ -1,4 +1,4 @@
-﻿namespace SuperTutor.SharedLibraries.BuildingBlocks.Application.Contracts;
+﻿namespace SuperTutor.SharedLibraries.BuildingBlocks.Application.UnitOfWork;
 
 public interface IUnitOfWork
 {
