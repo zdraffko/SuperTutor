@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using SuperTutor.Contexts.Profiles.Application;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Errors.Commands.Decorators;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents.Commands.Decorators;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.UnitOfWork.Commands.Decorators;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Validation.Commands;
@@ -33,6 +34,9 @@ internal class ApplicationModule : Module
 
         builder.RegisterGenericDecorator(typeof(ValidationCommandHandlerDecorator<>), typeof(ICommandHandler<>));
         builder.RegisterGenericDecorator(typeof(ValidationCommandHandlerDecorator<,>), typeof(ICommandHandler<,>));
+
+        builder.RegisterGenericDecorator(typeof(ErrorCommandHandlerDecorator<>), typeof(ICommandHandler<>));
+        builder.RegisterGenericDecorator(typeof(ErrorCommandHandlerDecorator<,>), typeof(ICommandHandler<,>));
     }
 
     private void RegisterCommandValidators(ContainerBuilder builder)
