@@ -19,7 +19,7 @@ public class UserService : IUserService
 
     public async Task<Result<string>> Login(string email, string password)
     {
-        var invalidLoginCredentialsErrorMessage = "Invalid login credentials.";
+        var invalidLoginCredentialsErrorMessage = "Invalid login credentials";
 
         var user = await userManager.FindByEmailAsync(email);
         if (user is null)

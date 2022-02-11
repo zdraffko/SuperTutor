@@ -13,7 +13,7 @@ internal class StudySubjectsForRemovalValidator : ICommandValidator<RemoveStudyS
         var studySubjectsForRemoval = Enumeration.FromValues<Subject>(command.StudySubjectsForRemoval).ToHashSet();
         if (!studySubjectsForRemoval.Any())
         {
-            return Result.Fail("At least one study subject must be selected for removal.");
+            return Result.Fail("At least one study subject must be selected for removal");
         }
 
         return Result.Ok();

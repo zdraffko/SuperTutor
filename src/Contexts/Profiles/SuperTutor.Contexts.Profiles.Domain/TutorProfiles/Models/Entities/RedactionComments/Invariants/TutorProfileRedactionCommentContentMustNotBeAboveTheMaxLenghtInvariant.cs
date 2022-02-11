@@ -8,7 +8,7 @@ public class TutorProfileRedactionCommentContentMustNotBeEmptyOrAboveTheMaxLengh
     private readonly string content;
 
     public TutorProfileRedactionCommentContentMustNotBeEmptyOrAboveTheMaxLenghtInvariant(string content)
-        : base($"The 'content' field is required and it cannot have more than {TutorProfileRedactionCommentConstants.ContentMaxLength} characters.")
+        : base($"The 'content' field is required and it cannot have more than {TutorProfileRedactionCommentConstants.ContentMaxLength} characters")
     {
         this.content = content;
     }

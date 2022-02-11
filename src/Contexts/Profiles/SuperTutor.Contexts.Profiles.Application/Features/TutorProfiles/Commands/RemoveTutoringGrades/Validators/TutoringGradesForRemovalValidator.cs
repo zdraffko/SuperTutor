@@ -12,7 +12,7 @@ internal class TutoringGradesForRemovalValidator : ICommandValidator<RemoveTutor
         var tutoringGradesForRemoval = Enumeration.FromValues<Grade>(command.TutoringGradesForRemoval).ToHashSet();
         if (!tutoringGradesForRemoval.Any())
         {
-            return Result.Fail("At least one tutoring grade must be selected for removal.");
+            return Result.Fail("At least one tutoring grade must be selected for removal");
         }
 
         return Result.Ok();

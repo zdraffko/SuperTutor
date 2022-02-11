@@ -7,7 +7,7 @@ public class TutorProfileRateForOneHourCanOnlyBeModifiedWithAmountsAboveZeroInva
     private readonly decimal rateForOneHourModificationAmount;
 
     public TutorProfileRateForOneHourCanOnlyBeModifiedWithAmountsAboveZeroInvariant(decimal rateForOneHourModificationAmount)
-        : base("The amount for modifying the rate for one hour must be above zero.")
+        : base("The amount for modifying the rate for one hour must be above zero")
     {
         this.rateForOneHourModificationAmount = rateForOneHourModificationAmount;
     }

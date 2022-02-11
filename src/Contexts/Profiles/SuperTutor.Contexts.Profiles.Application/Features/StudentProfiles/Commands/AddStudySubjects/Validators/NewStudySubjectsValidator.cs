@@ -12,7 +12,7 @@ internal class NewStudySubjectsValidator : ICommandValidator<AddStudySubjectsToS
         var newStudySubjects = Enumeration.FromValues<Subject>(command.NewStudySubjects).ToHashSet();
         if (!newStudySubjects.Any())
         {
-            return Result.Fail("At least one new study subject must be selected to be added.");
+            return Result.Fail("At least one new study subject must be selected to be added");
         }
 
         return Result.Ok();

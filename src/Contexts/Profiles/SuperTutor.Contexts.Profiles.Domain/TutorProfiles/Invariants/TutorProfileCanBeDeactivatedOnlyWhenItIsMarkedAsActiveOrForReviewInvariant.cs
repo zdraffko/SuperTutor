@@ -8,7 +8,7 @@ public class TutorProfileCanBeDeactivatedOnlyWhenItIsMarkedAsActiveOrForReviewIn
     private readonly TutorProfileStatus status;
 
     public TutorProfileCanBeDeactivatedOnlyWhenItIsMarkedAsActiveOrForReviewInvariant(TutorProfileStatus status)
-        : base("The tutor profile can only be deactivated when it is marked as active or for review.")
+        : base("The tutor profile can only be deactivated when it is marked as active or for review")
     {
         this.status = status;
     }

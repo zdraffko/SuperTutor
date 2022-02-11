@@ -8,7 +8,7 @@ public class TutorProfileCanBeSubmittedForReviewOnlyWhenItIsMarkedAsInactiveOrFo
     private readonly TutorProfileStatus status;
 
     public TutorProfileCanBeSubmittedForReviewOnlyWhenItIsMarkedAsInactiveOrForRedactionInvariant(TutorProfileStatus status)
-        : base("The tutor profile can be submitted for review only when it is marked as inactive or for redaction.")
+        : base("The tutor profile can be submitted for review only when it is marked as inactive or for redaction")
     {
         this.status = status;
     }

@@ -12,7 +12,7 @@ internal class StudyGradeValidator : ICommandValidator<CreateStudentProfileComma
         var studyGrade = Enumeration.FromValue<Grade>(command.StudyGrade);
         if (studyGrade is null)
         {
-            return Result.Fail($"A study grade with value '{command.StudyGrade}' does not exist.");
+            return Result.Fail($"A study grade with value '{command.StudyGrade}' does not exist");
         }
 
         return Result.Ok();

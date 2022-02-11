@@ -12,7 +12,7 @@ internal class TutoringSubjectValidator : ICommandValidator<CreateTutorProfileCo
         var tutoringSubject = Enumeration.FromValue<Subject>(command.TutoringSubject);
         if (tutoringSubject is null)
         {
-            return Result.Fail($"A tutoring subject with value '{command.TutoringSubject}' does not exist.");
+            return Result.Fail($"A tutoring subject with value '{command.TutoringSubject}' does not exist");
         }
 
         return Result.Ok();

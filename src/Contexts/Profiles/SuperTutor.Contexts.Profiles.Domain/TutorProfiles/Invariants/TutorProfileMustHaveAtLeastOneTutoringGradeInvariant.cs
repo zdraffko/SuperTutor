@@ -8,7 +8,7 @@ public class TutorProfileMustHaveAtLeastOneTutoringGradeInvariant : Invariant
     private readonly HashSet<Grade> newTutoringGrades;
 
     public TutorProfileMustHaveAtLeastOneTutoringGradeInvariant(HashSet<Grade> newTutoringGrades)
-        : base("The tutor profile must have at least one tutoring grade.")
+        : base("The tutor profile must have at least one tutoring grade")
     {
         this.newTutoringGrades = newTutoringGrades;
     }

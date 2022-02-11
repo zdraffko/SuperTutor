@@ -20,12 +20,12 @@ internal class UpdateStudyGradeForStudentProfileCommandHandler : ICommandHandler
         var studentProfile = await studentProfileRepository.GetById(command.StudentProfileId, cancellationToken);
         if (studentProfile is null)
         {
-            return Result.Fail("Student profile not found.");
+            return Result.Fail("Student profile not found");
         }
 
         var newStudyGrade = Enumeration.FromValue<Grade>(command.NewStudyGrade);
 
-        studentProfile.UpdateStudyGrade(newStudyGrade);
+        studentProfile.UpdateStudyGrade(newStudyGrade!);
 
         return Result.Ok();
     }

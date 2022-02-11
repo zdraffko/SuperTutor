@@ -12,7 +12,7 @@ internal class TutoringGradesValidator : ICommandValidator<CreateTutorProfileCom
         var tutoringGrades = Enumeration.FromValues<Grade>(command.TutoringGrades).ToHashSet();
         if (!tutoringGrades.Any())
         {
-            return Result.Fail("At least one tutoring grade must be selected.");
+            return Result.Fail("At least one tutoring grade must be selected");
         }
 
         return Result.Ok();

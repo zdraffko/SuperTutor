@@ -20,7 +20,7 @@ internal class RemoveStudySubjectsFromStudentProfileCommandHandler : ICommandHan
         var studentProfile = await studentProfileRepository.GetById(command.StudentProfileId, cancellationToken);
         if (studentProfile is null)
         {
-            return Result.Fail("Student profile not found.");
+            return Result.Fail("Student profile not found");
         }
 
         var studySubjectsForRemoval = Enumeration.FromValues<Subject>(command.StudySubjectsForRemoval).ToHashSet();

@@ -7,7 +7,7 @@ public class TutorProfileCanNotBeActivatedWhenItHasNeverBeenApprovedInvariant : 
     private readonly DateTime? lastApprovalDate;
 
     public TutorProfileCanNotBeActivatedWhenItHasNeverBeenApprovedInvariant(DateTime? lastApprovalDate)
-        : base("The tutor profile must be approved before it can be activated.")
+        : base("The tutor profile must be approved before it can be activated")
     {
         this.lastApprovalDate = lastApprovalDate;
     }

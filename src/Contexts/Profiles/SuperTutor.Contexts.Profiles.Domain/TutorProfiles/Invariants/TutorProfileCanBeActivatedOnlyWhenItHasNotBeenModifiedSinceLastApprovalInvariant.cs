@@ -8,7 +8,7 @@ public class TutorProfileCanBeActivatedOnlyWhenItHasNotBeenModifiedSinceLastAppr
     private readonly DateTime lastApprovalDate;
 
     public TutorProfileCanBeActivatedOnlyWhenItHasNotBeenModifiedSinceLastApprovalInvariant(DateTime? lastModificationDate, DateTime lastApprovalDate)
-        : base("The tutor profile can only be activated when there are no pending modifications for review.")
+        : base("The tutor profile can only be activated when there are no pending modifications for review")
     {
         this.lastModificationDate = lastModificationDate;
         this.lastApprovalDate = lastApprovalDate;

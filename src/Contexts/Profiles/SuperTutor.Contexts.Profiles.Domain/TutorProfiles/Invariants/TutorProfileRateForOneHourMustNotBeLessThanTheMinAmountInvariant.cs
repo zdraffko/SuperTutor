@@ -8,7 +8,7 @@ public class TutorProfileRateForOneHourMustNotBeLessThanTheMinAmountInvariant : 
     private readonly decimal newRateForOneHour;
 
     public TutorProfileRateForOneHourMustNotBeLessThanTheMinAmountInvariant(decimal newRateForOneHour)
-        : base($"The rate for one hour cannot be less than {TutorProfileConstants.RateForOneHourMinAmount}.")
+        : base($"The rate for one hour cannot be less than {TutorProfileConstants.RateForOneHourMinAmount}")
     {
         this.newRateForOneHour = newRateForOneHour;
     }

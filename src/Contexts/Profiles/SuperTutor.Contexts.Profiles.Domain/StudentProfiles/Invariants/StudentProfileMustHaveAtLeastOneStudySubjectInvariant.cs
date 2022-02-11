@@ -8,7 +8,7 @@ public class StudentProfileMustHaveAtLeastOneStudySubjectInvariant : Invariant
     private readonly HashSet<Subject> studySubjects;
 
     public StudentProfileMustHaveAtLeastOneStudySubjectInvariant(HashSet<Subject> studySubjects)
-        : base("The student profile must have at least one study subject.")
+        : base("The student profile must have at least one study subject")
     {
         this.studySubjects = studySubjects;
     }

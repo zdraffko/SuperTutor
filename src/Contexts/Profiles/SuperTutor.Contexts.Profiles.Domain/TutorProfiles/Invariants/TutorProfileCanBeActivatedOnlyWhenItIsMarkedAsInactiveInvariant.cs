@@ -8,7 +8,7 @@ public class TutorProfileCanBeActivatedOnlyWhenItIsMarkedAsInactiveInvariant : I
     private readonly TutorProfileStatus status;
 
     public TutorProfileCanBeActivatedOnlyWhenItIsMarkedAsInactiveInvariant(TutorProfileStatus status)
-        : base("The tutor profile can only be activated when it is marked as inactive.")
+        : base("The tutor profile can only be activated when it is marked as inactive")
     {
         this.status = status;
     }

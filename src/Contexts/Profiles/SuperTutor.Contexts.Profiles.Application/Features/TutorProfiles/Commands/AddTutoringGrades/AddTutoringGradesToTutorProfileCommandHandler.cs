@@ -20,7 +20,7 @@ internal class AddTutoringGradesToTutorProfileCommandHandler : ICommandHandler<A
         var tutorProfile = await tutorProfileRepository.GetById(command.TutorProfileId, cancellationToken);
         if (tutorProfile is null)
         {
-            return Result.Fail("Tutor profile not found.");
+            return Result.Fail("Tutor profile not found");
         }
 
         var newTutoringGrades = Enumeration.FromValues<Grade>(command.NewTutoringGrades).ToHashSet();

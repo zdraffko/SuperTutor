@@ -8,7 +8,7 @@ public class TutorProfileAboutMustNotBeEmptyOrAboveTheMaxLenghtInvariant : Invar
     private readonly string about;
 
     public TutorProfileAboutMustNotBeEmptyOrAboveTheMaxLenghtInvariant(string about)
-        : base($"The 'about' field cannot be empty and it cannot have more than {TutorProfileConstants.AboutMaxLength} characters.")
+        : base($"The 'about' field cannot be empty and it cannot have more than {TutorProfileConstants.AboutMaxLength} characters")
     {
         this.about = about;
     }

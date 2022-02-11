@@ -18,7 +18,7 @@ internal class SubmitTutorProfileForReviewCommandHandler : ICommandHandler<Submi
         var tutorProfile = await tutorProfileRepository.GetById(command.TutorProfileId, cancellationToken);
         if (tutorProfile is null)
         {
-            return Result.Fail("Tutor profile not found.");
+            return Result.Fail("Tutor profile not found");
         }
 
         tutorProfile.SubmitForReview();

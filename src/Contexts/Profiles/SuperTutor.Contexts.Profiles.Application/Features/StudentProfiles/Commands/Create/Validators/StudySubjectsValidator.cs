@@ -12,7 +12,7 @@ internal class StudySubjectsValidator : ICommandValidator<CreateStudentProfileCo
         var studySubjects = Enumeration.FromValues<Subject>(command.StudySubjects).ToHashSet();
         if (!studySubjects.Any())
         {
-            return Result.Fail("At least one study subject must be selected.");
+            return Result.Fail("At least one study subject must be selected");
         }
 
         return Result.Ok();

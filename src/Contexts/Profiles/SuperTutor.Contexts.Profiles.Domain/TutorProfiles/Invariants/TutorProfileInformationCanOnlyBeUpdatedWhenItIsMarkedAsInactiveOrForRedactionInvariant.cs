@@ -8,7 +8,7 @@ public class TutorProfileInformationCanOnlyBeUpdatedWhenItIsMarkedAsInactiveOrFo
     private readonly TutorProfileStatus status;
 
     public TutorProfileInformationCanOnlyBeUpdatedWhenItIsMarkedAsInactiveOrForRedactionInvariant(TutorProfileStatus status)
-        : base("The tutor profile can only be updated when it is marked as inactive or for redaction.")
+        : base("The tutor profile can only be updated when it is marked as inactive or for redaction")
     {
         this.status = status;
     }

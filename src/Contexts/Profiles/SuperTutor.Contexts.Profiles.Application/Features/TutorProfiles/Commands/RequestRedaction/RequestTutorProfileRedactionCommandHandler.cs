@@ -19,7 +19,7 @@ internal class RequestTutorProfileRedactionCommandHandler : ICommandHandler<Requ
         var tutorProfile = await tutorProfileRepository.GetById(command.TutorProfileId, cancellationToken);
         if (tutorProfile is null)
         {
-            return Result.Fail("Tutor profile not found.");
+            return Result.Fail("Tutor profile not found");
         }
 
         var tutorProfileRedactionComment = new TutorProfileRedactionComment(tutorProfile.Id, command.AdminId, command.Comment);

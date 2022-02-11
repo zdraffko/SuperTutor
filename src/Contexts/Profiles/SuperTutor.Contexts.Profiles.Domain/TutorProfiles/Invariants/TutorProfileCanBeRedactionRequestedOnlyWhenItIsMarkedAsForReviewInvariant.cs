@@ -8,7 +8,7 @@ public class TutorProfileCanBeRedactionRequestedOnlyWhenItIsMarkedAsForReviewInv
     private readonly TutorProfileStatus status;
 
     public TutorProfileCanBeRedactionRequestedOnlyWhenItIsMarkedAsForReviewInvariant(TutorProfileStatus status)
-        : base("Redaction can be requested for the tutor profile only when it is marked as submitted for review.")
+        : base("Redaction can be requested for the tutor profile only when it is marked as submitted for review")
     {
         this.status = status;
     }

@@ -8,7 +8,7 @@ public class TutorProfileCanBeApprovedOnlyWhenItIsMarkedAsForReviewInvariant : I
     private readonly TutorProfileStatus status;
 
     public TutorProfileCanBeApprovedOnlyWhenItIsMarkedAsForReviewInvariant(TutorProfileStatus status)
-        : base("The tutor profile can only be approved when it is marked as submitted for review.")
+        : base("The tutor profile can only be approved when it is marked as submitted for review")
     {
         this.status = status;
     }

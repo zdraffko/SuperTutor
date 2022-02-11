@@ -20,7 +20,7 @@ internal class AddStudySubjectsToStudentProfileCommandHandler : ICommandHandler<
         var studentProfile = await studentProfileRepository.GetById(command.StudentProfileId, cancellationToken);
         if (studentProfile is null)
         {
-            return Result.Fail("Student profile not found.");
+            return Result.Fail("Student profile not found");
         }
 
         var newStudySubjects = Enumeration.FromValues<Subject>(command.NewStudySubjects).ToHashSet();

@@ -8,7 +8,7 @@ public class TutorProfileCanBeSubmittedForReviewOnlyWhenItHasBeenModifiedSinceLa
     private readonly DateTime? lastRedactionRequestDate;
 
     public TutorProfileCanBeSubmittedForReviewOnlyWhenItHasBeenModifiedSinceLastRedactionRequestInvariant(DateTime? lastModificationDate, DateTime? lastRedactionRequestDate)
-        : base("The tutor profile can only be submitted for review when it has been modified since the last redaction request.")
+        : base("The tutor profile can only be submitted for review when it has been modified since the last redaction request")
     {
         this.lastModificationDate = lastModificationDate;
         this.lastRedactionRequestDate = lastRedactionRequestDate;

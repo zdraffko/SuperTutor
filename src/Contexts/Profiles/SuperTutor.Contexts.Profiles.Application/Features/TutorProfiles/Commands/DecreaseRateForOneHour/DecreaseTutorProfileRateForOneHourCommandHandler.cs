@@ -18,7 +18,7 @@ internal class DecreaseTutorProfileRateForOneHourCommandHandler : ICommandHandle
         var tutorProfile = await tutorProfileRepository.GetById(command.TutorProfileId, cancellationToken);
         if (tutorProfile is null)
         {
-            return Result.Fail("Tutor profile not found.");
+            return Result.Fail("Tutor profile not found");
         }
 
         tutorProfile.DecreaseRateForOneHour(command.DecreaseAmount);
