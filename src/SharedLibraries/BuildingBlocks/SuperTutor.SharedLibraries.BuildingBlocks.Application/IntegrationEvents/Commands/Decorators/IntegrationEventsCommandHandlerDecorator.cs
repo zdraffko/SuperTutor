@@ -18,6 +18,10 @@ public class IntegrationEventsCommandHandlerDecorator<TCommand> : ICommandHandle
     public async Task<Result> Handle(TCommand command, CancellationToken cancellationToken)
     {
         var decoratedResult = await decoratedCommandHandler.Handle(command, cancellationToken);
+        if (decoratedResult.IsFailed)
+        {
+            return decoratedResult;
+        }
 
         await integrationEventsService.DispatchAll(cancellationToken);
 
@@ -40,6 +44,10 @@ public class IntegrationEventsCommandHandlerDecorator<TCommand, TPayload> : ICom
     public async Task<Result<TPayload>> Handle(TCommand command, CancellationToken cancellationToken)
     {
         var decoratedResult = await decoratedCommandHandler.Handle(command, cancellationToken);
+        if (decoratedResult.IsFailed)
+        {
+            return decoratedResult;
+        }
 
         await integrationEventsService.DispatchAll(cancellationToken);
 
