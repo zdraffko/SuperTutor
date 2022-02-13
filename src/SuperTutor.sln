@@ -53,9 +53,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A5293D13
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C8289B34-1808-41D9-9F6C-01DDF9B59D3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Profiles.Tests.Domain.Unit", "Contexts\Profiles\Tests\SuperTutor.Contexts.Profiles.Tests.Domain.Unit\SuperTutor.Contexts.Profiles.Tests.Domain.Unit.csproj", "{5DBB8341-04AE-4AB5-89D5-2FD72B6B9FB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.Tests.Domain.Unit", "Contexts\Profiles\Tests\SuperTutor.Contexts.Profiles.Tests.Domain.Unit\SuperTutor.Contexts.Profiles.Tests.Domain.Unit.csproj", "{5DBB8341-04AE-4AB5-89D5-2FD72B6B9FB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.SharedLibraries.BuildingBlocks.Tests.Domain", "SharedLibraries\BuildingBlocks\Tests\SuperTutor.SharedLibraries.BuildingBlocks.Tests.Domain\SuperTutor.SharedLibraries.BuildingBlocks.Tests.Domain.csproj", "{3DD6A336-5FE3-40B6-8AC2-FA41D4A4EFC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.SharedLibraries.BuildingBlocks.Tests.Domain", "SharedLibraries\BuildingBlocks\Tests\SuperTutor.SharedLibraries.BuildingBlocks.Tests.Domain\SuperTutor.SharedLibraries.BuildingBlocks.Tests.Domain.csproj", "{3DD6A336-5FE3-40B6-8AC2-FA41D4A4EFC9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EC5FED04-2C57-4DDB-BEC3-8F82F43CCF1E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
