@@ -6,19 +6,22 @@ using Serilog;
 using Serilog.Sinks.Elasticsearch;
 using SuperTutor.Contexts.Profiles.Api;
 using SuperTutor.Contexts.Profiles.Persistence.Contexts;
+using SuperTutor.Contexts.Profiles.Startup.Modules;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((hostBuilderContext, loggerConfiguration)
     => loggerConfiguration
         .WriteTo.Console()
-        .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://elasticsearch:9200"))
+        .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(hostBuilderContext.Configuration["Elasticsearch:Url"]))
         {
-            IndexFormat = $"supertutor-profiles-logs-{DateTime.UtcNow:yyyy-MM}",
+            IndexFormat = $"supertutor-logs-profiles-{DateTime.UtcNow:yyyy-MM}",
             AutoRegisterTemplate = true,
-            DetectElasticsearchVersion = true
+            DetectElasticsearchVersion = true,
+            TypeName = null,
+            BatchAction = ElasticOpType.Create,
+            ModifyConnectionSettings = connectionConfiguration => connectionConfiguration.BasicAuthentication(hostBuilderContext.Configuration["Elasticsearch:Username"], hostBuilderContext.Configuration["Elasticsearch:Password"]),
         })
         .ReadFrom.Configuration(hostBuilderContext.Configuration));
 
@@ -30,12 +33,16 @@ builder.Services
     .AddApplicationPart(typeof(IProfilesApiAssemblyMarker).Assembly)
     .AddControllersAsServices();
 
-builder.Services.AddDbContext<ProfilesDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<ProfilesDbContext>(options => options.UseSqlServer(builder.Configuration["Database:ConnectionString"]));
 
 builder.Services.AddMassTransitHostedService();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterAssemblyModules(Assembly.GetExecutingAssembly()));
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder
+    => containerBuilder
+        .RegisterModule(new ApplicationModule())
+        .RegisterModule(new InfrastructureModule(builder.Configuration))
+        .RegisterModule(new PersistenceModule()));
 
 var app = builder.Build();
 

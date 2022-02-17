@@ -10,6 +10,10 @@ namespace SuperTutor.Contexts.Identity.Startup.Modules;
 
 internal class InfrastructureModule : Module
 {
+    private readonly IConfiguration configuration;
+
+    public InfrastructureModule(IConfiguration configuration) => this.configuration = configuration;
+
     protected override void Load(ContainerBuilder builder)
     {
         RegisterServices(builder);
@@ -24,13 +28,7 @@ internal class InfrastructureModule : Module
     }
 
     private void RegisterMasstransit(ContainerBuilder builder)
-    {
-        builder.AddMassTransit(busConfigurator =>
-        {
-            busConfigurator.UsingRabbitMq((context, rabbitmqConfigurator) =>
-            {
-                rabbitmqConfigurator.Host("amqp://devuser:devPass123!@supertutor-rabbitmq:5672");
-            });
-        });
-    }
+        => builder.AddMassTransit(busConfigurator
+            => busConfigurator.UsingRabbitMq((context, rabbitmqConfigurator)
+                => rabbitmqConfigurator.Host(configuration["RabbitMq:Url"])));
 }
