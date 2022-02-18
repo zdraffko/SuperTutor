@@ -130,11 +130,4 @@ public class TutorProfileRedactionCommentTests
     }
 
     #endregion SettleWithNewRedactionRequest Tests
-
-    #region Helper Methods
-
-    private TutorProfileRedactionComment CreateDefaultRedactionComment()
-        => new TutorProfileRedactionComment(DefaultTutorProfileId, DefaultAdminId, DefaultContent);
-
-    #endregion Helper Methods
 }

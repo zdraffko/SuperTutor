@@ -9,9 +9,7 @@ public class TutorProfileMustHaveAtLeastOneTutoringGradeInvariant : Invariant
 
     public TutorProfileMustHaveAtLeastOneTutoringGradeInvariant(HashSet<Grade> newTutoringGrades)
         : base("The tutor profile must have at least one tutoring grade")
-    {
-        this.newTutoringGrades = newTutoringGrades;
-    }
+        => this.newTutoringGrades = newTutoringGrades;
 
     public override bool IsValid() => newTutoringGrades.Count > 0;
 }

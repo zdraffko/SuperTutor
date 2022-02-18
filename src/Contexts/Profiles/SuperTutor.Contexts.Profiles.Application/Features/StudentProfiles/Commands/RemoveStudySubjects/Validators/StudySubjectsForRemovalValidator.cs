@@ -1,5 +1,4 @@
 ﻿using FluentResults;
-using SuperTutor.Contexts.Profiles.Application.Features.StudentProfiles.Commands.RemoveStudySubject;
 using SuperTutor.Contexts.Profiles.Domain.Common.Models.Enumerations;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Validation.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;

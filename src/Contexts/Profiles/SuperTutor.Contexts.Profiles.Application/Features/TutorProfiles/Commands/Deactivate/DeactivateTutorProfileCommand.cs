@@ -5,10 +5,7 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Comman
 
 public class DeactivateTutorProfileCommand : Command
 {
-    public DeactivateTutorProfileCommand(TutorProfileId tutorProfileId)
-    {
-        TutorProfileId = tutorProfileId;
-    }
+    public DeactivateTutorProfileCommand(TutorProfileId tutorProfileId) => TutorProfileId = tutorProfileId;
 
     public TutorProfileId TutorProfileId { get; }
 }

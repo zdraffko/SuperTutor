@@ -8,9 +8,7 @@ public class TutorProfileCanNotBeActivatedWhenItHasNeverBeenApprovedInvariant : 
 
     public TutorProfileCanNotBeActivatedWhenItHasNeverBeenApprovedInvariant(DateTime? lastApprovalDate)
         : base("The tutor profile must be approved before it can be activated")
-    {
-        this.lastApprovalDate = lastApprovalDate;
-    }
+        => this.lastApprovalDate = lastApprovalDate;
 
     public override bool IsValid() => lastApprovalDate.HasValue;
 }

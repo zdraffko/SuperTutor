@@ -92,7 +92,6 @@ public class TutorProfileTests
         action.ShouldBrakeInvariant<TutorProfileMustHaveAtLeastOneTutoringGradeInvariant>();
     }
 
-
     [Fact]
     public void Constructor_WhenTheRateForOneHourIsLessThanTheMinAmount_ShouldBreakTutorProfileRateForOneHourMustNotBeLessThanTheMinAmountInvariant()
     {
@@ -835,16 +834,16 @@ public class TutorProfileTests
     #region Helper Methods
 
     private TutorProfile CreateDefaultTutorProfile()
-        => new TutorProfile(DefaultTutoId, DefaultAbout, DefaultTutoringSubject, DefaultTutoringGrades, DefaultRateForOneHour);
+        => new(DefaultTutoId, DefaultAbout, DefaultTutoringSubject, DefaultTutoringGrades, DefaultRateForOneHour);
 
     private TutorProfileRedactionComment CreateDefaultRedactionComment(TutorProfileId tutorProfileId)
-        => new TutorProfileRedactionComment(tutorProfileId, DefaultAdminId, "Change about text.");
+        => new(tutorProfileId, DefaultAdminId, "Change about text.");
 
     #endregion Helper Methods
 
     #region Test Data
 
-    public static IEnumerable<object[]> TutoringGradesTestData = new List<object[]>
+    public static IEnumerable<object[]> TutoringGradesTestData => new List<object[]>
     {
         new object[] { new HashSet<Grade> { Grade.Twelveth } },
         new object[] { new HashSet<Grade> { Grade.Twelveth, Grade.Tenth } },

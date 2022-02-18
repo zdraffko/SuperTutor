@@ -10,10 +10,7 @@ internal class CreateTutorProfileCommandHandler : ICommandHandler<CreateTutorPro
 {
     private readonly ITutorProfileRepository tutorProfileRepository;
 
-    public CreateTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository)
-    {
-        this.tutorProfileRepository = tutorProfileRepository;
-    }
+    public CreateTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
 
     public async Task<Result> Handle(CreateTutorProfileCommand command, CancellationToken cancellationToken)
     {

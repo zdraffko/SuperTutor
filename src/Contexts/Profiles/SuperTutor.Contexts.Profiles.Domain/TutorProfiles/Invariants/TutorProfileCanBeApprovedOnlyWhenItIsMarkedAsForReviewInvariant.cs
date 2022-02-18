@@ -9,9 +9,7 @@ public class TutorProfileCanBeApprovedOnlyWhenItIsMarkedAsForReviewInvariant : I
 
     public TutorProfileCanBeApprovedOnlyWhenItIsMarkedAsForReviewInvariant(TutorProfileStatus status)
         : base("The tutor profile can only be approved when it is marked as submitted for review")
-    {
-        this.status = status;
-    }
+        => this.status = status;
 
     public override bool IsValid() => status == TutorProfileStatus.ForReview;
 }

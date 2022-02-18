@@ -17,13 +17,13 @@ internal class ApplicationModule : Module
         RegisterCommandValidators(builder);
     }
 
-    private void RegisterCommandHandlers(ContainerBuilder builder)
+    private static void RegisterCommandHandlers(ContainerBuilder builder)
     {
         builder.RegisterAssemblyTypes(typeof(IIdentityApplicationAssemblyMarker).Assembly).AsClosedTypesOf(typeof(ICommandHandler<>)).InstancePerLifetimeScope();
         builder.RegisterAssemblyTypes(typeof(IIdentityApplicationAssemblyMarker).Assembly).AsClosedTypesOf(typeof(ICommandHandler<,>)).InstancePerLifetimeScope();
     }
 
-    private void RegisterCommandHandlerDecorators(ContainerBuilder builder)
+    private static void RegisterCommandHandlerDecorators(ContainerBuilder builder)
     {
         builder.RegisterGenericDecorator(typeof(IntegrationEventsCommandHandlerDecorator<>), typeof(ICommandHandler<>));
         builder.RegisterGenericDecorator(typeof(IntegrationEventsCommandHandlerDecorator<,>), typeof(ICommandHandler<,>));
@@ -35,7 +35,7 @@ internal class ApplicationModule : Module
         builder.RegisterGenericDecorator(typeof(ErrorCommandHandlerDecorator<,>), typeof(ICommandHandler<,>));
     }
 
-    private void RegisterCommandValidators(ContainerBuilder builder)
+    private static void RegisterCommandValidators(ContainerBuilder builder)
     {
         builder.RegisterAssemblyTypes(typeof(IIdentityApplicationAssemblyMarker).Assembly).AsClosedTypesOf(typeof(ICommandValidator<>)).InstancePerLifetimeScope();
         builder.RegisterAssemblyTypes(typeof(IIdentityApplicationAssemblyMarker).Assembly).AsClosedTypesOf(typeof(ICommandValidator<,>)).InstancePerLifetimeScope();

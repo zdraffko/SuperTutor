@@ -9,9 +9,7 @@ public class TutorProfileRedactionCommentCannotBeSettledMoreThanOnceInvariant : 
 
     public TutorProfileRedactionCommentCannotBeSettledMoreThanOnceInvariant(TutorProfileRedactionCommentStatus currentStatus)
         : base($"The tutor profile redaction comment is already settled with status '{currentStatus}'")
-    {
-        this.currentStatus = currentStatus;
-    }
+        => this.currentStatus = currentStatus;
 
     public override bool IsValid() => currentStatus == TutorProfileRedactionCommentStatus.Active;
 }

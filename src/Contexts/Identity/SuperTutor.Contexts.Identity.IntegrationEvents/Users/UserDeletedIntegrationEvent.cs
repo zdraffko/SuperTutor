@@ -4,10 +4,7 @@ namespace SuperTutor.Contexts.Identity.IntegrationEvents.Users;
 
 public class UserDeletedIntegrationEvent : IntegrationEvent
 {
-    public UserDeletedIntegrationEvent(Guid userId)
-    {
-        UserId = userId;
-    }
+    public UserDeletedIntegrationEvent(Guid userId) => UserId = userId;
 
     public Guid UserId { get; }
 }

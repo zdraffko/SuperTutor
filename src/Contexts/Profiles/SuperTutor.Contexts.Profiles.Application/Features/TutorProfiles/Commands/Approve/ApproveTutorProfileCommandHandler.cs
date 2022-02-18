@@ -1,6 +1,5 @@
 ﻿using FluentResults;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
-using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.Approve;
@@ -9,10 +8,7 @@ internal class ApproveTutorProfileCommandHandler : ICommandHandler<ApproveTutorP
 {
     private readonly ITutorProfileRepository tutorProfileRepository;
 
-    public ApproveTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository)
-    {
-        this.tutorProfileRepository = tutorProfileRepository;
-    }
+    public ApproveTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
 
     public async Task<Result> Handle(ApproveTutorProfileCommand command, CancellationToken cancellationToken)
     {

@@ -8,10 +8,7 @@ internal class SubmitTutorProfileForReviewCommandHandler : ICommandHandler<Submi
 {
     private readonly ITutorProfileRepository tutorProfileRepository;
 
-    public SubmitTutorProfileForReviewCommandHandler(ITutorProfileRepository tutorProfileRepository)
-    {
-        this.tutorProfileRepository = tutorProfileRepository;
-    }
+    public SubmitTutorProfileForReviewCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
 
     public async Task<Result> Handle(SubmitTutorProfileForReviewCommand command, CancellationToken cancellationToken)
     {

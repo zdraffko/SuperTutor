@@ -8,10 +8,7 @@ public abstract class Entity<TIdentifier, TIdentifierValue> : IEquatable<Entity<
     where TIdentifier : Identifier<TIdentifierValue>
     where TIdentifierValue : struct
 {
-    protected Entity(TIdentifier id)
-    {
-        Id = id;
-    }
+    protected Entity(TIdentifier id) => Id = id;
 
     public TIdentifier Id { get; }
 

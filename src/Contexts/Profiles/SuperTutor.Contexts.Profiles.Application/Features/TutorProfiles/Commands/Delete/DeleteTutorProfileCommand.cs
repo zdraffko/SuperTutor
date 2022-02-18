@@ -5,10 +5,7 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Comman
 
 public class DeleteTutorProfileCommand : Command
 {
-    public DeleteTutorProfileCommand(TutorProfileId tutorProfileId)
-    {
-        TutorProfileId = tutorProfileId;
-    }
+    public DeleteTutorProfileCommand(TutorProfileId tutorProfileId) => TutorProfileId = tutorProfileId;
 
     public TutorProfileId TutorProfileId { get; }
 }

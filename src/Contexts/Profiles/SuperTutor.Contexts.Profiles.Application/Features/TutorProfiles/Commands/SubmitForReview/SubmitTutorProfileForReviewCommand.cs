@@ -5,10 +5,7 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Comman
 
 public class SubmitTutorProfileForReviewCommand : Command
 {
-    public SubmitTutorProfileForReviewCommand(TutorProfileId tutorProfileId)
-    {
-        TutorProfileId = tutorProfileId;
-    }
+    public SubmitTutorProfileForReviewCommand(TutorProfileId tutorProfileId) => TutorProfileId = tutorProfileId;
 
     public TutorProfileId TutorProfileId { get; }
 }

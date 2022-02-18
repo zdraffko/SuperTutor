@@ -9,9 +9,7 @@ public class TutorProfileCanBeDeactivatedOnlyWhenItIsMarkedAsActiveOrForReviewIn
 
     public TutorProfileCanBeDeactivatedOnlyWhenItIsMarkedAsActiveOrForReviewInvariant(TutorProfileStatus status)
         : base("The tutor profile can only be deactivated when it is marked as active or for review")
-    {
-        this.status = status;
-    }
+        => this.status = status;
 
     public override bool IsValid() => status == TutorProfileStatus.Active || status == TutorProfileStatus.ForReview;
 }

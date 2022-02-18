@@ -10,10 +10,7 @@ internal class AddStudySubjectsToStudentProfileCommandHandler : ICommandHandler<
 {
     private readonly IStudentProfileRepository studentProfileRepository;
 
-    public AddStudySubjectsToStudentProfileCommandHandler(IStudentProfileRepository studentProfileRepository)
-    {
-        this.studentProfileRepository = studentProfileRepository;
-    }
+    public AddStudySubjectsToStudentProfileCommandHandler(IStudentProfileRepository studentProfileRepository) => this.studentProfileRepository = studentProfileRepository;
 
     public async Task<Result> Handle(AddStudySubjectsToStudentProfileCommand command, CancellationToken cancellationToken)
     {

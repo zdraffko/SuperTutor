@@ -4,7 +4,7 @@ using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.TypeConverters;
+namespace SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.TypeConversion;
 
 internal class IdentifierTypeConverter : TypeConverter
 {
@@ -12,10 +12,7 @@ internal class IdentifierTypeConverter : TypeConverter
 
     private readonly TypeConverter currentConverter;
 
-    public IdentifierTypeConverter(Type typeToConvert)
-    {
-        currentConverter = ConvertersCache.GetOrAdd(typeToConvert, CreateConverter!);
-    }
+    public IdentifierTypeConverter(Type typeToConvert) => currentConverter = ConvertersCache.GetOrAdd(typeToConvert, CreateConverter!);
 
     public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType) => currentConverter.CanConvertFrom(context, sourceType);
 
@@ -45,10 +42,7 @@ internal class IdentifierTypeConverter<TIdentifierValue> : TypeConverter
 
     private readonly Type identifierType;
 
-    public IdentifierTypeConverter(Type identifierType)
-    {
-        this.identifierType = identifierType;
-    }
+    public IdentifierTypeConverter(Type identifierType) => this.identifierType = identifierType;
 
     public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
         => sourceType == typeof(string) || sourceType == typeof(TIdentifierValue) || base.CanConvertFrom(context, sourceType);

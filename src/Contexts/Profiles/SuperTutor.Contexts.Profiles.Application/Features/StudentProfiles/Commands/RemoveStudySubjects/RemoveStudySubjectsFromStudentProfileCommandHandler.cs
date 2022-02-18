@@ -4,16 +4,13 @@ using SuperTutor.Contexts.Profiles.Domain.StudentProfiles;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
-namespace SuperTutor.Contexts.Profiles.Application.Features.StudentProfiles.Commands.RemoveStudySubject;
+namespace SuperTutor.Contexts.Profiles.Application.Features.StudentProfiles.Commands.RemoveStudySubjects;
 
 internal class RemoveStudySubjectsFromStudentProfileCommandHandler : ICommandHandler<RemoveStudySubjectsFromStudentProfileCommand>
 {
     private readonly IStudentProfileRepository studentProfileRepository;
 
-    public RemoveStudySubjectsFromStudentProfileCommandHandler(IStudentProfileRepository studentProfileRepository)
-    {
-        this.studentProfileRepository = studentProfileRepository;
-    }
+    public RemoveStudySubjectsFromStudentProfileCommandHandler(IStudentProfileRepository studentProfileRepository) => this.studentProfileRepository = studentProfileRepository;
 
     public async Task<Result> Handle(RemoveStudySubjectsFromStudentProfileCommand command, CancellationToken cancellationToken)
     {

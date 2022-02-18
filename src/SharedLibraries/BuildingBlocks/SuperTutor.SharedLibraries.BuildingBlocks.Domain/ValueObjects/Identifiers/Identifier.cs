@@ -1,4 +1,4 @@
-﻿using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.TypeConverters;
+﻿using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.TypeConversion;
 using System.ComponentModel;
 
 namespace SuperTutor.SharedLibraries.BuildingBlocks.Domain.ValueObjects.Identifiers;
@@ -7,10 +7,7 @@ namespace SuperTutor.SharedLibraries.BuildingBlocks.Domain.ValueObjects.Identifi
 public abstract class Identifier<TValue> : ValueObject
     where TValue : struct
 {
-    protected Identifier(TValue value)
-    {
-        Value = value;
-    }
+    protected Identifier(TValue value) => Value = value;
 
     public TValue Value { get; }
 

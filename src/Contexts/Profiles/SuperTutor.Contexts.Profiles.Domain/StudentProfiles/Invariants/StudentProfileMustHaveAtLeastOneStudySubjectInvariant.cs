@@ -9,9 +9,7 @@ public class StudentProfileMustHaveAtLeastOneStudySubjectInvariant : Invariant
 
     public StudentProfileMustHaveAtLeastOneStudySubjectInvariant(HashSet<Subject> studySubjects)
         : base("The student profile must have at least one study subject")
-    {
-        this.studySubjects = studySubjects;
-    }
+        => this.studySubjects = studySubjects;
 
     public override bool IsValid() => studySubjects.Count > 0;
 }

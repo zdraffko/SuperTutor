@@ -20,7 +20,7 @@ internal class InfrastructureModule : Module
         RegisterMasstransit(builder);
     }
 
-    private void RegisterServices(ContainerBuilder builder)
+    private static void RegisterServices(ContainerBuilder builder)
     {
         builder.RegisterType<TokenService>().As<ITokenService>().InstancePerLifetimeScope();
         builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();

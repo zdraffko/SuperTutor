@@ -9,10 +9,7 @@ internal class RequestTutorProfileRedactionCommandHandler : ICommandHandler<Requ
 {
     private readonly ITutorProfileRepository tutorProfileRepository;
 
-    public RequestTutorProfileRedactionCommandHandler(ITutorProfileRepository tutorProfileRepository)
-    {
-        this.tutorProfileRepository = tutorProfileRepository;
-    }
+    public RequestTutorProfileRedactionCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
 
     public async Task<Result> Handle(RequestTutorProfileRedactionCommand command, CancellationToken cancellationToken)
     {

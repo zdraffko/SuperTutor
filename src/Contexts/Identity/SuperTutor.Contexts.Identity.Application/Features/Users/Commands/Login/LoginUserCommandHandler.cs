@@ -2,28 +2,24 @@
 using SuperTutor.Contexts.Identity.Application.Contracts.Users;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
-namespace SuperTutor.Contexts.Identity.Application.Features.Users.Commands.Login
+namespace SuperTutor.Contexts.Identity.Application.Features.Users.Commands.Login;
+
+internal class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, LoginUserCommandResult>
 {
-    internal class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, LoginUserCommandResult>
+    private readonly IUserService userService;
+
+    public LoginUserCommandHandler(IUserService userService) => this.userService = userService;
+
+    public async Task<Result<LoginUserCommandResult>> Handle(LoginUserCommand command, CancellationToken cancellationToken)
     {
-        private readonly IUserService userService;
-
-        public LoginUserCommandHandler(IUserService userService)
+        var loginResult = await userService.Login(command.Email, command.Password);
+        if (loginResult.IsFailed)
         {
-            this.userService = userService;
+            return loginResult.ToResult<LoginUserCommandResult>();
         }
 
-        public async Task<Result<LoginUserCommandResult>> Handle(LoginUserCommand command, CancellationToken cancellationToken)
-        {
-            var loginResult = await userService.Login(command.Email, command.Password);
-            if (loginResult.IsFailed)
-            {
-                return loginResult.ToResult<LoginUserCommandResult>();
-            }
+        var commandResult = new LoginUserCommandResult(loginResult.Value);
 
-            var commandResult = new LoginUserCommandResult(loginResult.Value);
-
-            return Result.Ok(commandResult);
-        }
+        return Result.Ok(commandResult);
     }
 }

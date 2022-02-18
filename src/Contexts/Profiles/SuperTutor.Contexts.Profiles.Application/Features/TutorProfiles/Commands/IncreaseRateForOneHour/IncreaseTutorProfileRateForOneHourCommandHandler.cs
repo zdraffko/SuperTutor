@@ -8,10 +8,7 @@ internal class IncreaseTutorProfileRateForOneHourCommandHandler : ICommandHandle
 {
     private readonly ITutorProfileRepository tutorProfileRepository;
 
-    public IncreaseTutorProfileRateForOneHourCommandHandler(ITutorProfileRepository tutorProfileRepository)
-    {
-        this.tutorProfileRepository = tutorProfileRepository;
-    }
+    public IncreaseTutorProfileRateForOneHourCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
 
     public async Task<Result> Handle(IncreaseTutorProfileRateForOneHourCommand command, CancellationToken cancellationToken)
     {

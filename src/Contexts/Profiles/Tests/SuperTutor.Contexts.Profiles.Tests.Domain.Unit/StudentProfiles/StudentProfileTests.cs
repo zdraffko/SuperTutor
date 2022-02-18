@@ -185,20 +185,20 @@ public class StudentProfileTests
 
     #region Helper Methods
 
-    private StudentProfile CreateDefaultStudentProfile() => new StudentProfile(DefaultStudentId, DefaultStudySubjects, DefaultStudyGrade);
+    private StudentProfile CreateDefaultStudentProfile() => new(DefaultStudentId, DefaultStudySubjects, DefaultStudyGrade);
 
     #endregion
 
     #region Test Data
 
-    public static IEnumerable<object[]> StudySubjectsTestData = new List<object[]>
+    public static IEnumerable<object[]> StudySubjectsTestData => new List<object[]>
     {
         new object[] { new HashSet<Subject> { Subject.Math } },
         new object[] { new HashSet<Subject> { Subject.Math, Subject.Literature } },
         new object[] { new HashSet<Subject> { Subject.Literature, Subject.BulgarianAndLiterature } }
     };
 
-    public static IEnumerable<object[]> StudyGradeTestData = new List<object[]>
+    public static IEnumerable<object[]> StudyGradeTestData => new List<object[]>
     {
         new object[] { Grade.Forth },
         new object[] { Grade.Ninth },

@@ -5,14 +5,11 @@ using SuperTutor.Contexts.Profiles.Persistence.Contexts.Contracts;
 
 namespace SuperTutor.Contexts.Profiles.Persistence.Repositories;
 
-public  class TutorProfileRepository : ITutorProfileRepository
+public class TutorProfileRepository : ITutorProfileRepository
 {
     private readonly ITutorProfilesDbContext tutorProfilesDbContext;
 
-    public TutorProfileRepository(ITutorProfilesDbContext tutorProfilesDbContext)
-    {
-        this.tutorProfilesDbContext = tutorProfilesDbContext;
-    }
+    public TutorProfileRepository(ITutorProfilesDbContext tutorProfilesDbContext) => this.tutorProfilesDbContext = tutorProfilesDbContext;
 
     public void Add(TutorProfile tutorProfile) => tutorProfilesDbContext.TutorProfiles.Add(tutorProfile);
 

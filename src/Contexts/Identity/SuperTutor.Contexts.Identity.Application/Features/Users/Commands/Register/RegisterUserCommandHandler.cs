@@ -8,10 +8,7 @@ internal class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
 {
     private readonly IUserService userService;
 
-    public RegisterUserCommandHandler(IUserService userService)
-    {
-        this.userService = userService;
-    }
+    public RegisterUserCommandHandler(IUserService userService) => this.userService = userService;
 
     public async Task<Result> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
         => await userService.Register(command.Email, command.Username, command.Password);

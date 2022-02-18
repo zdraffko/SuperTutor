@@ -18,7 +18,7 @@ internal class PersistenceModule : Module
         RegisterRepositories(builder);
     }
 
-    private void RegisterDbComponents(ContainerBuilder builder)
+    private static void RegisterDbComponents(ContainerBuilder builder)
     {
         builder.RegisterType<ProfilesDbContext>()
             .As<DbContext>()
@@ -29,7 +29,7 @@ internal class PersistenceModule : Module
         builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
     }
 
-    private void RegisterRepositories(ContainerBuilder builder)
+    private static void RegisterRepositories(ContainerBuilder builder)
     {
         builder.RegisterType<TutorProfileRepository>().As<ITutorProfileRepository>().InstancePerLifetimeScope();
         builder.RegisterType<StudentProfileRepository>().As<IStudentProfileRepository>().InstancePerLifetimeScope();

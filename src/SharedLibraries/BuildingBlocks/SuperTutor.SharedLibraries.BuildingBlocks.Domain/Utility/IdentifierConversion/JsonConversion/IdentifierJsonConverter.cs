@@ -3,7 +3,7 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Domain.ValueObjects.Identifiers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.JsonConversion.Identifiers;
+namespace SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
 
 internal class IdentifierJsonConverter<TIdentifier, TIdentifierValue> : JsonConverter<TIdentifier>
     where TIdentifier : Identifier<TIdentifierValue>
@@ -34,7 +34,7 @@ internal class IdentifierJsonConverter<TIdentifier, TIdentifierValue> : JsonConv
 
             return;
         }
-        
+
         JsonSerializer.Serialize(writer, identifier.Value, options);
     }
 }

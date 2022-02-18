@@ -9,7 +9,7 @@ using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.ValueObjects.Iden
 using SuperTutor.Contexts.Profiles.Persistence.EntityTypeConfigurations.Common.Constants;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
-namespace SuperTutor.Contexts.Profiles.Persistence.EntityTypeConfigurations.Profiles;
+namespace SuperTutor.Contexts.Profiles.Persistence.EntityTypeConfigurations.TutorProfiles;
 
 internal class TutorProfileEntityTypeConfiguration : IEntityTypeConfiguration<TutorProfile>
 {
@@ -60,7 +60,7 @@ internal class TutorProfileEntityTypeConfiguration : IEntityTypeConfiguration<Tu
             )
             .IsRequired()
             .Metadata.SetValueComparer(tutoringGradesValueComparer);
-            
+
         builder.Property(tutorProfile => tutorProfile.RateForOneHour)
             .HasPrecision(19, 4)
             .IsRequired();

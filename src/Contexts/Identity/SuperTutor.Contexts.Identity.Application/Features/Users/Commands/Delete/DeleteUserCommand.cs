@@ -4,10 +4,7 @@ namespace SuperTutor.Contexts.Identity.Application.Features.Users.Commands.Delet
 
 public class DeleteUserCommand : Command
 {
-    public DeleteUserCommand(string email)
-    {
-        Email = email;
-    }
+    public DeleteUserCommand(string email) => Email = email;
 
     public string Email { get; }
 }

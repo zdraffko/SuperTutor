@@ -8,10 +8,7 @@ internal class DeactivateTutorProfileCommandHandler : ICommandHandler<Deactivate
 {
     private readonly ITutorProfileRepository tutorProfileRepository;
 
-    public DeactivateTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository)
-    {
-        this.tutorProfileRepository = tutorProfileRepository;
-    }
+    public DeactivateTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
 
     public async Task<Result> Handle(DeactivateTutorProfileCommand command, CancellationToken cancellationToken)
     {

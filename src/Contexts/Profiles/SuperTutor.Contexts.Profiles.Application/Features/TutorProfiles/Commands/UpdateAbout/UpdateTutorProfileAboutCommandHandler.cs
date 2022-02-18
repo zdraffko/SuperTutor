@@ -8,10 +8,7 @@ internal class UpdateTutorProfileAboutCommandHandler : ICommandHandler<UpdateTut
 {
     private readonly ITutorProfileRepository tutorProfileRepository;
 
-    public UpdateTutorProfileAboutCommandHandler(ITutorProfileRepository tutorProfileRepository)
-    {
-        this.tutorProfileRepository = tutorProfileRepository;
-    }
+    public UpdateTutorProfileAboutCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
 
     public async Task<Result> Handle(UpdateTutorProfileAboutCommand command, CancellationToken cancellationToken)
     {

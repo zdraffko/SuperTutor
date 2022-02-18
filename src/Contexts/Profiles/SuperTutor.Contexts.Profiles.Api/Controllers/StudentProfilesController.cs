@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SuperTutor.Contexts.Profiles.Application.Features.StudentProfiles.Commands.AddStudySubjects;
 using SuperTutor.Contexts.Profiles.Application.Features.StudentProfiles.Commands.Create;
-using SuperTutor.Contexts.Profiles.Application.Features.StudentProfiles.Commands.RemoveStudySubject;
+using SuperTutor.Contexts.Profiles.Application.Features.StudentProfiles.Commands.RemoveStudySubjects;
 using SuperTutor.Contexts.Profiles.Application.Features.StudentProfiles.Commands.UpdateStudyGrade;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Api.Controllers;
 
-public  class StudentProfilesController : ApiController
+public class StudentProfilesController : ApiController
 {
     private readonly ICommandHandler<CreateStudentProfileCommand> createStudentProfileCommandHandler;
     private readonly ICommandHandler<AddStudySubjectsToStudentProfileCommand> addStudySubjectsToStudentProfileCommandHandler;

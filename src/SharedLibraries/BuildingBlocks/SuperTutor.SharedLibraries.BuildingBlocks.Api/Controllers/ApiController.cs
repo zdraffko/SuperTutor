@@ -9,7 +9,7 @@ namespace SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
 [Route("api/[controller]/[action]")]
 public abstract class ApiController : ControllerBase
 {
-    protected async Task<ActionResult> Handle<TCommand>(
+    protected static async Task<ActionResult> Handle<TCommand>(
         ICommandHandler<TCommand> commandHandler,
         TCommand command,
         CancellationToken cancellationToken) where TCommand : Command
@@ -19,7 +19,7 @@ public abstract class ApiController : ControllerBase
         return commandResult.ToActionResult();
     }
 
-    protected async Task<ActionResult<TPayload>> Handle<TCommand, TPayload>(
+    protected static async Task<ActionResult<TPayload>> Handle<TCommand, TPayload>(
         ICommandHandler<TCommand, TPayload> commandHandler,
         TCommand command,
         CancellationToken cancellationToken) where TCommand : Command<TPayload>
@@ -29,7 +29,7 @@ public abstract class ApiController : ControllerBase
         return commandResult.ToActionResult();
     }
 
-    protected async Task<ActionResult<TPayload>> Handle<TQuery, TPayload>(
+    protected static async Task<ActionResult<TPayload>> Handle<TQuery, TPayload>(
         IQueryHandler<TQuery, TPayload> queryHandler,
         TQuery query,
         CancellationToken cancellationToken) where TQuery : Query<TPayload>

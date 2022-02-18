@@ -7,10 +7,7 @@ public class UnitOfWork : IUnitOfWork
 {
     private readonly DbContext dbContext;
 
-    public UnitOfWork(DbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
+    public UnitOfWork(DbContext dbContext) => this.dbContext = dbContext;
 
     public async Task<int> Commit(CancellationToken cancellationToken) => await dbContext.SaveChangesAsync(cancellationToken);
 }

@@ -9,9 +9,7 @@ public class TutorProfileCanBeRedactionRequestedOnlyWhenItIsMarkedAsForReviewInv
 
     public TutorProfileCanBeRedactionRequestedOnlyWhenItIsMarkedAsForReviewInvariant(TutorProfileStatus status)
         : base("Redaction can be requested for the tutor profile only when it is marked as submitted for review")
-    {
-        this.status = status;
-    }
+        => this.status = status;
 
     public override bool IsValid() => status == TutorProfileStatus.ForReview;
 }

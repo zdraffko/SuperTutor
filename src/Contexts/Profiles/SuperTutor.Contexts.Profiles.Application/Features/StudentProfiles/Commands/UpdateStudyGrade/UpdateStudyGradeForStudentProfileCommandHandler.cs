@@ -10,10 +10,7 @@ internal class UpdateStudyGradeForStudentProfileCommandHandler : ICommandHandler
 {
     private readonly IStudentProfileRepository studentProfileRepository;
 
-    public UpdateStudyGradeForStudentProfileCommandHandler(IStudentProfileRepository studentProfileRepository)
-    {
-        this.studentProfileRepository = studentProfileRepository;
-    }
+    public UpdateStudyGradeForStudentProfileCommandHandler(IStudentProfileRepository studentProfileRepository) => this.studentProfileRepository = studentProfileRepository;
 
     public async Task<Result> Handle(UpdateStudyGradeForStudentProfileCommand command, CancellationToken cancellationToken)
     {

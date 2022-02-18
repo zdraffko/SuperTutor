@@ -10,10 +10,7 @@ internal class RemoveTutoringGradesFromTutorProfileCommandHandler : ICommandHand
 {
     private readonly ITutorProfileRepository tutorProfileRepository;
 
-    public RemoveTutoringGradesFromTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository)
-    {
-        this.tutorProfileRepository = tutorProfileRepository;
-    }
+    public RemoveTutoringGradesFromTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
 
     public async Task<Result> Handle(RemoveTutoringGradesFromTutorProfileCommand command, CancellationToken cancellationToken)
     {

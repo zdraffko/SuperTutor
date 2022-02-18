@@ -18,7 +18,7 @@ internal class InfrastructureModule : Module
         RegisterMasstransit(builder);
     }
 
-    private void RegisterServices(ContainerBuilder builder)
+    private static void RegisterServices(ContainerBuilder builder)
         => builder.RegisterType<IntegrationEventsService>().As<IIntegrationEventsService>().InstancePerLifetimeScope();
 
     private void RegisterMasstransit(ContainerBuilder builder)

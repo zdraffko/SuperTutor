@@ -24,20 +24,20 @@ public class ErrorCommandHandlerDecorator<TCommand> : ICommandHandler<TCommand>
             var decoratedResult = await decoratedCommandHandler.Handle(command, cancellationToken);
             if (decoratedResult.IsFailed)
             {
-                commandLogger.LogInformation("Command {CommandName} failed with result {Result}", typeof(TCommand).FullName, decoratedResult);
+                commandLogger.LogInformation("Command {@Command} failed with result {@Result}", command, decoratedResult);
             }
 
             return decoratedResult;
         }
-        catch (InvariantValidationException exception)
+        catch (InvariantValidationException invariantValidationException)
         {
-            commandLogger.LogError(exception, "Command {CommandName} broke invariant {InvariantName} with message {ErrorMessage}", typeof(TCommand).FullName, exception.BrokenInvariant.GetType().FullName, exception.BrokenInvariant.ErrorMessage);
+            commandLogger.LogInformation(invariantValidationException, "Command {@Command} broke invariant {@Invariant} with message {ErrorMessage}", command, invariantValidationException.BrokenInvariant, invariantValidationException.BrokenInvariant.ErrorMessage);
 
-            return Result.Fail(exception.BrokenInvariant.ErrorMessage);
+            return Result.Fail(invariantValidationException.BrokenInvariant.ErrorMessage);
         }
         catch (Exception exception)
         {
-            commandLogger.LogError(exception, "Command {CommandName} threw an unexpected exception with message {ErrorMessage}", typeof(TCommand).FullName, exception.Message);
+            commandLogger.LogError(exception, "Command {@Command} threw an unexpected exception with message {ErrorMessage}", command, exception.Message);
 
             return Result.Fail("An unexpected error has occurred");
         }
@@ -63,20 +63,20 @@ public class ErrorCommandHandlerDecorator<TCommand, TPayload> : ICommandHandler<
             var decoratedResult = await decoratedCommandHandler.Handle(command, cancellationToken);
             if (decoratedResult.IsFailed)
             {
-                commandLogger.LogInformation("Command {CommandName} failed with result {Result}", typeof(TCommand).FullName, decoratedResult);
+                commandLogger.LogInformation("Command {@Command} failed with result {@Result}", command, decoratedResult);
             }
 
             return decoratedResult;
         }
-        catch (InvariantValidationException exception)
+        catch (InvariantValidationException invariantValidationException)
         {
-            commandLogger.LogError(exception, "Command {CommandName} broke invariant {InvariantName} with message {ErrorMessage}", typeof(TCommand).FullName, exception.BrokenInvariant.GetType().FullName, exception.BrokenInvariant.ErrorMessage);
+            commandLogger.LogInformation(invariantValidationException, "Command {@Command} broke invariant {@Invariant} with message {ErrorMessage}", command, invariantValidationException.BrokenInvariant, invariantValidationException.BrokenInvariant.ErrorMessage);
 
-            return Result.Fail(exception.BrokenInvariant.ErrorMessage);
+            return Result.Fail(invariantValidationException.BrokenInvariant.ErrorMessage);
         }
         catch (Exception exception)
         {
-            commandLogger.LogError(exception, "Command {CommandName} threw an unexpected exception with message {ErrorMessage}", typeof(TCommand).FullName, exception.Message);
+            commandLogger.LogError(exception, "Command {@Command} threw an unexpected exception with message {ErrorMessage}", command, exception.Message);
 
             return Result.Fail("An unexpected error has occurred");
         }

@@ -9,9 +9,7 @@ public class TutorProfileCanBeActivatedOnlyWhenItIsMarkedAsInactiveInvariant : I
 
     public TutorProfileCanBeActivatedOnlyWhenItIsMarkedAsInactiveInvariant(TutorProfileStatus status)
         : base("The tutor profile can only be activated when it is marked as inactive")
-    {
-        this.status = status;
-    }
+        => this.status = status;
 
     public override bool IsValid() => status == TutorProfileStatus.Inactive;
 }

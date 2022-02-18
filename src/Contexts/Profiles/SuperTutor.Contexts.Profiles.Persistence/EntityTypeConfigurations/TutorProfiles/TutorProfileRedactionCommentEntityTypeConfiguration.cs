@@ -7,7 +7,7 @@ using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.Redactio
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
-namespace SuperTutor.Contexts.Profiles.Persistence.EntityTypeConfigurations.Profiles;
+namespace SuperTutor.Contexts.Profiles.Persistence.EntityTypeConfigurations.TutorProfiles;
 
 internal class TutorProfileRedactionCommentEntityTypeConfiguration : IEntityTypeConfiguration<TutorProfileRedactionComment>
 {

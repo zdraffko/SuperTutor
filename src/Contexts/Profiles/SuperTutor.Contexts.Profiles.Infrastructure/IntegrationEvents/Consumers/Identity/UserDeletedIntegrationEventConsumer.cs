@@ -9,10 +9,7 @@ public class UserDeletedIntegrationEventConsumer : IConsumer<UserDeletedIntegrat
 {
     private readonly ICommandHandler<DeleteProfilesForUserCommand> deleteProfilesForUserCommandHandler;
 
-    public UserDeletedIntegrationEventConsumer(ICommandHandler<DeleteProfilesForUserCommand> deleteProfilesForUserCommandHandler)
-    {
-        this.deleteProfilesForUserCommandHandler = deleteProfilesForUserCommandHandler;
-    }
+    public UserDeletedIntegrationEventConsumer(ICommandHandler<DeleteProfilesForUserCommand> deleteProfilesForUserCommandHandler) => this.deleteProfilesForUserCommandHandler = deleteProfilesForUserCommandHandler;
 
     public async Task Consume(ConsumeContext<UserDeletedIntegrationEvent> context)
         => await deleteProfilesForUserCommandHandler.Handle(new DeleteProfilesForUserCommand(context.Message.UserId), context.CancellationToken);

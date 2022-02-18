@@ -2,10 +2,7 @@
 
 public abstract class Invariant
 {
-    public Invariant(string errorMessage)
-    {
-        ErrorMessage = errorMessage;
-    }
+    public Invariant(string errorMessage) => ErrorMessage = errorMessage;
 
     public string ErrorMessage { get; }
 

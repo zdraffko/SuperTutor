@@ -5,9 +5,7 @@ namespace SuperTutor.SharedLibraries.BuildingBlocks.Domain.Exceptions;
 public class InvariantValidationException : Exception
 {
     public InvariantValidationException(Invariant brokenInvariant) : base(brokenInvariant.ErrorMessage)
-    {
-        BrokenInvariant = brokenInvariant;
-    }
+        => BrokenInvariant = brokenInvariant;
 
     public Invariant BrokenInvariant { get; }
 

@@ -8,10 +8,7 @@ internal class DeleteTutorProfileCommandHandler : ICommandHandler<DeleteTutorPro
 {
     private readonly ITutorProfileRepository tutorProfileRepository;
 
-    public DeleteTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository)
-    {
-        this.tutorProfileRepository = tutorProfileRepository;
-    }
+    public DeleteTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
 
     public async Task<Result> Handle(DeleteTutorProfileCommand command, CancellationToken cancellationToken)
     {

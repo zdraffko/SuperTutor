@@ -14,7 +14,7 @@ public abstract class Enumeration : IComparable
         Name = name;
     }
 
-    public static IEnumerable<TEnumeration> All<TEnumeration>() where TEnumeration : Enumeration 
+    public static IEnumerable<TEnumeration> All<TEnumeration>() where TEnumeration : Enumeration
         => typeof(TEnumeration)
             .GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
             .Select(fieldInfo => fieldInfo.GetValue(null))
@@ -29,7 +29,7 @@ public abstract class Enumeration : IComparable
     public static TEnumeration? FromName<TEnumeration>(string name) where TEnumeration : Enumeration
         => All<TEnumeration>().FirstOrDefault(enumeration => enumeration.Name == name);
 
-    public int CompareTo(object? otherObject) => Value.CompareTo(((Enumeration)otherObject!).Value);
+    public int CompareTo(object? otherObject) => Value.CompareTo(((Enumeration) otherObject!).Value);
 
     public override string ToString() => Name;
 

@@ -9,9 +9,7 @@ public class TutorProfileInformationCanOnlyBeUpdatedWhenItIsMarkedAsInactiveOrFo
 
     public TutorProfileInformationCanOnlyBeUpdatedWhenItIsMarkedAsInactiveOrForRedactionInvariant(TutorProfileStatus status)
         : base("The tutor profile can only be updated when it is marked as inactive or for redaction")
-    {
-        this.status = status;
-    }
+        => this.status = status;
 
     public override bool IsValid() => status == TutorProfileStatus.Inactive || status == TutorProfileStatus.ForRedaction;
 }

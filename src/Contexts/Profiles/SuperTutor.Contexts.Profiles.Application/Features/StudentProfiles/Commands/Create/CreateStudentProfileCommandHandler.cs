@@ -1,7 +1,6 @@
 ﻿using FluentResults;
 using SuperTutor.Contexts.Profiles.Domain.Common.Models.Enumerations;
 using SuperTutor.Contexts.Profiles.Domain.StudentProfiles;
-using SuperTutor.Contexts.Profiles.Domain.StudentProfiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
@@ -11,10 +10,7 @@ internal class CreateStudentProfileCommandHandler : ICommandHandler<CreateStuden
 {
     private readonly IStudentProfileRepository studentProfileRepository;
 
-    public CreateStudentProfileCommandHandler(IStudentProfileRepository studentProfileRepository)
-    {
-        this.studentProfileRepository = studentProfileRepository;
-    }
+    public CreateStudentProfileCommandHandler(IStudentProfileRepository studentProfileRepository) => this.studentProfileRepository = studentProfileRepository;
 
     public async Task<Result> Handle(CreateStudentProfileCommand command, CancellationToken cancellationToken)
     {

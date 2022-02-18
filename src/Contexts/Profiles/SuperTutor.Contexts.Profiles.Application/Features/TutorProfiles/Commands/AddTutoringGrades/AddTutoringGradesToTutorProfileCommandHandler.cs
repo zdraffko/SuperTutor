@@ -10,10 +10,7 @@ internal class AddTutoringGradesToTutorProfileCommandHandler : ICommandHandler<A
 {
     private readonly ITutorProfileRepository tutorProfileRepository;
 
-    public AddTutoringGradesToTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository)
-    {
-        this.tutorProfileRepository = tutorProfileRepository;
-    }
+    public AddTutoringGradesToTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
 
     public async Task<Result> Handle(AddTutoringGradesToTutorProfileCommand command, CancellationToken cancellationToken)
     {

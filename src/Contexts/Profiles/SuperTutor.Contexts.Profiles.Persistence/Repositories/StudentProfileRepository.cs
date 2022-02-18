@@ -9,10 +9,7 @@ public class StudentProfileRepository : IStudentProfileRepository
 {
     private readonly IStudentProfilesDbContext studentProfilesDbContext;
 
-    public StudentProfileRepository(IStudentProfilesDbContext studentProfilesDbContext)
-    {
-        this.studentProfilesDbContext = studentProfilesDbContext;
-    }
+    public StudentProfileRepository(IStudentProfilesDbContext studentProfilesDbContext) => this.studentProfilesDbContext = studentProfilesDbContext;
 
     public void Add(StudentProfile studentProfile) => studentProfilesDbContext.StudentProfiles.Add(studentProfile);
 
