@@ -39,7 +39,7 @@ public class TutorProfileRedactionComment : Entity<TutorProfileRedactionCommentI
 
     public bool IsSettled => Status != TutorProfileRedactionCommentStatus.Active;
 
-    public void SettleWithApprovement(AdminId settledByAdminId)
+    internal void SettleWithApprovement(AdminId settledByAdminId)
     {
         CheckInvariant(new TutorProfileRedactionCommentCannotBeSettledMoreThanOnceInvariant(Status));
 
@@ -52,7 +52,7 @@ public class TutorProfileRedactionComment : Entity<TutorProfileRedactionCommentI
         LastUpdateDate = currentDate;
     }
 
-    public void SettleWithNewRedactionRequest(AdminId settledByAdminId)
+    internal void SettleWithNewRedactionRequest(AdminId settledByAdminId)
     {
         CheckInvariant(new TutorProfileRedactionCommentCannotBeSettledMoreThanOnceInvariant(Status));
 
