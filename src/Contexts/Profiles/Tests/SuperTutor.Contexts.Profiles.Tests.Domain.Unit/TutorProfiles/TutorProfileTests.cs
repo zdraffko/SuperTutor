@@ -174,7 +174,7 @@ public class TutorProfileTests
     }
 
     [Fact]
-    public void RequestRedaction_WhenTheTutorProfileIsMarkedForReview_ShouldTransitionTheTutorProfileToActive()
+    public void RequestRedaction_WhenTheTutorProfileIsMarkedForReview_ShouldTransitionTheTutorProfileToForRedaction()
     {
         // Arrange
         var tutorProfile = CreateDefaultTutorProfile();

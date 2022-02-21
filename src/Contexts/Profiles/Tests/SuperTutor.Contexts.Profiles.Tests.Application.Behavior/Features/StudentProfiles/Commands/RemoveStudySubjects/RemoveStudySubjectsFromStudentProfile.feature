@@ -15,7 +15,7 @@ Scenario: Removing multiple study subject
 	When the student tries to remove the study subjects from his profile
 	Then only the present study subjects should be removed
 
-Scenario: Removing all of the present study subject
+Scenario: Removing all study subject from a profile
 	Given all of the student's study subjects are for removal
 	When the student tries to remove all of the study subjects from his profile
 	Then non of the study subjects should be removed
