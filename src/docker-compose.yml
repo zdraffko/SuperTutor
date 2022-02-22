@@ -71,6 +71,7 @@ services:
             - RabbitMq__Url=amqp://${RABBITMQ_DEFAULT_USERNAME}:${RABBITMQ_DEFAULT_PASSWORD}@supertutor-rabbitmq:5672
         volumes:
             - ./.aspnet/identity/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+            - /var/log/supertutor/identity:/app/logs
         networks: 
             - supertutor-network
         ports: 
@@ -94,6 +95,7 @@ services:
             - RabbitMq__Url=amqp://${RABBITMQ_DEFAULT_USERNAME}:${RABBITMQ_DEFAULT_PASSWORD}@supertutor-rabbitmq:5672
         volumes:
             - ./.aspnet/profiles/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+            - /var/log/supertutor/profiles:/app/logs
         networks: 
             - supertutor-network
         ports: 
