@@ -18,7 +18,7 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    var selfLogFileWriter = TextWriter.Synchronized(File.CreateText("./logs/selflog"));
+    var selfLogFileWriter = TextWriter.Synchronized(File.CreateText("./logs/serilog-selflog"));
 
     SelfLog.Enable(message =>
     {
@@ -39,7 +39,7 @@ try
                 TypeName = null,
                 BatchAction = ElasticOpType.Create,
                 ModifyConnectionSettings = connectionConfiguration => connectionConfiguration.BasicAuthentication(hostBuilderContext.Configuration["Elasticsearch:Username"], hostBuilderContext.Configuration["Elasticsearch:Password"]),
-                BufferBaseFilename = "./logs/buffers/elasticsearch"
+                BufferBaseFilename = "./logs/elasticsearch/buffer"
             })
             .ReadFrom.Configuration(hostBuilderContext.Configuration));
 
