@@ -29,10 +29,15 @@ try
         selfLogFileWriter.Flush();
     });
 
+    var elasticsearchNodeUrls = builder.Configuration["Elasticsearch:Urls"]
+        .Split(';', StringSplitOptions.RemoveEmptyEntries)
+        .Select(rawElasticsearchNodeUrl => new Uri(rawElasticsearchNodeUrl))
+        .ToList();
+
     builder.Host.UseSerilog((hostBuilderContext, loggerConfiguration)
         => loggerConfiguration
             .WriteTo.Console()
-            .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(hostBuilderContext.Configuration["Elasticsearch:Url"]))
+            .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(elasticsearchNodeUrls)
             {
                 IndexFormat = $"supertutor-logs-identity-{DateTime.UtcNow:yyyy-MM}",
                 AutoRegisterTemplate = true,

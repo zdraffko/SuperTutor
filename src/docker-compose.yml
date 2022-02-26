@@ -9,8 +9,6 @@ services:
             - SA_PASSWORD=devPass123!
         volumes: 
             - supertutor-mssqlserver-volume:/var/opt/mssql
-        networks: 
-            - supertutor-network
         ports:
             - "1433:1433"
 
@@ -23,39 +21,59 @@ services:
             - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASSWORD}
         volumes:
             - supertutor-rabbitmq-valume:/var/lib/rabbitmq/mnesia
-        networks: 
-            - supertutor-network
         ports:
             - 5672:5672
             - 15672:15672
 
-    elasticsearch:
-        container_name: elasticsearch
+    elasticsearchnode1:
+        container_name: elasticsearchnode1
         image: docker.elastic.co/elasticsearch/elasticsearch:8.0.0
-        ports:
-            - 9200:9200
         volumes:
-            - supertutor-elasticsearch-volume:/usr/share/elasticsearch/data
+            - supertutor-elasticsearchnode1-volume:/usr/share/elasticsearch/data
         environment:
+            - cluster.name=supertutor
+            - node.name=elasticsearchnode1
+            - discovery.seed_hosts=elasticsearchnode2
+            - cluster.initial_master_nodes=elasticsearchnode1,elasticsearchnode2
             - ES_JAVA_OPTS=-Xms512m -Xmx512m
-            - discovery.type=single-node
             - xpack.license.self_generated.type=basic
-        networks:
-            - supertutor-network
+            - xpack.security.enabled=false
+            - bootstrap.memory_lock=true
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
   
+    elasticsearchnode2:
+        container_name: elasticsearchnode2
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.0.0
+        volumes:
+            - supertutor-elasticsearchnode2-volume:/usr/share/elasticsearch/data
+        environment:
+            - cluster.name=supertutor
+            - node.name=elasticsearchnode2
+            - discovery.seed_hosts=elasticsearchnode1
+            - cluster.initial_master_nodes=elasticsearchnode1,elasticsearchnode2
+            - ES_JAVA_OPTS=-Xms512m -Xmx512m
+            - xpack.license.self_generated.type=basic
+            - xpack.security.enabled=false
+            - bootstrap.memory_lock=true
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+
     supertutor-kibana:
         container_name: supertutor-kibana
         image: docker.elastic.co/kibana/kibana:8.0.0
         ports:
             - 5601:5601
         depends_on:
-            - elasticsearch
+            - elasticsearchnode1
+            - elasticsearchnode2
         environment:
-            - ELASTICSEARCH_URL=http://elasticsearch:9200
+            - ELASTICSEARCH_HOSTS=["http://elasticsearchnode1:9200","http://elasticsearchnode2:9200"]
             - ELASTICSEARCH_USERNAME=kibana_system
-            - ELASTICSEARCH_PASSWORD=${KIBANA_SYSTEM_USER_PASSWORD}
-        networks:
-            - supertutor-network
     
     supertutor-identity:
         container_name: supertutor-identity
@@ -64,16 +82,14 @@ services:
             context: .
             dockerfile: ./Contexts/Identity/SuperTutor.Contexts.Identity.Startup/Dockerfile
         environment:
-            - Database__ConnectionString=Server=supertutor-mssqlserver;Database=SuperTutorIdentity;User Id=sa; Password=${MSSQLSERVER_SA_PASSWORD};MultipleActiveResultSets=true
-            - Elasticsearch__Url=http://elasticsearch:9200
+            - Database__ConnectionString=Server=supertutor-mssqlserver;Database=SuperTutorIdentity;User Id=sa;Password=${MSSQLSERVER_SA_PASSWORD};MultipleActiveResultSets=true
+            - Elasticsearch__Urls=http://elasticsearchnode1:9200;http://elasticsearchnode2:9200
             - Elasticsearch__Username=${ELASTIC_DEFAULT_USERNAME}
             - Elasticsearch__Password=${ELASTIC_DEFAULT_PASSWORD}
             - RabbitMq__Url=amqp://${RABBITMQ_DEFAULT_USERNAME}:${RABBITMQ_DEFAULT_PASSWORD}@supertutor-rabbitmq:5672
         volumes:
             - ./.aspnet/identity/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
             - /var/log/supertutor/identity:/app/logs
-        networks: 
-            - supertutor-network
         ports: 
             - 5000:80
         restart: on-failure
@@ -88,16 +104,14 @@ services:
             context: .
             dockerfile: ./Contexts/Profiles/SuperTutor.Contexts.Profiles.Startup/Dockerfile
         environment:
-            - Database__ConnectionString=Server=supertutor-mssqlserver;Database=SuperTutorProfiles;User Id=sa; Password=${MSSQLSERVER_SA_PASSWORD};MultipleActiveResultSets=true
-            - Elasticsearch__Url=http://elasticsearch:9200
+            - Database__ConnectionString=Server=supertutor-mssqlserver;Database=SuperTutorProfiles;User Id=sa;Password=${MSSQLSERVER_SA_PASSWORD};MultipleActiveResultSets=true
+            - Elasticsearch__Urls=http://elasticsearchnode1:9200;http://elasticsearchnode2:9200
             - Elasticsearch__Username=${ELASTIC_DEFAULT_USERNAME}
             - Elasticsearch__Password=${ELASTIC_DEFAULT_PASSWORD}
             - RabbitMq__Url=amqp://${RABBITMQ_DEFAULT_USERNAME}:${RABBITMQ_DEFAULT_PASSWORD}@supertutor-rabbitmq:5672
         volumes:
             - ./.aspnet/profiles/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
             - /var/log/supertutor/profiles:/app/logs
-        networks: 
-            - supertutor-network
         ports: 
             - 5001:80
         restart: on-failure
@@ -108,7 +122,5 @@ services:
 volumes:
     supertutor-mssqlserver-volume:
     supertutor-rabbitmq-valume:
-    supertutor-elasticsearch-volume:
-
-networks:
-    supertutor-network:
+    supertutor-elasticsearchnode1-volume:
+    supertutor-elasticsearchnode2-volume:
