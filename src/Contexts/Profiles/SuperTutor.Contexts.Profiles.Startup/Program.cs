@@ -38,7 +38,7 @@ try
             .WriteTo.Console()
             .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(elasticsearchNodeUrls)
             {
-                IndexFormat = $"supertutor-logs-profiles-{DateTime.UtcNow:yyyy-MM}",
+                IndexFormat = $"logs-supertutor-profiles-{DateTime.UtcNow:yyyy-MM-dd}",
                 AutoRegisterTemplate = true,
                 DetectElasticsearchVersion = true,
                 TypeName = null,
