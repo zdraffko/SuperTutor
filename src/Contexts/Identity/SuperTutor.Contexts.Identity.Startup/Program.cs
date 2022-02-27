@@ -40,8 +40,6 @@ try
             .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(elasticsearchNodeUrls)
             {
                 IndexFormat = $"logs-supertutor-identity-{DateTime.UtcNow:yyyy-MM-dd}",
-                AutoRegisterTemplate = true,
-                DetectElasticsearchVersion = true,
                 TypeName = null,
                 BatchAction = ElasticOpType.Create,
                 ModifyConnectionSettings = connectionConfiguration => connectionConfiguration.BasicAuthentication(hostBuilderContext.Configuration["Elasticsearch:Username"], hostBuilderContext.Configuration["Elasticsearch:Password"]),
