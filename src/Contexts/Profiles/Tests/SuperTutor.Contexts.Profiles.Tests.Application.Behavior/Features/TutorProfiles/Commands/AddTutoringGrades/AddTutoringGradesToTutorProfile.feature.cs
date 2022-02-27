@@ -81,15 +81,15 @@ namespace SuperTutor.Contexts.Profiles.Tests.Application.Behavior.Features.Tutor
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Adding a tutoring grade to a profile that is not inactive")]
+        [Xunit.SkippableFactAttribute(DisplayName="Adding a tutoring grade to a profile that is not inactive or for redaction")]
         [Xunit.TraitAttribute("FeatureTitle", "As a tutor, I want to add a new tutoring grade to my profile, in order for my pro" +
             "file to be more easily discovered by students")]
-        [Xunit.TraitAttribute("Description", "Adding a tutoring grade to a profile that is not inactive")]
-        public virtual void AddingATutoringGradeToAProfileThatIsNotInactive()
+        [Xunit.TraitAttribute("Description", "Adding a tutoring grade to a profile that is not inactive or for redaction")]
+        public virtual void AddingATutoringGradeToAProfileThatIsNotInactiveOrForRedaction()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding a tutoring grade to a profile that is not inactive", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding a tutoring grade to a profile that is not inactive or for redaction", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 3
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -111,7 +111,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 4
- testRunner.Given("the profile is not inactive", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("the profile is not inactive or for redaction", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 5
  testRunner.When("the tutor tries to add the tutoring grade to his profile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -123,15 +123,15 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Adding an already present tutoring grade")]
+        [Xunit.SkippableFactAttribute(DisplayName="Adding an already present tutoring grade when the profile is inactive")]
         [Xunit.TraitAttribute("FeatureTitle", "As a tutor, I want to add a new tutoring grade to my profile, in order for my pro" +
             "file to be more easily discovered by students")]
-        [Xunit.TraitAttribute("Description", "Adding an already present tutoring grade")]
-        public virtual void AddingAnAlreadyPresentTutoringGrade()
+        [Xunit.TraitAttribute("Description", "Adding an already present tutoring grade when the profile is inactive")]
+        public virtual void AddingAnAlreadyPresentTutoringGradeWhenTheProfileIsInactive()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding an already present tutoring grade", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding an already present tutoring grade when the profile is inactive", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 8
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -168,15 +168,18 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Adding a non already present tutoring grade")]
+        [Xunit.SkippableFactAttribute(DisplayName="Adding an already present tutoring grade when the profile is marked as for redact" +
+            "ion")]
         [Xunit.TraitAttribute("FeatureTitle", "As a tutor, I want to add a new tutoring grade to my profile, in order for my pro" +
             "file to be more easily discovered by students")]
-        [Xunit.TraitAttribute("Description", "Adding a non already present tutoring grade")]
-        public virtual void AddingANonAlreadyPresentTutoringGrade()
+        [Xunit.TraitAttribute("Description", "Adding an already present tutoring grade when the profile is marked as for redact" +
+            "ion")]
+        public virtual void AddingAnAlreadyPresentTutoringGradeWhenTheProfileIsMarkedAsForRedaction()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding a non already present tutoring grade", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding an already present tutoring grade when the profile is marked as for redact" +
+                    "ion", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 14
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -201,27 +204,27 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("the tutoring grade is already present", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 16
- testRunner.And("the profile is inactive", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the profile is marked as for redaction", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 17
  testRunner.When("the tutor tries to add the tutoring grade to his profile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 18
- testRunner.Then("the tutoring graded should be added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the tutoring graded should not be added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Adding multiple tutoring grades")]
+        [Xunit.SkippableFactAttribute(DisplayName="Adding a non already present tutoring grade when the profile is inactive")]
         [Xunit.TraitAttribute("FeatureTitle", "As a tutor, I want to add a new tutoring grade to my profile, in order for my pro" +
             "file to be more easily discovered by students")]
-        [Xunit.TraitAttribute("Description", "Adding multiple tutoring grades")]
-        public virtual void AddingMultipleTutoringGrades()
+        [Xunit.TraitAttribute("Description", "Adding a non already present tutoring grade when the profile is inactive")]
+        public virtual void AddingANonAlreadyPresentTutoringGradeWhenTheProfileIsInactive()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding multiple tutoring grades", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding a non already present tutoring grade when the profile is inactive", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 20
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -243,15 +246,153 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 21
- testRunner.Given("multiple tutoring grades", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("the tutoring grade is already present", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 22
  testRunner.And("the profile is inactive", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 23
- testRunner.When("the tutor tries to add the tutoring grades to his profile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("the tutor tries to add the tutoring grade to his profile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 24
+ testRunner.Then("the tutoring graded should be added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Adding a non already present tutoring grade when the profile is marked as for red" +
+            "action")]
+        [Xunit.TraitAttribute("FeatureTitle", "As a tutor, I want to add a new tutoring grade to my profile, in order for my pro" +
+            "file to be more easily discovered by students")]
+        [Xunit.TraitAttribute("Description", "Adding a non already present tutoring grade when the profile is marked as for red" +
+            "action")]
+        public virtual void AddingANonAlreadyPresentTutoringGradeWhenTheProfileIsMarkedAsForRedaction()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding a non already present tutoring grade when the profile is marked as for red" +
+                    "action", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 26
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 27
+ testRunner.Given("the tutoring grade is already present", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 28
+ testRunner.And("the profile is marked as for redaction", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 29
+ testRunner.When("the tutor tries to add the tutoring grade to his profile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 30
+ testRunner.Then("the tutoring graded should be added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Adding multiple tutoring grades when the profile is inactive")]
+        [Xunit.TraitAttribute("FeatureTitle", "As a tutor, I want to add a new tutoring grade to my profile, in order for my pro" +
+            "file to be more easily discovered by students")]
+        [Xunit.TraitAttribute("Description", "Adding multiple tutoring grades when the profile is inactive")]
+        public virtual void AddingMultipleTutoringGradesWhenTheProfileIsInactive()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding multiple tutoring grades when the profile is inactive", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 32
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 33
+ testRunner.Given("multiple tutoring grades", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 34
+ testRunner.And("the profile is inactive", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 35
+ testRunner.When("the tutor tries to add the tutoring grades to his profile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 36
+ testRunner.Then("only the not already present tutoring grades should be added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Adding multiple tutoring grades when the profile is marked as for redaction")]
+        [Xunit.TraitAttribute("FeatureTitle", "As a tutor, I want to add a new tutoring grade to my profile, in order for my pro" +
+            "file to be more easily discovered by students")]
+        [Xunit.TraitAttribute("Description", "Adding multiple tutoring grades when the profile is marked as for redaction")]
+        public virtual void AddingMultipleTutoringGradesWhenTheProfileIsMarkedAsForRedaction()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding multiple tutoring grades when the profile is marked as for redaction", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 38
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 39
+ testRunner.Given("multiple tutoring grades", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 40
+ testRunner.And("the profile is marked as for redaction", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 41
+ testRunner.When("the tutor tries to add the tutoring grades to his profile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 42
  testRunner.Then("only the not already present tutoring grades should be added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

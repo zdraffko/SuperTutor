@@ -207,15 +207,15 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Removing all of the present study subject")]
+        [Xunit.SkippableFactAttribute(DisplayName="Removing all study subject from a profile")]
         [Xunit.TraitAttribute("FeatureTitle", "As a student, I want to remove a study subjects from my profile, in order to get " +
             "better tutor recommendations")]
-        [Xunit.TraitAttribute("Description", "Removing all of the present study subject")]
-        public virtual void RemovingAllOfThePresentStudySubject()
+        [Xunit.TraitAttribute("Description", "Removing all study subject from a profile")]
+        public virtual void RemovingAllStudySubjectFromAProfile()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Removing all of the present study subject", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Removing all study subject from a profile", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 18
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
