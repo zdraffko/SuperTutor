@@ -25,11 +25,77 @@ services:
             - 5672:5672
             - 15672:15672
 
+    elasticsearchnodesetup:
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.0.0
+        volumes:
+          - elasticstack-certificates:/usr/share/elasticsearch/config/certs
+        user: "0"
+        command: >
+          bash -c '
+            if [ x${ELASTIC_DEFAULT_PASSWORD} == x ]; then
+              echo "Set the ELASTIC_DEFAULT_PASSWORD environment variable in the .env file";
+
+              exit 1;
+            elif [ x${KIBANA_SYSTEM_USER_PASSWORD} == x ]; then
+              echo "Set the KIBANA_SYSTEM_USER_PASSWORD environment variable in the .env file";
+
+              exit 1;
+            fi;
+
+            if [ ! -f certs/ca.zip ]; then
+              echo "Creating CA";
+
+              bin/elasticsearch-certutil ca --silent --pem -out config/certs/ca.zip;
+              unzip config/certs/ca.zip -d config/certs;
+            fi;
+
+            if [ ! -f certs/certs.zip ]; then
+              echo "Creating certs";
+
+              echo -ne \
+              "instances:\n"\
+              "  - name: elasticsearchnode1\n"\
+              "    dns:\n"\
+              "      - elasticsearchnode1\n"\
+              "      - localhost\n"\
+              "    ip:\n"\
+              "      - 127.0.0.1\n"\
+              "  - name: elasticsearchnode2\n"\
+              "    dns:\n"\
+              "      - elasticsearchnode2\n"\
+              "      - localhost\n"\
+              "    ip:\n"\
+              "      - 127.0.0.1\n"\
+              > config/certs/instances.yml;
+
+              bin/elasticsearch-certutil cert --silent --pem -out config/certs/certs.zip --in config/certs/instances.yml --ca-cert config/certs/ca/ca.crt --ca-key config/certs/ca/ca.key;
+              unzip config/certs/certs.zip -d config/certs;
+            fi;
+
+            echo "Setting file permissions"
+            chown -R root:root config/certs;
+            find . -type d -exec chmod 750 \{\} \;;
+            find . -type f -exec chmod 640 \{\} \;;
+
+            echo "Waiting for Elasticsearch availability";
+            until curl -s --cacert config/certs/ca/ca.crt http://elasticsearchnode1:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
+            
+            echo "Setting kibana_system password";
+            until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_DEFAULT_PASSWORD} -H "Content-Type: application/json" http://elasticsearchnode1:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_SYSTEM_USER_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
+           
+            echo "All done!";'
+        healthcheck:
+          test: ["CMD-SHELL", "[ -f config/certs/elasticsearchnode1/elasticsearchnode1.crt ]"]
+          interval: 1s
+          timeout: 5s
+          retries: 120
+
     elasticsearchnode1:
         container_name: elasticsearchnode1
         image: docker.elastic.co/elasticsearch/elasticsearch:8.0.0
         volumes:
             - supertutor-elasticsearchnode1-volume:/usr/share/elasticsearch/data
+            - elasticstack-certificates:/usr/share/elasticsearch/config/certs
         environment:
             - cluster.name=supertutor
             - node.name=elasticsearchnode1
@@ -40,16 +106,36 @@ services:
             - xpack.security.enabled=false
             - bootstrap.memory_lock=true
             - network.host=0.0.0.0
+            - ELASTIC_PASSWORD=${ELASTIC_DEFAULT_PASSWORD}
+            - xpack.security.enabled=true
+            - xpack.security.transport.ssl.enabled=true
+            - xpack.security.transport.ssl.key=certs/elasticsearchnode1/elasticsearchnode1.key
+            - xpack.security.transport.ssl.certificate=certs/elasticsearchnode1/elasticsearchnode1.crt
+            - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
+            - xpack.security.transport.ssl.verification_mode=certificate
         ulimits:
             memlock:
                 soft: -1
                 hard: -1
-  
+        depends_on:
+            elasticsearchnodesetup:
+                condition: service_healthy
+        healthcheck:
+            test:
+                [
+                "CMD-SHELL",
+                "curl -s --cacert config/certs/ca/ca.crt http://localhost:9200 | grep -q 'missing authentication credentials'",
+                ]
+            interval: 10s
+            timeout: 10s
+            retries: 120
+
     elasticsearchnode2:
         container_name: elasticsearchnode2
         image: docker.elastic.co/elasticsearch/elasticsearch:8.0.0
         volumes:
             - supertutor-elasticsearchnode2-volume:/usr/share/elasticsearch/data
+            - elasticstack-certificates:/usr/share/elasticsearch/config/certs
         environment:
             - cluster.name=supertutor
             - node.name=elasticsearchnode2
@@ -57,25 +143,49 @@ services:
             - cluster.initial_master_nodes=elasticsearchnode1,elasticsearchnode2
             - ES_JAVA_OPTS=-Xms512m -Xmx512m
             - xpack.license.self_generated.type=basic
-            - xpack.security.enabled=false
             - bootstrap.memory_lock=true
             - network.host=0.0.0.0
+            - ELASTIC_PASSWORD=${ELASTIC_DEFAULT_PASSWORD}
+            - xpack.security.enabled=true
+            - xpack.security.transport.ssl.enabled=true
+            - xpack.security.transport.ssl.key=certs/elasticsearchnode2/elasticsearchnode2.key
+            - xpack.security.transport.ssl.certificate=certs/elasticsearchnode2/elasticsearchnode2.crt
+            - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
+            - xpack.security.transport.ssl.verification_mode=certificate
         ulimits:
             memlock:
                 soft: -1
                 hard: -1
+        depends_on:
+            elasticsearchnodesetup:
+                condition: service_healthy
+        healthcheck:
+            test:
+                [
+                "CMD-SHELL",
+                "curl -s --cacert config/certs/ca/ca.crt http://localhost:9200 | grep -q 'missing authentication credentials'",
+                ]
+            interval: 10s
+            timeout: 10s
+            retries: 120
 
     supertutor-kibana:
         container_name: supertutor-kibana
         image: docker.elastic.co/kibana/kibana:8.0.0
         ports:
             - 5601:5601
-        depends_on:
-            - elasticsearchnode1
-            - elasticsearchnode2
+        volumes:
+            - elasticstack-certificates:/usr/share/kibana/config/certs
         environment:
             - ELASTICSEARCH_HOSTS=["http://elasticsearchnode1:9200","http://elasticsearchnode2:9200"]
             - ELASTICSEARCH_USERNAME=kibana_system
+            - ELASTICSEARCH_PASSWORD=${KIBANA_SYSTEM_USER_PASSWORD}
+            - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
+        depends_on:
+            elasticsearchnode1:
+                condition: service_healthy
+            elasticsearchnode2:
+                condition: service_healthy
     
     supertutor-identity:
         container_name: supertutor-identity
@@ -126,3 +236,4 @@ volumes:
     supertutor-rabbitmq-valume:
     supertutor-elasticsearchnode1-volume:
     supertutor-elasticsearchnode2-volume:
+    elasticstack-certificates:
