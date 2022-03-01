@@ -1,5 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Elastic.CommonSchema.Serilog;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -42,7 +43,8 @@ try
                 TypeName = null, // This is needed because the _type field for a document has been deprecated and there is no clean way at the moment to configure the Elasticsearch sink to not send it. See https://github.com/serilog-contrib/serilog-sinks-elasticsearch/issues/375#issuecomment-743372374 and https://www.elastic.co/guide/en/elasticsearch/reference/7.17/removal-of-types.html
                 BatchAction = ElasticOpType.Create, // This is needed in order to use data streams instead of aliases https://github.com/serilog-contrib/serilog-sinks-elasticsearch/issues/375#issuecomment-743372374
                 ModifyConnectionSettings = connectionConfiguration => connectionConfiguration.BasicAuthentication(hostBuilderContext.Configuration["Elasticsearch:Username"], hostBuilderContext.Configuration["Elasticsearch:Password"]),
-                BufferBaseFilename = "./logs/elasticsearch/buffer"
+                BufferBaseFilename = "./logs/elasticsearch/buffer",
+                CustomFormatter = new EcsTextFormatter()
             })
             .ReadFrom.Configuration(hostBuilderContext.Configuration));
 

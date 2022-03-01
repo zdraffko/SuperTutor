@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
+    <PackageReference Include="Elastic.CommonSchema.Serilog" Version="1.5.3" />
     <PackageReference Include="MassTransit.AspNetCore" Version="7.3.0" />
     <PackageReference Include="MassTransit.Autofac" Version="7.3.0" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="7.3.0" />
