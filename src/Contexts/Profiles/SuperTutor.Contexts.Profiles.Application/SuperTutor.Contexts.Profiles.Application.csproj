@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit" Version="7.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Application\SuperTutor.SharedLibraries.BuildingBlocks.Application.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Profiles.Domain\SuperTutor.Contexts.Profiles.Domain.csproj" />
   </ItemGroup>

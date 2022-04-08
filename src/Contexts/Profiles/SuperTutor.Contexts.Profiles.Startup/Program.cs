@@ -7,6 +7,7 @@ using Serilog;
 using Serilog.Debugging;
 using Serilog.Sinks.Elasticsearch;
 using SuperTutor.Contexts.Profiles.Api;
+using SuperTutor.Contexts.Profiles.Infrastructure;
 using SuperTutor.Contexts.Profiles.Persistence.Contexts;
 using SuperTutor.Contexts.Profiles.Startup.Modules;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
@@ -58,13 +59,30 @@ try
 
     builder.Services.AddDbContext<ProfilesDbContext>(options => options.UseSqlServer(builder.Configuration["Database:ConnectionString"]));
 
-    builder.Services.AddMassTransitHostedService();
+    builder.Services.AddMassTransit(busConfigurator =>
+    {
+        busConfigurator.AddConsumers(typeof(IProfilesInfrastructureAssemblyMarker).Assembly);
+
+        busConfigurator.UsingRabbitMq((busRegistrationContext, rabbitmqConfigurator) =>
+        {
+            rabbitmqConfigurator.Host(builder.Configuration["RabbitMq:Url"]);
+
+            var consumers = typeof(IProfilesInfrastructureAssemblyMarker).Assembly
+                .GetTypes()
+                .Where(type => type.IsAssignableTo(typeof(IConsumer)));
+
+            foreach (var consumer in consumers)
+            {
+                rabbitmqConfigurator.ReceiveEndpoint(consumer.FullName!, endpointConfigurator => endpointConfigurator.ConfigureConsumer(busRegistrationContext, consumer));
+            }
+        });
+    });
 
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder
         => containerBuilder
             .RegisterModule(new ApplicationModule())
-            .RegisterModule(new InfrastructureModule(builder.Configuration))
+            .RegisterModule(new InfrastructureModule())
             .RegisterModule(new PersistenceModule()));
 
     var app = builder.Build();

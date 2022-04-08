@@ -58,17 +58,19 @@ try
 
     builder.Services.AddDbContext<IdentityDbContext>(options => options.UseSqlServer(builder.Configuration["Database:ConnectionString"]));
 
+    builder.Services.AddMassTransit(busConfigurator
+            => busConfigurator.UsingRabbitMq((context, rabbitmqConfigurator)
+                => rabbitmqConfigurator.Host(builder.Configuration["RabbitMq:Url"])));
+
     builder.Services
         .AddIdentity<User, IdentityRole<Guid>>()
         .AddEntityFrameworkStores<IdentityDbContext>();
-
-    builder.Services.AddMassTransitHostedService();
 
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder
         => containerBuilder
             .RegisterModule(new ApplicationModule())
-            .RegisterModule(new InfrastructureModule(builder.Configuration)));
+            .RegisterModule(new InfrastructureModule()));
 
     var app = builder.Build();
 
