@@ -7,6 +7,15 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Contexts/Catalog/SuperTutor.Contexts.Catalog.Startup/SuperTutor.Contexts.Catalog.Startup.csproj", "Contexts/Catalog/SuperTutor.Contexts.Catalog.Startup/"]
+COPY ["Contexts/Catalog/SuperTutor.Contexts.Catalog.Infrastructure/SuperTutor.Contexts.Catalog.Infrastructure.csproj", "Contexts/Catalog/SuperTutor.Contexts.Catalog.Infrastructure/"]
+COPY ["SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.Persistence/SuperTutor.SharedLibraries.BuildingBlocks.Persistence.csproj", "SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.Persistence/"]
+COPY ["SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.Application/SuperTutor.SharedLibraries.BuildingBlocks.Application.csproj", "SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.Application/"]
+COPY ["SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.Domain/SuperTutor.SharedLibraries.BuildingBlocks.Domain.csproj", "SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.Domain/"]
+COPY ["Contexts/Catalog/SuperTutor.Contexts.Catalog.Api/SuperTutor.Contexts.Catalog.Api.csproj", "Contexts/Catalog/SuperTutor.Contexts.Catalog.Api/"]
+COPY ["SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.Api/SuperTutor.SharedLibraries.BuildingBlocks.Api.csproj", "SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.Api/"]
+COPY ["Contexts/Catalog/SuperTutor.Contexts.Catalog.Application/SuperTutor.Contexts.Catalog.Application.csproj", "Contexts/Catalog/SuperTutor.Contexts.Catalog.Application/"]
+COPY ["Contexts/Catalog/SuperTutor.Contexts.Catalog.Persistence/SuperTutor.Contexts.Catalog.Persistence.csproj", "Contexts/Catalog/SuperTutor.Contexts.Catalog.Persistence/"]
+COPY ["Contexts/Catalog/SuperTutor.Contexts.Catalog.Domain/SuperTutor.Contexts.Catalog.Domain.csproj", "Contexts/Catalog/SuperTutor.Contexts.Catalog.Domain/"]
 RUN dotnet restore "Contexts/Catalog/SuperTutor.Contexts.Catalog.Startup/SuperTutor.Contexts.Catalog.Startup.csproj"
 COPY . .
 WORKDIR "/src/Contexts/Catalog/SuperTutor.Contexts.Catalog.Startup"

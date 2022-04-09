@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Domain\SuperTutor.SharedLibraries.BuildingBlocks.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
