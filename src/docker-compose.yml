@@ -1,144 +1,6 @@
 version: '3.4'
 
 services:
-    supertutor-mssqlserver:
-        container_name: supertutor-mssqlserver
-        image: mcr.microsoft.com/mssql/server:2019-latest
-        environment:
-            - ACCEPT_EULA=Y
-            - SA_PASSWORD=devPass123!
-        volumes: 
-            - supertutor-mssqlserver-volume:/var/opt/mssql
-        ports:
-            - "1433:1433"
-
-    supertutor-rabbitmq:
-        container_name: supertutor-rabbitmq
-        image: rabbitmq:3-management
-        hostname: supertutor-rabbitmq
-        environment:
-            - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USERNAME}
-            - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASSWORD}
-        volumes:
-            - supertutor-rabbitmq-valume:/var/lib/rabbitmq/mnesia
-        ports:
-            - 5672:5672
-            - 15672:15672
-
-    elasticsearchnodesetup:
-        container_name: elasticsearchnodesetup
-        image: docker.elastic.co/elasticsearch/elasticsearch:8.0.0
-        volumes:
-          - elasticstack-certificates:/usr/share/elasticsearch/config/certs
-        user: "0"
-        command: >
-          bash -c '
-            if [ x${ELASTIC_DEFAULT_PASSWORD} == x ]; then
-              echo "Set the ELASTIC_DEFAULT_PASSWORD environment variable in the .env file";
-
-              exit 1;
-            elif [ x${KIBANA_SYSTEM_USER_PASSWORD} == x ]; then
-              echo "Set the KIBANA_SYSTEM_USER_PASSWORD environment variable in the .env file";
-
-              exit 1;
-            fi;
-
-            if [ ! -f certs/ca.zip ]; then
-              echo "Creating CA";
-
-              bin/elasticsearch-certutil ca --silent --pem -out config/certs/ca.zip;
-              unzip config/certs/ca.zip -d config/certs;
-            fi;
-
-            if [ ! -f certs/certs.zip ]; then
-              echo "Creating certs";
-
-              echo -ne \
-              "instances:\n"\
-              "  - name: elasticsearchnode1\n"\
-              "    dns:\n"\
-              "      - elasticsearchnode1\n"\
-              "      - localhost\n"\
-              "    ip:\n"\
-              "      - 127.0.0.1\n"\
-              > config/certs/instances.yml;
-
-              bin/elasticsearch-certutil cert --silent --pem -out config/certs/certs.zip --in config/certs/instances.yml --ca-cert config/certs/ca/ca.crt --ca-key config/certs/ca/ca.key;
-              unzip config/certs/certs.zip -d config/certs;
-            fi;
-
-            echo "Setting file permissions"
-            chown -R root:root config/certs;
-            find . -type d -exec chmod 750 \{\} \;;
-            find . -type f -exec chmod 640 \{\} \;;
-
-            echo "Waiting for Elasticsearch availability";
-            until curl -s --cacert config/certs/ca/ca.crt http://elasticsearchnode1:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
-            
-            echo "Setting kibana_system password";
-            until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_DEFAULT_PASSWORD} -H "Content-Type: application/json" http://elasticsearchnode1:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_SYSTEM_USER_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
-           
-            echo "All done!";'
-        healthcheck:
-          test: ["CMD-SHELL", "[ -f config/certs/elasticsearchnode1/elasticsearchnode1.crt ]"]
-          interval: 1s
-          timeout: 5s
-          retries: 120
-
-    elasticsearchnode1:
-        container_name: elasticsearchnode1
-        image: docker.elastic.co/elasticsearch/elasticsearch:8.0.0
-        volumes:
-            - elasticsearch-node-1-data:/usr/share/elasticsearch/data
-            - elasticstack-certificates:/usr/share/elasticsearch/config/certs
-        environment:
-            - cluster.name=supertutor
-            - node.name=elasticsearchnode1
-            - discovery.type=single-node
-            - xpack.license.self_generated.type=basic
-            - xpack.security.enabled=false
-            - bootstrap.memory_lock=true
-            - network.host=0.0.0.0
-            - ELASTIC_PASSWORD=${ELASTIC_DEFAULT_PASSWORD}
-            - xpack.security.enabled=true
-            - xpack.security.transport.ssl.enabled=true
-            - xpack.security.transport.ssl.key=certs/elasticsearchnode1/elasticsearchnode1.key
-            - xpack.security.transport.ssl.certificate=certs/elasticsearchnode1/elasticsearchnode1.crt
-            - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
-            - xpack.security.transport.ssl.verification_mode=certificate
-        ulimits:
-            memlock:
-                soft: -1
-                hard: -1
-        depends_on:
-            elasticsearchnodesetup:
-                condition: service_healthy
-        healthcheck:
-            test:
-                [
-                "CMD-SHELL",
-                "curl -s --cacert config/certs/ca/ca.crt http://localhost:9200 | grep -q 'missing authentication credentials'",
-                ]
-            interval: 10s
-            timeout: 10s
-            retries: 120
-    
-    kibana:
-        container_name: kibana
-        image: docker.elastic.co/kibana/kibana:8.0.0
-        ports:
-            - 5601:5601
-        volumes:
-            - elasticstack-certificates:/usr/share/kibana/config/certs
-        environment:
-            - ELASTICSEARCH_HOSTS=["http://elasticsearchnode1:9200"]
-            - ELASTICSEARCH_USERNAME=kibana_system
-            - ELASTICSEARCH_PASSWORD=${KIBANA_SYSTEM_USER_PASSWORD}
-            - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
-        depends_on:
-            elasticsearchnode1:
-                condition: service_healthy
-
     supertutor-identity:
         container_name: supertutor-identity
         image: zdraffko/supertutor:identity
@@ -147,7 +9,7 @@ services:
             dockerfile: ./Contexts/Identity/SuperTutor.Contexts.Identity.Startup/Dockerfile
         environment:
             - Database__ConnectionString=Server=supertutor-mssqlserver;Database=SuperTutorIdentity;User Id=sa;Password=${MSSQLSERVER_SA_PASSWORD};MultipleActiveResultSets=true
-            - Elasticsearch__Urls=http://elasticsearchnode1:9200
+            - Elasticsearch__Urls=http://supertutor-elasticsearch-node-1:9200
             - Elasticsearch__Username=${ELASTIC_DEFAULT_USERNAME}
             - Elasticsearch__Password=${ELASTIC_DEFAULT_PASSWORD}
             - RabbitMq__Url=amqp://${RABBITMQ_DEFAULT_USERNAME}:${RABBITMQ_DEFAULT_PASSWORD}@supertutor-rabbitmq:5672
@@ -157,13 +19,8 @@ services:
         ports: 
             - 5000:80
         restart: on-failure
-        depends_on:
-            supertutor-mssqlserver:
-                condition: service_started
-            supertutor-rabbitmq:
-                condition: service_started
-            elasticsearchnode1:
-                condition: service_healthy
+        networks:
+            - supertutor-infrastructure_default
 
     supertutor-profiles:
         container_name: supertutor-profiles
@@ -173,7 +30,7 @@ services:
             dockerfile: ./Contexts/Profiles/SuperTutor.Contexts.Profiles.Startup/Dockerfile
         environment:
             - Database__ConnectionString=Server=supertutor-mssqlserver;Database=SuperTutorProfiles;User Id=sa;Password=${MSSQLSERVER_SA_PASSWORD};MultipleActiveResultSets=true
-            - Elasticsearch__Urls=http://elasticsearchnode1:9200
+            - Elasticsearch__Urls=http://supertutor-elasticsearch-node-1:9200
             - Elasticsearch__Username=${ELASTIC_DEFAULT_USERNAME}
             - Elasticsearch__Password=${ELASTIC_DEFAULT_PASSWORD}
             - RabbitMq__Url=amqp://${RABBITMQ_DEFAULT_USERNAME}:${RABBITMQ_DEFAULT_PASSWORD}@supertutor-rabbitmq:5672
@@ -183,16 +40,9 @@ services:
         ports: 
             - 5001:80
         restart: on-failure
-        depends_on:
-            supertutor-mssqlserver:
-                condition: service_started
-            supertutor-rabbitmq:
-                condition: service_started
-            elasticsearchnode1:
-                condition: service_healthy
+        networks:
+            -  supertutor-infrastructure_default
 
-volumes:
-    supertutor-mssqlserver-volume:
-    supertutor-rabbitmq-valume:
-    elasticsearch-node-1-data:
-    elasticstack-certificates:
+networks:
+    supertutor-infrastructure_default:
+        external: true
