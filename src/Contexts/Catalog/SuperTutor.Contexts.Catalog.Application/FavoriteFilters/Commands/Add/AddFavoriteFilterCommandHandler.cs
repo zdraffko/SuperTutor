@@ -1,9 +1,9 @@
 ﻿using FluentResults;
-using MediatR;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Catalog.Application.FavoriteFilters.Commands.Add;
 
-internal class AddFavoriteFilterCommandHandler : IRequestHandler<AddFavoriteFilterCommand, Result>
+internal class AddFavoriteFilterCommandHandler : ICommandHandler<AddFavoriteFilterCommand>
 {
-    public Task<Result> Handle(AddFavoriteFilterCommand request, CancellationToken cancellationToken) => throw new NotImplementedException();
+    public Task<Result> Handle(AddFavoriteFilterCommand command, CancellationToken cancellationToken) => throw new NotImplementedException();
 }

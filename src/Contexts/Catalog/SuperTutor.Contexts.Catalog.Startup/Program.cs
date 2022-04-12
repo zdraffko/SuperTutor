@@ -2,13 +2,11 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Elastic.CommonSchema.Serilog;
 using MassTransit;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Debugging;
 using Serilog.Sinks.Elasticsearch;
 using SuperTutor.Contexts.Catalog.Api;
-using SuperTutor.Contexts.Catalog.Application;
 using SuperTutor.Contexts.Catalog.Infrastructure;
 using SuperTutor.Contexts.Catalog.Persistence.Shared;
 using SuperTutor.Contexts.Catalog.Startup.Modules;
@@ -79,8 +77,6 @@ try
              }
          });
      });
-
-    builder.Services.AddMediatR(typeof(ICatalogApplicationAssemblyMarker).Assembly);
 
     // Add owned service to the container via Autofac modules.
 
