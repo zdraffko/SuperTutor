@@ -1,28 +1,14 @@
 ﻿using Autofac;
-using SuperTutor.Contexts.Identity.Application;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Errors.Commands.Decorators;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents.Commands.Decorators;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Validation.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Validation.Commands.Decorators;
 
 namespace SuperTutor.Contexts.Identity.Startup.Modules;
 
 internal class ApplicationModule : Module
 {
-    protected override void Load(ContainerBuilder builder)
-    {
-        RegisterCommandHandlers(builder);
-        RegisterCommandHandlerDecorators(builder);
-        RegisterCommandValidators(builder);
-    }
-
-    private static void RegisterCommandHandlers(ContainerBuilder builder)
-    {
-        builder.RegisterAssemblyTypes(typeof(IIdentityApplicationAssemblyMarker).Assembly).AsClosedTypesOf(typeof(ICommandHandler<>)).InstancePerLifetimeScope();
-        builder.RegisterAssemblyTypes(typeof(IIdentityApplicationAssemblyMarker).Assembly).AsClosedTypesOf(typeof(ICommandHandler<,>)).InstancePerLifetimeScope();
-    }
-
+    protected override void Load(ContainerBuilder builder) => RegisterCommandHandlerDecorators(builder);
     private static void RegisterCommandHandlerDecorators(ContainerBuilder builder)
     {
         builder.RegisterGenericDecorator(typeof(IntegrationEventsCommandHandlerDecorator<>), typeof(ICommandHandler<>));
@@ -33,11 +19,5 @@ internal class ApplicationModule : Module
 
         builder.RegisterGenericDecorator(typeof(ErrorCommandHandlerDecorator<>), typeof(ICommandHandler<>));
         builder.RegisterGenericDecorator(typeof(ErrorCommandHandlerDecorator<,>), typeof(ICommandHandler<,>));
-    }
-
-    private static void RegisterCommandValidators(ContainerBuilder builder)
-    {
-        builder.RegisterAssemblyTypes(typeof(IIdentityApplicationAssemblyMarker).Assembly).AsClosedTypesOf(typeof(ICommandValidator<>)).InstancePerLifetimeScope();
-        builder.RegisterAssemblyTypes(typeof(IIdentityApplicationAssemblyMarker).Assembly).AsClosedTypesOf(typeof(ICommandValidator<,>)).InstancePerLifetimeScope();
     }
 }

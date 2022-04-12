@@ -9,7 +9,6 @@ using Serilog.Sinks.Elasticsearch;
 using SuperTutor.Contexts.Profiles.Api;
 using SuperTutor.Contexts.Profiles.Infrastructure;
 using SuperTutor.Contexts.Profiles.Persistence.Contexts;
-using SuperTutor.Contexts.Profiles.Startup.Modules;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
 
 Log.Logger = new LoggerConfiguration()
@@ -49,7 +48,7 @@ try
             })
             .ReadFrom.Configuration(hostBuilderContext.Configuration));
 
-    // Add services to the container.
+    // Add library services to the container via extension methods provided by the libraries.
 
     builder.Services
         .AddControllers()
@@ -78,12 +77,10 @@ try
         });
     });
 
+    // Add owned service to the container via Autofac modules.
+
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-    builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder
-        => containerBuilder
-            .RegisterModule(new ApplicationModule())
-            .RegisterModule(new InfrastructureModule())
-            .RegisterModule(new PersistenceModule()));
+    builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterAssemblyModules(typeof(Program).Assembly));
 
     var app = builder.Build();
 

@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Application\SuperTutor.SharedLibraries.BuildingBlocks.Application.csproj" />
     <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Domain\SuperTutor.SharedLibraries.BuildingBlocks.Domain.csproj" />
+    <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Persistence\SuperTutor.SharedLibraries.BuildingBlocks.Persistence.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Catalog.Api\SuperTutor.Contexts.Catalog.Api.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Catalog.Application\SuperTutor.Contexts.Catalog.Application.csproj" />

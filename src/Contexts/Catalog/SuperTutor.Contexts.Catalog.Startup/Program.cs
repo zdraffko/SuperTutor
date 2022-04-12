@@ -9,7 +9,6 @@ using Serilog.Sinks.Elasticsearch;
 using SuperTutor.Contexts.Catalog.Api;
 using SuperTutor.Contexts.Catalog.Infrastructure;
 using SuperTutor.Contexts.Catalog.Persistence.Shared;
-using SuperTutor.Contexts.Catalog.Startup.Modules;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
 
 Log.Logger = new LoggerConfiguration()
@@ -81,11 +80,7 @@ try
     // Add owned service to the container via Autofac modules.
 
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-    builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder
-        => containerBuilder
-            .RegisterModule(new ApplicationModule())
-            .RegisterModule(new InfrastructureModule())
-            .RegisterModule(new PersistenceModule()));
+    builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterAssemblyModules(typeof(Program).Assembly));
 
     var app = builder.Build();
 

@@ -10,7 +10,6 @@ using Serilog.Sinks.Elasticsearch;
 using SuperTutor.Contexts.Identity.Api;
 using SuperTutor.Contexts.Identity.Persistence;
 using SuperTutor.Contexts.Identity.Persistence.Entities;
-using SuperTutor.Contexts.Identity.Startup.Modules;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -49,7 +48,7 @@ try
             })
             .ReadFrom.Configuration(hostBuilderContext.Configuration));
 
-    // Add services to the container.
+    // Add library services to the container via extension methods provided by the libraries.
 
     builder.Services
         .AddControllers()
@@ -66,11 +65,10 @@ try
         .AddIdentity<User, IdentityRole<Guid>>()
         .AddEntityFrameworkStores<IdentityDbContext>();
 
+    // Add owned service to the container via Autofac modules.
+
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-    builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder
-        => containerBuilder
-            .RegisterModule(new ApplicationModule())
-            .RegisterModule(new InfrastructureModule()));
+    builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterAssemblyModules(typeof(Program).Assembly));
 
     var app = builder.Build();
 
