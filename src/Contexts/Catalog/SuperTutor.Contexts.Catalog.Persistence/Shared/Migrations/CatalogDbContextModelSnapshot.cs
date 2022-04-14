@@ -31,6 +31,10 @@ namespace SuperTutor.Contexts.Catalog.Persistence.Shared.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Filter")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 

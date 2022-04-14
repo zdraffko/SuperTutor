@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SuperTutor.Contexts.Catalog.Domain.FavoriteFilters;
+using SuperTutor.Contexts.Catalog.Persistence.FavoriteFilters;
 
 namespace SuperTutor.Contexts.Catalog.Persistence.Shared;
 
-public class CatalogDbContext : DbContext
+public class CatalogDbContext : DbContext, IFavoriteFilterDbContext
 {
     public CatalogDbContext(DbContextOptions<CatalogDbContext> options) : base(options) { }
 

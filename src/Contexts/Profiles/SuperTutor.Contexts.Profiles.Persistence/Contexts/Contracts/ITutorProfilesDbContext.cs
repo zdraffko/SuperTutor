@@ -5,5 +5,5 @@ namespace SuperTutor.Contexts.Profiles.Persistence.Contexts.Contracts;
 
 public interface ITutorProfilesDbContext
 {
-    public DbSet<TutorProfile> TutorProfiles { get; set; }
+    public DbSet<TutorProfile> TutorProfiles { get; }
 }

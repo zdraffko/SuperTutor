@@ -12,7 +12,7 @@ using SuperTutor.Contexts.Catalog.Persistence.Shared;
 namespace SuperTutor.Contexts.Catalog.Persistence.Shared.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20220409174455_InitialMigration")]
+    [Migration("20220414171101_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,10 @@ namespace SuperTutor.Contexts.Catalog.Persistence.Shared.Migrations
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Filter")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");

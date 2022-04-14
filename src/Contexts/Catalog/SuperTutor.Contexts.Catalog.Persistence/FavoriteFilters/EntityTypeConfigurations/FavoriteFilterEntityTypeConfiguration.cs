@@ -25,6 +25,8 @@ internal class FavoriteFilterEntityTypeConfiguration : IEntityTypeConfiguration<
                 studentIdValue => new StudentId(studentIdValue))
             .IsRequired();
 
+        builder.Property(favoriteFilter => favoriteFilter.Filter).IsRequired();
+
         builder.Property(favoriteFilter => favoriteFilter.CreationDate).IsRequired();
     }
 }

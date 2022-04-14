@@ -14,8 +14,9 @@ COPY ["SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.
 COPY ["Contexts/Catalog/SuperTutor.Contexts.Catalog.Api/SuperTutor.Contexts.Catalog.Api.csproj", "Contexts/Catalog/SuperTutor.Contexts.Catalog.Api/"]
 COPY ["SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.Api/SuperTutor.SharedLibraries.BuildingBlocks.Api.csproj", "SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.Api/"]
 COPY ["Contexts/Catalog/SuperTutor.Contexts.Catalog.Application/SuperTutor.Contexts.Catalog.Application.csproj", "Contexts/Catalog/SuperTutor.Contexts.Catalog.Application/"]
-COPY ["Contexts/Catalog/SuperTutor.Contexts.Catalog.Persistence/SuperTutor.Contexts.Catalog.Persistence.csproj", "Contexts/Catalog/SuperTutor.Contexts.Catalog.Persistence/"]
 COPY ["Contexts/Catalog/SuperTutor.Contexts.Catalog.Domain/SuperTutor.Contexts.Catalog.Domain.csproj", "Contexts/Catalog/SuperTutor.Contexts.Catalog.Domain/"]
+COPY ["Contexts/Catalog/SuperTutor.Contexts.Catalog.Persistence/SuperTutor.Contexts.Catalog.Persistence.csproj", "Contexts/Catalog/SuperTutor.Contexts.Catalog.Persistence/"]
+COPY ["SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure/SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.csproj", "SharedLibraries/BuildingBlocks/SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure/"]
 RUN dotnet restore "Contexts/Catalog/SuperTutor.Contexts.Catalog.Startup/SuperTutor.Contexts.Catalog.Startup.csproj"
 COPY . .
 WORKDIR "/src/Contexts/Catalog/SuperTutor.Contexts.Catalog.Startup"

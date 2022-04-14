@@ -12,5 +12,6 @@ public class FavoriteFiltersController : ApiController
     public FavoriteFiltersController(ICommandHandler<AddFavoriteFilterCommand> addFavoriteFilterCommandHandler) => this.addFavoriteFilterCommandHandler = addFavoriteFilterCommandHandler;
 
     [HttpPost]
-    public async Task<ActionResult> Add(AddFavoriteFilterCommand command, CancellationToken cancellationToken) => await Handle(addFavoriteFilterCommandHandler, command, cancellationToken);
+    public async Task<ActionResult> Add(AddFavoriteFilterCommand command, CancellationToken cancellationToken)
+        => await Handle(addFavoriteFilterCommandHandler, command, cancellationToken);
 }
