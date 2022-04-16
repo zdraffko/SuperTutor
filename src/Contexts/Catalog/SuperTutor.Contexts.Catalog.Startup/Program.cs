@@ -84,6 +84,14 @@ try
 
     var app = builder.Build();
 
+    if (builder.Environment.EnvironmentName == "AcceptanceTesting")
+    {
+        using var scope = app.Services.CreateScope();
+        var dataContext = scope.ServiceProvider.GetRequiredService<CatalogDbContext>();
+
+        dataContext.Database.Migrate();
+    }
+
     // Configure the HTTP request pipeline.
 
     app.UseSerilogRequestLogging();
