@@ -61,7 +61,7 @@ public class AddFavoriteFilterStepDefinitions
     public async Task ThenTheNewFilterShouldNotBeAddedToTheStudentsFavorites()
     {
         using var connection = new SqlConnection(DatabaseConnectionString);
-        var favoriteFilters = await connection.QueryAsync<AddFavoriteFilterResponse>(GetAddedFavoriteFilterQuery, getAddedFavoriteFilterQueryParameters);
+        var favoriteFilters = await connection.QueryAsync<FavoriteFilterDatabaseQueryResponse>(GetAddedFavoriteFilterQuery, getAddedFavoriteFilterQueryParameters);
 
         favoriteFilters.Should().NotContain(favoriteFilter => favoriteFilter.StudentId!.Value.ToString().ToUpper() == StudentId && favoriteFilter.Filter == NewFilter);
     }
@@ -70,7 +70,7 @@ public class AddFavoriteFilterStepDefinitions
     public async Task ThenTheNewFilterShouldNotBeAddedASecondTimeToTheStudentsFavorites()
     {
         using var connection = new SqlConnection(DatabaseConnectionString);
-        var favoriteFilters = await connection.QueryAsync<AddFavoriteFilterResponse>(GetAddedFavoriteFilterQuery, getAddedFavoriteFilterQueryParameters);
+        var favoriteFilters = await connection.QueryAsync<FavoriteFilterDatabaseQueryResponse>(GetAddedFavoriteFilterQuery, getAddedFavoriteFilterQueryParameters);
 
         favoriteFilters.Should().ContainSingle(favoriteFilter => favoriteFilter.StudentId!.Value.ToString().ToUpper() == StudentId && favoriteFilter.Filter == NewFilter);
     }
@@ -79,7 +79,7 @@ public class AddFavoriteFilterStepDefinitions
     public async Task ThenTheNumberOfTheStudentsFavoriteFiltersShouldRemainAtTheMaximum()
     {
         using var connection = new SqlConnection(DatabaseConnectionString);
-        var favoriteFilters = await connection.QueryAsync<AddFavoriteFilterResponse>(GetAddedFavoriteFilterQuery, getAddedFavoriteFilterQueryParameters);
+        var favoriteFilters = await connection.QueryAsync<FavoriteFilterDatabaseQueryResponse>("select * from catalog.FavoriteFilter where StudentId = @StudentId", new { StudentId });
 
         favoriteFilters.Should().HaveCount(MaximumNumberOfFiltersForAStudent);
     }
@@ -88,7 +88,7 @@ public class AddFavoriteFilterStepDefinitions
     public async Task ThenTheNewFilterShouldBeAddedToTheStudentsFavorites()
     {
         using var connection = new SqlConnection(DatabaseConnectionString);
-        var favoriteFilters = await connection.QueryAsync<AddFavoriteFilterResponse>(GetAddedFavoriteFilterQuery, getAddedFavoriteFilterQueryParameters);
+        var favoriteFilters = await connection.QueryAsync<FavoriteFilterDatabaseQueryResponse>(GetAddedFavoriteFilterQuery, getAddedFavoriteFilterQueryParameters);
 
         favoriteFilters.Should().HaveCount(1);
         favoriteFilters.Single().StudentId!.Value.ToString().ToUpper().Should().Be(StudentId);
