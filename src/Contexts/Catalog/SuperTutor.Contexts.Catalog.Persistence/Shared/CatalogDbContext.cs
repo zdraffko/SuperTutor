@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SuperTutor.Contexts.Catalog.Domain.Students;
-using SuperTutor.Contexts.Catalog.Persistence.FavoriteFilters;
+using SuperTutor.Contexts.Catalog.Persistence.Students;
 
 namespace SuperTutor.Contexts.Catalog.Persistence.Shared;
 

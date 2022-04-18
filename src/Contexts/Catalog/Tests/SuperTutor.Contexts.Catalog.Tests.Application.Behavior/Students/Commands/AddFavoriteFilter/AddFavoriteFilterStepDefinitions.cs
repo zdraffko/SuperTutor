@@ -1,31 +1,31 @@
 ﻿using Dapper;
 using FluentAssertions;
 using SuperTutor.Contexts.Catalog.Domain.Students.Constants;
-using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.FavoriteFilters.Commands.Add.Models;
+using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Commands.AddFavoriteFilter.Models;
 using System.Data.SqlClient;
 using System.Net.Http.Json;
 using TechTalk.SpecFlow;
 
-namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.FavoriteFilters.Commands.Add;
+namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Commands.AddFavoriteFilter;
 
 [Binding]
 public class AddFavoriteFilterStepDefinitions
 {
     private const string DatabaseConnectionString = "Server=localhost;Database=SuperTutorCatalogTest;User Id=sa;Password=testPass123;MultipleActiveResultSets=true";
-    private const string AddFavoriteFilterEndpoint = "/api/FavoriteFilters/Add";
+    private const string AddFavoriteFilterEndpoint = "/api/Students/AddFavoriteFilter";
     private const string StudentId = "A90A5DC7-03A7-48D4-A029-72F222698AAF";
     private const string NewFilter = "&newFilter=true";
     private const string GetAddedFavoriteFilterQuery = "select * from catalog.FavoriteFilters where StudentId = @StudentId and Filter = @NewFilter";
 
     private readonly HttpClient httpClient;
-    private readonly AddFavoriteFilterRequest addNewFavoriteFilterRequest;
+    private readonly AddFavoriteFilterForStudentRequest addNewFavoriteFilterRequest;
     private readonly object getAddedFavoriteFilterQueryParameters;
 
     public AddFavoriteFilterStepDefinitions(HttpClient httpClient)
     {
         this.httpClient = httpClient;
 
-        addNewFavoriteFilterRequest = new AddFavoriteFilterRequest
+        addNewFavoriteFilterRequest = new AddFavoriteFilterForStudentRequest
         {
             StudentId = StudentId,
             Filter = NewFilter
@@ -107,7 +107,7 @@ public class AddFavoriteFilterStepDefinitions
         var addFavoriteFilterRequestTasks = new List<Task<HttpResponseMessage>>();
         for (var addFavoriteFilterRequestNumber = 1; addFavoriteFilterRequestNumber <= numberOfFavoriteFiltersToAdd; addFavoriteFilterRequestNumber++)
         {
-            var addFavoriteFilterRequest = new AddFavoriteFilterRequest
+            var addFavoriteFilterRequest = new AddFavoriteFilterForStudentRequest
             {
                 StudentId = StudentId,
                 Filter = $"&favoriteFilterNumber={addFavoriteFilterRequestNumber}"

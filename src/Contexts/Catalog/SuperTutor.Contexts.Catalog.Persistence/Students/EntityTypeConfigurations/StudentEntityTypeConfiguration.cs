@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SuperTutor.Contexts.Catalog.Domain.Students;
 
-namespace SuperTutor.Contexts.Profiles.Persistence.EntityTypeConfigurations.StudentProfiles;
+namespace SuperTutor.Contexts.Catalog.Persistence.Students.EntityTypeConfigurations;
 
 internal class StudentEntityTypeConfiguration : IEntityTypeConfiguration<Student>
 {

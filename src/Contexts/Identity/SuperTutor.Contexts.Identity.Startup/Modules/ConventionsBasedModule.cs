@@ -10,7 +10,7 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Application.Validation.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure;
 using SuperTutor.SharedLibraries.BuildingBlocks.Persistence;
 
-namespace SuperTutor.Contexts.Profiles.Startup.Modules;
+namespace SuperTutor.Contexts.Identity.Startup.Modules;
 
 internal class ConventionsBasedModule : Module
 {

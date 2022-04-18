@@ -11,5 +11,5 @@ public class StudentCanNotHaveMoreThanTheMaximumAllowedFavoriteFiltersInvariant 
     public StudentCanNotHaveMoreThanTheMaximumAllowedFavoriteFiltersInvariant(HashSet<FavoriteFilter> studentsFavoriteFilters)
         : base($"The student can not have more than '{StudentConstants.MaximumAllowedFavoriteFilters}' favorite filters") => this.studentsFavoriteFilters = studentsFavoriteFilters;
 
-    public override bool IsValid() => studentsFavoriteFilters.Count() <= StudentConstants.MaximumAllowedFavoriteFilters;
+    public override bool IsValid() => studentsFavoriteFilters.Count <= StudentConstants.MaximumAllowedFavoriteFilters;
 }

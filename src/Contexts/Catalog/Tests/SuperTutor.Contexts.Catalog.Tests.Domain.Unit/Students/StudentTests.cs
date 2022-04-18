@@ -4,7 +4,6 @@ using SuperTutor.Contexts.Catalog.Domain.Students.Constants;
 using SuperTutor.Contexts.Catalog.Domain.Students.Invariants;
 using SuperTutor.Contexts.Catalog.Domain.Students.Models.ValueObjects.FavoriteFilters;
 using SuperTutor.SharedLibraries.BuildingBlocks.Tests.Domain.Extensions;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace SuperTutor.Contexts.Catalog.Tests.Domain.Unit.Students;
@@ -14,7 +13,7 @@ public class StudentTests
     #region Add Method Tests
 
     [Fact]
-    public async Task AddFavoriteFilter_WhenTheNewFilterIsUniqueAndTheStudentHasNotReachedTheMaximumNumberOfFavoriteFilters_ShouldAddTheNewFilterToTheStudentsFavorites()
+    public void AddFavoriteFilter_WhenTheNewFilterIsUniqueAndTheStudentHasNotReachedTheMaximumNumberOfFavoriteFilters_ShouldAddTheNewFilterToTheStudentsFavorites()
     {
         // Arrange
         var student = new Student();
@@ -28,7 +27,7 @@ public class StudentTests
     }
 
     [Fact]
-    public async Task AddFavoriteFilter_WhenTheFilterIsNotUniqueForTheStudent_ShouldBreakFavoriteFilterMustBeUniqueForStudentInvariant()
+    public void AddFavoriteFilter_WhenTheFilterIsNotUniqueForTheStudent_ShouldBreakFavoriteFilterMustBeUniqueForStudentInvariant()
     {
         // Arrange
         var student = new Student();
@@ -43,7 +42,7 @@ public class StudentTests
     }
 
     [Fact]
-    public async Task AddFavoriteFilter_WhenTheStudentAlreadyHasTheMaximumNumberOfFavoriteFilters_ShouldBreakStudentCanNotHaveMoreThanTheMaximumAllowedFavoriteFiltersInvariant()
+    public void AddFavoriteFilter_WhenTheStudentAlreadyHasTheMaximumNumberOfFavoriteFilters_ShouldBreakStudentCanNotHaveMoreThanTheMaximumAllowedFavoriteFiltersInvariant()
     {
         // Arrange
         var student = CreateStudentWithMaximumNumberOfFavoriteFilters(StudentConstants.MaximumAllowedFavoriteFilters);
@@ -60,7 +59,7 @@ public class StudentTests
 
     #region Helper Methods
 
-    private Student CreateStudentWithMaximumNumberOfFavoriteFilters(int maximumNumberOfFavoriteFilters)
+    private static Student CreateStudentWithMaximumNumberOfFavoriteFilters(int maximumNumberOfFavoriteFilters)
     {
         var student = new Student();
 

@@ -1,4 +1,4 @@
-﻿namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.FavoriteFilters.Commands.Add.Models;
+﻿namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Commands.AddFavoriteFilter.Models;
 
 internal class FavoriteFilterDatabaseQueryResponse
 {

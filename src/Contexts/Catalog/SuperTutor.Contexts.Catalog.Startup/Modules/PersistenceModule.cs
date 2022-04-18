@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Microsoft.EntityFrameworkCore;
-using SuperTutor.Contexts.Catalog.Persistence.FavoriteFilters;
 using SuperTutor.Contexts.Catalog.Persistence.Shared;
+using SuperTutor.Contexts.Catalog.Persistence.Students;
 
 namespace SuperTutor.Contexts.Catalog.Startup.Modules;
 

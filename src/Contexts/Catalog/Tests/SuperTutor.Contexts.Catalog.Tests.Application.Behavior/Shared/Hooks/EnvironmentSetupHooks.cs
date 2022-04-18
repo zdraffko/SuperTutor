@@ -19,7 +19,7 @@ public class EnvironmentSetupHooks
     [BeforeTestRun]
     public static void DockerComposeUp()
     {
-        var apiUrl = "http://localhost:5002/api/FavoriteFilters/Add";
+        var apiUrl = "http://localhost:5002/api/Students/AddFavoriteFilter";
         var dockerComposePath = GetDockerComposePath("docker-compose.Catalog.Tests.yml");
 
         compositeService = new Builder()
