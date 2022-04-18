@@ -70,17 +70,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog.Startup", "Contexts\Catalog\SuperTutor.Contexts.Catalog.Startup\SuperTutor.Contexts.Catalog.Startup.csproj", "{8EFFA5C1-BE6B-44BA-983B-2D5DD880458E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Catalog.Application", "Contexts\Catalog\SuperTutor.Contexts.Catalog.Application\SuperTutor.Contexts.Catalog.Application.csproj", "{41D55221-98B6-4C84-9FD7-90DFEF37358E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog.Application", "Contexts\Catalog\SuperTutor.Contexts.Catalog.Application\SuperTutor.Contexts.Catalog.Application.csproj", "{41D55221-98B6-4C84-9FD7-90DFEF37358E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Catalog.Persistence", "Contexts\Catalog\SuperTutor.Contexts.Catalog.Persistence\SuperTutor.Contexts.Catalog.Persistence.csproj", "{0D051F8B-1B78-411F-A503-D6516BB903D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog.Persistence", "Contexts\Catalog\SuperTutor.Contexts.Catalog.Persistence\SuperTutor.Contexts.Catalog.Persistence.csproj", "{0D051F8B-1B78-411F-A503-D6516BB903D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Catalog.Infrastructure", "Contexts\Catalog\SuperTutor.Contexts.Catalog.Infrastructure\SuperTutor.Contexts.Catalog.Infrastructure.csproj", "{0288627D-9179-485A-9BAB-DC7F0F5D88B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog.Infrastructure", "Contexts\Catalog\SuperTutor.Contexts.Catalog.Infrastructure\SuperTutor.Contexts.Catalog.Infrastructure.csproj", "{0288627D-9179-485A-9BAB-DC7F0F5D88B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Catalog.Domain", "Contexts\Catalog\SuperTutor.Contexts.Catalog.Domain\SuperTutor.Contexts.Catalog.Domain.csproj", "{18885B2F-7E7E-49B6-9A5C-1FFDF907DF2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog.Domain", "Contexts\Catalog\SuperTutor.Contexts.Catalog.Domain\SuperTutor.Contexts.Catalog.Domain.csproj", "{18885B2F-7E7E-49B6-9A5C-1FFDF907DF2B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4AFA11E7-3EF6-4274-B90D-31304D0C7036}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Catalog.Tests.Application.Behavior", "Contexts\Catalog\Tests\SuperTutor.Contexts.Catalog.Tests.Application.Behavior\SuperTutor.Contexts.Catalog.Tests.Application.Behavior.csproj", "{C59C0F0C-C8F1-4420-AD6A-15DE5FAE436D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog.Tests.Application.Behavior", "Contexts\Catalog\Tests\SuperTutor.Contexts.Catalog.Tests.Application.Behavior\SuperTutor.Contexts.Catalog.Tests.Application.Behavior.csproj", "{C59C0F0C-C8F1-4420-AD6A-15DE5FAE436D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Catalog.Tests.Domain.Unit", "Contexts\Catalog\Tests\SuperTutor.Contexts.Catalog.Tests.Domain.Unit\SuperTutor.Contexts.Catalog.Tests.Domain.Unit.csproj", "{723EA1F4-C3DC-43BD-A8C5-D4BF0718AFA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -200,6 +202,10 @@ Global
 		{C59C0F0C-C8F1-4420-AD6A-15DE5FAE436D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C59C0F0C-C8F1-4420-AD6A-15DE5FAE436D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C59C0F0C-C8F1-4420-AD6A-15DE5FAE436D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{723EA1F4-C3DC-43BD-A8C5-D4BF0718AFA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{723EA1F4-C3DC-43BD-A8C5-D4BF0718AFA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{723EA1F4-C3DC-43BD-A8C5-D4BF0718AFA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{723EA1F4-C3DC-43BD-A8C5-D4BF0718AFA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -239,6 +245,7 @@ Global
 		{18885B2F-7E7E-49B6-9A5C-1FFDF907DF2B} = {E804220B-A3D4-4BEE-BEF6-B5B559AF5D0C}
 		{4AFA11E7-3EF6-4274-B90D-31304D0C7036} = {E804220B-A3D4-4BEE-BEF6-B5B559AF5D0C}
 		{C59C0F0C-C8F1-4420-AD6A-15DE5FAE436D} = {4AFA11E7-3EF6-4274-B90D-31304D0C7036}
+		{723EA1F4-C3DC-43BD-A8C5-D4BF0718AFA2} = {4AFA11E7-3EF6-4274-B90D-31304D0C7036}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4CB9FFAA-0741-40AA-BFA6-60CC8D6EC98F}
