@@ -1,4 +1,4 @@
-﻿using SuperTutor.Contexts.Catalog.Domain.FavoriteFilters.Models.ValueObjects.Identifiers;
+﻿using SuperTutor.Contexts.Catalog.Domain.Students;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Catalog.Application.FavoriteFilters.Commands.Add;

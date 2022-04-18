@@ -19,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SuperTutor.Contexts.Catalog.Domain\SuperTutor.Contexts.Catalog.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Shared\docker-compose.Catalog.yml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>

@@ -9,6 +9,6 @@ internal class PersistenceModule : Module
 {
     protected override void Load(ContainerBuilder builder) => builder.RegisterType<CatalogDbContext>()
         .As<DbContext>()
-        .As<IFavoriteFilterDbContext>()
+        .As<IStudentDbContext>()
         .InstancePerLifetimeScope();
 }
