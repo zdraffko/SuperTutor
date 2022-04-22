@@ -19,14 +19,14 @@ public class EnvironmentSetupHooks
     [BeforeTestRun]
     public static void DockerComposeUp()
     {
-        var apiUrl = "http://localhost:5002/api/Students/AddFavoriteFilter";
+        var apiUrl = "http://localhost:5002/health";
         var dockerComposePath = GetDockerComposePath("docker-compose.Catalog.Tests.yml");
 
         compositeService = new Builder()
             .UseContainer()
             .UseCompose().FromFile(dockerComposePath).ServiceName("supertutor-catalog-test").ForceBuild()
             .RemoveOrphans()
-            .WaitForHttp("catalog", apiUrl, continuation: (response, _) => response.Code != HttpStatusCode.MethodNotAllowed ? 2000 : 0)
+            .WaitForHttp("supertutor-catalog-test", apiUrl, method: HttpMethod.Get, continuation: (response, _) => response.Code == HttpStatusCode.OK ? 0 : 1000)
             .Build()
             .Start();
     }

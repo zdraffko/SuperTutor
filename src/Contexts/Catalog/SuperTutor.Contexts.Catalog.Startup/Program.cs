@@ -2,6 +2,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Elastic.CommonSchema.Serilog;
 using MassTransit;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Debugging;
@@ -9,6 +10,7 @@ using Serilog.Sinks.Elasticsearch;
 using SuperTutor.Contexts.Catalog.Api;
 using SuperTutor.Contexts.Catalog.Infrastructure;
 using SuperTutor.Contexts.Catalog.Persistence.Shared;
+using SuperTutor.SharedLibraries.BuildingBlocks.Api.HealthChecks.Extensions;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
 
 Log.Logger = new LoggerConfiguration()
@@ -19,7 +21,7 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    var selfLogFileWriter = TextWriter.Synchronized(File.CreateText("./logs/serilog-selflog"));
+    var selfLogFileWriter = TextWriter.Synchronized(File.CreateText("/app/logs/serilog-selflog"));
 
     SelfLog.Enable(message =>
     {
@@ -47,6 +49,14 @@ try
                 CustomFormatter = new EcsTextFormatter()
             })
             .ReadFrom.Configuration(hostBuilderContext.Configuration));
+
+    builder.Services.AddHealthChecks()
+        .AddSqlServer(builder.Configuration["Database:ConnectionString"], name: "Database", healthQuery: "select top (1) [Id] from catalog.Students")
+        .AddRabbitMQ(builder.Configuration["RabbitMq:Url"], name: "RabbitMq")
+        .AddElasticsearch(options => options
+                .UseServer(elasticsearchNodeUrls.First().AbsoluteUri)
+                .UseBasicAuthentication(builder.Configuration["Elasticsearch:Username"], builder.Configuration["Elasticsearch:Password"]),
+        "Elasticsearch");
 
     // Add library services to the container via extension methods provided by the libraries.
 
@@ -91,6 +101,8 @@ try
 
         dataContext.Database.Migrate();
     }
+
+    app.UseHealthChecks("/health", new HealthCheckOptions().AddCustomResponseWriter());
 
     // Configure the HTTP request pipeline.
 

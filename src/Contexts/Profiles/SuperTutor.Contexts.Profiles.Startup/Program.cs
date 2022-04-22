@@ -2,6 +2,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Elastic.CommonSchema.Serilog;
 using MassTransit;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Debugging;
@@ -9,6 +10,7 @@ using Serilog.Sinks.Elasticsearch;
 using SuperTutor.Contexts.Profiles.Api;
 using SuperTutor.Contexts.Profiles.Infrastructure;
 using SuperTutor.Contexts.Profiles.Persistence.Contexts;
+using SuperTutor.SharedLibraries.BuildingBlocks.Api.HealthChecks.Extensions;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
 
 Log.Logger = new LoggerConfiguration()
@@ -48,6 +50,14 @@ try
             })
             .ReadFrom.Configuration(hostBuilderContext.Configuration));
 
+    builder.Services.AddHealthChecks()
+        .AddSqlServer(builder.Configuration["Database:ConnectionString"], name: "Database", healthQuery: "select top (1) [Id] from profiles.StudentProfiles")
+        .AddRabbitMQ(builder.Configuration["RabbitMq:Url"], name: "RabbitMq")
+        .AddElasticsearch(options => options
+                .UseServer(elasticsearchNodeUrls.First().AbsoluteUri)
+                .UseBasicAuthentication(builder.Configuration["Elasticsearch:Username"], builder.Configuration["Elasticsearch:Password"]),
+        "Elasticsearch");
+
     // Add library services to the container via extension methods provided by the libraries.
 
     builder.Services
@@ -83,6 +93,8 @@ try
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterAssemblyModules(typeof(Program).Assembly));
 
     var app = builder.Build();
+
+    app.UseHealthChecks("/health", new HealthCheckOptions().AddCustomResponseWriter());
 
     // Configure the HTTP request pipeline.
 
