@@ -7,4 +7,6 @@ internal static class Constants
     public const string AddFavoriteFilterEndpoint = "/api/Students/AddFavoriteFilter";
 
     public const string RemoveFavoriteFilterEndpoint = "/api/Students/RemoveFavoriteFilter";
+
+    public const string GetAllFavoriteFiltersEndpoint = "/api/Students/GetAllFavoriteFilters";
 }

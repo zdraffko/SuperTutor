@@ -20,13 +20,6 @@ public class RemoveFavoriteFilterStepDefinitions
 
     public RemoveFavoriteFilterStepDefinitions(HttpClient httpClient) => this.httpClient = httpClient;
 
-    [Given(@"Alex is a student that wants to remove a favorite filter")]
-    public async Task GivenAlexIsAStudentThatWantsToRemoveAFavoriteFilter()
-    {
-        using var connection = new SqlConnection(Constants.DatabaseConnectionString);
-        await connection.ExecuteAsync("insert into catalog.Students (Id) values (@StudentId)", new { StudentId });
-    }
-
     [Given(@"Alex has a filter in his favorites")]
     public async Task GivenAlexHasAFilterInHisFavorites()
     {

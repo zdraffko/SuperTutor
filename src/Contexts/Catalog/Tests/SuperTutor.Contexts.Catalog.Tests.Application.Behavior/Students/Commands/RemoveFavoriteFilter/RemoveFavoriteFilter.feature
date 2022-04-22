@@ -1,7 +1,7 @@
 ﻿Feature: As a student, I want to remove a filter that I no longer need from my favorites, in order to free up space in my favorites for a new filter
 
 Background:
-	Given Alex is a student that wants to remove a favorite filter
+	Given Alex is a student
 
 Scenario: Removing an existing filter from favorites
 	Given Alex has a filter in his favorites
