@@ -21,4 +21,15 @@ public class Student : Entity<StudentId, Guid>, IAggregateRoot
 
         CheckInvariant(new StudentCanNotHaveMoreThanTheMaximumAllowedFavoriteFiltersInvariant(favoriteFilters));
     }
+
+    public void RemoveFavoriteFilter(string filter)
+    {
+        var favoriteFilterForRemoval = favoriteFilters.SingleOrDefault(favoriteFilter => favoriteFilter.Filter == filter);
+        if (favoriteFilterForRemoval is null)
+        {
+            return;
+        }
+
+        favoriteFilters.Remove(favoriteFilterForRemoval);
+    }
 }
