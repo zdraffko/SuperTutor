@@ -57,6 +57,48 @@ public class StudentTests
 
     #endregion Add Method Tests
 
+    #region Add Method Tests
+
+    [Fact]
+    public void RemoveFavoriteFilter_WhenTheFilterForRemovalIsPresentInTheStudentsFavorites_ShouldRemoveTheFilterFromTheStudentsFavorites()
+    {
+        // Arrange
+        var student = new Student();
+        var presentFavoriteFilterOne = new FavoriteFilter(student.Id, "&filter=1");
+        var presentFavoriteFilterTwo = new FavoriteFilter(student.Id, "&filter=2");
+
+        student.AddFavoriteFilter(presentFavoriteFilterOne);
+        student.AddFavoriteFilter(presentFavoriteFilterTwo);
+
+        // Act
+        student.RemoveFavoriteFilter(presentFavoriteFilterOne.Filter);
+
+        // Assert
+        student.FavoriteFilters
+            .Should().HaveCount(1)
+            .And.NotContain(presentFavoriteFilterOne);
+    }
+
+    [Fact]
+    public void RemoveFavoriteFilter_WhenTheFilterForRemovalIsNotPresentInTheStudentsFavorites_ShouldNotModifyTheStudentsFavoriteFilters()
+    {
+        // Arrange
+        var student = new Student();
+        var presentFavoriteFilterOne = new FavoriteFilter(student.Id, "&filter=1");
+        var presentFavoriteFilterTwo = new FavoriteFilter(student.Id, "&filter=2");
+
+        student.AddFavoriteFilter(presentFavoriteFilterOne);
+        student.AddFavoriteFilter(presentFavoriteFilterTwo);
+
+        // Act
+        student.RemoveFavoriteFilter("&nonPresentFilter=true");
+
+        // Assert
+        student.FavoriteFilters.Should().HaveCount(2);
+    }
+
+    #endregion Add Method Tests
+
     #region Helper Methods
 
     private static Student CreateStudentWithMaximumNumberOfFavoriteFilters(int maximumNumberOfFavoriteFilters)
