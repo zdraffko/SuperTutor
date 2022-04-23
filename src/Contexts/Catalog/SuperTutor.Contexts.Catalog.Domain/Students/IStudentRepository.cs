@@ -7,4 +7,6 @@ public interface IStudentRepository : IAggregateRootRepository<Student>
     void Add(Student student);
 
     Task<Student?> GetById(StudentId studentId, CancellationToken cancellationToken);
+
+    void DeleteById(StudentId studentId, CancellationToken cancellationToken);
 }

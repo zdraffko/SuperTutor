@@ -3,7 +3,9 @@ using SuperTutor.Contexts.Profiles.Domain.StudentProfiles;
 using SuperTutor.Contexts.Profiles.Domain.StudentProfiles.Models.ValueObjects.Identifiers;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.ValueObjects.Identifiers;
+using SuperTutor.Contexts.Profiles.IntegrationEvents.StudentProfiles;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents;
 
 namespace SuperTutor.Contexts.Profiles.Application.Integration.Identity.Commands.DeleteProfilesForUser;
 
@@ -11,11 +13,13 @@ internal class DeleteProfilesForUserCommandHandler : ICommandHandler<DeleteProfi
 {
     private readonly IStudentProfileRepository studentProfileRepository;
     private readonly ITutorProfileRepository tutorProfileRepository;
+    private readonly IIntegrationEventsService integrationEventsService;
 
-    public DeleteProfilesForUserCommandHandler(IStudentProfileRepository studentProfileRepository, ITutorProfileRepository tutorProfileRepository)
+    public DeleteProfilesForUserCommandHandler(IStudentProfileRepository studentProfileRepository, ITutorProfileRepository tutorProfileRepository, IIntegrationEventsService integrationEventsService)
     {
         this.studentProfileRepository = studentProfileRepository;
         this.tutorProfileRepository = tutorProfileRepository;
+        this.integrationEventsService = integrationEventsService;
     }
 
     public async Task<Result> Handle(DeleteProfilesForUserCommand command, CancellationToken cancellationToken)
@@ -40,6 +44,8 @@ internal class DeleteProfilesForUserCommandHandler : ICommandHandler<DeleteProfi
         }
 
         studentProfileRepository.Remove(studentProfile);
+
+        integrationEventsService.Raise(new StudentProfileDeletedIntegrationEvent(studentId.Value));
 
         return true;
     }

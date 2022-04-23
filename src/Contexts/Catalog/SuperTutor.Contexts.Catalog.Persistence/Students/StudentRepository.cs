@@ -13,4 +13,12 @@ internal class StudentRepository : IStudentRepository
 
     public async Task<Student?> GetById(StudentId studentId, CancellationToken cancellationToken)
         => await studentDbContext.Students.SingleOrDefaultAsync(student => student.Id == studentId, cancellationToken);
+
+    public void DeleteById(StudentId studentId, CancellationToken cancellationToken)
+    {
+        var student = new Student(studentId);
+
+        studentDbContext.Students.Attach(student);
+        studentDbContext.Students.Remove(student);
+    }
 }
