@@ -1,7 +1,9 @@
 ﻿using FluentResults;
 using SuperTutor.Contexts.Profiles.Domain.Common.Models.Enumerations;
 using SuperTutor.Contexts.Profiles.Domain.StudentProfiles;
+using SuperTutor.Contexts.Profiles.IntegrationEvents.StudentProfiles;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.StudentProfiles.Commands.Create;
@@ -9,8 +11,13 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.StudentProfiles.Comm
 internal class CreateStudentProfileCommandHandler : ICommandHandler<CreateStudentProfileCommand>
 {
     private readonly IStudentProfileRepository studentProfileRepository;
+    private readonly IIntegrationEventsService integrationEventsService;
 
-    public CreateStudentProfileCommandHandler(IStudentProfileRepository studentProfileRepository) => this.studentProfileRepository = studentProfileRepository;
+    public CreateStudentProfileCommandHandler(IStudentProfileRepository studentProfileRepository, IIntegrationEventsService integrationEventsService)
+    {
+        this.studentProfileRepository = studentProfileRepository;
+        this.integrationEventsService = integrationEventsService;
+    }
 
     public async Task<Result> Handle(CreateStudentProfileCommand command, CancellationToken cancellationToken)
     {
@@ -20,6 +27,8 @@ internal class CreateStudentProfileCommandHandler : ICommandHandler<CreateStuden
         var studentProfile = new StudentProfile(command.StudentId, studySubjects, studyGrade!);
 
         studentProfileRepository.Add(studentProfile);
+
+        integrationEventsService.Raise(new StudentProfileCreatedIntegrationEvent(command.StudentId.Value));
 
         return await Task.FromResult(Result.Ok());
     }

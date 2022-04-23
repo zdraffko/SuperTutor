@@ -9,7 +9,7 @@ public class Student : Entity<StudentId, Guid>, IAggregateRoot
 {
     private readonly HashSet<FavoriteFilter> favoriteFilters;
 
-    public Student() : base(new StudentId(Guid.NewGuid())) => favoriteFilters = new HashSet<FavoriteFilter>();
+    public Student(StudentId id) : base(id) => favoriteFilters = new HashSet<FavoriteFilter>();
 
     public IReadOnlyCollection<FavoriteFilter> FavoriteFilters => favoriteFilters;
 

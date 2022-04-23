@@ -1,9 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Profiles\SuperTutor.Contexts.Profiles.IntegrationEvents\SuperTutor.Contexts.Profiles.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\SuperTutor.Contexts.Catalog.Application\SuperTutor.Contexts.Catalog.Application.csproj" />
+  </ItemGroup>
 
 </Project>

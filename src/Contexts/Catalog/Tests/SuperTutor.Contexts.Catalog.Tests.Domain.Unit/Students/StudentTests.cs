@@ -4,19 +4,22 @@ using SuperTutor.Contexts.Catalog.Domain.Students.Constants;
 using SuperTutor.Contexts.Catalog.Domain.Students.Invariants;
 using SuperTutor.Contexts.Catalog.Domain.Students.Models.ValueObjects.FavoriteFilters;
 using SuperTutor.SharedLibraries.BuildingBlocks.Tests.Domain.Extensions;
+using System;
 using Xunit;
 
 namespace SuperTutor.Contexts.Catalog.Tests.Domain.Unit.Students;
 
 public class StudentTests
 {
+    private readonly StudentId studentId = new(Guid.Parse("A90A5DC7-03A7-48D4-A029-72F222698AAF"));
+
     #region Add Method Tests
 
     [Fact]
     public void AddFavoriteFilter_WhenTheNewFilterIsUniqueAndTheStudentHasNotReachedTheMaximumNumberOfFavoriteFilters_ShouldAddTheNewFilterToTheStudentsFavorites()
     {
         // Arrange
-        var student = new Student();
+        var student = new Student(studentId);
         var newFavoriteFilter = new FavoriteFilter(student.Id, "&newFilter=true");
 
         // Act
@@ -30,7 +33,7 @@ public class StudentTests
     public void AddFavoriteFilter_WhenTheFilterIsNotUniqueForTheStudent_ShouldBreakFavoriteFilterMustBeUniqueForStudentInvariant()
     {
         // Arrange
-        var student = new Student();
+        var student = new Student(studentId);
         var newFavoriteFilter = new FavoriteFilter(student.Id, "&newFilter=true");
         student.AddFavoriteFilter(newFavoriteFilter);
 
@@ -63,7 +66,7 @@ public class StudentTests
     public void RemoveFavoriteFilter_WhenTheFilterForRemovalIsPresentInTheStudentsFavorites_ShouldRemoveTheFilterFromTheStudentsFavorites()
     {
         // Arrange
-        var student = new Student();
+        var student = new Student(studentId);
         var presentFavoriteFilterOne = new FavoriteFilter(student.Id, "&filter=1");
         var presentFavoriteFilterTwo = new FavoriteFilter(student.Id, "&filter=2");
 
@@ -83,7 +86,7 @@ public class StudentTests
     public void RemoveFavoriteFilter_WhenTheFilterForRemovalIsNotPresentInTheStudentsFavorites_ShouldNotModifyTheStudentsFavoriteFilters()
     {
         // Arrange
-        var student = new Student();
+        var student = new Student(studentId);
         var presentFavoriteFilterOne = new FavoriteFilter(student.Id, "&filter=1");
         var presentFavoriteFilterTwo = new FavoriteFilter(student.Id, "&filter=2");
 
@@ -101,9 +104,9 @@ public class StudentTests
 
     #region Helper Methods
 
-    private static Student CreateStudentWithMaximumNumberOfFavoriteFilters(int maximumNumberOfFavoriteFilters)
+    private Student CreateStudentWithMaximumNumberOfFavoriteFilters(int maximumNumberOfFavoriteFilters)
     {
-        var student = new Student();
+        var student = new Student(studentId);
 
         for (var favoriteFilterNumber = 1; favoriteFilterNumber <= maximumNumberOfFavoriteFilters; favoriteFilterNumber++)
         {
