@@ -1,10 +1,10 @@
 ﻿using MassTransit;
-using SuperTutor.Contexts.Catalog.Application.Integration.Profiles.Commands.DeleteStudent;
+using SuperTutor.Contexts.Catalog.Application.Integration.Profiles.StudentProfiles.Commands.DeleteStudent;
 using SuperTutor.Contexts.Catalog.Domain.Students;
 using SuperTutor.Contexts.Profiles.IntegrationEvents.StudentProfiles;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
-namespace SuperTutor.Contexts.Catalog.Infrastructure.IntegrationEvents.Consumers.Profiles;
+namespace SuperTutor.Contexts.Catalog.Infrastructure.IntegrationEvents.Consumers.Profiles.StudentProfiles;
 
 public class StudentProfileDeletedIntegrationEventConsumer : IConsumer<StudentProfileDeletedIntegrationEvent>
 {

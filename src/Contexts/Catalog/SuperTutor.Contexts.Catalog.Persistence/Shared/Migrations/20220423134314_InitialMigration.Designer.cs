@@ -12,7 +12,7 @@ using SuperTutor.Contexts.Catalog.Persistence.Shared;
 namespace SuperTutor.Contexts.Catalog.Persistence.Shared.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20220418135707_InitialMigration")]
+    [Migration("20220423134314_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,36 @@ namespace SuperTutor.Contexts.Catalog.Persistence.Shared.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students", "catalog");
+                });
+
+            modelBuilder.Entity("SuperTutor.Contexts.Catalog.Domain.TutorProfiles.TutorProfile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("About")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("RateForOneHour")
+                        .HasPrecision(19, 4)
+                        .HasColumnType("decimal(19,4)");
+
+                    b.Property<int>("TutoringSubject")
+                        .HasColumnType("int");
+
+                    b.Property<string>("tutoringGrades")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TutoringGrades");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TutorProfiles", "catalog");
                 });
 
             modelBuilder.Entity("SuperTutor.Contexts.Catalog.Domain.Students.Student", b =>

@@ -1,6 +1,6 @@
 ﻿using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
-namespace SuperTutor.Contexts.Profiles.Application.Integration.Identity.Commands.DeleteProfilesForUser;
+namespace SuperTutor.Contexts.Profiles.Application.Integration.Identity.Users.Commands.DeleteProfiles;
 
 public class DeleteProfilesForUserCommand : Command
 {

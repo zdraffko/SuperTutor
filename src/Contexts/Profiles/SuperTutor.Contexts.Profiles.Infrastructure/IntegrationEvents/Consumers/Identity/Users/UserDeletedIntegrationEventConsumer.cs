@@ -1,9 +1,9 @@
 ﻿using MassTransit;
 using SuperTutor.Contexts.Identity.IntegrationEvents.Users;
-using SuperTutor.Contexts.Profiles.Application.Integration.Identity.Commands.DeleteProfilesForUser;
+using SuperTutor.Contexts.Profiles.Application.Integration.Identity.Users.Commands.DeleteProfiles;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
-namespace SuperTutor.Contexts.Profiles.Infrastructure.IntegrationEvents.Consumers.Identity;
+namespace SuperTutor.Contexts.Profiles.Infrastructure.IntegrationEvents.Consumers.Identity.Users;
 
 public class UserDeletedIntegrationEventConsumer : IConsumer<UserDeletedIntegrationEvent>
 {

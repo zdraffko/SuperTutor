@@ -33,6 +33,36 @@ namespace SuperTutor.Contexts.Catalog.Persistence.Shared.Migrations
                     b.ToTable("Students", "catalog");
                 });
 
+            modelBuilder.Entity("SuperTutor.Contexts.Catalog.Domain.TutorProfiles.TutorProfile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("About")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("RateForOneHour")
+                        .HasPrecision(19, 4)
+                        .HasColumnType("decimal(19,4)");
+
+                    b.Property<int>("TutoringSubject")
+                        .HasColumnType("int");
+
+                    b.Property<string>("tutoringGrades")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TutoringGrades");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TutorProfiles", "catalog");
+                });
+
             modelBuilder.Entity("SuperTutor.Contexts.Catalog.Domain.Students.Student", b =>
                 {
                     b.OwnsMany("SuperTutor.Contexts.Catalog.Domain.Students.Models.ValueObjects.FavoriteFilters.FavoriteFilter", "FavoriteFilters", b1 =>

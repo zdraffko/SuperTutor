@@ -2,7 +2,7 @@
 using SuperTutor.Contexts.Catalog.Domain.Students;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
-namespace SuperTutor.Contexts.Catalog.Application.Integration.Profiles.Commands.DeleteStudent;
+namespace SuperTutor.Contexts.Catalog.Application.Integration.Profiles.StudentProfiles.Commands.DeleteStudent;
 internal class DeleteStudentCommandHandler : ICommandHandler<DeleteStudentCommand>
 {
     private readonly IStudentRepository studentRepository;

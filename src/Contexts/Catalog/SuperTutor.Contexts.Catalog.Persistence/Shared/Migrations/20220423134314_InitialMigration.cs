@@ -21,6 +21,20 @@ public partial class InitialMigration : Migration
             constraints: table => table.PrimaryKey("PK_Students", x => x.Id));
 
         migrationBuilder.CreateTable(
+            name: "TutorProfiles",
+            schema: "catalog",
+            columns: table => new
+            {
+                Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                About = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                TutoringSubject = table.Column<int>(type: "int", nullable: false),
+                RateForOneHour = table.Column<decimal>(type: "decimal(19,4)", precision: 19, scale: 4, nullable: false),
+                IsActive = table.Column<bool>(type: "bit", nullable: false),
+                TutoringGrades = table.Column<string>(type: "nvarchar(max)", nullable: false)
+            },
+            constraints: table => table.PrimaryKey("PK_TutorProfiles", x => x.Id));
+
+        migrationBuilder.CreateTable(
             name: "FavoriteFilters",
             schema: "catalog",
             columns: table => new
@@ -47,6 +61,10 @@ public partial class InitialMigration : Migration
     {
         migrationBuilder.DropTable(
             name: "FavoriteFilters",
+            schema: "catalog");
+
+        migrationBuilder.DropTable(
+            name: "TutorProfiles",
             schema: "catalog");
 
         migrationBuilder.DropTable(
