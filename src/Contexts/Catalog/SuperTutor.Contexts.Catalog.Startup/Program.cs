@@ -12,6 +12,7 @@ using SuperTutor.Contexts.Catalog.Infrastructure;
 using SuperTutor.Contexts.Catalog.Persistence.Shared;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.HealthChecks.Extensions;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
+using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Options;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -59,6 +60,9 @@ try
         "Elasticsearch");
 
     // Add library services to the container via extension methods provided by the libraries.
+
+    builder.Services.Configure<DatabaseOptions>(
+    builder.Configuration.GetSection(DatabaseOptions.OptionsSectionName));
 
     builder.Services
         .AddControllers()
