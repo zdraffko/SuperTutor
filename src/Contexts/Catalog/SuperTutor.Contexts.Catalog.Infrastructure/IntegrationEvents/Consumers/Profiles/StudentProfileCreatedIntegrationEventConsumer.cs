@@ -1,5 +1,5 @@
 ﻿using MassTransit;
-using SuperTutor.Contexts.Catalog.Application.Students.Commands.Create;
+using SuperTutor.Contexts.Catalog.Application.Integration.Profiles.Commands.CreateStudent;
 using SuperTutor.Contexts.Catalog.Domain.Students;
 using SuperTutor.Contexts.Profiles.IntegrationEvents.StudentProfiles;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;

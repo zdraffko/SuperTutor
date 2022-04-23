@@ -2,7 +2,7 @@
 using SuperTutor.Contexts.Catalog.Domain.Students;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
-namespace SuperTutor.Contexts.Catalog.Application.Students.Commands.Create;
+namespace SuperTutor.Contexts.Catalog.Application.Integration.Profiles.Commands.CreateStudent;
 
 internal class CreateStudentCommandHandler : ICommandHandler<CreateStudentCommand>
 {
