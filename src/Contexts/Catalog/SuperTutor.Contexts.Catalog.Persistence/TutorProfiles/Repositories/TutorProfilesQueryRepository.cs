@@ -2,7 +2,7 @@
 using SuperTutor.Contexts.Catalog.Application.TutorProfiles.Queries.GetByFilter;
 using SuperTutor.Contexts.Catalog.Application.TutorProfiles.Queries.Shared;
 
-namespace SuperTutor.Contexts.Catalog.Persistence.TutorProfiles;
+namespace SuperTutor.Contexts.Catalog.Persistence.TutorProfiles.Repositories;
 
 internal class TutorProfilesQueryRepository : ITutorProfilesQueryRepository
 {

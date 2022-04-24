@@ -3,9 +3,9 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Queries;
 
 namespace SuperTutor.Contexts.Catalog.Application.Students.Queries.GetAllfavoriteFilters;
 
-public class GetAllfavoriteFiltersForStudentQuery : Query<GetAllfavoriteFiltersForStudentQueryPayload>
+public class GetAllFavoriteFiltersForStudentQuery : Query<GetAllFavoriteFiltersForStudentQueryPayload>
 {
-    public GetAllfavoriteFiltersForStudentQuery(StudentId studentId) => StudentId = studentId;
+    public GetAllFavoriteFiltersForStudentQuery(StudentId studentId) => StudentId = studentId;
 
     public StudentId StudentId { get; }
 }

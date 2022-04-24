@@ -1,20 +1,19 @@
 ﻿using FluentResults;
+using SuperTutor.Contexts.Catalog.Application.Students.Queries.Shared;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Queries;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Repositories;
 
 namespace SuperTutor.Contexts.Catalog.Application.Students.Queries.GetAllfavoriteFilters;
 
-public class GetAllfavoriteFiltersForStudentQueryHandler : IQueryHandler<GetAllfavoriteFiltersForStudentQuery, GetAllfavoriteFiltersForStudentQueryPayload>
+public class GetAllFavoriteFiltersForStudentQueryHandler : IQueryHandler<GetAllFavoriteFiltersForStudentQuery, GetAllFavoriteFiltersForStudentQueryPayload>
 {
-    private readonly IQueryRepository queryRepository;
+    private readonly IStudentsQueryRepository studentsQueryRepository;
 
-    public GetAllfavoriteFiltersForStudentQueryHandler(IQueryRepository queryRepository) => this.queryRepository = queryRepository;
+    public GetAllFavoriteFiltersForStudentQueryHandler(IStudentsQueryRepository studentsQueryRepository) => this.studentsQueryRepository = studentsQueryRepository;
 
-    public async Task<Result<GetAllfavoriteFiltersForStudentQueryPayload>> Handle(GetAllfavoriteFiltersForStudentQuery query, CancellationToken cancellationToken)
+    public async Task<Result<GetAllFavoriteFiltersForStudentQueryPayload>> Handle(GetAllFavoriteFiltersForStudentQuery query, CancellationToken cancellationToken)
     {
-        var databaseQuery = "select Filter from catalog.FavoriteFilters where StudentId = @StudentId";
-        var filters = await queryRepository.GetAll<string>(databaseQuery, new { StudentId = query.StudentId.Value.ToString() }, cancellationToken);
-        var payload = new GetAllfavoriteFiltersForStudentQueryPayload(filters);
+        var filters = await studentsQueryRepository.GetAllFiltersForStudent(query.StudentId, cancellationToken);
+        var payload = new GetAllFavoriteFiltersForStudentQueryPayload(filters);
 
         return Result.Ok(payload);
     }

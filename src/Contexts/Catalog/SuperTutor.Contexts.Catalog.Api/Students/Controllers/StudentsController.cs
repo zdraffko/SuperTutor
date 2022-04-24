@@ -13,16 +13,16 @@ public class StudentsController : ApiController
 {
     private readonly ICommandHandler<AddFavoriteFilterForStudentCommand> addFavoriteFilterForStudentCommandHandler;
     private readonly ICommandHandler<RemoveFavoriteFilterForStudentCommand> removeFavoriteFilterForStudentCommandHandler;
-    private readonly IQueryHandler<GetAllfavoriteFiltersForStudentQuery, GetAllfavoriteFiltersForStudentQueryPayload> getAllfavoriteFiltersForStudentQueryHandler;
+    private readonly IQueryHandler<GetAllFavoriteFiltersForStudentQuery, GetAllFavoriteFiltersForStudentQueryPayload> getAllFavoriteFiltersForStudentQueryHandler;
 
     public StudentsController(
         ICommandHandler<AddFavoriteFilterForStudentCommand> addFavoriteFilterForStudentCommandHandler,
         ICommandHandler<RemoveFavoriteFilterForStudentCommand> removeFavoriteFilterForStudentCommandHandler,
-        IQueryHandler<GetAllfavoriteFiltersForStudentQuery, GetAllfavoriteFiltersForStudentQueryPayload> getAllfavoriteFiltersForStudentQueryHandler)
+        IQueryHandler<GetAllFavoriteFiltersForStudentQuery, GetAllFavoriteFiltersForStudentQueryPayload> getAllFavoriteFiltersForStudentQueryHandler)
     {
         this.addFavoriteFilterForStudentCommandHandler = addFavoriteFilterForStudentCommandHandler;
         this.removeFavoriteFilterForStudentCommandHandler = removeFavoriteFilterForStudentCommandHandler;
-        this.getAllfavoriteFiltersForStudentQueryHandler = getAllfavoriteFiltersForStudentQueryHandler;
+        this.getAllFavoriteFiltersForStudentQueryHandler = getAllFavoriteFiltersForStudentQueryHandler;
     }
 
     [HttpPost]
@@ -34,6 +34,6 @@ public class StudentsController : ApiController
         => await Handle(removeFavoriteFilterForStudentCommandHandler, command, cancellationToken);
 
     [HttpGet]
-    public async Task<ActionResult<GetAllfavoriteFiltersForStudentQueryPayload>> GetAllFavoriteFilters([FromJsonQuery] GetAllfavoriteFiltersForStudentQuery query, CancellationToken cancellationToken)
-        => await Handle(getAllfavoriteFiltersForStudentQueryHandler, query, cancellationToken);
+    public async Task<ActionResult<GetAllFavoriteFiltersForStudentQueryPayload>> GetAllFavoriteFilters([FromJsonQuery] GetAllFavoriteFiltersForStudentQuery query, CancellationToken cancellationToken)
+        => await Handle(getAllFavoriteFiltersForStudentQueryHandler, query, cancellationToken);
 }
