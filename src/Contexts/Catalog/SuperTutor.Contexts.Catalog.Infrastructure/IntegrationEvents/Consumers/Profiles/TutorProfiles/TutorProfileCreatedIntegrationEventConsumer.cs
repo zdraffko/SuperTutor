@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using SuperTutor.Contexts.Catalog.Application.Integration.Profiles.TutorProfiles.CreateTutorProfile;
 using SuperTutor.Contexts.Catalog.Domain.TutorProfiles;
+using SuperTutor.Contexts.Catalog.Domain.TutorProfiles.Models.ValueObjects;
 using SuperTutor.Contexts.Profiles.IntegrationEvents.TutorProfiles;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
@@ -16,8 +17,8 @@ public class TutorProfileCreatedIntegrationEventConsumer : IConsumer<TutorProfil
         => await createTutorProfileCommandHandler.Handle(new CreateTutorProfileCommand(
                 new TutorProfileId(context.Message.TutorProfileId),
                 context.Message.About,
-                context.Message.TutoringSubject,
-                context.Message.TutoringGrades,
+                new TutoringSubject(context.Message.TutoringSubject.Value, context.Message.TutoringSubject.Name),
+                context.Message.TutoringGrades.Select(tutoringGrade => new TutoringGrade(tutoringGrade.Value, tutoringGrade.Name)),
                 context.Message.RateForOneHour,
                 context.Message.IsActive
             ), context.CancellationToken);

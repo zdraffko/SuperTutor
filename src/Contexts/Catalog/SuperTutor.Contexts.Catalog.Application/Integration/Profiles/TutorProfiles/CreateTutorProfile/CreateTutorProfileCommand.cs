@@ -1,11 +1,12 @@
 ﻿using SuperTutor.Contexts.Catalog.Domain.TutorProfiles;
+using SuperTutor.Contexts.Catalog.Domain.TutorProfiles.Models.ValueObjects;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Catalog.Application.Integration.Profiles.TutorProfiles.CreateTutorProfile;
 
 public class CreateTutorProfileCommand : Command
 {
-    public CreateTutorProfileCommand(TutorProfileId tutorProfileId, string about, int tutoringSubject, IEnumerable<int> tutoringGrades, decimal rateForOneHour, bool isActive)
+    public CreateTutorProfileCommand(TutorProfileId tutorProfileId, string about, TutoringSubject tutoringSubject, IEnumerable<TutoringGrade> tutoringGrades, decimal rateForOneHour, bool isActive)
     {
         TutorProfileId = tutorProfileId;
         About = about;
@@ -19,9 +20,9 @@ public class CreateTutorProfileCommand : Command
 
     public string About { get; }
 
-    public int TutoringSubject { get; }
+    public TutoringSubject TutoringSubject { get; }
 
-    public IEnumerable<int> TutoringGrades { get; }
+    public IEnumerable<TutoringGrade> TutoringGrades { get; }
 
     public decimal RateForOneHour { get; }
 

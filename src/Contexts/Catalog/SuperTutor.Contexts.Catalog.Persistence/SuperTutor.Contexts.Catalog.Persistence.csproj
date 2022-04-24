@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SuperTutor.Contexts.Catalog.Application\SuperTutor.Contexts.Catalog.Application.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Catalog.Domain\SuperTutor.Contexts.Catalog.Domain.csproj" />
   </ItemGroup>
 

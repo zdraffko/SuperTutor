@@ -4,7 +4,7 @@ namespace SuperTutor.Contexts.Profiles.IntegrationEvents.TutorProfiles;
 
 public class TutorProfileCreatedIntegrationEvent : IntegrationEvent
 {
-    public TutorProfileCreatedIntegrationEvent(Guid tutorProfileId, string about, int tutoringSubject, IEnumerable<int> tutoringGrades, decimal rateForOneHour, bool isActive)
+    public TutorProfileCreatedIntegrationEvent(Guid tutorProfileId, string about, Subject tutoringSubject, IEnumerable<Grade> tutoringGrades, decimal rateForOneHour, bool isActive)
     {
         TutorProfileId = tutorProfileId;
         About = about;
@@ -18,11 +18,37 @@ public class TutorProfileCreatedIntegrationEvent : IntegrationEvent
 
     public string About { get; }
 
-    public int TutoringSubject { get; }
+    public Subject TutoringSubject { get; }
 
-    public IEnumerable<int> TutoringGrades { get; }
+    public IEnumerable<Grade> TutoringGrades { get; }
 
     public decimal RateForOneHour { get; }
 
     public bool IsActive { get; }
+
+    public class Subject
+    {
+        public Subject(int value, string name)
+        {
+            Value = value;
+            Name = name;
+        }
+
+        public int Value { get; }
+
+        public string Name { get; }
+    }
+
+    public class Grade
+    {
+        public Grade(int value, string name)
+        {
+            Value = value;
+            Name = name;
+        }
+
+        public int Value { get; }
+
+        public string Name { get; }
+    }
 }

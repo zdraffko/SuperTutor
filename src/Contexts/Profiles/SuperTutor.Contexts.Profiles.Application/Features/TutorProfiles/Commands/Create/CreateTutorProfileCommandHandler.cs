@@ -32,8 +32,8 @@ internal class CreateTutorProfileCommandHandler : ICommandHandler<CreateTutorPro
         var tutorProfileCreatedIntegrationEvent = new TutorProfileCreatedIntegrationEvent(
             tutorProfile.Id.Value,
             tutorProfile.About,
-            tutorProfile.TutoringSubject.Value,
-            tutorProfile.TutoringGrades.Select(tutoringGrade => tutoringGrade.Value),
+            new TutorProfileCreatedIntegrationEvent.Subject(tutorProfile.TutoringSubject.Value, tutorProfile.TutoringSubject.Name),
+            tutorProfile.TutoringGrades.Select(tutoringGrade => new TutorProfileCreatedIntegrationEvent.Grade(tutoringGrade.Value, tutoringGrade.Name)),
             tutorProfile.RateForOneHour,
             tutorProfile.Status == TutorProfileStatus.Active);
 
