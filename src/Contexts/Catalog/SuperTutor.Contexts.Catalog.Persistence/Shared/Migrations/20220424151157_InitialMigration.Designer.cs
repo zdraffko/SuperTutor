@@ -12,7 +12,7 @@ using SuperTutor.Contexts.Catalog.Persistence.Shared;
 namespace SuperTutor.Contexts.Catalog.Persistence.Shared.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20220423134314_InitialMigration")]
+    [Migration("20220424151157_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,14 +52,6 @@ namespace SuperTutor.Contexts.Catalog.Persistence.Shared.Migrations
                         .HasPrecision(19, 4)
                         .HasColumnType("decimal(19,4)");
 
-                    b.Property<int>("TutoringSubject")
-                        .HasColumnType("int");
-
-                    b.Property<string>("tutoringGrades")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TutoringGrades");
-
                     b.HasKey("Id");
 
                     b.ToTable("TutorProfiles", "catalog");
@@ -91,6 +83,60 @@ namespace SuperTutor.Contexts.Catalog.Persistence.Shared.Migrations
                         });
 
                     b.Navigation("FavoriteFilters");
+                });
+
+            modelBuilder.Entity("SuperTutor.Contexts.Catalog.Domain.TutorProfiles.TutorProfile", b =>
+                {
+                    b.OwnsMany("SuperTutor.Contexts.Catalog.Domain.TutorProfiles.Models.ValueObjects.TutoringGrade", "TutoringGrades", b1 =>
+                        {
+                            b1.Property<Guid>("TutorProfileId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"), 1L, 1);
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<int>("Value")
+                                .HasColumnType("int");
+
+                            b1.HasKey("TutorProfileId", "Id");
+
+                            b1.ToTable("TutorProfileTutoringGrades", "catalog");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TutorProfileId");
+                        });
+
+                    b.OwnsOne("SuperTutor.Contexts.Catalog.Domain.TutorProfiles.Models.ValueObjects.TutoringSubject", "TutoringSubject", b1 =>
+                        {
+                            b1.Property<Guid>("TutorProfileId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<int>("Value")
+                                .HasColumnType("int");
+
+                            b1.HasKey("TutorProfileId");
+
+                            b1.ToTable("TutorProfiles", "catalog");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TutorProfileId");
+                        });
+
+                    b.Navigation("TutoringGrades");
+
+                    b.Navigation("TutoringSubject")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

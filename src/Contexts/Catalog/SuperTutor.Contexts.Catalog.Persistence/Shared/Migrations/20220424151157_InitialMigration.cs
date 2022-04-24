@@ -27,10 +27,10 @@ public partial class InitialMigration : Migration
             {
                 Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                 About = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                TutoringSubject = table.Column<int>(type: "int", nullable: false),
+                TutoringSubject_Value = table.Column<int>(type: "int", nullable: false),
+                TutoringSubject_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 RateForOneHour = table.Column<decimal>(type: "decimal(19,4)", precision: 19, scale: 4, nullable: false),
-                IsActive = table.Column<bool>(type: "bit", nullable: false),
-                TutoringGrades = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                IsActive = table.Column<bool>(type: "bit", nullable: false)
             },
             constraints: table => table.PrimaryKey("PK_TutorProfiles", x => x.Id));
 
@@ -55,6 +55,29 @@ public partial class InitialMigration : Migration
                     principalColumn: "Id",
                     onDelete: ReferentialAction.Cascade);
             });
+
+        migrationBuilder.CreateTable(
+            name: "TutorProfileTutoringGrades",
+            schema: "catalog",
+            columns: table => new
+            {
+                TutorProfileId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                Id = table.Column<int>(type: "int", nullable: false)
+                    .Annotation("SqlServer:Identity", "1, 1"),
+                Value = table.Column<int>(type: "int", nullable: false),
+                Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_TutorProfileTutoringGrades", x => new { x.TutorProfileId, x.Id });
+                table.ForeignKey(
+                    name: "FK_TutorProfileTutoringGrades_TutorProfiles_TutorProfileId",
+                    column: x => x.TutorProfileId,
+                    principalSchema: "catalog",
+                    principalTable: "TutorProfiles",
+                    principalColumn: "Id",
+                    onDelete: ReferentialAction.Cascade);
+            });
     }
 
     protected override void Down(MigrationBuilder migrationBuilder)
@@ -64,11 +87,15 @@ public partial class InitialMigration : Migration
             schema: "catalog");
 
         migrationBuilder.DropTable(
-            name: "TutorProfiles",
+            name: "TutorProfileTutoringGrades",
             schema: "catalog");
 
         migrationBuilder.DropTable(
             name: "Students",
+            schema: "catalog");
+
+        migrationBuilder.DropTable(
+            name: "TutorProfiles",
             schema: "catalog");
     }
 }

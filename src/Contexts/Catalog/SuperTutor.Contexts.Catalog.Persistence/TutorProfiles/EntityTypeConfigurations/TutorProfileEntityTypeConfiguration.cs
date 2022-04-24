@@ -23,18 +23,22 @@ internal class TutorProfileEntityTypeConfiguration : IEntityTypeConfiguration<Tu
             .HasMaxLength(TutorProfileConstants.AboutMaxLength)
             .IsRequired();
 
-        builder.Property(tutorProfile => tutorProfile.TutoringSubject).IsRequired();
+        builder.OwnsOne(tutorProfile => tutorProfile.TutoringSubject, ownedBuilder =>
+        {
+            ownedBuilder.Property(tutoringSubject => tutoringSubject.Value).IsRequired();
+            ownedBuilder.Property(tutoringSubject => tutoringSubject.Name).IsRequired();
+        });
+        builder.Navigation(tutorProfile => tutorProfile.TutoringSubject);
 
-        builder.Ignore(tutorProfile => tutorProfile.TutoringGrades);
-        builder.Property<List<int>>("tutoringGrades")
-            .HasColumnName("TutoringGrades")
-            .HasConversion(
-                tutoringGrades => string.Join(",", tutoringGrades.Select(tutoringGrade => tutoringGrade)),
-                commaSeparatedTutoringGradeValues => commaSeparatedTutoringGradeValues
-                    .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                    .Select(stringTutoringGradeValue => int.Parse(stringTutoringGradeValue)).ToList()
-            )
-            .IsRequired();
+        builder.OwnsMany(tutorProfile => tutorProfile.TutoringGrades, ownedBuilder =>
+        {
+            ownedBuilder.ToTable("TutorProfileTutoringGrades");
+
+            ownedBuilder.Property(tutoringGrade => tutoringGrade.Value).IsRequired();
+            ownedBuilder.Property(tutoringGrade => tutoringGrade.Name).IsRequired();
+        });
+        builder.Navigation(tutorProfile => tutorProfile.TutoringGrades).Metadata.SetField("tutoringGrades");
+        builder.Navigation(tutorProfile => tutorProfile.TutoringGrades).UsePropertyAccessMode(PropertyAccessMode.Field);
 
         builder.Property(tutorProfile => tutorProfile.RateForOneHour)
             .HasPrecision(19, 4)
