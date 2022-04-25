@@ -4,9 +4,9 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Catalog.Application.Integration.Profiles.TutorProfiles.UpdateTutoringGrades;
 
-public class UpdateTutoringGradesCommand : Command
+public class UpdateTutoringGradesForTutorProfileCommand : Command
 {
-    public UpdateTutoringGradesCommand(TutorProfileId tutorProfileId, IEnumerable<TutoringGrade> newTutoringGrades)
+    public UpdateTutoringGradesForTutorProfileCommand(TutorProfileId tutorProfileId, IEnumerable<TutoringGrade> newTutoringGrades)
     {
         TutorProfileId = tutorProfileId;
         NewTutoringGrades = newTutoringGrades;

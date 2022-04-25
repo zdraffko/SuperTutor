@@ -23,7 +23,7 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
         IsActive = isActive;
     }
 
-    public string About { get; }
+    public string About { get; private set; }
 
     public TutoringSubject TutoringSubject { get; }
 
@@ -61,4 +61,6 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
 
         tutoringGrades = finalTutoringGrades;
     }
+
+    public void UpdateAbout(string newAbout) => About = newAbout;
 }

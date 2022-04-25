@@ -9,12 +9,12 @@ namespace SuperTutor.Contexts.Catalog.Infrastructure.IntegrationEvents.Consumers
 
 public class TutorProfileTutoringGradesAddedIntegrationEventConsumer : IConsumer<TutorProfileTutoringGradesAddedIntegrationEvent>
 {
-    private readonly ICommandHandler<UpdateTutoringGradesCommand> updateTutoringGradesCommandHandler;
+    private readonly ICommandHandler<UpdateTutoringGradesForTutorProfileCommand> updateTutoringGradesForTutorProfileCommandHandler;
 
-    public TutorProfileTutoringGradesAddedIntegrationEventConsumer(ICommandHandler<UpdateTutoringGradesCommand> updateTutoringGradesCommandHandler) => this.updateTutoringGradesCommandHandler = updateTutoringGradesCommandHandler;
+    public TutorProfileTutoringGradesAddedIntegrationEventConsumer(ICommandHandler<UpdateTutoringGradesForTutorProfileCommand> updateTutoringGradesForTutorProfileCommandHandler) => this.updateTutoringGradesForTutorProfileCommandHandler = updateTutoringGradesForTutorProfileCommandHandler;
 
     public async Task Consume(ConsumeContext<TutorProfileTutoringGradesAddedIntegrationEvent> context)
-        => await updateTutoringGradesCommandHandler.Handle(new UpdateTutoringGradesCommand(
+        => await updateTutoringGradesForTutorProfileCommandHandler.Handle(new UpdateTutoringGradesForTutorProfileCommand(
             new TutorProfileId(context.Message.TutorProfileId),
             context.Message.FinalTutoringGradesForTutorProfile.Select(tutoringGrade => new TutoringGrade(tutoringGrade.Value, tutoringGrade.Name))), context.CancellationToken);
 }

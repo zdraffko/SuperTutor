@@ -3,9 +3,9 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Catalog.Application.Integration.Profiles.TutorProfiles.UpdateRateForOneHour;
 
-public class UpdateRateForOneHourCommand : Command
+public class UpdateRateForOneHourForTutorProfileCommand : Command
 {
-    public UpdateRateForOneHourCommand(TutorProfileId tutorProfileId, decimal newRateForOneHour)
+    public UpdateRateForOneHourForTutorProfileCommand(TutorProfileId tutorProfileId, decimal newRateForOneHour)
     {
         TutorProfileId = tutorProfileId;
         NewRateForOneHour = newRateForOneHour;

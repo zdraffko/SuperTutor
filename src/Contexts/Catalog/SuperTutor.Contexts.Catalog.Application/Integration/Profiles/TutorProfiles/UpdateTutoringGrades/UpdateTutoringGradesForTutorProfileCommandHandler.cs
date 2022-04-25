@@ -4,13 +4,13 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Catalog.Application.Integration.Profiles.TutorProfiles.UpdateTutoringGrades;
 
-internal class UpdateTutoringGradesCommandHandler : ICommandHandler<UpdateTutoringGradesCommand>
+internal class UpdateTutoringGradesForTutorProfileCommandHandler : ICommandHandler<UpdateTutoringGradesForTutorProfileCommand>
 {
     private readonly ITutorProfileRepository tutorProfileRepository;
 
-    public UpdateTutoringGradesCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
+    public UpdateTutoringGradesForTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
 
-    public async Task<Result> Handle(UpdateTutoringGradesCommand command, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UpdateTutoringGradesForTutorProfileCommand command, CancellationToken cancellationToken)
     {
         var tutorProfile = await tutorProfileRepository.GetById(command.TutorProfileId, cancellationToken);
         if (tutorProfile is null)

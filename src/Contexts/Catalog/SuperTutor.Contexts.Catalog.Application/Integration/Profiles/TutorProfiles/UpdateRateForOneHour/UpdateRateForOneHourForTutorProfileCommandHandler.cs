@@ -4,13 +4,13 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Catalog.Application.Integration.Profiles.TutorProfiles.UpdateRateForOneHour;
 
-internal class UpdateRateForOneHourCommandHandler : ICommandHandler<UpdateRateForOneHourCommand>
+internal class UpdateRateForOneHourForTutorProfileCommandHandler : ICommandHandler<UpdateRateForOneHourForTutorProfileCommand>
 {
     private readonly ITutorProfileRepository tutorProfileRepository;
 
-    public UpdateRateForOneHourCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
+    public UpdateRateForOneHourForTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
 
-    public async Task<Result> Handle(UpdateRateForOneHourCommand command, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UpdateRateForOneHourForTutorProfileCommand command, CancellationToken cancellationToken)
     {
         var tutorProfile = await tutorProfileRepository.GetById(command.TutorProfileId, cancellationToken);
         if (tutorProfile is null)

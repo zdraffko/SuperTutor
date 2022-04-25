@@ -8,10 +8,10 @@ namespace SuperTutor.Contexts.Catalog.Infrastructure.IntegrationEvents.Consumers
 
 public class TutorProfileRateForOneHourIncreasedIntegrationEventConsumer : IConsumer<TutorProfileRateForOneHourIncreasedIntegrationEvent>
 {
-    private readonly ICommandHandler<UpdateRateForOneHourCommand> updateRateForOneHourCommandHandler;
+    private readonly ICommandHandler<UpdateRateForOneHourForTutorProfileCommand> updateRateForOneHourForTutorProfileCommandHandler;
 
-    public TutorProfileRateForOneHourIncreasedIntegrationEventConsumer(ICommandHandler<UpdateRateForOneHourCommand> updateRateForOneHourCommandHandler) => this.updateRateForOneHourCommandHandler = updateRateForOneHourCommandHandler;
+    public TutorProfileRateForOneHourIncreasedIntegrationEventConsumer(ICommandHandler<UpdateRateForOneHourForTutorProfileCommand> updateRateForOneHourForTutorProfileCommandHandler) => this.updateRateForOneHourForTutorProfileCommandHandler = updateRateForOneHourForTutorProfileCommandHandler;
 
     public async Task Consume(ConsumeContext<TutorProfileRateForOneHourIncreasedIntegrationEvent> context)
-        => await updateRateForOneHourCommandHandler.Handle(new UpdateRateForOneHourCommand(new TutorProfileId(context.Message.TutorProfileId), context.Message.NewRateForOneHour), context.CancellationToken);
+        => await updateRateForOneHourForTutorProfileCommandHandler.Handle(new UpdateRateForOneHourForTutorProfileCommand(new TutorProfileId(context.Message.TutorProfileId), context.Message.NewRateForOneHour), context.CancellationToken);
 }
