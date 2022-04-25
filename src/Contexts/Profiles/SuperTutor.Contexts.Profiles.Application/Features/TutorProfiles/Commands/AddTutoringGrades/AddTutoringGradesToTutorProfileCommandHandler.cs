@@ -1,7 +1,9 @@
 ﻿using FluentResults;
 using SuperTutor.Contexts.Profiles.Domain.Common.Models.Enumerations;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
+using SuperTutor.Contexts.Profiles.IntegrationEvents.TutorProfiles;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.AddTutoringGrades;
@@ -9,8 +11,13 @@ namespace SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Comman
 internal class AddTutoringGradesToTutorProfileCommandHandler : ICommandHandler<AddTutoringGradesToTutorProfileCommand>
 {
     private readonly ITutorProfileRepository tutorProfileRepository;
+    private readonly IIntegrationEventsService integrationEventsService;
 
-    public AddTutoringGradesToTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
+    public AddTutoringGradesToTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository, IIntegrationEventsService integrationEventsService)
+    {
+        this.tutorProfileRepository = tutorProfileRepository;
+        this.integrationEventsService = integrationEventsService;
+    }
 
     public async Task<Result> Handle(AddTutoringGradesToTutorProfileCommand command, CancellationToken cancellationToken)
     {
@@ -23,6 +30,10 @@ internal class AddTutoringGradesToTutorProfileCommandHandler : ICommandHandler<A
         var newTutoringGrades = Enumeration.FromValues<Grade>(command.NewTutoringGrades).ToHashSet();
 
         tutorProfile.AddTutoringGrades(newTutoringGrades);
+
+        integrationEventsService.Raise(new TutorProfileTutoringGradesAddedIntegrationEvent(
+            tutorProfile.Id.Value,
+            tutorProfile.TutoringGrades.Select(tutoringGrade => new TutorProfileTutoringGradesAddedIntegrationEvent.Grade(tutoringGrade.Value, tutoringGrade.Name))));
 
         return Result.Ok();
     }

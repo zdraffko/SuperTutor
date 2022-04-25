@@ -7,7 +7,7 @@ namespace SuperTutor.Contexts.Catalog.Domain.TutorProfiles;
 
 public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
 {
-    private readonly List<TutoringGrade> tutoringGrades;
+    private List<TutoringGrade> tutoringGrades;
 
     // Required for EntityFramework Core
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -38,4 +38,27 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
     public void Deactivate() => IsActive = false;
 
     public void UpdateRateForOneHour(decimal newRateForOneHour) => RateForOneHour = newRateForOneHour;
+
+    public void UpdateTutoringGrades(List<TutoringGrade> newTutoringGrades)
+    {
+        var finalTutoringGrades = new List<TutoringGrade>();
+
+        foreach (var existingTutoringGrade in tutoringGrades)
+        {
+            if (newTutoringGrades.Contains(existingTutoringGrade))
+            {
+                finalTutoringGrades.Add(existingTutoringGrade);
+            }
+        }
+
+        foreach (var newTutoringGrade in newTutoringGrades)
+        {
+            if (!tutoringGrades.Contains(newTutoringGrade))
+            {
+                finalTutoringGrades.Add(newTutoringGrade);
+            }
+        }
+
+        tutoringGrades = finalTutoringGrades;
+    }
 }
