@@ -11,6 +11,8 @@ internal class TutorProfileRepository : ITutorProfileRepository
 
     public void Add(TutorProfile tutorProfile) => tutorProfilesDbContext.TutorProfiles.Add(tutorProfile);
 
+    public void Remove(TutorProfile tutorProfile) => tutorProfilesDbContext.TutorProfiles.Remove(tutorProfile);
+
     public async Task<TutorProfile?> GetById(TutorProfileId tutorProfileId, CancellationToken cancellationToken)
         => await tutorProfilesDbContext.TutorProfiles.SingleOrDefaultAsync(tutorProfile => tutorProfile.Id == tutorProfileId, cancellationToken);
 }
