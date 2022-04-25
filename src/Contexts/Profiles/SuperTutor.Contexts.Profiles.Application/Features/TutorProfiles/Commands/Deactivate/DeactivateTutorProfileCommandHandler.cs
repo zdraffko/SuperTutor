@@ -1,14 +1,21 @@
 ﻿using FluentResults;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
+using SuperTutor.Contexts.Profiles.IntegrationEvents.TutorProfiles;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.Deactivate;
 
 internal class DeactivateTutorProfileCommandHandler : ICommandHandler<DeactivateTutorProfileCommand>
 {
     private readonly ITutorProfileRepository tutorProfileRepository;
+    private readonly IIntegrationEventsService integrationEventsService;
 
-    public DeactivateTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
+    public DeactivateTutorProfileCommandHandler(ITutorProfileRepository tutorProfileRepository, IIntegrationEventsService integrationEventsService)
+    {
+        this.tutorProfileRepository = tutorProfileRepository;
+        this.integrationEventsService = integrationEventsService;
+    }
 
     public async Task<Result> Handle(DeactivateTutorProfileCommand command, CancellationToken cancellationToken)
     {
@@ -19,6 +26,8 @@ internal class DeactivateTutorProfileCommandHandler : ICommandHandler<Deactivate
         }
 
         tutorProfile.Deactivate();
+
+        integrationEventsService.Raise(new TutorProfileDeactivatedIntegrationEvent(tutorProfile.Id.Value));
 
         return Result.Ok();
     }

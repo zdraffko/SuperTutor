@@ -34,4 +34,6 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
     public bool IsActive { get; private set; }
 
     public void Activate() => IsActive = true;
+
+    public void Deactivate() => IsActive = false;
 }
