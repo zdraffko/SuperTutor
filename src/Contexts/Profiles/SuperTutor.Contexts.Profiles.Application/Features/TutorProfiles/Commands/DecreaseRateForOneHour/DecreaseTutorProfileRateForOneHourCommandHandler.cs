@@ -1,14 +1,21 @@
 ﻿using FluentResults;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
+using SuperTutor.Contexts.Profiles.IntegrationEvents.TutorProfiles;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.DecreaseRateForOneHour;
 
 internal class DecreaseTutorProfileRateForOneHourCommandHandler : ICommandHandler<DecreaseTutorProfileRateForOneHourCommand>
 {
     private readonly ITutorProfileRepository tutorProfileRepository;
+    private readonly IIntegrationEventsService integrationEventsService;
 
-    public DecreaseTutorProfileRateForOneHourCommandHandler(ITutorProfileRepository tutorProfileRepository) => this.tutorProfileRepository = tutorProfileRepository;
+    public DecreaseTutorProfileRateForOneHourCommandHandler(ITutorProfileRepository tutorProfileRepository, IIntegrationEventsService integrationEventsService)
+    {
+        this.tutorProfileRepository = tutorProfileRepository;
+        this.integrationEventsService = integrationEventsService;
+    }
 
     public async Task<Result> Handle(DecreaseTutorProfileRateForOneHourCommand command, CancellationToken cancellationToken)
     {
@@ -20,6 +27,7 @@ internal class DecreaseTutorProfileRateForOneHourCommandHandler : ICommandHandle
 
         tutorProfile.DecreaseRateForOneHour(command.DecreaseAmount);
 
+        integrationEventsService.Raise(new TutorProfileRateForOneHourDecreasedIntegrationEvent(tutorProfile.Id.Value, tutorProfile.RateForOneHour));
         return Result.Ok();
     }
 }
