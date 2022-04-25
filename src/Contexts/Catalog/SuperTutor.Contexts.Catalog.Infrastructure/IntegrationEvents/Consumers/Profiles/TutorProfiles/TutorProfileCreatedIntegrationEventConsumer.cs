@@ -1,5 +1,5 @@
 ﻿using MassTransit;
-using SuperTutor.Contexts.Catalog.Application.Integration.Profiles.TutorProfiles.CreateTutorProfile;
+using SuperTutor.Contexts.Catalog.Application.Integration.Profiles.TutorProfiles.Create;
 using SuperTutor.Contexts.Catalog.Domain.TutorProfiles;
 using SuperTutor.Contexts.Catalog.Domain.TutorProfiles.Models.ValueObjects;
 using SuperTutor.Contexts.Profiles.IntegrationEvents.TutorProfiles;

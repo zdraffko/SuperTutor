@@ -1,7 +1,7 @@
 ﻿using SuperTutor.Contexts.Catalog.Domain.TutorProfiles;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
-namespace SuperTutor.Contexts.Catalog.Application.Integration.Profiles.TutorProfiles.ActivateTutorProfile;
+namespace SuperTutor.Contexts.Catalog.Application.Integration.Profiles.TutorProfiles.Activate;
 
 public class ActivateTutorProfileCommand : Command
 {

@@ -29,11 +29,13 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
 
     public IReadOnlyCollection<TutoringGrade> TutoringGrades => tutoringGrades;
 
-    public decimal RateForOneHour { get; }
+    public decimal RateForOneHour { get; private set; }
 
     public bool IsActive { get; private set; }
 
     public void Activate() => IsActive = true;
 
     public void Deactivate() => IsActive = false;
+
+    public void UpdateRateForOneHour(decimal newRateForOneHour) => RateForOneHour = newRateForOneHour;
 }

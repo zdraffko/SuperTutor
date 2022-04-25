@@ -2,7 +2,7 @@
 using SuperTutor.Contexts.Catalog.Domain.TutorProfiles;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
-namespace SuperTutor.Contexts.Catalog.Application.Integration.Profiles.TutorProfiles.CreateTutorProfile;
+namespace SuperTutor.Contexts.Catalog.Application.Integration.Profiles.TutorProfiles.Create;
 
 internal class CreateTutorProfileCommandHandler : ICommandHandler<CreateTutorProfileCommand>
 {
