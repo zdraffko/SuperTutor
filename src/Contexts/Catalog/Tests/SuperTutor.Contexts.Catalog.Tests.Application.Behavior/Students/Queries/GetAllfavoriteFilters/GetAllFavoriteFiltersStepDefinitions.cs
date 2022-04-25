@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
-using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Shared;
 using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Commands.AddFavoriteFilter.Models;
 using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Queries.GetAllfavoriteFilters.Models;
+using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Shared;
 using System.Net.Http.Json;
 using System.Text.Json;
 using TechTalk.SpecFlow;
@@ -31,7 +31,7 @@ public class GetAllFavoriteFiltersStepDefinitions
             Filter = ExistingFilter
         };
 
-        await httpClient.PostAsJsonAsync(Constants.AddFavoriteFilterEndpoint, addNewFavoriteFilterRequest);
+        await httpClient.PostAsJsonAsync(StudentConstants.AddFavoriteFilterEndpoint, addNewFavoriteFilterRequest);
     }
 
     [Given(@"Alex does not have any favorite filters")]
@@ -42,7 +42,7 @@ public class GetAllFavoriteFiltersStepDefinitions
     {
         var request = JsonSerializer.Serialize(new { StudentId });
 
-        getFavoriteFiltersResponse = await httpClient.GetFromJsonAsync<GetFavoriteFiltersForStudentResponse>($"{Constants.GetAllFavoriteFiltersEndpoint}?query={request}");
+        getFavoriteFiltersResponse = await httpClient.GetFromJsonAsync<GetFavoriteFiltersForStudentResponse>($"{StudentConstants.GetAllFavoriteFiltersEndpoint}?query={request}");
     }
 
     [Then(@"all of Alex's favorite filters should be returned")]

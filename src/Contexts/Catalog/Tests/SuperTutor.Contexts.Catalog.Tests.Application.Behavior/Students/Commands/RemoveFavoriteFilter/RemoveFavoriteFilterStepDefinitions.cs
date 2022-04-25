@@ -4,6 +4,7 @@ using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Shared;
 using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Shared.Models;
 using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Commands.AddFavoriteFilter.Models;
 using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Commands.RemoveFavoriteFilter.Models;
+using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Shared;
 using System.Data.SqlClient;
 using System.Net.Http.Json;
 using TechTalk.SpecFlow;
@@ -29,7 +30,7 @@ public class RemoveFavoriteFilterStepDefinitions
             Filter = ExistingFilter
         };
 
-        await httpClient.PostAsJsonAsync(Constants.AddFavoriteFilterEndpoint, addNewFavoriteFilterRequest);
+        await httpClient.PostAsJsonAsync(StudentConstants.AddFavoriteFilterEndpoint, addNewFavoriteFilterRequest);
     }
 
     [When(@"Alex tries to remove that filter")]
@@ -41,7 +42,7 @@ public class RemoveFavoriteFilterStepDefinitions
             Filter = ExistingFilter
         };
 
-        await httpClient.PostAsJsonAsync(Constants.RemoveFavoriteFilterEndpoint, removeFavoriteFilterRequest);
+        await httpClient.PostAsJsonAsync(StudentConstants.RemoveFavoriteFilterEndpoint, removeFavoriteFilterRequest);
     }
 
     [When(@"Alex tries to remove a non existing filter from his favorites")]
@@ -53,7 +54,7 @@ public class RemoveFavoriteFilterStepDefinitions
             Filter = "&nonExistingFilter=true"
         };
 
-        await httpClient.PostAsJsonAsync(Constants.RemoveFavoriteFilterEndpoint, removeFavoriteFilterRequest);
+        await httpClient.PostAsJsonAsync(StudentConstants.RemoveFavoriteFilterEndpoint, removeFavoriteFilterRequest);
     }
 
     [Then(@"the filter should be removed from his favorites")]

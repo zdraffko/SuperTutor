@@ -1,9 +1,8 @@
 ﻿using Dapper;
 using FluentAssertions;
-using SuperTutor.Contexts.Catalog.Domain.Students.Constants;
-using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Shared;
 using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Shared.Models;
 using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Commands.AddFavoriteFilter.Models;
+using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Shared;
 using System.Data.SqlClient;
 using System.Net.Http.Json;
 using TechTalk.SpecFlow;
@@ -46,10 +45,10 @@ public class AddFavoriteFilterStepDefinitions
     }
 
     [Given(@"Alex has the maximum number of filters in his favorites")]
-    public async Task GivenTheStudentHasTheMaximumNumberOfFiltersInHisFavorites() => await AddFavoriteFilters(StudentConstants.MaximumAllowedFavoriteFilters);
+    public async Task GivenTheStudentHasTheMaximumNumberOfFiltersInHisFavorites() => await AddFavoriteFilters(Domain.Students.Constants.StudentConstants.MaximumAllowedFavoriteFilters);
 
     [Given(@"the same filter is already present in Alex's favorites")]
-    public async Task GivenTheSameFilterIsAlreadyPresentInTheStudentsFavorites() => await httpClient.PostAsJsonAsync(Constants.AddFavoriteFilterEndpoint, addNewFavoriteFilterRequest);
+    public async Task GivenTheSameFilterIsAlreadyPresentInTheStudentsFavorites() => await httpClient.PostAsJsonAsync(StudentConstants.AddFavoriteFilterEndpoint, addNewFavoriteFilterRequest);
 
     [Given(@"the same filter is not already present in Alex's favorites")]
     public async Task GivenTheSameFilterIsNotAlreadyPresentInTheStudentsFavorites()
@@ -62,7 +61,7 @@ public class AddFavoriteFilterStepDefinitions
     public async Task GivenTheStudentHasNotReachedTheMaximumNumberOfAllowedFavoriteFiltersHeHas(int numberOfAlreadyAddedFavoriteFilters) => await AddFavoriteFilters(numberOfAlreadyAddedFavoriteFilters);
 
     [When(@"Alex tries add a new filter")]
-    public async Task WhenTheStudentTriesAddANewFilter() => await httpClient.PostAsJsonAsync(Constants.AddFavoriteFilterEndpoint, addNewFavoriteFilterRequest);
+    public async Task WhenTheStudentTriesAddANewFilter() => await httpClient.PostAsJsonAsync(StudentConstants.AddFavoriteFilterEndpoint, addNewFavoriteFilterRequest);
 
     [Then(@"the new filter should not be added to Alex's favorites")]
     public async Task ThenTheNewFilterShouldNotBeAddedToTheStudentsFavorites()
@@ -88,7 +87,7 @@ public class AddFavoriteFilterStepDefinitions
         using var connection = new SqlConnection(Constants.DatabaseConnectionString);
         var favoriteFilters = await connection.QueryAsync<FavoriteFilterDatabaseQueryResponse>("select * from catalog.FavoriteFilters where StudentId = @StudentId", new { StudentId });
 
-        favoriteFilters.Should().HaveCount(StudentConstants.MaximumAllowedFavoriteFilters);
+        favoriteFilters.Should().HaveCount(Domain.Students.Constants.StudentConstants.MaximumAllowedFavoriteFilters);
     }
 
     [Then(@"the new filter should be added to Alex's favorites")]
@@ -113,7 +112,7 @@ public class AddFavoriteFilterStepDefinitions
                 Filter = $"&favoriteFilterNumber={addFavoriteFilterRequestNumber}"
             };
 
-            var addFavoriteFilterRequestTask = httpClient.PostAsJsonAsync(Constants.AddFavoriteFilterEndpoint, addFavoriteFilterRequest);
+            var addFavoriteFilterRequestTask = httpClient.PostAsJsonAsync(StudentConstants.AddFavoriteFilterEndpoint, addFavoriteFilterRequest);
 
             addFavoriteFilterRequestTasks.Add(addFavoriteFilterRequestTask);
         }
