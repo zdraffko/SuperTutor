@@ -6,7 +6,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using TechTalk.SpecFlow;
 
-namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Queries.GetAll;
+namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Queries.GetAllFavoriteFilters;
 
 [Binding]
 public class GetAllFavoriteFiltersStepDefinitions

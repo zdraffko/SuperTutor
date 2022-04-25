@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 using System.Net.Http.Json;
 using TechTalk.SpecFlow;
 
-namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Commands.Remove;
+namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Commands.RemoveFavoriteFilter;
 
 [Binding]
 public class RemoveFavoriteFilterStepDefinitions

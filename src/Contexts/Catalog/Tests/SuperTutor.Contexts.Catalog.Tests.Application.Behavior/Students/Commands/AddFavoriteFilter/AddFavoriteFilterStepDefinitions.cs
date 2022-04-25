@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using FluentAssertions;
+using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Shared;
 using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Shared.Models;
 using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Commands.AddFavoriteFilter.Models;
 using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Shared;
