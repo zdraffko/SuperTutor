@@ -57,6 +57,11 @@ public class UserService : IUserService
     public async Task<Result<Guid>> Delete(string email)
     {
         var user = await userManager.FindByEmailAsync(email);
+        if (user is null)
+        {
+            return Result.Ok(Guid.Empty);
+        }
+
         var deleteUserResult = await userManager.DeleteAsync(user);
 
         if (!deleteUserResult.Succeeded)

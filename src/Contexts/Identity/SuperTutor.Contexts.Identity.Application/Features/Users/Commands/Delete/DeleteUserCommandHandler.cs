@@ -20,7 +20,12 @@ internal class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand>
     public async Task<Result> Handle(DeleteUserCommand command, CancellationToken cancellationToken)
     {
         var deleteUserResult = await userService.Delete(command.Email);
-        if (deleteUserResult.IsSuccess)
+        if (!deleteUserResult.IsSuccess)
+        {
+            return new Result().WithErrors(deleteUserResult.Errors);
+        }
+
+        if (deleteUserResult.Value != Guid.Empty)
         {
             var deletedUserId = deleteUserResult.Value;
             integrationEventsService.Raise(new UserDeletedIntegrationEvent(deletedUserId));
