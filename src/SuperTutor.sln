@@ -84,7 +84,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog.Tests.Domain.Unit", "Contexts\Catalog\Tests\SuperTutor.Contexts.Catalog.Tests.Domain.Unit\SuperTutor.Contexts.Catalog.Tests.Domain.Unit.csproj", "{723EA1F4-C3DC-43BD-A8C5-D4BF0718AFA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Profiles.IntegrationEvents", "Contexts\Profiles\SuperTutor.Contexts.Profiles.IntegrationEvents\SuperTutor.Contexts.Profiles.IntegrationEvents.csproj", "{F380D532-3BD9-411C-8657-F0AB438B349A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.IntegrationEvents", "Contexts\Profiles\SuperTutor.Contexts.Profiles.IntegrationEvents\SuperTutor.Contexts.Profiles.IntegrationEvents.csproj", "{F380D532-3BD9-411C-8657-F0AB438B349A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Schedule", "Schedule", "{D7B6D655-A6A9-47A6-850C-91D96960C944}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Schedule.Domain", "Contexts\Schedule\SuperTutor.Contexts.Schedule.Domain\SuperTutor.Contexts.Schedule.Domain.csproj", "{BDFF7D5F-2D19-40FD-9319-3A55A1FB1F7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Schedule.Api", "Contexts\Schedule\SuperTutor.Contexts.Schedule.Api\SuperTutor.Contexts.Schedule.Api.csproj", "{3EEFCE3B-BCBB-407E-9471-F70E581C1EF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Schedule.Application", "Contexts\Schedule\SuperTutor.Contexts.Schedule.Application\SuperTutor.Contexts.Schedule.Application.csproj", "{9FB9E9AA-29AA-45EC-A613-87F4C7A4B97A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Schedule.Infrastructure", "Contexts\Schedule\SuperTutor.Contexts.Schedule.Infrastructure\SuperTutor.Contexts.Schedule.Infrastructure.csproj", "{8C3EC0AE-5D59-4468-B6CD-A359B6E625F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Schedule.Startup", "Contexts\Schedule\SuperTutor.Contexts.Schedule.Startup\SuperTutor.Contexts.Schedule.Startup.csproj", "{3DED9048-7FD4-4911-8DD0-820D9FC60BFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Schedule.Persistence", "Contexts\Schedule\SuperTutor.Contexts.Schedule.Persistence\SuperTutor.Contexts.Schedule.Persistence.csproj", "{2F79488C-C84C-4295-9FF2-E663F5FCC85D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -212,6 +226,30 @@ Global
 		{F380D532-3BD9-411C-8657-F0AB438B349A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F380D532-3BD9-411C-8657-F0AB438B349A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F380D532-3BD9-411C-8657-F0AB438B349A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDFF7D5F-2D19-40FD-9319-3A55A1FB1F7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDFF7D5F-2D19-40FD-9319-3A55A1FB1F7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDFF7D5F-2D19-40FD-9319-3A55A1FB1F7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDFF7D5F-2D19-40FD-9319-3A55A1FB1F7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EEFCE3B-BCBB-407E-9471-F70E581C1EF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EEFCE3B-BCBB-407E-9471-F70E581C1EF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EEFCE3B-BCBB-407E-9471-F70E581C1EF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EEFCE3B-BCBB-407E-9471-F70E581C1EF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FB9E9AA-29AA-45EC-A613-87F4C7A4B97A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FB9E9AA-29AA-45EC-A613-87F4C7A4B97A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FB9E9AA-29AA-45EC-A613-87F4C7A4B97A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FB9E9AA-29AA-45EC-A613-87F4C7A4B97A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C3EC0AE-5D59-4468-B6CD-A359B6E625F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C3EC0AE-5D59-4468-B6CD-A359B6E625F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C3EC0AE-5D59-4468-B6CD-A359B6E625F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C3EC0AE-5D59-4468-B6CD-A359B6E625F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DED9048-7FD4-4911-8DD0-820D9FC60BFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DED9048-7FD4-4911-8DD0-820D9FC60BFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DED9048-7FD4-4911-8DD0-820D9FC60BFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DED9048-7FD4-4911-8DD0-820D9FC60BFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F79488C-C84C-4295-9FF2-E663F5FCC85D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F79488C-C84C-4295-9FF2-E663F5FCC85D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F79488C-C84C-4295-9FF2-E663F5FCC85D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F79488C-C84C-4295-9FF2-E663F5FCC85D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -253,6 +291,13 @@ Global
 		{C59C0F0C-C8F1-4420-AD6A-15DE5FAE436D} = {4AFA11E7-3EF6-4274-B90D-31304D0C7036}
 		{723EA1F4-C3DC-43BD-A8C5-D4BF0718AFA2} = {4AFA11E7-3EF6-4274-B90D-31304D0C7036}
 		{F380D532-3BD9-411C-8657-F0AB438B349A} = {FCFD1BE3-C52C-436B-BA5C-10C2D37F8EEF}
+		{D7B6D655-A6A9-47A6-850C-91D96960C944} = {A1E1E7E6-ED90-4C56-97C2-312DE5B5A54F}
+		{BDFF7D5F-2D19-40FD-9319-3A55A1FB1F7B} = {D7B6D655-A6A9-47A6-850C-91D96960C944}
+		{3EEFCE3B-BCBB-407E-9471-F70E581C1EF0} = {D7B6D655-A6A9-47A6-850C-91D96960C944}
+		{9FB9E9AA-29AA-45EC-A613-87F4C7A4B97A} = {D7B6D655-A6A9-47A6-850C-91D96960C944}
+		{8C3EC0AE-5D59-4468-B6CD-A359B6E625F2} = {D7B6D655-A6A9-47A6-850C-91D96960C944}
+		{3DED9048-7FD4-4911-8DD0-820D9FC60BFE} = {D7B6D655-A6A9-47A6-850C-91D96960C944}
+		{2F79488C-C84C-4295-9FF2-E663F5FCC85D} = {D7B6D655-A6A9-47A6-850C-91D96960C944}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4CB9FFAA-0741-40AA-BFA6-60CC8D6EC98F}
