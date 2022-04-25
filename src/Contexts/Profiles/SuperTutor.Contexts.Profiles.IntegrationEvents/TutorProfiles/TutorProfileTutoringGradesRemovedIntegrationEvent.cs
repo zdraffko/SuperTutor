@@ -2,9 +2,9 @@
 
 namespace SuperTutor.Contexts.Profiles.IntegrationEvents.TutorProfiles;
 
-public class TutorProfileTutoringGradesAddedIntegrationEvent : IntegrationEvent
+public class TutorProfileTutoringGradesRemovedIntegrationEvent : IntegrationEvent
 {
-    public TutorProfileTutoringGradesAddedIntegrationEvent(Guid tutorProfileId, IEnumerable<Grade> finalTutoringGradesForTutorProfile)
+    public TutorProfileTutoringGradesRemovedIntegrationEvent(Guid tutorProfileId, IEnumerable<Grade> finalTutoringGradesForTutorProfile)
     {
         TutorProfileId = tutorProfileId;
         FinalTutoringGradesForTutorProfile = finalTutoringGradesForTutorProfile;
