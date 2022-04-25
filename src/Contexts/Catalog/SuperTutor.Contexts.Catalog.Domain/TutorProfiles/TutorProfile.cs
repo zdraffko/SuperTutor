@@ -31,5 +31,7 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
 
     public decimal RateForOneHour { get; }
 
-    public bool IsActive { get; }
+    public bool IsActive { get; private set; }
+
+    public void Activate() => IsActive = true;
 }
