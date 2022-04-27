@@ -20,7 +20,7 @@ public static class HealthCheckOptionsExtensions
                 {
                     Component = healthReportEntry.Key,
                     Status = healthReportEntry.Value.Status.ToString(),
-                    Description = healthReportEntry.Value.Description,
+                    Description = healthReportEntry.Value.Description ?? healthReportEntry.Value.Exception?.Message,
                     Duration = healthReportEntry.Value.Duration
                 }),
                 TotalDuration = healthReport.TotalDuration
