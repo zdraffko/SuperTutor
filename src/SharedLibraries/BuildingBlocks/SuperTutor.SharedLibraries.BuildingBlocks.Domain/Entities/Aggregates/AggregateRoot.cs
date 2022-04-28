@@ -16,13 +16,5 @@ public abstract class AggregateRoot<TIdentifier, TIdentifierValue> : Entity<TIde
 
     protected void RaiseDomainEvent(DomainEvent domainEvent) => domainEvents.Add(domainEvent);
 
-    protected abstract void ApplyDomainEvent(DomainEvent domainEvent);
-
-    public void ApplyDomainEvents(IEnumerable<DomainEvent> domainEvents)
-    {
-        foreach (var domainEvent in domainEvents)
-        {
-            ApplyDomainEvent(domainEvent);
-        }
-    }
+    public abstract void ApplyDomainEvent(DomainEvent domainEvent);
 }

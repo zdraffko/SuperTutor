@@ -10,7 +10,7 @@ public abstract class Entity<TIdentifier, TIdentifierValue> : IEquatable<Entity<
 {
     protected Entity(TIdentifier id) => Id = id;
 
-    public TIdentifier Id { get; }
+    public TIdentifier Id { get; protected set; }
 
     protected void CheckInvariant(Invariant invariant)
     {
