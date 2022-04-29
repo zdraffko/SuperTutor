@@ -61,7 +61,12 @@ try
 
     builder.Services
         .AddControllers()
-        .AddJsonOptions(jsonOptions => jsonOptions.JsonSerializerOptions.Converters.Add(new IdentifierJsonConverterFactory()))
+        .AddJsonOptions(jsonOptions =>
+        {
+            jsonOptions.JsonSerializerOptions.Converters.Add(new IdentifierJsonConverterFactory());
+            jsonOptions.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+            jsonOptions.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
+        })
         .AddApplicationPart(typeof(IScheduleApiAssemblyMarker).Assembly)
         .AddControllersAsServices();
 

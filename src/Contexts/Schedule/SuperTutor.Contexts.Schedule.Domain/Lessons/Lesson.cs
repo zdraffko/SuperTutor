@@ -34,5 +34,5 @@ public class Lesson : AggregateRoot<LessonId, Guid>
 
     public static Lesson ReserveRegularLesson(DateOnly date, TimeOnly startTime, TimeSpan duration) => new(date, startTime, duration, LessonType.Regular);
 
-    protected override void ApplyDomainEvent(DomainEvent domainEvent) => throw new NotImplementedException();
+    public override void ApplyDomainEvent(DomainEvent domainEvent) => throw new NotImplementedException();
 }
