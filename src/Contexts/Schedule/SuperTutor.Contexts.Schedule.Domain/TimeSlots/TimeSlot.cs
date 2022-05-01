@@ -3,7 +3,6 @@ using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Invariants;
 using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Models.Enumerations;
 using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Aggregates;
-using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Events;
 
 namespace SuperTutor.Contexts.Schedule.Domain.TimeSlots;
@@ -46,9 +45,7 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
             addedTimeSlot.Id,
             addedTimeSlot.TutorId,
             addedTimeSlot.Date,
-            addedTimeSlot.StartTime,
-            addedTimeSlot.Type.Value,
-            addedTimeSlot.Status.Value
+            addedTimeSlot.StartTime
         ));
 
         return addedTimeSlot;
@@ -64,9 +61,7 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
             addedTimeSlot.Id,
             addedTimeSlot.TutorId,
             addedTimeSlot.Date,
-            addedTimeSlot.StartTime,
-            addedTimeSlot.Type.Value,
-            addedTimeSlot.Status.Value
+            addedTimeSlot.StartTime
         ));
 
         return addedTimeSlot;
@@ -111,8 +106,8 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
         TutorId = domainEvent.TutorId;
         Date = domainEvent.Date;
         StartTime = domainEvent.StartTime;
-        Type = Enumeration.FromValue<TimeSlotType>(domainEvent.Type)!;
-        Status = Enumeration.FromValue<TimeSlotStatus>(domainEvent.Status)!;
+        Type = TimeSlotType.Availability;
+        Status = TimeSlotStatus.Unassigned;
     }
 
     private void Apply(TimeSlotTimeOffTakenDomainEvent domainEvent)
@@ -121,8 +116,8 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
         TutorId = domainEvent.TutorId;
         Date = domainEvent.Date;
         StartTime = domainEvent.StartTime;
-        Type = Enumeration.FromValue<TimeSlotType>(domainEvent.Type)!;
-        Status = Enumeration.FromValue<TimeSlotStatus>(domainEvent.Status)!;
+        Type = TimeSlotType.TimeOff;
+        Status = TimeSlotStatus.Assigned;
     }
 
     private void Apply(TimeSlotAvailabilityRemovedDomainEvent _) => Status = TimeSlotStatus.Removed;

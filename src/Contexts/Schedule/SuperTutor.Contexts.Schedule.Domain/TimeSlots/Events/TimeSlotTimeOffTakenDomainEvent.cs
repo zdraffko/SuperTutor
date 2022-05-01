@@ -9,16 +9,12 @@ public class TimeSlotTimeOffTakenDomainEvent : DomainEvent
         TimeSlotId timeSlotId,
         TutorId tutorId,
         DateOnly date,
-        TimeOnly startTime,
-        int type,
-        int status)
+        TimeOnly startTime)
     {
         TimeSlotId = timeSlotId;
         TutorId = tutorId;
         Date = date;
         StartTime = startTime;
-        Type = type;
-        Status = status;
     }
 
     public TimeSlotId TimeSlotId { get; }
@@ -28,8 +24,4 @@ public class TimeSlotTimeOffTakenDomainEvent : DomainEvent
     public DateOnly Date { get; }
 
     public TimeOnly StartTime { get; }
-
-    public int Type { get; }
-
-    public int Status { get; }
 }
