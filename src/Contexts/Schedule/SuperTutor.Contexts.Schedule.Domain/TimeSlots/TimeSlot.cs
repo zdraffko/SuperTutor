@@ -54,11 +54,37 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
         return addedTimeSlot;
     }
 
-    public static TimeSlot TakeTimeOff(TutorId tutorId, DateOnly date, TimeOnly startTime) => new(tutorId, date, startTime, TimeSlotType.TimeOff);
+    public static TimeSlot TakeTimeOff(TutorId tutorId, DateOnly date, TimeOnly startTime)
+    {
+        var addedTimeSlot = new TimeSlot(tutorId, date, startTime, TimeSlotType.TimeOff);
+
+        addedTimeSlot.CheckInvariant(new TimeSlotDateAndTimeMustBeIntoTheFutureInvariant(date, startTime));
+
+        addedTimeSlot.RaiseDomainEvent(new TimeSlotTimeOffTakenDomainEvent(
+            addedTimeSlot.Id,
+            addedTimeSlot.TutorId,
+            addedTimeSlot.Date,
+            addedTimeSlot.StartTime,
+            addedTimeSlot.Type.Value,
+            addedTimeSlot.Status.Value
+        ));
+
+        return addedTimeSlot;
+    }
 
     public override void ApplyDomainEvent(DomainEvent domainEvent) => Apply((dynamic) domainEvent);
 
     private void Apply(TimeSlotAvailabilityAddedDomainEvent domainEvent)
+    {
+        Id = domainEvent.TimeSlotId;
+        TutorId = domainEvent.TutorId;
+        Date = domainEvent.Date;
+        StartTime = domainEvent.StartTime;
+        Type = Enumeration.FromValue<TimeSlotType>(domainEvent.Type)!;
+        Status = Enumeration.FromValue<TimeSlotStatus>(domainEvent.Status)!;
+    }
+
+    private void Apply(TimeSlotTimeOffTakenDomainEvent domainEvent)
     {
         Id = domainEvent.TimeSlotId;
         TutorId = domainEvent.TutorId;
