@@ -11,4 +11,6 @@ public interface IAggregateRootEventsRepository<TAggregateRoot, TAggregateRootId
     Task Add(TAggregateRoot aggregateRoot, CancellationToken cancellationToken);
 
     Task<TAggregateRoot?> Load(TAggregateRootIdentifier aggregateRootIdentifier, CancellationToken cancellationToken);
+
+    Task Update(TAggregateRoot aggregateRoot, CancellationToken cancellationToken);
 }

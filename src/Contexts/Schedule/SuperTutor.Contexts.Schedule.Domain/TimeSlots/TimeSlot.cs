@@ -72,6 +72,22 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
         return addedTimeSlot;
     }
 
+    public void RemoveTimeOff()
+    {
+        if (Status == TimeSlotStatus.Removed)
+        {
+            return;
+        }
+
+        CheckInvariant(new TimeSlotForRemovalMustBeTheCorrectTypeInvariant(this, TimeSlotType.TimeOff));
+
+        Status = TimeSlotStatus.Removed;
+
+        RaiseDomainEvent(new TimeSlotTimeOffRemovedDomainEvent(Id));
+    }
+
+    #region Apply Domain Events
+
     public override void ApplyDomainEvent(DomainEvent domainEvent) => Apply((dynamic) domainEvent);
 
     private void Apply(TimeSlotAvailabilityAddedDomainEvent domainEvent)
@@ -93,4 +109,8 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
         Type = Enumeration.FromValue<TimeSlotType>(domainEvent.Type)!;
         Status = Enumeration.FromValue<TimeSlotStatus>(domainEvent.Status)!;
     }
+
+    private void Apply(TimeSlotTimeOffRemovedDomainEvent _) => Status = TimeSlotStatus.Removed;
+
+    #endregion Apply Domain Events
 }
