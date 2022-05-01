@@ -39,7 +39,7 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
     {
         var addedTimeSlot = new TimeSlot(tutorId, date, startTime, TimeSlotType.Availability);
 
-        addedTimeSlot.CheckInvariant(new TimeSlotDateAndTimeMustBeIntoTheFutureInvariant(date, startTime));
+        addedTimeSlot.CheckInvariant(new TimeSlotDateAndTimeMustBeIntoTheFutureInvariant(addedTimeSlot.Date, addedTimeSlot.StartTime));
 
         addedTimeSlot.RaiseDomainEvent(new TimeSlotAvailabilityAddedDomainEvent(
             addedTimeSlot.Id,
@@ -55,7 +55,7 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
     {
         var addedTimeSlot = new TimeSlot(tutorId, date, startTime, TimeSlotType.TimeOff);
 
-        addedTimeSlot.CheckInvariant(new TimeSlotDateAndTimeMustBeIntoTheFutureInvariant(date, startTime));
+        addedTimeSlot.CheckInvariant(new TimeSlotDateAndTimeMustBeIntoTheFutureInvariant(addedTimeSlot.Date, addedTimeSlot.StartTime));
 
         addedTimeSlot.RaiseDomainEvent(new TimeSlotTimeOffTakenDomainEvent(
             addedTimeSlot.Id,
