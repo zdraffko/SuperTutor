@@ -72,6 +72,21 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
         return addedTimeSlot;
     }
 
+    public void RemoveAvailability()
+    {
+        if (Status == TimeSlotStatus.Removed)
+        {
+            return;
+        }
+
+        CheckInvariant(new TimeSlotForRemovalMustBeTheCorrectTypeInvariant(this, TimeSlotType.Availability));
+        CheckInvariant(new TimeSlotAvailabilityCanBeRemovedOnlyWhenIsIsUnassignedInvariant(this));
+
+        Status = TimeSlotStatus.Removed;
+
+        RaiseDomainEvent(new TimeSlotAvailabilityRemovedDomainEvent(Id));
+    }
+
     public void RemoveTimeOff()
     {
         if (Status == TimeSlotStatus.Removed)
@@ -109,6 +124,8 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
         Type = Enumeration.FromValue<TimeSlotType>(domainEvent.Type)!;
         Status = Enumeration.FromValue<TimeSlotStatus>(domainEvent.Status)!;
     }
+
+    private void Apply(TimeSlotAvailabilityRemovedDomainEvent _) => Status = TimeSlotStatus.Removed;
 
     private void Apply(TimeSlotTimeOffRemovedDomainEvent _) => Status = TimeSlotStatus.Removed;
 
