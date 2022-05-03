@@ -8,10 +8,10 @@ namespace SuperTutor.SharedLibraries.BuildingBlocks.Application.Errors.Commands.
 public class ErrorCommandHandlerDecorator<TCommand> : ICommandHandler<TCommand>
     where TCommand : Command
 {
-    private readonly ILogger<TCommand> commandLogger;
+    private readonly ILogger<ErrorCommandHandlerDecorator<TCommand>> commandLogger;
     private readonly ICommandHandler<TCommand> decoratedCommandHandler;
 
-    public ErrorCommandHandlerDecorator(ILogger<TCommand> commandLogger, ICommandHandler<TCommand> decoratedCommandHandler)
+    public ErrorCommandHandlerDecorator(ILogger<ErrorCommandHandlerDecorator<TCommand>> commandLogger, ICommandHandler<TCommand> decoratedCommandHandler)
     {
         this.commandLogger = commandLogger;
         this.decoratedCommandHandler = decoratedCommandHandler;
@@ -47,10 +47,10 @@ public class ErrorCommandHandlerDecorator<TCommand> : ICommandHandler<TCommand>
 public class ErrorCommandHandlerDecorator<TCommand, TPayload> : ICommandHandler<TCommand, TPayload>
     where TCommand : Command<TPayload>
 {
-    private readonly ILogger<TCommand> commandLogger;
+    private readonly ILogger<ErrorCommandHandlerDecorator<TCommand, TPayload>> commandLogger;
     private readonly ICommandHandler<TCommand, TPayload> decoratedCommandHandler;
 
-    public ErrorCommandHandlerDecorator(ILogger<TCommand> commandLogger, ICommandHandler<TCommand, TPayload> decoratedCommandHandler)
+    public ErrorCommandHandlerDecorator(ILogger<ErrorCommandHandlerDecorator<TCommand, TPayload>> commandLogger, ICommandHandler<TCommand, TPayload> decoratedCommandHandler)
     {
         this.commandLogger = commandLogger;
         this.decoratedCommandHandler = decoratedCommandHandler;

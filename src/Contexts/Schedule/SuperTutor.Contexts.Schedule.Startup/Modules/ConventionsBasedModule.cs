@@ -5,8 +5,6 @@ using SuperTutor.Contexts.Schedule.Infrastructure;
 using SuperTutor.Contexts.Schedule.Persistence;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
-using SuperTutor.SharedLibraries.BuildingBlocks.Application.Validation.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure;
 using SuperTutor.SharedLibraries.BuildingBlocks.Persistence;
 
@@ -28,12 +26,6 @@ internal class ConventionsBasedModule : Module
             typeof(IBuildingBlocksInfrastructureAssemblyMarker).Assembly,
             typeof(IBuildingBlocksPersistenceAssemblyMarker).Assembly
         };
-
-        builder.RegisterAssemblyTypes(assemblies).AsClosedTypesOf(typeof(ICommandHandler<>)).InstancePerLifetimeScope();
-        builder.RegisterAssemblyTypes(assemblies).AsClosedTypesOf(typeof(ICommandHandler<,>)).InstancePerLifetimeScope();
-
-        builder.RegisterAssemblyTypes(assemblies).AsClosedTypesOf(typeof(ICommandValidator<>)).InstancePerLifetimeScope();
-        builder.RegisterAssemblyTypes(assemblies).AsClosedTypesOf(typeof(ICommandValidator<,>)).InstancePerLifetimeScope();
 
         builder.RegisterAssemblyTypes(assemblies).AsImplementedInterfaces().PreserveExistingDefaults().InstancePerLifetimeScope();
     }

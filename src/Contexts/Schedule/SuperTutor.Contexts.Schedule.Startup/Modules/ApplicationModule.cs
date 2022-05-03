@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.DomainEvents;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.DomainEvents.Decorators;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Errors.Commands.Decorators;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents.Commands.Decorators;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Validation.Commands.Decorators;
@@ -20,5 +22,7 @@ internal class ApplicationModule : Module
 
         builder.RegisterGenericDecorator(typeof(ErrorCommandHandlerDecorator<>), typeof(ICommandHandler<>));
         builder.RegisterGenericDecorator(typeof(ErrorCommandHandlerDecorator<,>), typeof(ICommandHandler<,>));
+
+        builder.RegisterGenericDecorator(typeof(ErrorDomainEventHandler<>), typeof(IDomainEventHandler<>));
     }
 }
