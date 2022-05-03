@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.TutorProfiles.Queries.GetByFilter.Models;
+namespace SuperTutor.Contexts.Catalog.Tests.Acceptance.TutorProfiles.Queries.GetByFilter.Models;
 
 public class GetTutorProfilesByFilterResponse
 {

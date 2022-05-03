@@ -47,7 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A5293D13
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C8289B34-1808-41D9-9F6C-01DDF9B59D3D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.Tests.Domain.Unit", "Contexts\Profiles\Tests\SuperTutor.Contexts.Profiles.Tests.Domain.Unit\SuperTutor.Contexts.Profiles.Tests.Domain.Unit.csproj", "{5DBB8341-04AE-4AB5-89D5-2FD72B6B9FB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.Tests.Unit.Domain", "Contexts\Profiles\Tests\SuperTutor.Contexts.Profiles.Tests.Domain.Unit\SuperTutor.Contexts.Profiles.Tests.Unit.Domain.csproj", "{5DBB8341-04AE-4AB5-89D5-2FD72B6B9FB6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.SharedLibraries.BuildingBlocks.Tests.Domain", "SharedLibraries\BuildingBlocks\Tests\SuperTutor.SharedLibraries.BuildingBlocks.Tests.Domain\SuperTutor.SharedLibraries.BuildingBlocks.Tests.Domain.csproj", "{3DD6A336-5FE3-40B6-8AC2-FA41D4A4EFC9}"
 EndProject
@@ -56,7 +56,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.Tests.Application.Behavior", "Contexts\Profiles\Tests\SuperTutor.Contexts.Profiles.Tests.Application.Behavior\SuperTutor.Contexts.Profiles.Tests.Application.Behavior.csproj", "{1F9F33C9-D978-4110-902A-7D2C37EC681B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.Tests.Acceptance", "Contexts\Profiles\Tests\SuperTutor.Contexts.Profiles.Tests.Application.Behavior\SuperTutor.Contexts.Profiles.Tests.Acceptance.csproj", "{1F9F33C9-D978-4110-902A-7D2C37EC681B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{E804220B-A3D4-4BEE-BEF6-B5B559AF5D0C}"
 EndProject
@@ -72,9 +72,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4AFA11E7-3EF6-4274-B90D-31304D0C7036}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog.Tests.Application.Behavior", "Contexts\Catalog\Tests\SuperTutor.Contexts.Catalog.Tests.Application.Behavior\SuperTutor.Contexts.Catalog.Tests.Application.Behavior.csproj", "{C59C0F0C-C8F1-4420-AD6A-15DE5FAE436D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog.Tests.Acceptance", "Contexts\Catalog\Tests\SuperTutor.Contexts.Catalog.Tests.Application.Behavior\SuperTutor.Contexts.Catalog.Tests.Acceptance.csproj", "{C59C0F0C-C8F1-4420-AD6A-15DE5FAE436D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog.Tests.Domain.Unit", "Contexts\Catalog\Tests\SuperTutor.Contexts.Catalog.Tests.Domain.Unit\SuperTutor.Contexts.Catalog.Tests.Domain.Unit.csproj", "{723EA1F4-C3DC-43BD-A8C5-D4BF0718AFA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog.Tests.Unit.Domain", "Contexts\Catalog\Tests\SuperTutor.Contexts.Catalog.Tests.Domain.Unit\SuperTutor.Contexts.Catalog.Tests.Unit.Domain.csproj", "{723EA1F4-C3DC-43BD-A8C5-D4BF0718AFA2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.IntegrationEvents", "Contexts\Profiles\SuperTutor.Contexts.Profiles.IntegrationEvents\SuperTutor.Contexts.Profiles.IntegrationEvents.csproj", "{F380D532-3BD9-411C-8657-F0AB438B349A}"
 EndProject

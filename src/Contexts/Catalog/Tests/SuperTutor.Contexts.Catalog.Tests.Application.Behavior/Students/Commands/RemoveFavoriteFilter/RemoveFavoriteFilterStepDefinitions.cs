@@ -1,15 +1,15 @@
 ﻿using Dapper;
 using FluentAssertions;
-using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Shared;
-using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Shared.Models;
-using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Commands.AddFavoriteFilter.Models;
-using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Commands.RemoveFavoriteFilter.Models;
-using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Shared;
+using SuperTutor.Contexts.Catalog.Tests.Acceptance.Shared;
+using SuperTutor.Contexts.Catalog.Tests.Acceptance.Shared.Models;
+using SuperTutor.Contexts.Catalog.Tests.Acceptance.Students.Commands.AddFavoriteFilter.Models;
+using SuperTutor.Contexts.Catalog.Tests.Acceptance.Students.Commands.RemoveFavoriteFilter.Models;
+using SuperTutor.Contexts.Catalog.Tests.Acceptance.Students.Shared;
 using System.Data.SqlClient;
 using System.Net.Http.Json;
 using TechTalk.SpecFlow;
 
-namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Commands.RemoveFavoriteFilter;
+namespace SuperTutor.Contexts.Catalog.Tests.Acceptance.Students.Commands.RemoveFavoriteFilter;
 
 [Binding]
 public class RemoveFavoriteFilterStepDefinitions

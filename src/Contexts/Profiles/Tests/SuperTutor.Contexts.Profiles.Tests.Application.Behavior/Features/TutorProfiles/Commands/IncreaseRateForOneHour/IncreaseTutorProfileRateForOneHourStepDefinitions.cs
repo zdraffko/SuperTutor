@@ -1,4 +1,4 @@
-﻿namespace SuperTutor.Contexts.Profiles.Tests.Application.Behavior.Features.TutorProfiles.Commands.IncreaseRateForOneHour;
+﻿namespace SuperTutor.Contexts.Profiles.Tests.Acceptance.Features.TutorProfiles.Commands.IncreaseRateForOneHour;
 internal class IncreaseTutorProfileRateForOneHourStepDefinitions
 {
 }

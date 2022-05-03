@@ -1,14 +1,14 @@
 ﻿using Dapper;
 using FluentAssertions;
-using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Shared;
-using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.TutorProfiles.Queries.GetByFilter.Models;
-using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.TutorProfiles.Shared;
+using SuperTutor.Contexts.Catalog.Tests.Acceptance.Shared;
+using SuperTutor.Contexts.Catalog.Tests.Acceptance.TutorProfiles.Queries.GetByFilter.Models;
+using SuperTutor.Contexts.Catalog.Tests.Acceptance.TutorProfiles.Shared;
 using System.Data.SqlClient;
 using System.Net.Http.Json;
 using System.Text.Json;
 using TechTalk.SpecFlow;
 
-namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.TutorProfiles.Queries.GetByFilter;
+namespace SuperTutor.Contexts.Catalog.Tests.Acceptance.TutorProfiles.Queries.GetByFilter;
 
 [Binding]
 public class GetTutorProfilesByFilterStepDefinitions

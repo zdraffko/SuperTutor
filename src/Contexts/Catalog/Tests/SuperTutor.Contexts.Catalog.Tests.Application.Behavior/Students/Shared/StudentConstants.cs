@@ -1,4 +1,4 @@
-﻿namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Shared;
+﻿namespace SuperTutor.Contexts.Catalog.Tests.Acceptance.Students.Shared;
 
 internal static class StudentConstants
 {

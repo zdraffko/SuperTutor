@@ -1,6 +1,6 @@
 ﻿using TechTalk.SpecFlow;
 
-namespace SuperTutor.Contexts.Profiles.Tests.Application.Behavior.Features.TutorProfiles.Commands.Activate;
+namespace SuperTutor.Contexts.Profiles.Tests.Acceptance.Features.TutorProfiles.Commands.Activate;
 
 [Binding]
 internal class ActivateTutorProfileStepDefinitions

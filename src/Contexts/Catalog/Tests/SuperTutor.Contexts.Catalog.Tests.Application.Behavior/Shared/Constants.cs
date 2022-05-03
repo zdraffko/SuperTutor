@@ -1,4 +1,4 @@
-﻿namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Shared;
+﻿namespace SuperTutor.Contexts.Catalog.Tests.Acceptance.Shared;
 
 internal class Constants
 {

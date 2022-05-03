@@ -1,4 +1,4 @@
-﻿namespace SuperTutor.Contexts.Profiles.Tests.Application.Behavior.Features.TutorProfiles.Commands.AddTutoringGrades;
+﻿namespace SuperTutor.Contexts.Profiles.Tests.Acceptance.Features.TutorProfiles.Commands.AddTutoringGrades;
 
 internal class AddTutoringGradesToTutorProfileStepDefinitions
 {

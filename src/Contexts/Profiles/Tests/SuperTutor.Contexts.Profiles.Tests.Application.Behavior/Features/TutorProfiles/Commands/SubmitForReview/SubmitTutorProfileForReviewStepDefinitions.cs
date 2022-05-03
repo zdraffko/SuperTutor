@@ -1,4 +1,4 @@
-﻿namespace SuperTutor.Contexts.Profiles.Tests.Application.Behavior.Features.TutorProfiles.Commands.SubmitForReview;
+﻿namespace SuperTutor.Contexts.Profiles.Tests.Acceptance.Features.TutorProfiles.Commands.SubmitForReview;
 internal class SubmitTutorProfileForReviewStepDefinitions
 {
 }

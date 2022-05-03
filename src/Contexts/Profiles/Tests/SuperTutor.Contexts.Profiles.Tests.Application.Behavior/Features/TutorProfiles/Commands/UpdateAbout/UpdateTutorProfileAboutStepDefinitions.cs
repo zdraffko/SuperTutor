@@ -1,4 +1,4 @@
-﻿namespace SuperTutor.Contexts.Profiles.Tests.Application.Behavior.Features.TutorProfiles.Commands.UpdateAbout;
+﻿namespace SuperTutor.Contexts.Profiles.Tests.Acceptance.Features.TutorProfiles.Commands.UpdateAbout;
 
 internal class UpdateTutorProfileAboutStepDefinitions
 {

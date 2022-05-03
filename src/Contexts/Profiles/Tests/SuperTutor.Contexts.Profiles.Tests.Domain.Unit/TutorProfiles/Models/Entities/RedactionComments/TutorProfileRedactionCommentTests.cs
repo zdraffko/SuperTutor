@@ -9,7 +9,7 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Tests.Domain.Extensions;
 using System;
 using Xunit;
 
-namespace SuperTutor.Contexts.Profiles.Tests.Domain.Unit.TutorProfiles.Models.Entities.RedactionComments;
+namespace SuperTutor.Contexts.Profiles.Tests.Unit.Domain.TutorProfiles.Models.Entities.RedactionComments;
 
 public class TutorProfileRedactionCommentTests
 {

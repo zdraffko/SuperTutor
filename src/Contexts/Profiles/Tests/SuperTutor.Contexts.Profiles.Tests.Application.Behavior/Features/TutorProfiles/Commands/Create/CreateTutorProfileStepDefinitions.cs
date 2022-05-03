@@ -1,4 +1,4 @@
-﻿namespace SuperTutor.Contexts.Profiles.Tests.Application.Behavior.Features.TutorProfiles.Commands.Create;
+﻿namespace SuperTutor.Contexts.Profiles.Tests.Acceptance.Features.TutorProfiles.Commands.Create;
 
 internal class CreateTutorProfileStepDefinitions
 {

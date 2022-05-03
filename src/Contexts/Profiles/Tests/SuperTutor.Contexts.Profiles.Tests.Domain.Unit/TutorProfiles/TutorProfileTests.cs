@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace SuperTutor.Contexts.Profiles.Tests.Domain.Unit.TutorProfiles;
+namespace SuperTutor.Contexts.Profiles.Tests.Unit.Domain.TutorProfiles;
 
 public class TutorProfileTests
 {

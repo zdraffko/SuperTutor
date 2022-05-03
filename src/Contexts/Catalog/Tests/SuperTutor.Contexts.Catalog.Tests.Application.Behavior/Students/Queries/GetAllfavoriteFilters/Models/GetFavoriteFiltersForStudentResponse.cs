@@ -1,4 +1,4 @@
-﻿namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Queries.GetAllfavoriteFilters.Models;
+﻿namespace SuperTutor.Contexts.Catalog.Tests.Acceptance.Students.Queries.GetAllFavoriteFilters.Models;
 
 internal class GetFavoriteFiltersForStudentResponse
 {

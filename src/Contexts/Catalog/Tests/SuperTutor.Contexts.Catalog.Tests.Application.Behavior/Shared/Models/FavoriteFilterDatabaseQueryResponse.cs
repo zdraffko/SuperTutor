@@ -1,4 +1,4 @@
-﻿namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Shared.Models;
+﻿namespace SuperTutor.Contexts.Catalog.Tests.Acceptance.Shared.Models;
 
 internal class FavoriteFilterDatabaseQueryResponse
 {

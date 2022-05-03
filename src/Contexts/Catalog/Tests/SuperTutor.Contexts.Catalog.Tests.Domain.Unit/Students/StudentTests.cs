@@ -7,7 +7,7 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Tests.Domain.Extensions;
 using System;
 using Xunit;
 
-namespace SuperTutor.Contexts.Catalog.Tests.Domain.Unit.Students;
+namespace SuperTutor.Contexts.Catalog.Tests.Unit.Domain.Students;
 
 public class StudentTests
 {

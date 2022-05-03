@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
-using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Commands.AddFavoriteFilter.Models;
-using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Queries.GetAllfavoriteFilters.Models;
-using SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Shared;
+using SuperTutor.Contexts.Catalog.Tests.Acceptance.Students.Commands.AddFavoriteFilter.Models;
+using SuperTutor.Contexts.Catalog.Tests.Acceptance.Students.Queries.GetAllFavoriteFilters.Models;
+using SuperTutor.Contexts.Catalog.Tests.Acceptance.Students.Shared;
 using System.Net.Http.Json;
 using System.Text.Json;
 using TechTalk.SpecFlow;
 
-namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Students.Queries.GetAllFavoriteFilters;
+namespace SuperTutor.Contexts.Catalog.Tests.Acceptance.Students.Queries.GetAllFavoriteFilters;
 
 [Binding]
 public class GetAllFavoriteFiltersStepDefinitions

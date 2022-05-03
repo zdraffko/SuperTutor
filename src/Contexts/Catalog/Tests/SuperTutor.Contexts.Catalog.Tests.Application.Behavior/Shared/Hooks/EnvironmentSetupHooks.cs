@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 using System.Net;
 using TechTalk.SpecFlow;
 
-namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.Shared.Hooks;
+namespace SuperTutor.Contexts.Catalog.Tests.Acceptance.Shared.Hooks;
 
 [Binding]
 public class EnvironmentSetupHooks

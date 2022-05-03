@@ -1,4 +1,4 @@
-﻿namespace SuperTutor.Contexts.Catalog.Tests.Application.Behavior.TutorProfiles.Shared;
+﻿namespace SuperTutor.Contexts.Catalog.Tests.Acceptance.TutorProfiles.Shared;
 
 internal static class TutorProfileConstants
 {

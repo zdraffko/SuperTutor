@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace SuperTutor.Contexts.Profiles.Tests.Domain.Unit.StudentProfiles;
+namespace SuperTutor.Contexts.Profiles.Tests.Unit.Domain.StudentProfiles;
 
 public class StudentProfileTests
 {
