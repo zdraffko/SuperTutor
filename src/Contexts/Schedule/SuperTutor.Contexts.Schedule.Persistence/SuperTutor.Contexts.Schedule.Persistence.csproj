@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Persistence\SuperTutor.SharedLibraries.BuildingBlocks.Persistence.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Schedule.Application\SuperTutor.Contexts.Schedule.Application.csproj" />
   </ItemGroup>
 

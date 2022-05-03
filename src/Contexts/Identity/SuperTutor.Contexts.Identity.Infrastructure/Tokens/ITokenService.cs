@@ -1,4 +1,4 @@
-﻿using SuperTutor.Contexts.Identity.Persistence.Entities;
+﻿using SuperTutor.Contexts.Identity.Infrastructure.Persistence.Entities;
 
 namespace SuperTutor.Contexts.Identity.Infrastructure.Tokens;
 

@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Microsoft.EntityFrameworkCore;
-using SuperTutor.Contexts.Profiles.Persistence.Contexts;
-using SuperTutor.Contexts.Profiles.Persistence.Contexts.Contracts;
+using SuperTutor.Contexts.Profiles.Infrastructure.Persistence.Contexts;
+using SuperTutor.Contexts.Profiles.Infrastructure.Persistence.Contexts.Contracts;
 
 namespace SuperTutor.Contexts.Profiles.Startup.Modules;
 

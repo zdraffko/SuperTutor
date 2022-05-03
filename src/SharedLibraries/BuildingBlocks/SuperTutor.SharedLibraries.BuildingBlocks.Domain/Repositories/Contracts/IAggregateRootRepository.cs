@@ -1,4 +1,4 @@
-﻿using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Contracts;
+﻿using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Aggregates;
 
 namespace SuperTutor.SharedLibraries.BuildingBlocks.Domain.Repositories.Contracts;
 

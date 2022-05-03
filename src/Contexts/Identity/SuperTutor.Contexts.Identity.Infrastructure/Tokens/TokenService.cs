@@ -1,5 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using SuperTutor.Contexts.Identity.Persistence.Entities;
+using SuperTutor.Contexts.Identity.Infrastructure.Persistence.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

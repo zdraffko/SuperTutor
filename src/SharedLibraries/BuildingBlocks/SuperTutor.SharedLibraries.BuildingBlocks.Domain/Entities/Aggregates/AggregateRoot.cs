@@ -1,5 +1,4 @@
-﻿using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Contracts;
-using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Events;
+﻿using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Events;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.ValueObjects.Identifiers;
 
 namespace SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Aggregates;

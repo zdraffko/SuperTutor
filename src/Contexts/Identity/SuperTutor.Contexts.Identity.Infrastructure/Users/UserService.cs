@@ -1,8 +1,8 @@
 ﻿using FluentResults;
 using Microsoft.AspNetCore.Identity;
 using SuperTutor.Contexts.Identity.Application.Contracts.Users;
+using SuperTutor.Contexts.Identity.Infrastructure.Persistence.Entities;
 using SuperTutor.Contexts.Identity.Infrastructure.Tokens;
-using SuperTutor.Contexts.Identity.Persistence.Entities;
 
 namespace SuperTutor.Contexts.Identity.Infrastructure.Users;
 

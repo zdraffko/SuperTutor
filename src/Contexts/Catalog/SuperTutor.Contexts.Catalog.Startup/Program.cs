@@ -9,7 +9,7 @@ using Serilog.Debugging;
 using Serilog.Sinks.Elasticsearch;
 using SuperTutor.Contexts.Catalog.Api;
 using SuperTutor.Contexts.Catalog.Infrastructure;
-using SuperTutor.Contexts.Catalog.Persistence.Shared;
+using SuperTutor.Contexts.Catalog.Infrastructure.Persistence.Shared;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.HealthChecks.Extensions;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
 

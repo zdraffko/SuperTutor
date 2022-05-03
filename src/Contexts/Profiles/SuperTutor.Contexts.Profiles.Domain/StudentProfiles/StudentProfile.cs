@@ -2,7 +2,7 @@
 using SuperTutor.Contexts.Profiles.Domain.StudentProfiles.Invariants;
 using SuperTutor.Contexts.Profiles.Domain.StudentProfiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities;
-using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Contracts;
+using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Aggregates;
 
 namespace SuperTutor.Contexts.Profiles.Domain.StudentProfiles;
 

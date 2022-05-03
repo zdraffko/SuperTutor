@@ -23,7 +23,6 @@
   <ItemGroup>
     <ProjectReference Include="..\SuperTutor.Contexts.Schedule.Api\SuperTutor.Contexts.Schedule.Api.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Schedule.Infrastructure\SuperTutor.Contexts.Schedule.Infrastructure.csproj" />
-    <ProjectReference Include="..\SuperTutor.Contexts.Schedule.Persistence\SuperTutor.Contexts.Schedule.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

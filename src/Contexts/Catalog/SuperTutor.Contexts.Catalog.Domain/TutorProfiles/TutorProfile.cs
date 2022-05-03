@@ -1,7 +1,7 @@
 ﻿using SuperTutor.Contexts.Catalog.Domain.TutorProfiles.Constants;
 using SuperTutor.Contexts.Catalog.Domain.TutorProfiles.Models.ValueObjects;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities;
-using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Contracts;
+using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Aggregates;
 
 namespace SuperTutor.Contexts.Catalog.Domain.TutorProfiles;
 

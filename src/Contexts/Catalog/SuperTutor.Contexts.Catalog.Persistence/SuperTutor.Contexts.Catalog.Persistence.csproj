@@ -19,8 +19,4 @@
     <ProjectReference Include="..\SuperTutor.Contexts.Catalog.Domain\SuperTutor.Contexts.Catalog.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Shared\Migrations\" />
-  </ItemGroup>
-
 </Project>

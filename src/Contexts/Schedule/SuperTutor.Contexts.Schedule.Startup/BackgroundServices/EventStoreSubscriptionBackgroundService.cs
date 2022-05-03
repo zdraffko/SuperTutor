@@ -1,4 +1,4 @@
-﻿using SuperTutor.SharedLibraries.BuildingBlocks.Persistence.Subscriptions;
+﻿using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Persistence.Subscriptions;
 
 namespace SuperTutor.Contexts.Schedule.Startup.BackgroundServices;
 

@@ -1,9 +1,9 @@
 ﻿using Autofac;
 using SuperTutor.Contexts.Schedule.Domain;
 using SuperTutor.Contexts.Schedule.Startup.BackgroundServices;
-using SuperTutor.SharedLibraries.BuildingBlocks.Persistence.Repositories;
-using SuperTutor.SharedLibraries.BuildingBlocks.Persistence.Serializers;
-using SuperTutor.SharedLibraries.BuildingBlocks.Persistence.Subscriptions;
+using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Persistence.Repositories;
+using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Persistence.Serializers;
+using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Persistence.Subscriptions;
 
 namespace SuperTutor.Contexts.Schedule.Startup.Modules;
 

@@ -4,7 +4,7 @@ using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Entities.Redactio
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.Enumerations;
 using SuperTutor.Contexts.Profiles.Domain.TutorProfiles.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities;
-using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Contracts;
+using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Aggregates;
 
 namespace SuperTutor.Contexts.Profiles.Domain.TutorProfiles;
 

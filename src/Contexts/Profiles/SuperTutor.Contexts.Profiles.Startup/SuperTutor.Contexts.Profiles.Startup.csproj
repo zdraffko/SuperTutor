@@ -29,7 +29,6 @@
     <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Profiles.Api\SuperTutor.Contexts.Profiles.Api.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Profiles.Infrastructure\SuperTutor.Contexts.Profiles.Infrastructure.csproj" />
-    <ProjectReference Include="..\SuperTutor.Contexts.Profiles.Persistence\SuperTutor.Contexts.Profiles.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

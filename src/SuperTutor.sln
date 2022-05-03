@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.SharedLibraries.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Identity.Infrastructure", "Contexts\Identity\SuperTutor.Contexts.Identity.Infrastructure\SuperTutor.Contexts.Identity.Infrastructure.csproj", "{654BD2F2-A0D6-4666-94F2-CDE4C770A28D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Identity.Persistence", "Contexts\Identity\SuperTutor.Contexts.Identity.Persistence\SuperTutor.Contexts.Identity.Persistence.csproj", "{9BBF6BCD-D69F-462D-B431-5B42000C6D66}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Identity.Api", "Contexts\Identity\SuperTutor.Contexts.Identity.Api\SuperTutor.Contexts.Identity.Api.csproj", "{8EC19012-8FFA-4CA7-B9B8-F8D146EF02CE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.SharedLibraries.BuildingBlocks.Api", "SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Api\SuperTutor.SharedLibraries.BuildingBlocks.Api.csproj", "{A8041A5D-B224-40EA-BBC7-3E840DAE0969}"
@@ -29,8 +27,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Identit
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CBB3DF2C-9FE6-4B93-9842-DA42E11FD31E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.SharedLibraries.BuildingBlocks.Persistence", "SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Persistence\SuperTutor.SharedLibraries.BuildingBlocks.Persistence.csproj", "{F86740FD-8B7D-44EA-8991-D26F49F15DBA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Profiles", "Profiles", "{FCFD1BE3-C52C-436B-BA5C-10C2D37F8EEF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.Application", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Application\SuperTutor.Contexts.Profiles.Application.csproj", "{B5CD73DB-D2EC-436C-9679-220CA5FDAC9A}"
@@ -38,8 +34,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.Domain", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Domain\SuperTutor.Contexts.Profiles.Domain.csproj", "{B2495183-7E62-4E9E-9693-A10D93E20421}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.Api", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Api\SuperTutor.Contexts.Profiles.Api.csproj", "{2F8681B5-97C8-4E5C-BB12-2ECD42F6C90E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.Persistence", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Persistence\SuperTutor.Contexts.Profiles.Persistence.csproj", "{78757B2F-7EDC-4E2E-A2DF-147FEEFB638B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Profiles.Startup", "Contexts\Profiles\SuperTutor.Contexts.Profiles.Startup\SuperTutor.Contexts.Profiles.Startup.csproj", "{A5C1BF1C-FA9E-4A25-9689-4D2EB509B9DE}"
 EndProject
@@ -72,8 +66,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog.Application", "Contexts\Catalog\SuperTutor.Contexts.Catalog.Application\SuperTutor.Contexts.Catalog.Application.csproj", "{41D55221-98B6-4C84-9FD7-90DFEF37358E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog.Persistence", "Contexts\Catalog\SuperTutor.Contexts.Catalog.Persistence\SuperTutor.Contexts.Catalog.Persistence.csproj", "{0D051F8B-1B78-411F-A503-D6516BB903D5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog.Infrastructure", "Contexts\Catalog\SuperTutor.Contexts.Catalog.Infrastructure\SuperTutor.Contexts.Catalog.Infrastructure.csproj", "{0288627D-9179-485A-9BAB-DC7F0F5D88B0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Catalog.Domain", "Contexts\Catalog\SuperTutor.Contexts.Catalog.Domain\SuperTutor.Contexts.Catalog.Domain.csproj", "{18885B2F-7E7E-49B6-9A5C-1FFDF907DF2B}"
@@ -98,11 +90,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Schedul
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Schedule.Startup", "Contexts\Schedule\SuperTutor.Contexts.Schedule.Startup\SuperTutor.Contexts.Schedule.Startup.csproj", "{3DED9048-7FD4-4911-8DD0-820D9FC60BFE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Schedule.Persistence", "Contexts\Schedule\SuperTutor.Contexts.Schedule.Persistence\SuperTutor.Contexts.Schedule.Persistence.csproj", "{2F79488C-C84C-4295-9FF2-E663F5FCC85D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{18773A68-F0C8-4ED7-B0F9-2AB0671536D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Schedule.Tests.Acceptance", "Contexts\Schedule\Tests\SuperTutor.Contexts.Schedule.Tests.Acceptance\SuperTutor.Contexts.Schedule.Tests.Acceptance.csproj", "{63DE29D3-FFDF-485C-9A64-27603167A2BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Schedule.Tests.Acceptance", "Contexts\Schedule\Tests\SuperTutor.Contexts.Schedule.Tests.Acceptance\SuperTutor.Contexts.Schedule.Tests.Acceptance.csproj", "{63DE29D3-FFDF-485C-9A64-27603167A2BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -126,10 +116,6 @@ Global
 		{654BD2F2-A0D6-4666-94F2-CDE4C770A28D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{654BD2F2-A0D6-4666-94F2-CDE4C770A28D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{654BD2F2-A0D6-4666-94F2-CDE4C770A28D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9BBF6BCD-D69F-462D-B431-5B42000C6D66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9BBF6BCD-D69F-462D-B431-5B42000C6D66}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9BBF6BCD-D69F-462D-B431-5B42000C6D66}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9BBF6BCD-D69F-462D-B431-5B42000C6D66}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8EC19012-8FFA-4CA7-B9B8-F8D146EF02CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8EC19012-8FFA-4CA7-B9B8-F8D146EF02CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EC19012-8FFA-4CA7-B9B8-F8D146EF02CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -146,10 +132,6 @@ Global
 		{CBB3DF2C-9FE6-4B93-9842-DA42E11FD31E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBB3DF2C-9FE6-4B93-9842-DA42E11FD31E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBB3DF2C-9FE6-4B93-9842-DA42E11FD31E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F86740FD-8B7D-44EA-8991-D26F49F15DBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F86740FD-8B7D-44EA-8991-D26F49F15DBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F86740FD-8B7D-44EA-8991-D26F49F15DBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F86740FD-8B7D-44EA-8991-D26F49F15DBA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B5CD73DB-D2EC-436C-9679-220CA5FDAC9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B5CD73DB-D2EC-436C-9679-220CA5FDAC9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5CD73DB-D2EC-436C-9679-220CA5FDAC9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -162,10 +144,6 @@ Global
 		{2F8681B5-97C8-4E5C-BB12-2ECD42F6C90E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F8681B5-97C8-4E5C-BB12-2ECD42F6C90E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F8681B5-97C8-4E5C-BB12-2ECD42F6C90E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78757B2F-7EDC-4E2E-A2DF-147FEEFB638B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78757B2F-7EDC-4E2E-A2DF-147FEEFB638B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78757B2F-7EDC-4E2E-A2DF-147FEEFB638B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78757B2F-7EDC-4E2E-A2DF-147FEEFB638B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A5C1BF1C-FA9E-4A25-9689-4D2EB509B9DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A5C1BF1C-FA9E-4A25-9689-4D2EB509B9DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5C1BF1C-FA9E-4A25-9689-4D2EB509B9DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -206,10 +184,6 @@ Global
 		{41D55221-98B6-4C84-9FD7-90DFEF37358E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41D55221-98B6-4C84-9FD7-90DFEF37358E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41D55221-98B6-4C84-9FD7-90DFEF37358E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0D051F8B-1B78-411F-A503-D6516BB903D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0D051F8B-1B78-411F-A503-D6516BB903D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0D051F8B-1B78-411F-A503-D6516BB903D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0D051F8B-1B78-411F-A503-D6516BB903D5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0288627D-9179-485A-9BAB-DC7F0F5D88B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0288627D-9179-485A-9BAB-DC7F0F5D88B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0288627D-9179-485A-9BAB-DC7F0F5D88B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -250,10 +224,6 @@ Global
 		{3DED9048-7FD4-4911-8DD0-820D9FC60BFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DED9048-7FD4-4911-8DD0-820D9FC60BFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DED9048-7FD4-4911-8DD0-820D9FC60BFE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2F79488C-C84C-4295-9FF2-E663F5FCC85D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2F79488C-C84C-4295-9FF2-E663F5FCC85D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2F79488C-C84C-4295-9FF2-E663F5FCC85D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2F79488C-C84C-4295-9FF2-E663F5FCC85D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{63DE29D3-FFDF-485C-9A64-27603167A2BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{63DE29D3-FFDF-485C-9A64-27603167A2BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63DE29D3-FFDF-485C-9A64-27603167A2BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -269,16 +239,13 @@ Global
 		{8F30E125-B955-4C89-93EF-B85B88B85F96} = {C9E90C08-FD6E-407F-A33F-0B2C05DC2E49}
 		{1FF4D315-0649-4C68-9E12-B5D8C7CED639} = {C9E90C08-FD6E-407F-A33F-0B2C05DC2E49}
 		{654BD2F2-A0D6-4666-94F2-CDE4C770A28D} = {DB167D28-A138-4B9C-B3D3-14F93D999CC3}
-		{9BBF6BCD-D69F-462D-B431-5B42000C6D66} = {DB167D28-A138-4B9C-B3D3-14F93D999CC3}
 		{8EC19012-8FFA-4CA7-B9B8-F8D146EF02CE} = {DB167D28-A138-4B9C-B3D3-14F93D999CC3}
 		{A8041A5D-B224-40EA-BBC7-3E840DAE0969} = {C9E90C08-FD6E-407F-A33F-0B2C05DC2E49}
 		{07EE0F60-B01A-4AA1-B964-6DC71838A5F8} = {DB167D28-A138-4B9C-B3D3-14F93D999CC3}
-		{F86740FD-8B7D-44EA-8991-D26F49F15DBA} = {C9E90C08-FD6E-407F-A33F-0B2C05DC2E49}
 		{FCFD1BE3-C52C-436B-BA5C-10C2D37F8EEF} = {A1E1E7E6-ED90-4C56-97C2-312DE5B5A54F}
 		{B5CD73DB-D2EC-436C-9679-220CA5FDAC9A} = {FCFD1BE3-C52C-436B-BA5C-10C2D37F8EEF}
 		{B2495183-7E62-4E9E-9693-A10D93E20421} = {FCFD1BE3-C52C-436B-BA5C-10C2D37F8EEF}
 		{2F8681B5-97C8-4E5C-BB12-2ECD42F6C90E} = {FCFD1BE3-C52C-436B-BA5C-10C2D37F8EEF}
-		{78757B2F-7EDC-4E2E-A2DF-147FEEFB638B} = {FCFD1BE3-C52C-436B-BA5C-10C2D37F8EEF}
 		{A5C1BF1C-FA9E-4A25-9689-4D2EB509B9DE} = {FCFD1BE3-C52C-436B-BA5C-10C2D37F8EEF}
 		{B00B7C03-CCE8-4843-9165-B785C4E387CE} = {C9E90C08-FD6E-407F-A33F-0B2C05DC2E49}
 		{42A904B6-1AA0-448A-ABDC-EF5A8CEEAD54} = {DB167D28-A138-4B9C-B3D3-14F93D999CC3}
@@ -292,7 +259,6 @@ Global
 		{BBBDD310-244D-4903-ADD9-6D042C69F280} = {E804220B-A3D4-4BEE-BEF6-B5B559AF5D0C}
 		{8EFFA5C1-BE6B-44BA-983B-2D5DD880458E} = {E804220B-A3D4-4BEE-BEF6-B5B559AF5D0C}
 		{41D55221-98B6-4C84-9FD7-90DFEF37358E} = {E804220B-A3D4-4BEE-BEF6-B5B559AF5D0C}
-		{0D051F8B-1B78-411F-A503-D6516BB903D5} = {E804220B-A3D4-4BEE-BEF6-B5B559AF5D0C}
 		{0288627D-9179-485A-9BAB-DC7F0F5D88B0} = {E804220B-A3D4-4BEE-BEF6-B5B559AF5D0C}
 		{18885B2F-7E7E-49B6-9A5C-1FFDF907DF2B} = {E804220B-A3D4-4BEE-BEF6-B5B559AF5D0C}
 		{4AFA11E7-3EF6-4274-B90D-31304D0C7036} = {E804220B-A3D4-4BEE-BEF6-B5B559AF5D0C}
@@ -305,7 +271,6 @@ Global
 		{9FB9E9AA-29AA-45EC-A613-87F4C7A4B97A} = {D7B6D655-A6A9-47A6-850C-91D96960C944}
 		{8C3EC0AE-5D59-4468-B6CD-A359B6E625F2} = {D7B6D655-A6A9-47A6-850C-91D96960C944}
 		{3DED9048-7FD4-4911-8DD0-820D9FC60BFE} = {D7B6D655-A6A9-47A6-850C-91D96960C944}
-		{2F79488C-C84C-4295-9FF2-E663F5FCC85D} = {D7B6D655-A6A9-47A6-850C-91D96960C944}
 		{18773A68-F0C8-4ED7-B0F9-2AB0671536D6} = {D7B6D655-A6A9-47A6-850C-91D96960C944}
 		{63DE29D3-FFDF-485C-9A64-27603167A2BA} = {18773A68-F0C8-4ED7-B0F9-2AB0671536D6}
 	EndGlobalSection
