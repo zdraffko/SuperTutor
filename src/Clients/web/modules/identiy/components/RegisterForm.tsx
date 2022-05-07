@@ -1,24 +1,31 @@
 import { Anchor, Box, Button, Checkbox, createStyles, Divider, Group, Paper, PasswordInput, Stack, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { useForm, zodResolver } from "@mantine/form";
 import Link from "next/link";
+import { z } from "zod";
 
 interface RegisterFormProps {
     isTutorRegistration: boolean;
 }
 
+const registerFormSchema = z
+    .object({
+        email: z.string().email({ message: "Невалиден имейл" }),
+        password: z.string().min(12, { message: "Паролата трябва да е с дължина поне 12 символа" }),
+        confirmPassword: z.string()
+    })
+    .refine(data => data.confirmPassword === data.password, {
+        message: "Паролите не съвпадат",
+        path: ["confirmPassword"]
+    });
+
 export const RegisterForm: React.FC<RegisterFormProps> = ({ isTutorRegistration }) => {
     const form = useForm({
+        schema: zodResolver(registerFormSchema),
         initialValues: {
-            name: "",
-            userName: "",
             email: "",
             password: "",
             confirmPassword: "",
             termsOfService: false
-        },
-
-        validate: {
-            email: value => (/^\S+@\S+$/.test(value) ? null : "Invalid email")
         }
     });
 
@@ -46,20 +53,38 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ isTutorRegistration 
                 <form onSubmit={form.onSubmit(values => console.log(values))}>
                     <TextInput
                         p="sm"
-                        label="Емейл"
+                        label="Имейл"
                         required
                         placeholder="exampleuser@example.com"
-                        value={form.values.email}
-                        error={form.errors.email && "Please specify valid email"}
-                        onChange={event => form.setFieldValue("email", event.currentTarget.value)}
+                        {...form.getInputProps("email")}
+                        onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля въведи имейл")}
+                        onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                     />
-                    <PasswordInput pl="sm" pr="sm" pt="sm" label="Парола" required value={form.values.password} onChange={event => form.setFieldValue("password", event.currentTarget.value)} />
-                    <Text align="left" size="xs" mx="sm" color="">
-                        Паролата трябва да е с дължина поне 12 симвула
-                    </Text>
-                    <PasswordInput p="sm" label="Потвърди паролата" required value={form.values.confirmPassword} onChange={event => form.setFieldValue("confirmPassword", event.currentTarget.value)} />
+                    <PasswordInput
+                        description="Паролата трябва да е с дължина поне 12 символа"
+                        pl="sm"
+                        pr="sm"
+                        label="Парола"
+                        required
+                        {...form.getInputProps("password")}
+                        onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля въведи парола")}
+                        onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
+                    />
+                    <PasswordInput
+                        p="sm"
+                        label="Потвърди паролата"
+                        required
+                        {...form.getInputProps("confirmPassword")}
+                        onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля потвърди паролата")}
+                        onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
+                    />
                     <Group p="sm">
-                        <Checkbox required checked={form.values.termsOfService} onChange={() => form.setFieldValue("termsOfService", !form.values.termsOfService)} />
+                        <Checkbox
+                            required
+                            {...form.getInputProps("termsOfService")}
+                            onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Трябва да се съгласиш с условията за ползване преди да продължиш напред")}
+                            onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
+                        />
                         <Text>
                             Съгласявам се с <Anchor>условията за ползване</Anchor>
                         </Text>

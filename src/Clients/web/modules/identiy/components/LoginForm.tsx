@@ -1,20 +1,18 @@
 import { Box, Button, createStyles, Divider, Group, Paper, PasswordInput, Stack, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { useForm, zodResolver } from "@mantine/form";
 import Link from "next/link";
+import { z } from "zod";
+
+const loginFormSchema = z.object({
+    email: z.string().email({ message: "Невалиден имейл" })
+});
 
 export const LoginForm: React.FC = () => {
     const form = useForm({
+        schema: zodResolver(loginFormSchema),
         initialValues: {
-            name: "",
-            userName: "",
             email: "",
-            password: "",
-            confirmPassword: "",
-            termsOfService: false
-        },
-
-        validate: {
-            email: value => (/^\S+@\S+$/.test(value) ? null : "Invalid email")
+            password: ""
         }
     });
 
@@ -52,11 +50,20 @@ export const LoginForm: React.FC = () => {
                         label="Емейл"
                         required
                         placeholder="exampleuser@example.com"
-                        value={form.values.email}
-                        error={form.errors.email && "Please specify valid email"}
-                        onChange={event => form.setFieldValue("email", event.currentTarget.value)}
+                        {...form.getInputProps("email")}
+                        onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля въведи имейл")}
+                        onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                     />
-                    <PasswordInput pl="sm" pr="sm" pt="sm" label="Парола" required value={form.values.password} onChange={event => form.setFieldValue("password", event.currentTarget.value)} />
+                    <PasswordInput
+                        pl="sm"
+                        pr="sm"
+                        pt="sm"
+                        label="Парола"
+                        required
+                        {...form.getInputProps("password")}
+                        onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля въведи парола")}
+                        onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
+                    />
                     <Box p="sm" mt="xl">
                         <Button type="submit" fullWidth size="lg">
                             Вход
