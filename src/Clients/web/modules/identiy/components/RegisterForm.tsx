@@ -1,4 +1,4 @@
-import { Anchor, Box, Button, Checkbox, createStyles, Divider, Group, Paper, PasswordInput, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
+import { Anchor, Box, Button, Checkbox, createStyles, Divider, Group, Paper, PasswordInput, Stack, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import Link from "next/link";
 
@@ -26,7 +26,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ isTutorRegistration 
     const { classes } = useStyles();
 
     return (
-        <Group direction="column" align="center">
+        <Stack align="center">
             <Title order={2} m="xl">
                 Супер Учител
             </Title>
@@ -71,12 +71,12 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ isTutorRegistration 
                     </Box>
                     <Link href="/" passHref>
                         <Text component="a" p="sm" my="xl" size="sm">
-                            Обратно
+                            Начало
                         </Text>
                     </Link>
                 </form>
             </Paper>
-        </Group>
+        </Stack>
     );
 };
 

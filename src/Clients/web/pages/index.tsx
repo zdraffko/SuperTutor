@@ -1,34 +1,45 @@
-import { Button, Footer, Group, Text } from "@mantine/core";
+import { Button, Footer, Group, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
-const HomePage: NextPage = () => (
-    <>
-        <Head>
-            <title>Супер Учител</title>
-            <link rel="icon" href="/favicon.ico" />
-        </Head>
+const HomePage: NextPage = () => {
+    const theme = useMantineTheme();
 
-        <main>
-            <h1>Супер Учител</h1>
-            <Group>
+    return (
+        <>
+            <Head>
+                <title>Супер Учител</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <Group position="right">
                 <Link href="/identity/login" passHref>
-                    <Button component="a">Вход</Button>
-                </Link>
-                <Link href="/identity/register/tutor" passHref>
-                    <Button component="a">Регистрация като учител</Button>
-                </Link>
-                <Link href="/identity/register/student" passHref>
-                    <Button component="a">Регистрация като ученик</Button>
+                    <Button component="a" m="xl">
+                        Вход
+                    </Button>
                 </Link>
             </Group>
-        </main>
-
-        <Footer height={60}>
-            <Text>Супер Учител @{new Date().getUTCFullYear()}</Text>
-        </Footer>
-    </>
-);
+            <main style={{ height: "90vh", marginTop: "10vh" }}>
+                <Stack align="center" justify="center" style={{ marginTop: "10vh" }}>
+                    <Title order={1}>Супер Учител</Title>
+                    <Title order={4}>Започни своето приключение сега</Title>
+                    <Group>
+                        <Link href="/identity/register/tutor" passHref>
+                            <Button component="a">Регистрация като учител</Button>
+                        </Link>
+                        <Link href="/identity/register/student" passHref>
+                            <Button component="a">Регистрация като ученик</Button>
+                        </Link>
+                    </Group>
+                </Stack>
+            </main>
+            <Footer height={60} color={theme.colors.gray[0]} p="lg">
+                <Group position="center">
+                    <Text>Супер Учител ©{new Date().getUTCFullYear()}</Text>
+                </Group>
+            </Footer>
+        </>
+    );
+};
 
 export default HomePage;
