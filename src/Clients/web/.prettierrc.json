@@ -3,5 +3,7 @@
     "tabWidth": 4,
     "useTabs": false,
     "jsxBracketSameLine": false,
-    "trailingComma": "none"
-  }
+    "trailingComma": "none",
+    "printWidth": 200,
+    "arrowParens": "avoid"
+}
