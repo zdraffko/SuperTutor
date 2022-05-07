@@ -1,5 +1,6 @@
+import { LoginForm } from "modules/identiy";
 import type { NextPage } from "next";
 
-const LoginPage: NextPage = () => <h1>Login</h1>;
+const LoginPage: NextPage = () => <LoginForm />;
 
 export default LoginPage;

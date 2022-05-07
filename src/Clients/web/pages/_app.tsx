@@ -32,7 +32,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                             },
                             body: {
                                 ...theme.fn.fontStyles(),
-                                backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0],
+                                backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[9] : theme.colors.gray[0],
                                 color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
                                 lineHeight: theme.lineHeight,
                                 padding: 0,
