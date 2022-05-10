@@ -2,7 +2,7 @@
 
 namespace SuperTutor.Contexts.Identity.Application.Features.Users.Commands.Register;
 
-public class RegisterUserCommand : Command
+public class RegisterUserCommand : Command<RegisterUserCommandResult>
 {
     public RegisterUserCommand(string email, string username, string password)
     {

@@ -10,12 +10,12 @@ namespace SuperTutor.Contexts.Identity.Api.Controllers;
 public class UsersController : ApiController
 {
     private readonly ICommandHandler<LoginUserCommand, LoginUserCommandResult> loginUserCommandHandler;
-    private readonly ICommandHandler<RegisterUserCommand> registerUserCommandHandler;
+    private readonly ICommandHandler<RegisterUserCommand, RegisterUserCommandResult> registerUserCommandHandler;
     private readonly ICommandHandler<DeleteUserCommand> deleteUserCommandHandler;
 
     public UsersController(
         ICommandHandler<LoginUserCommand, LoginUserCommandResult> loginUserCommandHandler,
-        ICommandHandler<RegisterUserCommand> registerUserCommandHandler,
+        ICommandHandler<RegisterUserCommand, RegisterUserCommandResult> registerUserCommandHandler,
         ICommandHandler<DeleteUserCommand> deleteUserCommandHandler)
     {
         this.loginUserCommandHandler = loginUserCommandHandler;
@@ -28,7 +28,7 @@ public class UsersController : ApiController
         => await Handle(loginUserCommandHandler, command, cancellationToken);
 
     [HttpPost]
-    public async Task<ActionResult> Register(RegisterUserCommand command, CancellationToken cancellationToken)
+    public async Task<ActionResult<RegisterUserCommandResult>> Register(RegisterUserCommand command, CancellationToken cancellationToken)
         => await Handle(registerUserCommandHandler, command, cancellationToken);
 
     [HttpPost]

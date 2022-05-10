@@ -2,7 +2,7 @@
 
 public class LoginUserCommandResult
 {
-    public LoginUserCommandResult(string token) => Token = token;
+    public LoginUserCommandResult(string authToken) => AuthToken = authToken;
 
-    public string Token { get; }
+    public string AuthToken { get; }
 }
