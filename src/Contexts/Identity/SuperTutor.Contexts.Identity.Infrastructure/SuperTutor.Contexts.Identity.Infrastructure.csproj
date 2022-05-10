@@ -14,11 +14,19 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
 	  <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Identity.Application\SuperTutor.Contexts.Identity.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Persistence\Migrations\" />
   </ItemGroup>
 
 </Project>

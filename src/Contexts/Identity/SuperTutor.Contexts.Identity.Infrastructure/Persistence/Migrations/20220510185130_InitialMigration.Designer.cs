@@ -9,10 +9,10 @@ using SuperTutor.Contexts.Identity.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace SuperTutor.Contexts.Identity.Persistence.Migrations
+namespace SuperTutor.Contexts.Identity.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20211226163740_InitialMigration")]
+    [Migration("20220510185130_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +20,7 @@ namespace SuperTutor.Contexts.Identity.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("identity")
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -156,7 +156,7 @@ namespace SuperTutor.Contexts.Identity.Persistence.Migrations
                     b.ToTable("UserTokens", "identity");
                 });
 
-            modelBuilder.Entity("SuperTutor.Contexts.Identity.Persistence.Entities.User", b =>
+            modelBuilder.Entity("SuperTutor.Contexts.Identity.Domain.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -167,9 +167,11 @@ namespace SuperTutor.Contexts.Identity.Persistence.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -183,14 +185,17 @@ namespace SuperTutor.Contexts.Identity.Persistence.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
@@ -200,12 +205,17 @@ namespace SuperTutor.Contexts.Identity.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("SecurityStamp")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -216,8 +226,7 @@ namespace SuperTutor.Contexts.Identity.Persistence.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("Users", "identity");
                 });
@@ -233,7 +242,7 @@ namespace SuperTutor.Contexts.Identity.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("SuperTutor.Contexts.Identity.Persistence.Entities.User", null)
+                    b.HasOne("SuperTutor.Contexts.Identity.Domain.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -242,7 +251,7 @@ namespace SuperTutor.Contexts.Identity.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("SuperTutor.Contexts.Identity.Persistence.Entities.User", null)
+                    b.HasOne("SuperTutor.Contexts.Identity.Domain.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -257,7 +266,7 @@ namespace SuperTutor.Contexts.Identity.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SuperTutor.Contexts.Identity.Persistence.Entities.User", null)
+                    b.HasOne("SuperTutor.Contexts.Identity.Domain.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -266,7 +275,7 @@ namespace SuperTutor.Contexts.Identity.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("SuperTutor.Contexts.Identity.Persistence.Entities.User", null)
+                    b.HasOne("SuperTutor.Contexts.Identity.Domain.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

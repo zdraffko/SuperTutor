@@ -1,7 +1,8 @@
 ﻿using FluentResults;
 using Microsoft.AspNetCore.Identity;
 using SuperTutor.Contexts.Identity.Application.Contracts.Users;
-using SuperTutor.Contexts.Identity.Infrastructure.Persistence.Entities;
+using SuperTutor.Contexts.Identity.Domain.Users;
+using SuperTutor.Contexts.Identity.Domain.Users.Models.Enumerations;
 using SuperTutor.Contexts.Identity.Infrastructure.Tokens;
 
 namespace SuperTutor.Contexts.Identity.Infrastructure.Users;
@@ -39,20 +40,9 @@ public class UserService : IUserService
         return Result.Ok(token);
     }
 
-    public async Task<Result> Register(string email, string username, string plainPassword)
-    {
-        var user = new User(email, username);
-        var createUserResult = await userManager.CreateAsync(user, plainPassword);
+    public async Task<Result> RegisterTutor(string email, string plainPassword) => await Register(email, UserType.Tutor, plainPassword);
 
-        if (!createUserResult.Succeeded)
-        {
-            var identityErrorDescriptions = createUserResult.Errors.Select(identityError => identityError.Description);
-
-            return new Result().WithErrors(identityErrorDescriptions);
-        }
-
-        return Result.Ok();
-    }
+    public async Task<Result> RegisterStudent(string email, string plainPassword) => await Register(email, UserType.Student, plainPassword);
 
     public async Task<Result<Guid>> Delete(string email)
     {
@@ -72,5 +62,20 @@ public class UserService : IUserService
         }
 
         return Result.Ok(user.Id);
+    }
+
+    private async Task<Result> Register(string email, UserType userType, string plainPassword)
+    {
+        var user = new User(email, userType);
+        var createUserResult = await userManager.CreateAsync(user, plainPassword);
+
+        if (!createUserResult.Succeeded)
+        {
+            var identityErrorDescriptions = createUserResult.Errors.Select(identityError => identityError.Description);
+
+            return new Result().WithErrors(identityErrorDescriptions);
+        }
+
+        return Result.Ok();
     }
 }

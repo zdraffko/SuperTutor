@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SuperTutor.Contexts.Identity.Infrastructure.Persistence.Entities;
+using SuperTutor.Contexts.Identity.Domain.Users;
 
 namespace SuperTutor.Contexts.Identity.Infrastructure.Persistence;
 
@@ -23,5 +23,7 @@ public class IdentityDbContext : IdentityDbContext<User, IdentityRole<Guid>, Gui
         modelBuilder.Entity<IdentityUserRole<Guid>>(userRoleBuilder => userRoleBuilder.ToTable("UserRoles"));
         modelBuilder.Entity<User>(userBuilder => userBuilder.ToTable(name: "Users"));
         modelBuilder.Entity<IdentityUserToken<Guid>>(userTokenBuilder => userTokenBuilder.ToTable("UserTokens"));
+
+        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
     }
 }

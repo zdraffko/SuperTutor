@@ -9,8 +9,8 @@ using Serilog;
 using Serilog.Debugging;
 using Serilog.Sinks.Elasticsearch;
 using SuperTutor.Contexts.Identity.Api;
+using SuperTutor.Contexts.Identity.Domain.Users;
 using SuperTutor.Contexts.Identity.Infrastructure.Persistence;
-using SuperTutor.Contexts.Identity.Infrastructure.Persistence.Entities;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.HealthChecks.Extensions;
 
 Log.Logger = new LoggerConfiguration()
