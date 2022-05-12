@@ -18,6 +18,8 @@ public class UserService : IUserService
         this.tokenService = tokenService;
     }
 
+    public async Task<User?> GetById(Guid userId) => await userManager.FindByIdAsync(userId.ToString());
+
     public async Task<Result<string>> Login(string email, string password)
     {
         var invalidLoginCredentialsErrorMessage = "Invalid login credentials";
