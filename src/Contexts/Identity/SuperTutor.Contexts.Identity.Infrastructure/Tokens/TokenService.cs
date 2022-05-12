@@ -1,5 +1,7 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using SuperTutor.Contexts.Identity.Domain.Users;
+using SuperTutor.Contexts.Identity.Infrastructure.Tokens.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -8,10 +10,14 @@ namespace SuperTutor.Contexts.Identity.Infrastructure.Tokens;
 
 public class TokenService : ITokenService
 {
+    private readonly string SecretKey;
+
+    public TokenService(IOptionsSnapshot<AuthTokenOptions> authTokenOptions) => SecretKey = authTokenOptions.Value.SecretKey;
+
     public async Task<string> GenerateToken(User user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var secret = Encoding.ASCII.GetBytes("TEMP_SECRET_TEMP_TEMP_TEMP_TEMP_TEMP_TEMP_TEMP");
+        var secret = Encoding.ASCII.GetBytes(SecretKey);
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {

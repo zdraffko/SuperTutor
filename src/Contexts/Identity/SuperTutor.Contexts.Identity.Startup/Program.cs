@@ -11,6 +11,7 @@ using Serilog.Sinks.Elasticsearch;
 using SuperTutor.Contexts.Identity.Api;
 using SuperTutor.Contexts.Identity.Domain.Users;
 using SuperTutor.Contexts.Identity.Infrastructure.Persistence;
+using SuperTutor.Contexts.Identity.Infrastructure.Tokens.Options;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.HealthChecks.Extensions;
 
 Log.Logger = new LoggerConfiguration()
@@ -74,6 +75,8 @@ try
     builder.Services
         .AddIdentity<User, IdentityRole<Guid>>()
         .AddEntityFrameworkStores<IdentityDbContext>();
+
+    builder.Services.Configure<AuthTokenOptions>(builder.Configuration.GetSection(AuthTokenOptions.SectionName));
 
     // Add owned service to the container via Autofac modules.
 
