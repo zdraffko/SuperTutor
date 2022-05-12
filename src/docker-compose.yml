@@ -11,6 +11,8 @@ services:
             - Elasticsearch__Urls=http://supertutor-elasticsearch-node-1:9200
             - Elasticsearch__Username=${ELASTIC_DEFAULT_USERNAME}
             - Elasticsearch__Password=${ELASTIC_DEFAULT_PASSWORD}
+            - ApiUrls__Identity=http://supertutor-identity/api
+            - AuthTokenSecretKey=${AUTH_TOKEN_SECRET_KEY}
         volumes:
             - ./.aspnet/identity/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
             - /var/log/supertutor/apigateway-web:/app/logs
@@ -32,6 +34,7 @@ services:
             - Elasticsearch__Username=${ELASTIC_DEFAULT_USERNAME}
             - Elasticsearch__Password=${ELASTIC_DEFAULT_PASSWORD}
             - RabbitMq__Url=amqp://${RABBITMQ_DEFAULT_USERNAME}:${RABBITMQ_DEFAULT_PASSWORD}@supertutor-rabbitmq:5672
+            - AuthToken__SecretKey=${AUTH_TOKEN_SECRET_KEY}
         volumes:
             - ./.aspnet/identity/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
             - /var/log/supertutor/identity:/app/logs

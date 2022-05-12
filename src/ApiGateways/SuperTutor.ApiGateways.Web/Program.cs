@@ -1,11 +1,15 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Elastic.CommonSchema.Serilog;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Debugging;
 using Serilog.Sinks.Elasticsearch;
+using SuperTutor.ApiGateways.Web.Options;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.HealthChecks.Extensions;
+using System.Text;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -56,10 +60,43 @@ try
         .AddControllers()
         .AddControllersAsServices();
 
+    var key = Encoding.ASCII.GetBytes(builder.Configuration["AuthTokenSecretKey"]);
+
+    builder.Services
+        .AddAuthentication(authentication =>
+        {
+            authentication.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            authentication.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(bearer =>
+        {
+            bearer.RequireHttpsMetadata = false;
+            bearer.SaveToken = true;
+            bearer.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false
+            };
+        });
+
+    builder.Services.AddHttpContextAccessor();
+
+    builder.Services.Configure<ApiUrlsOptions>(builder.Configuration.GetSection(ApiUrlsOptions.SectionName));
+
     // Add owned service to the container via Autofac modules.
 
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterAssemblyModules(typeof(Program).Assembly));
+
+    builder.Services.AddCors(options => options.AddPolicy("CorsPolicy", corsPolicyBuilder
+        => corsPolicyBuilder
+            .SetIsOriginAllowed((host) => true)
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials())
+    );
 
     var app = builder.Build();
 
@@ -77,6 +114,12 @@ try
     }
 
     app.UseRouting();
+
+    app.UseCors("CorsPolicy");
+
+    app.UseAuthentication();
+
+    app.UseAuthorization();
 
     app.UseEndpoints(endpoints => endpoints.MapControllers());
 
