@@ -1,5 +1,5 @@
-import { Alert, Loader } from "@mantine/core";
-import { getUser } from "modules/identiy/api/getUser";
+import { Alert, Center, Loader } from "@mantine/core";
+import { getIdentityInfo } from "modules/identiy/api/getIdentityInfo";
 import { loginUser, LoginUserRequest } from "modules/identiy/api/login";
 import { registerUser, RegisterUserRequest } from "modules/identiy/api/register";
 import { initReactQueryAuth } from "react-query-auth";
@@ -13,7 +13,7 @@ const load = async (): Promise<User | null> => {
         return null;
     }
 
-    return await getUser();
+    return await getIdentityInfo();
 };
 
 const login = async (loginUserRequest: LoginUserRequest): Promise<User | null> => {
@@ -22,7 +22,7 @@ const login = async (loginUserRequest: LoginUserRequest): Promise<User | null> =
 
     authTokenStorage.set(authToken);
 
-    return await getUser();
+    return await getIdentityInfo();
 };
 
 const register = async (registerUserRequest: RegisterUserRequest): Promise<User | null> => {
@@ -31,7 +31,7 @@ const register = async (registerUserRequest: RegisterUserRequest): Promise<User 
 
     authTokenStorage.set(authToken);
 
-    return await getUser();
+    return await getIdentityInfo();
 };
 
 const logout = async (): Promise<any> => {
@@ -45,11 +45,17 @@ const reactQueryAuthConfig = {
     loginFn: login,
     registerFn: register,
     logoutFn: logout,
-    LoaderComponent: () => <Loader size="lg" />,
+    LoaderComponent: () => (
+        <Center style={{ width: "100vw", height: "100vh" }}>
+            <Loader size="lg" />
+        </Center>
+    ),
     ErrorComponent: () => (
-        <Alert icon={<AlertCircle size={16} />} title="Опа!" color="red">
-            Възникна неочаквана грешка, моля опитайте пак.
-        </Alert>
+        <Center style={{ width: "100vw", height: "100vh" }}>
+            <Alert icon={<AlertCircle size={16} />} title="Опа!" color="red">
+                Възникна неочаквана грешка, моля опитайте пак.
+            </Alert>
+        </Center>
     )
 };
 

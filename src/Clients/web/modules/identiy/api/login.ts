@@ -9,4 +9,8 @@ export interface LoginUserResponse {
     authToken: string;
 }
 
-export const loginUser = async (request: LoginUserRequest): Promise<LoginUserResponse> => await axios.post("/identity/login", request);
+export const loginUser = async (request: LoginUserRequest): Promise<LoginUserResponse> => {
+    const axiosResponse = await axios.post<LoginUserResponse>("/identity/login", request);
+
+    return axiosResponse.data;
+};

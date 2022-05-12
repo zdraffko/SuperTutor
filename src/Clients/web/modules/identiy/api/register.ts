@@ -12,14 +12,7 @@ export interface RegisterUserResponse {
 }
 
 export const registerUser = async (request: RegisterUserRequest): Promise<RegisterUserResponse> => {
-    const registerUserRequestWithoutUserType = {
-        email: request.email,
-        password: request.password
-    };
+    const axiosResponse = await axios.post("/identity/register", request);
 
-    if (request.type === UserType.Tutor) {
-        return await axios.post("/identity/registerTutor", registerUserRequestWithoutUserType);
-    }
-
-    return await axios.post("/identity/registerStudent", registerUserRequestWithoutUserType);
+    return axiosResponse.data;
 };

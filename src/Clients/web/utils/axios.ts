@@ -1,19 +1,21 @@
 import Axios, { AxiosRequestConfig } from "axios";
-import { ApiUrl } from "configs";
+import getConfig from "next/config";
 import authTokenStorage from "./authTokenStorage";
 
 const authenticationInterceptor = (config: AxiosRequestConfig) => {
     const authToken = authTokenStorage.get();
 
     if (authToken !== null && config.headers !== undefined) {
-        config.headers.authorization = authToken;
+        config.headers.authorization = `Bearer ${authToken}`;
     }
 
     return config;
 };
 
+const { publicRuntimeConfig } = getConfig();
+
 export const axios = Axios.create({
-    baseURL: ApiUrl
+    baseURL: publicRuntimeConfig.apiUrl
 });
 
 axios.interceptors.request.use(authenticationInterceptor);

@@ -1,6 +1,8 @@
 import { Box, Button, createStyles, Divider, Group, Paper, PasswordInput, Stack, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useAuth } from "utils/authentication/reactQueryAuth";
 import { z } from "zod";
 
 const loginFormSchema = z.object({
@@ -18,6 +20,8 @@ export const LoginForm: React.FC = () => {
 
     const theme = useMantineTheme();
     const { classes } = useStyles();
+    const { login, isLoggingIn } = useAuth();
+    const router = useRouter();
 
     return (
         <Stack align="center">
@@ -44,7 +48,12 @@ export const LoginForm: React.FC = () => {
                     </Group>
                 </Group>
                 <Divider m="sm" />
-                <form onSubmit={form.onSubmit(values => console.log(values))}>
+                <form
+                    onSubmit={form.onSubmit(async values => {
+                        await login(values);
+                        router.push("/");
+                    })}
+                >
                     <TextInput
                         p="sm"
                         label="Емейл"
@@ -65,7 +74,7 @@ export const LoginForm: React.FC = () => {
                         onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                     />
                     <Box p="sm" mt="xl">
-                        <Button type="submit" fullWidth size="lg">
+                        <Button type="submit" fullWidth size="lg" loading={isLoggingIn}>
                             Вход
                         </Button>
                     </Box>

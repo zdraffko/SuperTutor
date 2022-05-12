@@ -1,6 +1,9 @@
 import { Anchor, Box, Button, Checkbox, createStyles, Divider, Group, Paper, PasswordInput, Stack, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useAuth } from "utils/authentication/reactQueryAuth";
+import { UserType } from "utils/authentication/types";
 import { z } from "zod";
 
 interface RegisterFormProps {
@@ -31,6 +34,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ isTutorRegistration 
 
     const theme = useMantineTheme();
     const { classes } = useStyles();
+    const { register, isRegistering } = useAuth();
+    const router = useRouter();
 
     return (
         <Stack align="center">
@@ -50,7 +55,16 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ isTutorRegistration 
                     </Group>
                 </Group>
                 <Divider m="sm" />
-                <form onSubmit={form.onSubmit(values => console.log(values))}>
+                <form
+                    onSubmit={form.onSubmit(async values => {
+                        const userType = isTutorRegistration ? UserType.Tutor : UserType.Student;
+                        const registerRequest = { ...values, type: userType };
+
+                        await register(registerRequest);
+
+                        router.push("/");
+                    })}
+                >
                     <TextInput
                         p="sm"
                         label="Имейл"
@@ -90,7 +104,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ isTutorRegistration 
                         </Text>
                     </Group>
                     <Box p="sm">
-                        <Button type="submit" fullWidth size="lg">
+                        <Button type="submit" fullWidth size="lg" loading={isRegistering}>
                             Регистрация
                         </Button>
                     </Box>
