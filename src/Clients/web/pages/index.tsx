@@ -1,4 +1,5 @@
 import { Button, Footer, Group, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import Logo from "components/Logo";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -30,7 +31,10 @@ const LandingPage: NextPage = () => {
             </Group>
             <main style={{ height: "90vh", marginTop: "10vh" }}>
                 <Stack align="center" justify="center" style={{ marginTop: "10vh" }}>
-                    <Title order={1}>Супер Учител</Title>
+                    <Group>
+                        <Logo width="120px" height="120px" />
+                        <Title order={1}>Супер Учител</Title>
+                    </Group>
                     <Title order={4}>Започни своето приключение сега</Title>
                     <Group>
                         <Link href="/identity/register/tutor" passHref>

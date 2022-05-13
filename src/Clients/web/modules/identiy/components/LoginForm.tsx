@@ -1,5 +1,6 @@
 import { Box, Button, createStyles, Divider, Group, Paper, PasswordInput, Stack, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
+import Logo from "components/Logo";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useAuth } from "utils/authentication/reactQueryAuth";
@@ -25,9 +26,12 @@ export const LoginForm: React.FC = () => {
 
     return (
         <Stack align="center">
-            <Title order={2} m="xl">
-                Супер Учител
-            </Title>
+            <Group mt="xl">
+                <Logo width="70px" height="70px" />
+                <Title order={2} mb="xl" mt="xl">
+                    Супер Учител
+                </Title>
+            </Group>
             <Paper className={classes.formWrapper} shadow="lg" radius="md" p="md" withBorder>
                 <Group p="sm" position="apart">
                     <Title order={3}>Вход</Title>
