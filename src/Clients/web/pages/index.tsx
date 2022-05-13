@@ -2,9 +2,18 @@ import { Button, Footer, Group, Stack, Text, Title, useMantineTheme } from "@man
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useAuth } from "utils/authentication/reactQueryAuth";
 
-const HomePage: NextPage = () => {
+const LandingPage: NextPage = () => {
     const theme = useMantineTheme();
+    const { user } = useAuth();
+    const router = useRouter();
+
+    const isUserLoggedIn = !!user;
+    if (isUserLoggedIn) {
+        router.push("/dashboard");
+    }
 
     return (
         <>
@@ -42,4 +51,4 @@ const HomePage: NextPage = () => {
     );
 };
 
-export default HomePage;
+export default LandingPage;

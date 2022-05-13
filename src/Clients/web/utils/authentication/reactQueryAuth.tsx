@@ -7,6 +7,10 @@ import { AlertCircle } from "tabler-icons-react";
 import authTokenStorage from "utils/authTokenStorage";
 import { User } from "./types";
 
+interface AuthError {
+    message: string;
+}
+
 const load = async (): Promise<User | null> => {
     const authToken = authTokenStorage.get();
     if (authToken === null) {
@@ -59,4 +63,4 @@ const reactQueryAuthConfig = {
     )
 };
 
-export const { AuthProvider, useAuth } = initReactQueryAuth<User | null, unknown, LoginUserRequest, RegisterUserRequest>(reactQueryAuthConfig);
+export const { AuthProvider, useAuth } = initReactQueryAuth<User | null, AuthError, LoginUserRequest, RegisterUserRequest>(reactQueryAuthConfig);

@@ -1,8 +1,13 @@
-import { User } from "utils/authentication/types";
+import { User, UserType } from "utils/authentication/types";
 import { axios } from "utils/axios";
 
-export const getIdentityInfo = async (): Promise<User> => {
-    const axiosResponse = await axios.get<User>("/identity/GetIdentityInfo");
+interface GetIdentityInfoResponse {
+    userEmail: string;
+    userType: UserType;
+}
 
-    return axiosResponse.data;
+export const getIdentityInfo = async (): Promise<User> => {
+    const axiosResponse = await axios.get<GetIdentityInfoResponse>("/identity/GetIdentityInfo");
+
+    return { email: axiosResponse.data.userEmail, type: axiosResponse.data.userType };
 };

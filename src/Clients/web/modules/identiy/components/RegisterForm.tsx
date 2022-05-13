@@ -62,7 +62,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ isTutorRegistration 
 
                         await register(registerRequest);
 
-                        router.push("/");
+                        router.push("/dashboard");
                     })}
                 >
                     <TextInput
