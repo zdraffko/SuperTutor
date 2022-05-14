@@ -22,7 +22,7 @@ const SideBarHeader: React.FC = () => {
                     </Text>
                 </Center>
                 <ActionIcon variant="default" onClick={() => toggleColorScheme()} size={30}>
-                    {colorScheme === "dark" ? <Sun color="yellow" size={16} /> : <MoonStars size={16} />}
+                    {colorScheme === "dark" ? <Sun color="yellow" size={16} /> : <MoonStars color="indigo" size={16} />}
                 </ActionIcon>
             </Group>
         </Box>
