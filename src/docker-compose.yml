@@ -14,7 +14,7 @@ services:
             - ApiUrls__Identity=http://supertutor-identity/api
             - AuthTokenSecretKey=${AUTH_TOKEN_SECRET_KEY}
         volumes:
-            - ./.aspnet/identity/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+            - ./.aspnet/apigateway-web/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
             - /var/log/supertutor/apigateway-web:/app/logs
         ports: 
             - 4000:80
@@ -106,6 +106,26 @@ services:
         restart: on-failure
         networks:
             -  supertutor-infrastructure_default
+
+    supertutor-classroom:
+        container_name: supertutor-classroom
+        image: zdraffko/supertutor:classroom
+        build:
+            context: .
+            dockerfile: ./Contexts/Classroom/SuperTutor.Contexts.Classroom.Startup/Dockerfile
+        environment:
+            - Elasticsearch__Urls=http://supertutor-elasticsearch-node-1:9200
+            - Elasticsearch__Username=${ELASTIC_DEFAULT_USERNAME}
+            - Elasticsearch__Password=${ELASTIC_DEFAULT_PASSWORD}
+            - AuthTokenSecretKey=${AUTH_TOKEN_SECRET_KEY}
+        volumes:
+            - ./.aspnet/classroom/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+            - /var/log/supertutor/classroom:/app/logs
+        ports: 
+            - 5004:80
+        restart: on-failure
+        networks:
+            - supertutor-infrastructure_default
 
 networks:
     supertutor-infrastructure_default:
