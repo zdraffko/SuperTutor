@@ -72,16 +72,30 @@ try
             authentication.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             authentication.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         })
-        .AddJwtBearer(bearer =>
+        .AddJwtBearer(bearerOptions =>
         {
-            bearer.RequireHttpsMetadata = false;
-            bearer.SaveToken = true;
-            bearer.TokenValidationParameters = new TokenValidationParameters
+            bearerOptions.RequireHttpsMetadata = false;
+            bearerOptions.SaveToken = true;
+            bearerOptions.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(key),
                 ValidateIssuer = false,
                 ValidateAudience = false
+            };
+            bearerOptions.Events = new JwtBearerEvents
+            {
+                OnMessageReceived = context =>
+                {
+                    if (!string.IsNullOrWhiteSpace(context.Request.Path.Value) &&
+                        context.Request.Path.Value.StartsWith("/hubs/") &&
+                        context.Request.Query.ContainsKey("access_token"))
+                    {
+                        context.Token = context.Request.Query["access_token"];
+                    }
+
+                    return Task.CompletedTask;
+                },
             };
         });
 
@@ -125,7 +139,7 @@ try
 
     app.UseEndpoints(endpoints => endpoints.MapControllers());
 
-    app.MapHub<SignalingHub>("/hubs/signaling");
+    app.MapHub<VideoConferenceHub>("/hubs/videoconference");
 
     app.Run();
 }
