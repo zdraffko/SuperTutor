@@ -1,6 +1,5 @@
 import { HubConnectionBuilder, HubConnectionState, IHttpConnectionOptions, LogLevel } from "@microsoft/signalr";
 import { useCallback, useEffect, useState } from "react";
-import Peer from "simple-peer";
 import authTokenStorage from "utils/authTokenStorage";
 
 const useVideoConferenceHub = () => {
@@ -44,16 +43,7 @@ const useVideoConferenceHub = () => {
         };
     }, [hubConnection, isHubConnected]);
 
-    const createRoom = async (data: Peer.SignalData) => {
-        if (!isHubConnected()) {
-            console.log("Cannot create a room. Hub not connected");
-        }
-
-        console.log("Hub: invoking CreateRoom");
-        await hubConnection.invoke("CreateRoom", "test-room", JSON.stringify(data));
-    };
-
-    return { hubConnection, createRoom };
+    return { hubConnection, isHubConnected };
 };
 
 export default useVideoConferenceHub;

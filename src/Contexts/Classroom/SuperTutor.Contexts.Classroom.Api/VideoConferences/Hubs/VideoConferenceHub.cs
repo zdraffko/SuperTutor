@@ -8,74 +8,82 @@ public class VideoConferenceHub : Hub
 {
     private static readonly Dictionary<string, VideoConferenceRoom> VideoConferenceRooms = new();
 
-    public async Task SendMessage(object message, string roomName)
+    public async Task CreateRoom(string roomName, string tutorName)
     {
-        await EmitLog("Client " + Context.ConnectionId + " said: " + message, roomName);
-
-        await Clients.OthersInGroup(roomName).SendAsync("message", message);
-    }
-
-    public async Task CreateRoom(string roomName, string signalData)
-    {
-        await EmitLog("Received request to create " + roomName + " from client " + Context.ConnectionId, roomName);
-
-        if (!VideoConferenceRooms.ContainsKey(roomName))
+        if (VideoConferenceRooms.ContainsKey(roomName))
         {
-            VideoConferenceRooms.Add(roomName, new VideoConferenceRoom(roomName, new VideoConferenceTutor("testTutor", signalData)));
+            await Clients.Caller.SendAsync("RoomCreationFailed", new { Message = $"Стая с името '{roomName}' вече съществува" });
+
+            return;
         }
 
-        await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
+        var tutor = new VideoConferenceTutor(tutorName, Context.ConnectionId);
+        var room = new VideoConferenceRoom(roomName, tutor);
 
-        await Clients.Caller.SendAsync("RoomCreated", new { from = "testTutor", signal = signalData });
+        VideoConferenceRooms.Add(room.Name, room);
 
-        await EmitLog("Client " + Context.ConnectionId + " created the room " + roomName, roomName);
+        await Groups.AddToGroupAsync(tutor.ConnectionId, room.Name);
 
-        await EmitLog("Room " + roomName + " now has " + 1 + " client(s)", roomName);
+        await Clients.Caller.SendAsync("RoomCreated");
     }
 
-    public async Task JoinRoom(string roomName, string signalData)
+    public async Task JoinRoom(string roomName, string studentName, string studentSignalData)
     {
         if (!VideoConferenceRooms.ContainsKey(roomName))
         {
-            await EmitLog("Client " + Context.ConnectionId + " tried to join room " + roomName + " which does not exist", roomName);
+            await Clients.Caller.SendAsync("JoinRoomFailed", new { Message = $"Стая с името '{roomName}' не съществува" });
 
             return;
         }
 
         var room = VideoConferenceRooms[roomName];
-        room.Students.Add(new VideoConferenceStudent("testStudent"));
+        var student = new VideoConferenceStudent(studentName, Context.ConnectionId);
 
-        await Clients.Group(roomName).SendAsync("StudentJoined", signalData);
+        await Groups.AddToGroupAsync(student.ConnectionId, room.Name);
+        room.Students.Add(student);
 
+        await Clients.OthersInGroup(roomName).SendAsync("StudentJoinedRoom", new { StudentName = student.Name, StudentSignalData = studentSignalData });
     }
 
-    public async Task JoinRoomInitial(string roomName)
+    public async Task AcknowledgeNewlyJoinedStudent(string roomName, string tutorSignalData) => await Clients.OthersInGroup(roomName).SendAsync("StudentAcknowledged", tutorSignalData);
+
+    public async Task CloseRoom(string roomName)
     {
-        await EmitLog("Client " + Context.ConnectionId + " tries to join room " + roomName, roomName);
+        var roomForRemoval = VideoConferenceRooms[roomName];
 
-        if (!VideoConferenceRooms.ContainsKey(roomName))
+        await Clients.Group(roomName).SendAsync("RoomClosed", roomForRemoval.Name);
+
+        await Groups.RemoveFromGroupAsync(roomForRemoval.Tutor.ConnectionId, roomForRemoval.Name);
+        foreach (var student in roomForRemoval.Students)
         {
-            await EmitLog("Client " + Context.ConnectionId + " tried to join room " + roomName + " which does not exist", roomName);
+            await Groups.RemoveFromGroupAsync(student.ConnectionId, roomForRemoval.Name);
+        }
 
+        VideoConferenceRooms.Remove(roomName);
+    }
+
+    public async Task LeaveRoom(string roomName, string studentName)
+    {
+        var room = VideoConferenceRooms[roomName];
+        var studentForRemoval = room.Students.FirstOrDefault(student => student.Name == studentName);
+
+        if (studentForRemoval is null)
+        {
             return;
         }
 
+        await Clients.Caller.SendAsync("RoomLeft", room.Name);
+        await Clients.OthersInGroup(room.Name).SendAsync("StudentLeftRoom", studentForRemoval.Name);
 
-        await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
+        await Groups.RemoveFromGroupAsync(studentForRemoval.ConnectionId, room.Name);
 
-        var room = VideoConferenceRooms[roomName];
-        room.Students.Add(new VideoConferenceStudent("testStudent"));
-
-        await Clients.Caller.SendAsync("JoinedRoom", room.Tutor?.SignalData);
-
+        room.Students.Remove(studentForRemoval);
     }
-
-    private async Task EmitLog(string message, string roomName) => await Clients.Group(roomName).SendAsync("log", "[Server]: " + message);
 }
 
 public class VideoConferenceRoom
 {
-    public VideoConferenceRoom(string name, VideoConferenceTutor? tutor)
+    public VideoConferenceRoom(string name, VideoConferenceTutor tutor)
     {
         Name = name;
         Tutor = tutor;
@@ -84,27 +92,33 @@ public class VideoConferenceRoom
 
     public string Name { get; }
 
-    public VideoConferenceTutor? Tutor { get; }
+    public VideoConferenceTutor Tutor { get; }
 
     public List<VideoConferenceStudent> Students { get; }
 }
 
 public class VideoConferenceTutor
 {
-    public VideoConferenceTutor(string name, string signalData)
+    public VideoConferenceTutor(string name, string connectionId)
     {
         Name = name;
-        SignalData = signalData;
+        ConnectionId = connectionId;
     }
 
     public string Name { get; }
 
-    public string SignalData { get; }
+    public string ConnectionId { get; }
 }
 
 public class VideoConferenceStudent
 {
-    public VideoConferenceStudent(string name) => Name = name;
+    public VideoConferenceStudent(string name, string connectionId)
+    {
+        Name = name;
+        ConnectionId = connectionId;
+    }
 
     public string Name { get; }
+
+    public string ConnectionId { get; }
 }

@@ -10,7 +10,7 @@ const ClassroomPage: React.FC = () => (
                 <Grid.Col span={8}>
                     <WorkSpace />
                 </Grid.Col>
-                <Grid.Col span={3} offset={1}>
+                <Grid.Col span={4}>
                     <VideoConference />
                 </Grid.Col>
             </Grid>
