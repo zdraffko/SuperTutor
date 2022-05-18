@@ -24,7 +24,7 @@ public class VideoConferenceHub : Hub
 
         await Groups.AddToGroupAsync(tutor.ConnectionId, room.Name);
 
-        await Clients.Caller.SendAsync("RoomCreated");
+        await Clients.Caller.SendAsync("RoomCreated", room.Name);
     }
 
     public async Task JoinRoom(string roomName, string studentName, string studentSignalData)
@@ -42,10 +42,14 @@ public class VideoConferenceHub : Hub
         await Groups.AddToGroupAsync(student.ConnectionId, room.Name);
         room.Students.Add(student);
 
-        await Clients.OthersInGroup(roomName).SendAsync("StudentJoinedRoom", new { StudentName = student.Name, StudentSignalData = studentSignalData });
+        await Signal(room.Name, studentSignalData);
+
+        //await Clients.OthersInGroup(roomName).SendAsync("StudentJoinedRoom", student.Name);
     }
 
-    public async Task AcknowledgeNewlyJoinedStudent(string roomName, string tutorSignalData) => await Clients.OthersInGroup(roomName).SendAsync("StudentAcknowledged", tutorSignalData);
+    public async Task ConfirmJoinRoom(string roomName, string studentName) => await Clients.OthersInGroup(roomName).SendAsync("StudentJoinedRoom", studentName);
+
+    public async Task Signal(string roomName, string signalData) => await Clients.OthersInGroup(roomName).SendAsync("SignalReceived", signalData);
 
     public async Task CloseRoom(string roomName)
     {

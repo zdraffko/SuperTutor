@@ -2,10 +2,10 @@ import { HubConnectionBuilder, HubConnectionState, IHttpConnectionOptions, LogLe
 import { useCallback, useEffect, useState } from "react";
 import authTokenStorage from "utils/authTokenStorage";
 
-const useVideoConferenceHub = () => {
+const useClassroomHub = () => {
     const [hubConnection] = useState(
         new HubConnectionBuilder()
-            .withUrl("http://localhost:5004/hubs/videoconference", {
+            .withUrl("http://localhost:5004/hubs/classroom", {
                 accessTokenFactory: () => authTokenStorage.get()
             } as IHttpConnectionOptions)
             .withAutomaticReconnect()
@@ -17,7 +17,7 @@ const useVideoConferenceHub = () => {
 
     useEffect(() => {
         hubConnection.onclose(error => {
-            console.log("SignalR: Clsoed connection to video conference hub");
+            console.log("SignalR: Closed connection to video conference hub");
 
             if (error) {
                 console.log(error);
@@ -46,4 +46,4 @@ const useVideoConferenceHub = () => {
     return { hubConnection, isHubConnected };
 };
 
-export default useVideoConferenceHub;
+export default useClassroomHub;

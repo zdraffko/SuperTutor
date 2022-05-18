@@ -1,2 +1,4 @@
-export * from "./components/VideoConference";
-export * from "./components/WorkSpace/WorkSpace";
+export * from "./components/InsideClassroom/StudentInsideClassroom";
+export * from "./components/InsideClassroom/TutorInsideClassroom";
+export * from "./components/OutsideClassroom/StudentOutsideClassroom";
+export * from "./components/OutsideClassroom/TutorOutsideClassroom";

@@ -139,7 +139,7 @@ try
 
     app.UseEndpoints(endpoints => endpoints.MapControllers());
 
-    app.MapHub<VideoConferenceHub>("/hubs/videoconference");
+    app.MapHub<VideoConferenceHub>("/hubs/classroom");
 
     app.Run();
 }
