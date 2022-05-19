@@ -16,7 +16,7 @@ interface TutorInsideClassroomProps {
 
 export const TutorInsideClassroom: React.FC<TutorInsideClassroomProps> = ({ classroomHub, localPeerRef, classroomName, setIsInsideClassroom }) => {
     const [isClosingClassroom, setIsClosingClassroom] = useState(false);
-    const [hasStudentDisconnected, setHasStudentDisconnected] = useState(false);
+    const [isStudentInsideClassroom, setIsStudentInsideClassroom] = useState(false);
 
     useEffect(() => {
         classroomHub.off("StudentJoinedRoom");
@@ -25,7 +25,7 @@ export const TutorInsideClassroom: React.FC<TutorInsideClassroomProps> = ({ clas
 
             //localPeerRef.current?.signal(data.studentSignalData);
 
-            setHasStudentDisconnected(false);
+            setIsStudentInsideClassroom(true);
 
             showNotification({
                 autoClose: 5000,
@@ -74,7 +74,7 @@ export const TutorInsideClassroom: React.FC<TutorInsideClassroomProps> = ({ clas
 
             //End peer recreation
 
-            setHasStudentDisconnected(true);
+            setIsStudentInsideClassroom(false);
 
             showNotification({
                 autoClose: 5000,
@@ -95,14 +95,14 @@ export const TutorInsideClassroom: React.FC<TutorInsideClassroomProps> = ({ clas
     return (
         <Grid>
             <Grid.Col span={8}>
-                <WorkSpace />
+                <WorkSpace localPeerRef={localPeerRef} isRemotePeerConnected={isStudentInsideClassroom} />
             </Grid.Col>
             <Grid.Col span={4}>
                 <Stack>
                     <Button onClick={closeClassroom} loading={isClosingClassroom}>
                         Затвори стаята
                     </Button>
-                    <VideoConference localPeerRef={localPeerRef} hasRemotePeerDisconnected={hasStudentDisconnected} />
+                    <VideoConference localPeerRef={localPeerRef} hasRemotePeerDisconnected={isStudentInsideClassroom} />
                 </Stack>
             </Grid.Col>
         </Grid>
