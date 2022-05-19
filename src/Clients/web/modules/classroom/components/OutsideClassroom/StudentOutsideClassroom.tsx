@@ -36,6 +36,7 @@ export const StudentOutsideClassroom: React.FC<StudentOutsideClassroomProps> = (
         //     });
         // });
 
+        classroomHub.off("JoinRoomFailed");
         classroomHub.on("JoinRoomFailed", (data: { message: string }) => {
             console.log("Hub: Recieved JoinRoomFailed");
 
@@ -50,6 +51,7 @@ export const StudentOutsideClassroom: React.FC<StudentOutsideClassroomProps> = (
             });
         });
 
+        classroomHub.off("SignalReceived");
         classroomHub.on("SignalReceived", (studentSignalData: string) => {
             console.log("Hub: Recieved SignalReceived with student signal data " + studentSignalData);
 
@@ -57,10 +59,13 @@ export const StudentOutsideClassroom: React.FC<StudentOutsideClassroomProps> = (
         });
     }, [classroomHub, localPeerRef, setIsInsideClassroom]);
 
-    const joinClassroom = () => {
+    const joinClassroom = async () => {
         console.log("joinClassroom method");
 
         setIsJoiningClassroom(true);
+
+        console.log("Hub: invoking JoinRoom");
+        await classroomHub.invoke("JoinRoom", classroomName, userEmail);
 
         localPeerRef.current = new Peer({
             initiator: true
@@ -68,14 +73,6 @@ export const StudentOutsideClassroom: React.FC<StudentOutsideClassroomProps> = (
 
         localPeerRef.current?.on("signal", async studentSignalData => {
             console.log("Peer remote: Recieved student signal data " + JSON.stringify(studentSignalData));
-            console.log("isJoiningClassroom " + isJoiningClassroom);
-            if (studentSignalData.type === "offer") {
-                console.log("Hub: invoking JoinRoom");
-
-                await classroomHub.invoke("JoinRoom", classroomName, userEmail, JSON.stringify(studentSignalData));
-
-                return;
-            }
 
             console.log("Hub: invoking Signal");
             await classroomHub.invoke("Signal", classroomName, JSON.stringify(studentSignalData));

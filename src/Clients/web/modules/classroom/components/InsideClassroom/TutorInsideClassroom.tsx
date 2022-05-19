@@ -16,12 +16,16 @@ interface TutorInsideClassroomProps {
 
 export const TutorInsideClassroom: React.FC<TutorInsideClassroomProps> = ({ classroomHub, localPeerRef, classroomName, setIsInsideClassroom }) => {
     const [isClosingClassroom, setIsClosingClassroom] = useState(false);
+    const [hasStudentDisconnected, setHasStudentDisconnected] = useState(false);
 
     useEffect(() => {
+        classroomHub.off("StudentJoinedRoom");
         classroomHub.on("StudentJoinedRoom", (studentName: string) => {
             console.log("Hub: Recieved StudentJoined with student data " + studentName);
 
             //localPeerRef.current?.signal(data.studentSignalData);
+
+            setHasStudentDisconnected(false);
 
             showNotification({
                 autoClose: 5000,
@@ -31,6 +35,7 @@ export const TutorInsideClassroom: React.FC<TutorInsideClassroomProps> = ({ clas
             });
         });
 
+        classroomHub.off("RoomClosed");
         classroomHub.on("RoomClosed", (roomName: string) => {
             console.log("Hub: Recieved RoomClosed with roomName" + roomName);
 
@@ -47,6 +52,7 @@ export const TutorInsideClassroom: React.FC<TutorInsideClassroomProps> = ({ clas
             });
         });
 
+        classroomHub.off("StudentLeftRoom");
         classroomHub.on("StudentLeftRoom", (studentName: string) => {
             console.log("Hub: Received StudentLeftRoom with student name" + studentName);
 
@@ -67,6 +73,8 @@ export const TutorInsideClassroom: React.FC<TutorInsideClassroomProps> = ({ clas
             });
 
             //End peer recreation
+
+            setHasStudentDisconnected(true);
 
             showNotification({
                 autoClose: 5000,
@@ -94,7 +102,7 @@ export const TutorInsideClassroom: React.FC<TutorInsideClassroomProps> = ({ clas
                     <Button onClick={closeClassroom} loading={isClosingClassroom}>
                         Затвори стаята
                     </Button>
-                    <VideoConference localPeerRef={localPeerRef} />
+                    <VideoConference localPeerRef={localPeerRef} hasRemotePeerDisconnected={hasStudentDisconnected} />
                 </Stack>
             </Grid.Col>
         </Grid>

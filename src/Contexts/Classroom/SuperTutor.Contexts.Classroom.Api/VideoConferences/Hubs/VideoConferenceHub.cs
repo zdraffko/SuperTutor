@@ -27,7 +27,7 @@ public class VideoConferenceHub : Hub
         await Clients.Caller.SendAsync("RoomCreated", room.Name);
     }
 
-    public async Task JoinRoom(string roomName, string studentName, string studentSignalData)
+    public async Task JoinRoom(string roomName, string studentName)
     {
         if (!VideoConferenceRooms.ContainsKey(roomName))
         {
@@ -42,7 +42,7 @@ public class VideoConferenceHub : Hub
         await Groups.AddToGroupAsync(student.ConnectionId, room.Name);
         room.Students.Add(student);
 
-        await Signal(room.Name, studentSignalData);
+        //await Signal(room.Name, studentSignalData);
 
         //await Clients.OthersInGroup(roomName).SendAsync("StudentJoinedRoom", student.Name);
     }

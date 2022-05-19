@@ -19,6 +19,7 @@ export const TutorOutsideClassroom: React.FC<TutorOutsideClassroomProps> = ({ us
     const [isCreatingClassroom, setIsCreatingClassroom] = useState(false);
 
     useEffect(() => {
+        classroomHub.off("RoomCreated");
         classroomHub.on("RoomCreated", (createdClassroomName: string) => {
             console.log("Hub: Recieved RoomCreated");
 
@@ -33,6 +34,7 @@ export const TutorOutsideClassroom: React.FC<TutorOutsideClassroomProps> = ({ us
             });
         });
 
+        classroomHub.off("RoomCreationFailed");
         classroomHub.on("RoomCreationFailed", (data: { message: string }) => {
             console.log("Hub: Recieved RoomCreationFailed");
 
@@ -47,6 +49,7 @@ export const TutorOutsideClassroom: React.FC<TutorOutsideClassroomProps> = ({ us
             });
         });
 
+        classroomHub.off("SignalReceived");
         classroomHub.on("SignalReceived", (studentSignalData: string) => {
             console.log("Hub: Recieved SignalReceived with student signal data " + studentSignalData);
 

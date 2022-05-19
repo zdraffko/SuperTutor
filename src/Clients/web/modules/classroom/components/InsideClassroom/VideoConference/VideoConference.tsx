@@ -6,13 +6,15 @@ import { X } from "tabler-icons-react";
 
 interface VideoConferenceProps {
     localPeerRef: MutableRefObject<Peer.Instance | undefined>;
+    hasRemotePeerDisconnected: boolean;
 }
 
-export const VideoConference: React.FC<VideoConferenceProps> = ({ localPeerRef }) => {
+export const VideoConference: React.FC<VideoConferenceProps> = ({ localPeerRef, hasRemotePeerDisconnected }) => {
     const localVideoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
+        console.log("Init VideoConference");
         if (remoteVideoRef.current) {
             remoteVideoRef.current.srcObject = null;
         }
@@ -57,7 +59,7 @@ export const VideoConference: React.FC<VideoConferenceProps> = ({ localPeerRef }
                     icon: <X />
                 });
             });
-    }, [localPeerRef]);
+    }, [localPeerRef, hasRemotePeerDisconnected]);
 
     return (
         <Stack align="stretch">

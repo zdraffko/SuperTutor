@@ -19,6 +19,7 @@ export const StudentInsideClassroom: React.FC<StudentInsideClassroomProps> = ({ 
     const [isLeavingClassroom, setIsLeavingClassroom] = useState(false);
 
     useEffect(() => {
+        classroomHub.off("RoomClosed");
         classroomHub.on("RoomClosed", (roomName: string) => {
             console.log("Hub: Recieved RoomClosed with roomName" + roomName);
 
@@ -34,6 +35,7 @@ export const StudentInsideClassroom: React.FC<StudentInsideClassroomProps> = ({ 
             });
         });
 
+        classroomHub.off("RoomLeft");
         classroomHub.on("RoomLeft", (roomName: string) => {
             console.log("Hub: Recieved RoomLeft with roomName" + roomName);
 
@@ -44,7 +46,7 @@ export const StudentInsideClassroom: React.FC<StudentInsideClassroomProps> = ({ 
 
             showNotification({
                 autoClose: 5000,
-                message: `Стаята ${roomName} бе напусната успешно`,
+                message: `Стая "${roomName}" бе напусната успешно`,
                 color: "teal",
                 icon: <Check />
             });
@@ -68,7 +70,7 @@ export const StudentInsideClassroom: React.FC<StudentInsideClassroomProps> = ({ 
                     <Button onClick={leaveClassroom} loading={isLeavingClassroom}>
                         Напусни стаята
                     </Button>
-                    <VideoConference localPeerRef={localPeerRef} />
+                    <VideoConference localPeerRef={localPeerRef} hasRemotePeerDisconnected={false} />
                 </Stack>
             </Grid.Col>
         </Grid>
