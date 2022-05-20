@@ -1,9 +1,10 @@
-import { Button, Grid, Stack } from "@mantine/core";
+import { Button, Grid, Group, Stack } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { HubConnection } from "@microsoft/signalr";
 import { Dispatch, MutableRefObject, SetStateAction, useEffect, useState } from "react";
 import Peer from "simple-peer";
 import { Check, ExclamationMark } from "tabler-icons-react";
+import RoomIndicator from "./RoomIndicator/RoomIndicator";
 import { VideoConference } from "./VideoConference/VideoConference";
 import { WorkSpace } from "./WorkSpace/WorkSpace";
 
@@ -17,6 +18,7 @@ interface TutorInsideClassroomProps {
 export const TutorInsideClassroom: React.FC<TutorInsideClassroomProps> = ({ classroomHub, localPeerRef, classroomName, setIsInsideClassroom }) => {
     const [isClosingClassroom, setIsClosingClassroom] = useState(false);
     const [isStudentInsideClassroom, setIsStudentInsideClassroom] = useState(false);
+    const [isWorkSpaceSavingChanges, setIsWorkSpaceSavingChanges] = useState(false);
 
     useEffect(() => {
         classroomHub.off("StudentJoinedRoom");
@@ -95,13 +97,16 @@ export const TutorInsideClassroom: React.FC<TutorInsideClassroomProps> = ({ clas
     return (
         <Grid>
             <Grid.Col span={8}>
-                <WorkSpace localPeerRef={localPeerRef} isRemotePeerConnected={isStudentInsideClassroom} />
+                <WorkSpace localPeerRef={localPeerRef} isRemotePeerConnected={isStudentInsideClassroom} setIsWorkSpaceSavingChanges={setIsWorkSpaceSavingChanges} />
             </Grid.Col>
             <Grid.Col span={4}>
                 <Stack>
-                    <Button onClick={closeClassroom} loading={isClosingClassroom}>
-                        Затвори стаята
-                    </Button>
+                    <Group position="apart">
+                        <RoomIndicator classroomName={classroomName} isClassroomSavingChanges={isWorkSpaceSavingChanges} />
+                        <Button onClick={closeClassroom} loading={isClosingClassroom}>
+                            Затвори стаята
+                        </Button>
+                    </Group>
                     <VideoConference localPeerRef={localPeerRef} hasRemotePeerDisconnected={isStudentInsideClassroom} />
                 </Stack>
             </Grid.Col>

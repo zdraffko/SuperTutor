@@ -1,9 +1,10 @@
-import { Button, Grid, Stack } from "@mantine/core";
+import { Button, Grid, Group, Stack } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { HubConnection } from "@microsoft/signalr";
 import { Dispatch, MutableRefObject, SetStateAction, useEffect, useState } from "react";
 import Peer from "simple-peer";
 import { Check, ExclamationMark } from "tabler-icons-react";
+import RoomIndicator from "./RoomIndicator/RoomIndicator";
 import { VideoConference } from "./VideoConference/VideoConference";
 import { WorkSpace } from "./WorkSpace/WorkSpace";
 
@@ -17,6 +18,7 @@ interface StudentInsideClassroomProps {
 
 export const StudentInsideClassroom: React.FC<StudentInsideClassroomProps> = ({ userEmail, classroomHub, localPeerRef, classroomName, setIsInsideClassroom }) => {
     const [isLeavingClassroom, setIsLeavingClassroom] = useState(false);
+    const [isWorkSpaceSavingChanges, setIsWorkSpaceSavingChanges] = useState(false);
 
     useEffect(() => {
         classroomHub.off("RoomClosed");
@@ -63,13 +65,16 @@ export const StudentInsideClassroom: React.FC<StudentInsideClassroomProps> = ({ 
     return (
         <Grid>
             <Grid.Col span={8}>
-                <WorkSpace localPeerRef={localPeerRef} isRemotePeerConnected={true} />
+                <WorkSpace localPeerRef={localPeerRef} isRemotePeerConnected={true} setIsWorkSpaceSavingChanges={setIsWorkSpaceSavingChanges} />
             </Grid.Col>
             <Grid.Col span={4}>
                 <Stack>
-                    <Button onClick={leaveClassroom} loading={isLeavingClassroom}>
-                        Напусни стаята
-                    </Button>
+                    <Group position="apart">
+                        <RoomIndicator classroomName={classroomName} isClassroomSavingChanges={isWorkSpaceSavingChanges} />
+                        <Button onClick={leaveClassroom} loading={isLeavingClassroom}>
+                            Напусни стаята
+                        </Button>
+                    </Group>
                     <VideoConference localPeerRef={localPeerRef} hasRemotePeerDisconnected={false} />
                 </Stack>
             </Grid.Col>

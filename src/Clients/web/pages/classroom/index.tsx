@@ -10,7 +10,7 @@ import { UserType } from "utils/authentication/types";
 const ClassroomPage: React.FC = () => {
     const [classroomName, setClassroomName] = useState("");
     const [isInsideClassroom, setIsInsideClassroom] = useState(false);
-    const { hubConnection } = useClassroomHub();
+    const { classroomHub } = useClassroomHub();
     const localPeerRef = useRef<Peer.Instance>();
     const { user } = useAuth();
 
@@ -19,11 +19,11 @@ const ClassroomPage: React.FC = () => {
             <MainLayout>
                 {isInsideClassroom ? (
                     user?.type === UserType.Tutor ? (
-                        <TutorInsideClassroom classroomHub={hubConnection} classroomName={classroomName} setIsInsideClassroom={setIsInsideClassroom} localPeerRef={localPeerRef} />
+                        <TutorInsideClassroom classroomHub={classroomHub} classroomName={classroomName} setIsInsideClassroom={setIsInsideClassroom} localPeerRef={localPeerRef} />
                     ) : (
                         <StudentInsideClassroom
                             userEmail={user?.email}
-                            classroomHub={hubConnection}
+                            classroomHub={classroomHub}
                             classroomName={classroomName}
                             setIsInsideClassroom={setIsInsideClassroom}
                             localPeerRef={localPeerRef}
@@ -32,7 +32,7 @@ const ClassroomPage: React.FC = () => {
                 ) : user?.type === UserType.Tutor ? (
                     <TutorOutsideClassroom
                         userEmail={user?.email}
-                        classroomHub={hubConnection}
+                        classroomHub={classroomHub}
                         classroomName={classroomName}
                         setClassroomName={setClassroomName}
                         setIsInsideClassroom={setIsInsideClassroom}
@@ -41,7 +41,7 @@ const ClassroomPage: React.FC = () => {
                 ) : (
                     <StudentOutsideClassroom
                         userEmail={user?.email}
-                        classroomHub={hubConnection}
+                        classroomHub={classroomHub}
                         classroomName={classroomName}
                         setClassroomName={setClassroomName}
                         setIsInsideClassroom={setIsInsideClassroom}

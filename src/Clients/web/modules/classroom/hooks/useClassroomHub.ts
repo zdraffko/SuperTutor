@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import authTokenStorage from "utils/authTokenStorage";
 
 const useClassroomHub = () => {
-    const [hubConnection] = useState(
+    const [classroomHub] = useState(
         new HubConnectionBuilder()
             .withUrl("http://localhost:5004/hubs/classroom", {
                 accessTokenFactory: () => authTokenStorage.get()
@@ -13,10 +13,10 @@ const useClassroomHub = () => {
             .build()
     );
 
-    const isHubConnected = useCallback(() => hubConnection && hubConnection.state === HubConnectionState.Connected, [hubConnection]);
+    const isHubConnected = useCallback(() => classroomHub && classroomHub.state === HubConnectionState.Connected, [classroomHub]);
 
     useEffect(() => {
-        hubConnection.onclose(error => {
+        classroomHub.onclose(error => {
             console.log("SignalR: Closed connection to video conference hub");
 
             if (error) {
@@ -24,10 +24,10 @@ const useClassroomHub = () => {
             }
         });
 
-        hubConnection.on("log", logMessage => console.log(`Log from hub: ${logMessage}`));
+        classroomHub.on("log", logMessage => console.log(`Log from hub: ${logMessage}`));
 
         console.log("starting");
-        hubConnection
+        classroomHub
             .start()
             .then(() => {
                 if (isHubConnected()) {
@@ -39,11 +39,11 @@ const useClassroomHub = () => {
             });
 
         return () => {
-            hubConnection.stop().then(() => console.log("Stopping connection"));
+            classroomHub.stop().then(() => console.log("Stopping connection"));
         };
-    }, [hubConnection, isHubConnected]);
+    }, [classroomHub, isHubConnected]);
 
-    return { hubConnection, isHubConnected };
+    return { classroomHub, isHubConnected };
 };
 
 export default useClassroomHub;
