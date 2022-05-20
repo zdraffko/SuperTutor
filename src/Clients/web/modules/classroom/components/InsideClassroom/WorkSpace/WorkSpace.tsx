@@ -13,7 +13,7 @@ interface WorkSpaceProps {
 export const WorkSpace: React.FC<WorkSpaceProps> = ({ localPeerRef, isRemotePeerConnected }) => (
     <Tabs position="center" grow>
         <Tabs.Tab label="Бяла дъска" tabKey="Whiteboard" icon={<Perspective size={20} />}>
-            <Whiteboard />
+            <Whiteboard localPeerRef={localPeerRef} isRemotePeerConnected={isRemotePeerConnected} />
         </Tabs.Tab>
         <Tabs.Tab label="Тетрадка" tabKey="Notebook" icon={<Notes size={20} />}>
             <Notebook localPeerRef={localPeerRef} isRemotePeerConnected={isRemotePeerConnected} />

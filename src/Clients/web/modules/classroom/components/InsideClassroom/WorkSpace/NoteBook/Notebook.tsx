@@ -1,16 +1,12 @@
 import { Paper, ScrollArea, useMantineColorScheme } from "@mantine/core";
 import { MutableRefObject, useCallback, useEffect, useState } from "react";
 import Peer from "simple-peer";
+import { PeerDataChannelMessage } from "types/peerTypes";
 import { useAuth } from "utils/authentication/reactQueryAuth";
 import { UserType } from "utils/authentication/types";
 import RichTextEditor from "./TextEditor";
 
 const initialValue = "<p>Моята <b>супер</b> тетрадка</p>";
-
-interface PeerDataChannelMessage<TPayload> {
-    type: string;
-    payload: TPayload;
-}
 
 interface NotebookProps {
     localPeerRef: MutableRefObject<Peer.Instance | undefined>;
