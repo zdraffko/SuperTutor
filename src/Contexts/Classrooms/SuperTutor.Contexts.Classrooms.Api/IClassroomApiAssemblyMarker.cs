@@ -1,4 +1,4 @@
-﻿namespace SuperTutor.Contexts.Classroom.Api;
+﻿namespace SuperTutor.Contexts.Classrooms.Api;
 
 public interface IClassroomApiAssemblyMarker
 {

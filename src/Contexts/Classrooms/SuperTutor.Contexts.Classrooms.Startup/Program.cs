@@ -1,14 +1,18 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Elastic.CommonSchema.Serilog;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Debugging;
 using Serilog.Sinks.Elasticsearch;
-using SuperTutor.Contexts.Classroom.Api;
-using SuperTutor.Contexts.Classroom.Api.VideoConferences.Hubs;
+using SuperTutor.Contexts.Classrooms.Api;
+using SuperTutor.Contexts.Classrooms.Api.Hubs;
+using SuperTutor.Contexts.Classrooms.Infrastructure;
+using SuperTutor.Contexts.Classrooms.Infrastructure.Persistence.Shared;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.HealthChecks.Extensions;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
 using System.Text;
@@ -51,6 +55,8 @@ try
             .ReadFrom.Configuration(hostBuilderContext.Configuration));
 
     builder.Services.AddHealthChecks()
+        .AddSqlServer(builder.Configuration["Database:ConnectionString"], name: "Database", healthQuery: "select top (1) [Id] from classrooms.Classrooms")
+        .AddRabbitMQ(builder.Configuration["RabbitMq:Url"], name: "RabbitMq")
         .AddElasticsearch(options => options
                 .UseServer(elasticsearchNodeUrls.First().AbsoluteUri)
                 .UseBasicAuthentication(builder.Configuration["Elasticsearch:Username"], builder.Configuration["Elasticsearch:Password"]),
@@ -63,6 +69,27 @@ try
         .AddJsonOptions(jsonOptions => jsonOptions.JsonSerializerOptions.Converters.Add(new IdentifierJsonConverterFactory()))
         .AddApplicationPart(typeof(IClassroomApiAssemblyMarker).Assembly)
         .AddControllersAsServices();
+
+    builder.Services.AddDbContext<ClassroomDbContext>(options => options.UseSqlServer(builder.Configuration["Database:ConnectionString"]));
+
+    builder.Services.AddMassTransit(busConfigurator =>
+    {
+        busConfigurator.AddConsumers(typeof(IClassroomInfrastructureAssemblyMarker).Assembly);
+
+        busConfigurator.UsingRabbitMq((busRegistrationContext, rabbitmqConfigurator) =>
+        {
+            rabbitmqConfigurator.Host(builder.Configuration["RabbitMq:Url"]);
+
+            var consumers = typeof(IClassroomInfrastructureAssemblyMarker).Assembly
+                .GetTypes()
+                .Where(type => type.IsAssignableTo(typeof(IConsumer)));
+
+            foreach (var consumer in consumers)
+            {
+                rabbitmqConfigurator.ReceiveEndpoint(consumer.FullName!, endpointConfigurator => endpointConfigurator.ConfigureConsumer(busRegistrationContext, consumer));
+            }
+        });
+    });
 
     var key = Encoding.ASCII.GetBytes(builder.Configuration["AuthTokenSecretKey"]);
 
@@ -139,7 +166,7 @@ try
 
     app.UseEndpoints(endpoints => endpoints.MapControllers());
 
-    app.MapHub<VideoConferenceHub>("/hubs/classroom");
+    app.MapHub<ClassroomHub>("/hubs/classroom");
 
     app.Run();
 }

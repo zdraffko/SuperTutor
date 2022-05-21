@@ -72,6 +72,10 @@ public class IdentityController : ApiController
         var queryString = $"{IdentityApiUrl}/users/GetIdentityInfo?query={JsonSerializer.Serialize(query)}";
 
         var response = await httpClient.GetFromJsonAsync<GetIdentityInfoResponse>(queryString, cancellationToken: cancellationToken);
+        if (response is not null)
+        {
+            response.UserId = userId;
+        }
 
         return Ok(response);
     }

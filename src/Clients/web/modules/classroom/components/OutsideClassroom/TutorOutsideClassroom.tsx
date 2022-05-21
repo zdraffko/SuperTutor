@@ -7,7 +7,7 @@ import { Check, X } from "tabler-icons-react";
 import WhiteboardTeachingSvg from "./WhiteboardTeachingSvg";
 
 interface TutorOutsideClassroomProps {
-    userEmail: string | undefined;
+    userId: string | undefined;
     classroomHub: HubConnection;
     classroomName: string;
     setClassroomName: Dispatch<SetStateAction<string>>;
@@ -15,7 +15,7 @@ interface TutorOutsideClassroomProps {
     localPeerRef: MutableRefObject<Peer.Instance | undefined>;
 }
 
-export const TutorOutsideClassroom: React.FC<TutorOutsideClassroomProps> = ({ userEmail, classroomHub, classroomName, setClassroomName, setIsInsideClassroom, localPeerRef }) => {
+export const TutorOutsideClassroom: React.FC<TutorOutsideClassroomProps> = ({ userId, classroomHub, classroomName, setClassroomName, setIsInsideClassroom, localPeerRef }) => {
     const [isCreatingClassroom, setIsCreatingClassroom] = useState(false);
 
     useEffect(() => {
@@ -70,7 +70,7 @@ export const TutorOutsideClassroom: React.FC<TutorOutsideClassroomProps> = ({ us
         });
 
         console.log("Hub: invoking CreateRoom");
-        await classroomHub.invoke("CreateRoom", classroomName, userEmail);
+        await classroomHub.invoke("CreateRoom", classroomName, userId);
     };
 
     return (

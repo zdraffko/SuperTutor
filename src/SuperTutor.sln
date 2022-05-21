@@ -112,11 +112,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.ApiGateways.Web"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Identity.Domain", "Contexts\Identity\SuperTutor.Contexts.Identity.Domain\SuperTutor.Contexts.Identity.Domain.csproj", "{1F269EB0-3D19-4202-957F-832700A2ED6B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Classroom", "Classroom", "{22DD0B4A-D343-42CC-8C42-6AB72FC9D3F0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Classrooms", "Classrooms", "{22DD0B4A-D343-42CC-8C42-6AB72FC9D3F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Classroom.Startup", "Contexts\Classroom\SuperTutor.Contexts.Classroom.Startup\SuperTutor.Contexts.Classroom.Startup.csproj", "{D1754445-D8CA-4BA9-B57F-B980B0ED0B11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Classrooms.Api", "Contexts\Classrooms\SuperTutor.Contexts.Classrooms.Api\SuperTutor.Contexts.Classrooms.Api.csproj", "{24FB90EE-A0D4-4BA1-940A-60698548D34F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Classroom.Api", "Contexts\Classroom\SuperTutor.Contexts.Classroom.Api\SuperTutor.Contexts.Classroom.Api.csproj", "{0E919F8B-6951-4627-A2FF-616B1E3E1E38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Classrooms.Application", "Contexts\Classrooms\SuperTutor.Contexts.Classrooms.Application\SuperTutor.Contexts.Classrooms.Application.csproj", "{C861A499-E4A5-49A7-9151-00B69FF7441C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Classrooms.Domain", "Contexts\Classrooms\SuperTutor.Contexts.Classrooms.Domain\SuperTutor.Contexts.Classrooms.Domain.csproj", "{3AC08CD2-F0E3-4E25-BA39-55E0784A35BE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Classrooms.Infrastructure", "Contexts\Classrooms\SuperTutor.Contexts.Classrooms.Infrastructure\SuperTutor.Contexts.Classrooms.Infrastructure.csproj", "{CDDE0295-D5F5-4CE2-BF84-0B462EE89BFB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Classrooms.Startup", "Contexts\Classrooms\SuperTutor.Contexts.Classrooms.Startup\SuperTutor.Contexts.Classrooms.Startup.csproj", "{AA1F2A6E-729A-4074-A44E-FA2E42967048}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -280,14 +286,26 @@ Global
 		{1F269EB0-3D19-4202-957F-832700A2ED6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F269EB0-3D19-4202-957F-832700A2ED6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F269EB0-3D19-4202-957F-832700A2ED6B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D1754445-D8CA-4BA9-B57F-B980B0ED0B11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1754445-D8CA-4BA9-B57F-B980B0ED0B11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1754445-D8CA-4BA9-B57F-B980B0ED0B11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1754445-D8CA-4BA9-B57F-B980B0ED0B11}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0E919F8B-6951-4627-A2FF-616B1E3E1E38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E919F8B-6951-4627-A2FF-616B1E3E1E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E919F8B-6951-4627-A2FF-616B1E3E1E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0E919F8B-6951-4627-A2FF-616B1E3E1E38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24FB90EE-A0D4-4BA1-940A-60698548D34F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24FB90EE-A0D4-4BA1-940A-60698548D34F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24FB90EE-A0D4-4BA1-940A-60698548D34F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24FB90EE-A0D4-4BA1-940A-60698548D34F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C861A499-E4A5-49A7-9151-00B69FF7441C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C861A499-E4A5-49A7-9151-00B69FF7441C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C861A499-E4A5-49A7-9151-00B69FF7441C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C861A499-E4A5-49A7-9151-00B69FF7441C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AC08CD2-F0E3-4E25-BA39-55E0784A35BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AC08CD2-F0E3-4E25-BA39-55E0784A35BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AC08CD2-F0E3-4E25-BA39-55E0784A35BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AC08CD2-F0E3-4E25-BA39-55E0784A35BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDDE0295-D5F5-4CE2-BF84-0B462EE89BFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDDE0295-D5F5-4CE2-BF84-0B462EE89BFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDDE0295-D5F5-4CE2-BF84-0B462EE89BFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDDE0295-D5F5-4CE2-BF84-0B462EE89BFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA1F2A6E-729A-4074-A44E-FA2E42967048}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA1F2A6E-729A-4074-A44E-FA2E42967048}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA1F2A6E-729A-4074-A44E-FA2E42967048}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA1F2A6E-729A-4074-A44E-FA2E42967048}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -342,8 +360,11 @@ Global
 		{A4468078-58B6-4168-803A-387BA0F0D77F} = {27C8F3DE-3BBD-4740-BC57-01869069A728}
 		{1F269EB0-3D19-4202-957F-832700A2ED6B} = {DB167D28-A138-4B9C-B3D3-14F93D999CC3}
 		{22DD0B4A-D343-42CC-8C42-6AB72FC9D3F0} = {A1E1E7E6-ED90-4C56-97C2-312DE5B5A54F}
-		{D1754445-D8CA-4BA9-B57F-B980B0ED0B11} = {22DD0B4A-D343-42CC-8C42-6AB72FC9D3F0}
-		{0E919F8B-6951-4627-A2FF-616B1E3E1E38} = {22DD0B4A-D343-42CC-8C42-6AB72FC9D3F0}
+		{24FB90EE-A0D4-4BA1-940A-60698548D34F} = {22DD0B4A-D343-42CC-8C42-6AB72FC9D3F0}
+		{C861A499-E4A5-49A7-9151-00B69FF7441C} = {22DD0B4A-D343-42CC-8C42-6AB72FC9D3F0}
+		{3AC08CD2-F0E3-4E25-BA39-55E0784A35BE} = {22DD0B4A-D343-42CC-8C42-6AB72FC9D3F0}
+		{CDDE0295-D5F5-4CE2-BF84-0B462EE89BFB} = {22DD0B4A-D343-42CC-8C42-6AB72FC9D3F0}
+		{AA1F2A6E-729A-4074-A44E-FA2E42967048} = {22DD0B4A-D343-42CC-8C42-6AB72FC9D3F0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4CB9FFAA-0741-40AA-BFA6-60CC8D6EC98F}

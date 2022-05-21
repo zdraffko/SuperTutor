@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Application\SuperTutor.SharedLibraries.BuildingBlocks.Application.csproj" />
+    <ProjectReference Include="..\SuperTutor.Contexts.Classrooms.Domain\SuperTutor.Contexts.Classrooms.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

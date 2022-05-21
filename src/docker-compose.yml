@@ -107,20 +107,22 @@ services:
         networks:
             -  supertutor-infrastructure_default
 
-    supertutor-classroom:
-        container_name: supertutor-classroom
-        image: zdraffko/supertutor:classroom
+    supertutor-classrooms:
+        container_name: supertutor-classrooms
+        image: zdraffko/supertutor:classrooms
         build:
             context: .
-            dockerfile: ./Contexts/Classroom/SuperTutor.Contexts.Classroom.Startup/Dockerfile
+            dockerfile: ./Contexts/Classrooms/SuperTutor.Contexts.Classrooms.Startup/Dockerfile
         environment:
+            - Database__ConnectionString=Server=supertutor-mssqlserver;Database=SuperTutorClassrooms;User Id=sa;Password=${MSSQLSERVER_SA_PASSWORD};MultipleActiveResultSets=true
             - Elasticsearch__Urls=http://supertutor-elasticsearch-node-1:9200
             - Elasticsearch__Username=${ELASTIC_DEFAULT_USERNAME}
             - Elasticsearch__Password=${ELASTIC_DEFAULT_PASSWORD}
+            - RabbitMq__Url=amqp://${RABBITMQ_DEFAULT_USERNAME}:${RABBITMQ_DEFAULT_PASSWORD}@supertutor-rabbitmq:5672
             - AuthTokenSecretKey=${AUTH_TOKEN_SECRET_KEY}
         volumes:
-            - ./.aspnet/classroom/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
-            - /var/log/supertutor/classroom:/app/logs
+            - ./.aspnet/classrooms/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+            - /var/log/supertutor/classrooms:/app/logs
         ports: 
             - 5004:80
         restart: on-failure

@@ -1,30 +1,34 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.Create;
+using SuperTutor.Contexts.Classrooms.Domain.Classrooms.Models.ValueObjects.Identifiers;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
-namespace SuperTutor.Contexts.Classroom.Api.VideoConferences.Hubs;
+namespace SuperTutor.Contexts.Classrooms.Api.Hubs;
 
 [Authorize]
-public class VideoConferenceHub : Hub
+public class ClassroomHub : Hub
 {
     private static readonly Dictionary<string, VideoConferenceRoom> VideoConferenceRooms = new();
 
-    public async Task CreateRoom(string roomName, string tutorName)
+    private readonly ICommandHandler<CreateClassroomCommand> createClassroomCommandHandler;
+
+    public ClassroomHub(ICommandHandler<CreateClassroomCommand> createClassroomCommandHandler) => this.createClassroomCommandHandler = createClassroomCommandHandler;
+
+    public async Task CreateRoom(string classroomName, string tutorId)
     {
-        if (VideoConferenceRooms.ContainsKey(roomName))
+        if (!Guid.TryParse(tutorId, out var tutorIdValue))
         {
-            await Clients.Caller.SendAsync("RoomCreationFailed", new { Message = $"Стая с името '{roomName}' вече съществува" });
+            await Clients.Caller.SendAsync("RoomCreationFailed", new { Message = "Невалидно учителско Id" });
 
             return;
         }
 
-        var tutor = new VideoConferenceTutor(tutorName, Context.ConnectionId);
-        var room = new VideoConferenceRoom(roomName, tutor);
+        await createClassroomCommandHandler.Handle(new CreateClassroomCommand(classroomName, new TutorId(tutorIdValue)), new CancellationTokenSource().Token);
 
-        VideoConferenceRooms.Add(room.Name, room);
+        await Groups.AddToGroupAsync(Context.ConnectionId, classroomName);
 
-        await Groups.AddToGroupAsync(tutor.ConnectionId, room.Name);
-
-        await Clients.Caller.SendAsync("RoomCreated", room.Name);
+        await Clients.Caller.SendAsync("RoomCreated", classroomName);
     }
 
     public async Task JoinRoom(string roomName, string studentName)
@@ -82,6 +86,18 @@ public class VideoConferenceHub : Hub
         await Groups.RemoveFromGroupAsync(studentForRemoval.ConnectionId, room.Name);
 
         room.Students.Remove(studentForRemoval);
+    }
+
+    public async Task SaveNotebookContent(string notebookContent)
+    {
+        await Task.Delay(2000);
+        await Clients.Caller.SendAsync("NotebookContentSaved");
+    }
+
+    public async Task SaveWhiteboardContent(string whiteboardContent)
+    {
+        await Task.Delay(2000);
+        await Clients.Caller.SendAsync("WhiteboardContentSaved");
     }
 }
 
