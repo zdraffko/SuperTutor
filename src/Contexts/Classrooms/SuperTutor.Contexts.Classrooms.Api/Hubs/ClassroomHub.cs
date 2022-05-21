@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 using SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.Close;
 using SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.Create;
 using SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.Join;
+using SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.Leave;
 using SuperTutor.Contexts.Classrooms.Application.Classrooms.Queries.GetStudentConnectionId;
 using SuperTutor.Contexts.Classrooms.Domain.Classrooms.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
@@ -13,22 +14,23 @@ namespace SuperTutor.Contexts.Classrooms.Api.Hubs;
 [Authorize]
 public class ClassroomHub : Hub
 {
-    private static readonly Dictionary<string, VideoConferenceRoom> VideoConferenceRooms = new();
-
     private readonly ICommandHandler<CreateClassroomCommand> createClassroomCommandHandler;
     private readonly ICommandHandler<JoinClassroomCommand> joinClassroomCommandHandler;
     private readonly ICommandHandler<CloseClassroomCommand> closeClassroomCommandHandler;
+    private readonly ICommandHandler<LeaveClassroomCommand> leaveClassroomCommandHandler;
     private readonly IQueryHandler<GetClassroomStudentConnectionIdQuery, GetClassroomStudentConnectionIdQueryPayload> getClassroomStudentConnectionIdQueryHandler;
 
     public ClassroomHub(
         ICommandHandler<CreateClassroomCommand> createClassroomCommandHandler,
         ICommandHandler<JoinClassroomCommand> joinClassroomCommandHandler,
         ICommandHandler<CloseClassroomCommand> closeClassroomCommandHandler,
+        ICommandHandler<LeaveClassroomCommand> leaveClassroomCommandHandler,
         IQueryHandler<GetClassroomStudentConnectionIdQuery, GetClassroomStudentConnectionIdQueryPayload> getClassroomStudentConnectionIdQueryHandler)
     {
         this.createClassroomCommandHandler = createClassroomCommandHandler;
         this.joinClassroomCommandHandler = joinClassroomCommandHandler;
         this.closeClassroomCommandHandler = closeClassroomCommandHandler;
+        this.leaveClassroomCommandHandler = leaveClassroomCommandHandler;
         this.getClassroomStudentConnectionIdQueryHandler = getClassroomStudentConnectionIdQueryHandler;
     }
 
@@ -97,22 +99,22 @@ public class ClassroomHub : Hub
         await Groups.RemoveFromGroupAsync(queryResult.Value.StudentConnectionId, classroomName, cancellationToken);
     }
 
-    public async Task LeaveRoom(string roomName, string studentName)
+    public async Task LeaveRoom(string classroomName, string studentName)
     {
-        var room = VideoConferenceRooms[roomName];
-        var studentForRemoval = room.Students.FirstOrDefault(student => student.Name == studentName);
+        var cancellationToken = new CancellationTokenSource().Token;
 
-        if (studentForRemoval is null)
+        var queryResult = await getClassroomStudentConnectionIdQueryHandler.Handle(new GetClassroomStudentConnectionIdQuery(classroomName), cancellationToken);
+
+        var leaveClassroomResult = await leaveClassroomCommandHandler.Handle(new LeaveClassroomCommand(classroomName), cancellationToken);
+        if (leaveClassroomResult.IsFailed)
         {
+            // TODO Handle this case
             return;
         }
 
-        await Clients.Caller.SendAsync("RoomLeft", room.Name);
-        await Clients.OthersInGroup(room.Name).SendAsync("StudentLeftRoom", studentForRemoval.Name);
-
-        await Groups.RemoveFromGroupAsync(studentForRemoval.ConnectionId, room.Name);
-
-        room.Students.Remove(studentForRemoval);
+        await Clients.Caller.SendAsync("RoomLeft", classroomName);
+        await Clients.OthersInGroup(classroomName).SendAsync("StudentLeftRoom", studentName);
+        await Groups.RemoveFromGroupAsync(queryResult.Value.StudentConnectionId, classroomName);
     }
 
     public async Task SaveNotebookContent(string notebookContent)
@@ -126,46 +128,4 @@ public class ClassroomHub : Hub
         await Task.Delay(2000);
         await Clients.Caller.SendAsync("WhiteboardContentSaved");
     }
-}
-
-public class VideoConferenceRoom
-{
-    public VideoConferenceRoom(string name, VideoConferenceTutor tutor)
-    {
-        Name = name;
-        Tutor = tutor;
-        Students = new List<VideoConferenceStudent>();
-    }
-
-    public string Name { get; }
-
-    public VideoConferenceTutor Tutor { get; }
-
-    public List<VideoConferenceStudent> Students { get; }
-}
-
-public class VideoConferenceTutor
-{
-    public VideoConferenceTutor(string name, string connectionId)
-    {
-        Name = name;
-        ConnectionId = connectionId;
-    }
-
-    public string Name { get; }
-
-    public string ConnectionId { get; }
-}
-
-public class VideoConferenceStudent
-{
-    public VideoConferenceStudent(string name, string connectionId)
-    {
-        Name = name;
-        ConnectionId = connectionId;
-    }
-
-    public string Name { get; }
-
-    public string ConnectionId { get; }
 }

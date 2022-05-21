@@ -38,4 +38,10 @@ public class Classroom : Entity<ClassroomId, Guid>, IAggregateRoot
     }
 
     public void Close() => IsActive = false;
+
+    public void Leave()
+    {
+        StudentId = null;
+        StudentConnectionId = null;
+    }
 }
