@@ -11,12 +11,13 @@ import RichTextEditor from "./TextEditor";
 const initialValue = "<p>Моята <b>супер</b> тетрадка</p>";
 
 interface NotebookProps {
+    classroomName: string;
     localPeerRef: MutableRefObject<Peer.Instance | undefined>;
     isRemotePeerConnected: boolean;
     setIsNotebookSavingChanges: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Notebook: React.FC<NotebookProps> = ({ localPeerRef, isRemotePeerConnected, setIsNotebookSavingChanges }) => {
+export const Notebook: React.FC<NotebookProps> = ({ classroomName, localPeerRef, isRemotePeerConnected, setIsNotebookSavingChanges }) => {
     const [notebookContent, setNotebookContent] = useState(initialValue);
     const { colorScheme } = useMantineColorScheme();
     const { user } = useAuth();
@@ -43,7 +44,7 @@ export const Notebook: React.FC<NotebookProps> = ({ localPeerRef, isRemotePeerCo
         if (isHubConnected() && isUserIdle && notebookContent !== lastSavedNotebookContent.current) {
             setIsNotebookSavingChanges(true);
 
-            classroomHub.invoke("SaveNotebookContent", notebookContent).then(() => {
+            classroomHub.invoke("SaveNotebookContent", classroomName, notebookContent).then(() => {
                 lastSavedNotebookContent.current = notebookContent;
             });
         }

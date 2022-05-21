@@ -23,9 +23,9 @@ public class Classroom : Entity<ClassroomId, Guid>, IAggregateRoot
 
     public string? StudentConnectionId { get; private set; }
 
-    public string? NotebookContent { get; }
+    public string? NotebookContent { get; private set; }
 
-    public string? WhiteboardContent { get; }
+    public string? WhiteboardContent { get; private set; }
 
     public bool IsActive { get; private set; }
 
@@ -44,4 +44,8 @@ public class Classroom : Entity<ClassroomId, Guid>, IAggregateRoot
         StudentId = null;
         StudentConnectionId = null;
     }
+
+    public void SaveNotebookContent(string notebookContent) => NotebookContent = notebookContent;
+
+    public void SaveWhiteboardContent(string whiteboardContent) => WhiteboardContent = whiteboardContent;
 }

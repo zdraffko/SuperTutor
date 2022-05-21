@@ -65,7 +65,7 @@ export const StudentInsideClassroom: React.FC<StudentInsideClassroomProps> = ({ 
     return (
         <Grid>
             <Grid.Col span={8}>
-                <WorkSpace localPeerRef={localPeerRef} isRemotePeerConnected={true} setIsWorkSpaceSavingChanges={setIsWorkSpaceSavingChanges} />
+                <WorkSpace classroomName={classroomName} localPeerRef={localPeerRef} isRemotePeerConnected={true} setIsWorkSpaceSavingChanges={setIsWorkSpaceSavingChanges} />
             </Grid.Col>
             <Grid.Col span={4}>
                 <Stack>

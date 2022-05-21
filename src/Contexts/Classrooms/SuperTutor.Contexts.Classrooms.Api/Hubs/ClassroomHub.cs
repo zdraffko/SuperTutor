@@ -4,6 +4,8 @@ using SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.Close;
 using SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.Create;
 using SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.Join;
 using SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.Leave;
+using SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.SaveNotebookContent;
+using SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.SaveWhiteboardContent;
 using SuperTutor.Contexts.Classrooms.Application.Classrooms.Queries.GetStudentConnectionId;
 using SuperTutor.Contexts.Classrooms.Domain.Classrooms.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
@@ -18,6 +20,8 @@ public class ClassroomHub : Hub
     private readonly ICommandHandler<JoinClassroomCommand> joinClassroomCommandHandler;
     private readonly ICommandHandler<CloseClassroomCommand> closeClassroomCommandHandler;
     private readonly ICommandHandler<LeaveClassroomCommand> leaveClassroomCommandHandler;
+    private readonly ICommandHandler<SaveNotebookContentCommand> saveNotebookContentCommandHandler;
+    private readonly ICommandHandler<SaveWhiteboardContentCommand> saveWhiteboardContentCommandHandler;
     private readonly IQueryHandler<GetClassroomStudentConnectionIdQuery, GetClassroomStudentConnectionIdQueryPayload> getClassroomStudentConnectionIdQueryHandler;
 
     public ClassroomHub(
@@ -25,12 +29,16 @@ public class ClassroomHub : Hub
         ICommandHandler<JoinClassroomCommand> joinClassroomCommandHandler,
         ICommandHandler<CloseClassroomCommand> closeClassroomCommandHandler,
         ICommandHandler<LeaveClassroomCommand> leaveClassroomCommandHandler,
+        ICommandHandler<SaveNotebookContentCommand> saveNotebookContentCommandHandler,
+        ICommandHandler<SaveWhiteboardContentCommand> saveWhiteboardContentCommandHandler,
         IQueryHandler<GetClassroomStudentConnectionIdQuery, GetClassroomStudentConnectionIdQueryPayload> getClassroomStudentConnectionIdQueryHandler)
     {
         this.createClassroomCommandHandler = createClassroomCommandHandler;
         this.joinClassroomCommandHandler = joinClassroomCommandHandler;
         this.closeClassroomCommandHandler = closeClassroomCommandHandler;
         this.leaveClassroomCommandHandler = leaveClassroomCommandHandler;
+        this.saveNotebookContentCommandHandler = saveNotebookContentCommandHandler;
+        this.saveWhiteboardContentCommandHandler = saveWhiteboardContentCommandHandler;
         this.getClassroomStudentConnectionIdQueryHandler = getClassroomStudentConnectionIdQueryHandler;
     }
 
@@ -112,20 +120,26 @@ public class ClassroomHub : Hub
             return;
         }
 
-        await Clients.Caller.SendAsync("RoomLeft", classroomName);
-        await Clients.OthersInGroup(classroomName).SendAsync("StudentLeftRoom", studentName);
-        await Groups.RemoveFromGroupAsync(queryResult.Value.StudentConnectionId, classroomName);
+        await Clients.Caller.SendAsync("RoomLeft", classroomName, cancellationToken);
+        await Clients.OthersInGroup(classroomName).SendAsync("StudentLeftRoom", studentName, cancellationToken);
+        await Groups.RemoveFromGroupAsync(queryResult.Value.StudentConnectionId, classroomName, cancellationToken);
     }
 
-    public async Task SaveNotebookContent(string notebookContent)
+    public async Task SaveNotebookContent(string classroomName, string notebookContent)
     {
-        await Task.Delay(2000);
-        await Clients.Caller.SendAsync("NotebookContentSaved");
+        var cancellationToken = new CancellationTokenSource().Token;
+
+        await saveNotebookContentCommandHandler.Handle(new SaveNotebookContentCommand(classroomName, notebookContent), cancellationToken);
+
+        await Clients.Caller.SendAsync("NotebookContentSaved", cancellationToken);
     }
 
-    public async Task SaveWhiteboardContent(string whiteboardContent)
+    public async Task SaveWhiteboardContent(string classroomName, string whiteboardContent)
     {
-        await Task.Delay(2000);
-        await Clients.Caller.SendAsync("WhiteboardContentSaved");
+        var cancellationToken = new CancellationTokenSource().Token;
+
+        await saveWhiteboardContentCommandHandler.Handle(new SaveWhiteboardContentCommand(classroomName, whiteboardContent), cancellationToken);
+
+        await Clients.Caller.SendAsync("WhiteboardContentSaved", cancellationToken);
     }
 }

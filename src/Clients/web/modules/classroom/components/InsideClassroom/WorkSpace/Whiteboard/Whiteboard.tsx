@@ -13,12 +13,13 @@ interface WhiteboardUpdatePayload {
 }
 
 interface WhiteboardProps {
+    classroomName: string;
     localPeerRef: MutableRefObject<Peer.Instance | undefined>;
     isRemotePeerConnected: boolean;
     setIsWhiteboardSavingChanges: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Whiteboard: React.FC<WhiteboardProps> = ({ localPeerRef, isRemotePeerConnected, setIsWhiteboardSavingChanges }) => {
+export const Whiteboard: React.FC<WhiteboardProps> = ({ classroomName, localPeerRef, isRemotePeerConnected, setIsWhiteboardSavingChanges }) => {
     const { colorScheme } = useMantineColorScheme();
     const drawApp = useRef<TldrawApp>();
     const [drawDocument, setDrawDocument] = useState<TDDocument>();
@@ -64,7 +65,7 @@ export const Whiteboard: React.FC<WhiteboardProps> = ({ localPeerRef, isRemotePe
             console.log("saving");
             setIsWhiteboardSavingChanges(true);
 
-            classroomHub.invoke("SaveWhiteboardContent", whiteboardContent).then(() => {
+            classroomHub.invoke("SaveWhiteboardContent", classroomName, whiteboardContent).then(() => {
                 lastSavedWhiteboardContent.current = whiteboardContent;
             });
         }
