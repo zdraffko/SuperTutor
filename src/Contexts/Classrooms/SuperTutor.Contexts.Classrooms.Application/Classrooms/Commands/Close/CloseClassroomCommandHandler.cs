@@ -2,15 +2,15 @@
 using SuperTutor.Contexts.Classrooms.Domain.Classrooms;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
-namespace SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.Join;
+namespace SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.Close;
 
-internal class JoinClassroomCommandHandler : ICommandHandler<JoinClassroomCommand>
+internal class CloseClassroomCommandHandler : ICommandHandler<CloseClassroomCommand>
 {
     private readonly IClassroomRepository classroomRepository;
 
-    public JoinClassroomCommandHandler(IClassroomRepository classroomRepository) => this.classroomRepository = classroomRepository;
+    public CloseClassroomCommandHandler(IClassroomRepository classroomRepository) => this.classroomRepository = classroomRepository;
 
-    public async Task<Result> Handle(JoinClassroomCommand command, CancellationToken cancellationToken)
+    public async Task<Result> Handle(CloseClassroomCommand command, CancellationToken cancellationToken)
     {
         var classroom = await classroomRepository.GetByName(command.ClassroomName, cancellationToken);
         if (classroom is null)
@@ -18,7 +18,7 @@ internal class JoinClassroomCommandHandler : ICommandHandler<JoinClassroomComman
             return Result.Fail($"Класна стая с име '{command.ClassroomName}' не съществува");
         }
 
-        classroom.Join(command.StudentId, command.StudentConnectionId);
+        classroom.Close();
 
         return Result.Ok();
     }

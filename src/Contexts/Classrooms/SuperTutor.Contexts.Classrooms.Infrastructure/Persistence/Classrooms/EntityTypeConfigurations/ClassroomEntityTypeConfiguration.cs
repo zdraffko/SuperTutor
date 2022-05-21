@@ -32,6 +32,8 @@ internal class ClassroomEntityTypeConfiguration : IEntityTypeConfiguration<Class
                 studentId => studentId!.Value,
                 studentIdValue => new StudentId(studentIdValue));
 
+        builder.Property(classroom => classroom.StudentConnectionId);
+
         builder.Property(classroom => classroom.NotebookContent);
 
         builder.Property(classroom => classroom.WhiteboardContent);

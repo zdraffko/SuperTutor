@@ -1,4 +1,5 @@
-﻿using SuperTutor.Contexts.Classrooms.Domain.Classrooms.Models.ValueObjects.Identifiers;
+﻿using SuperTutor.Contexts.Classrooms.Domain.Classrooms.Invariants;
+using SuperTutor.Contexts.Classrooms.Domain.Classrooms.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Aggregates;
 
@@ -17,13 +18,24 @@ public class Classroom : Entity<ClassroomId, Guid>, IAggregateRoot
 
     public TutorId TutorId { get; }
 
+    // TODO: Refactor the student related properties to a owned value object
     public StudentId? StudentId { get; private set; }
+
+    public string? StudentConnectionId { get; private set; }
 
     public string? NotebookContent { get; }
 
     public string? WhiteboardContent { get; }
 
-    public bool IsActive { get; }
+    public bool IsActive { get; private set; }
 
-    public void Join(StudentId studentId) => StudentId = studentId;
+    public void Join(StudentId studentId, string studentConnectionId)
+    {
+        CheckInvariant(new ClassroomCanOnlyBeJoinedWhenItIsActiveInvariant(IsActive));
+
+        StudentId = studentId;
+        StudentConnectionId = studentConnectionId;
+    }
+
+    public void Close() => IsActive = false;
 }

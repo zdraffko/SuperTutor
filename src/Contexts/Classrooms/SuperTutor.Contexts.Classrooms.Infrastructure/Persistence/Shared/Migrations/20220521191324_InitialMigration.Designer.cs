@@ -12,7 +12,7 @@ using SuperTutor.Contexts.Classrooms.Infrastructure.Persistence.Shared;
 namespace SuperTutor.Contexts.Classrooms.Infrastructure.Persistence.Shared.Migrations
 {
     [DbContext(typeof(ClassroomDbContext))]
-    [Migration("20220521132522_InitialMigration")]
+    [Migration("20220521191324_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,9 @@ namespace SuperTutor.Contexts.Classrooms.Infrastructure.Persistence.Shared.Migra
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NotebookContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentConnectionId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -48,7 +51,6 @@ namespace SuperTutor.Contexts.Classrooms.Infrastructure.Persistence.Shared.Migra
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("WhiteboardContent")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

@@ -36,6 +36,9 @@ namespace SuperTutor.Contexts.Classrooms.Infrastructure.Persistence.Shared.Migra
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NotebookContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentConnectionId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -46,7 +49,6 @@ namespace SuperTutor.Contexts.Classrooms.Infrastructure.Persistence.Shared.Migra
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("WhiteboardContent")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
