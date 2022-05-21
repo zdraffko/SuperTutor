@@ -31,7 +31,6 @@ const ClassroomPage: React.FC = () => {
                     )
                 ) : user?.type === UserType.Tutor ? (
                     <TutorOutsideClassroom
-                        userId={user?.id}
                         classroomHub={classroomHub}
                         classroomName={classroomName}
                         setClassroomName={setClassroomName}
@@ -40,7 +39,6 @@ const ClassroomPage: React.FC = () => {
                     />
                 ) : (
                     <StudentOutsideClassroom
-                        userEmail={user?.email}
                         classroomHub={classroomHub}
                         classroomName={classroomName}
                         setClassroomName={setClassroomName}

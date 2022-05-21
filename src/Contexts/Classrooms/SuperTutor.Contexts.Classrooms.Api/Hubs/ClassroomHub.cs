@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.Create;
+using SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.Join;
 using SuperTutor.Contexts.Classrooms.Domain.Classrooms.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
@@ -12,8 +13,13 @@ public class ClassroomHub : Hub
     private static readonly Dictionary<string, VideoConferenceRoom> VideoConferenceRooms = new();
 
     private readonly ICommandHandler<CreateClassroomCommand> createClassroomCommandHandler;
+    private readonly ICommandHandler<JoinClassroomCommand> joinClassroomCommandHandler;
 
-    public ClassroomHub(ICommandHandler<CreateClassroomCommand> createClassroomCommandHandler) => this.createClassroomCommandHandler = createClassroomCommandHandler;
+    public ClassroomHub(ICommandHandler<CreateClassroomCommand> createClassroomCommandHandler, ICommandHandler<JoinClassroomCommand> joinClassroomCommandHandler)
+    {
+        this.createClassroomCommandHandler = createClassroomCommandHandler;
+        this.joinClassroomCommandHandler = joinClassroomCommandHandler;
+    }
 
     public async Task CreateRoom(string classroomName, string tutorId)
     {
@@ -24,31 +30,39 @@ public class ClassroomHub : Hub
             return;
         }
 
-        await createClassroomCommandHandler.Handle(new CreateClassroomCommand(classroomName, new TutorId(tutorIdValue)), new CancellationTokenSource().Token);
+        var createClassroomResult = await createClassroomCommandHandler.Handle(new CreateClassroomCommand(classroomName, new TutorId(tutorIdValue)), new CancellationTokenSource().Token);
+        if (createClassroomResult.IsFailed)
+        {
+            var errorMessage = createClassroomResult.Errors.FirstOrDefault()?.Message;
+            await Clients.Caller.SendAsync("RoomCreationFailed", new { Message = errorMessage });
+
+            return;
+        }
 
         await Groups.AddToGroupAsync(Context.ConnectionId, classroomName);
 
         await Clients.Caller.SendAsync("RoomCreated", classroomName);
     }
 
-    public async Task JoinRoom(string roomName, string studentName)
+    public async Task JoinRoom(string classroomName, string studentId)
     {
-        if (!VideoConferenceRooms.ContainsKey(roomName))
+        if (!Guid.TryParse(studentId, out var studentIdValue))
         {
-            await Clients.Caller.SendAsync("JoinRoomFailed", new { Message = $"Стая с името '{roomName}' не съществува" });
+            await Clients.Caller.SendAsync("JoinRoomFailed", new { Message = "Невалидно учителско Id" });
 
             return;
         }
 
-        var room = VideoConferenceRooms[roomName];
-        var student = new VideoConferenceStudent(studentName, Context.ConnectionId);
+        var joinClassroomResult = await joinClassroomCommandHandler.Handle(new JoinClassroomCommand(classroomName, new StudentId(studentIdValue)), new CancellationTokenSource().Token);
+        if (joinClassroomResult.IsFailed)
+        {
+            var errorMessage = joinClassroomResult.Errors.FirstOrDefault()?.Message;
+            await Clients.Caller.SendAsync("JoinRoomFailed", new { Message = errorMessage });
 
-        await Groups.AddToGroupAsync(student.ConnectionId, room.Name);
-        room.Students.Add(student);
+            return;
+        }
 
-        //await Signal(room.Name, studentSignalData);
-
-        //await Clients.OthersInGroup(roomName).SendAsync("StudentJoinedRoom", student.Name);
+        await Groups.AddToGroupAsync(Context.ConnectionId, classroomName);
     }
 
     public async Task ConfirmJoinRoom(string roomName, string studentName) => await Clients.OthersInGroup(roomName).SendAsync("StudentJoinedRoom", studentName);

@@ -17,11 +17,13 @@ public class Classroom : Entity<ClassroomId, Guid>, IAggregateRoot
 
     public TutorId TutorId { get; }
 
-    public StudentId? StudentId { get; }
+    public StudentId? StudentId { get; private set; }
 
     public string? NotebookContent { get; }
 
     public string? WhiteboardContent { get; }
 
     public bool IsActive { get; }
+
+    public void Join(StudentId studentId) => StudentId = studentId;
 }

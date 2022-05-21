@@ -4,10 +4,10 @@ import { HubConnection } from "@microsoft/signalr";
 import { Dispatch, MutableRefObject, SetStateAction, useEffect, useState } from "react";
 import Peer from "simple-peer";
 import { Check, X } from "tabler-icons-react";
+import { useAuth } from "utils/authentication/reactQueryAuth";
 import WhiteboardTeachingSvg from "./WhiteboardTeachingSvg";
 
 interface TutorOutsideClassroomProps {
-    userId: string | undefined;
     classroomHub: HubConnection;
     classroomName: string;
     setClassroomName: Dispatch<SetStateAction<string>>;
@@ -15,8 +15,9 @@ interface TutorOutsideClassroomProps {
     localPeerRef: MutableRefObject<Peer.Instance | undefined>;
 }
 
-export const TutorOutsideClassroom: React.FC<TutorOutsideClassroomProps> = ({ userId, classroomHub, classroomName, setClassroomName, setIsInsideClassroom, localPeerRef }) => {
+export const TutorOutsideClassroom: React.FC<TutorOutsideClassroomProps> = ({ classroomHub, classroomName, setClassroomName, setIsInsideClassroom, localPeerRef }) => {
     const [isCreatingClassroom, setIsCreatingClassroom] = useState(false);
+    const { user } = useAuth();
 
     useEffect(() => {
         classroomHub.off("RoomCreated");
@@ -70,7 +71,7 @@ export const TutorOutsideClassroom: React.FC<TutorOutsideClassroomProps> = ({ us
         });
 
         console.log("Hub: invoking CreateRoom");
-        await classroomHub.invoke("CreateRoom", classroomName, userId);
+        await classroomHub.invoke("CreateRoom", classroomName, user?.id);
     };
 
     return (

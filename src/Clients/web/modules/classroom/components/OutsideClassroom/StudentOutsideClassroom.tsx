@@ -4,10 +4,10 @@ import { HubConnection } from "@microsoft/signalr";
 import { Dispatch, MutableRefObject, SetStateAction, useEffect, useState } from "react";
 import Peer from "simple-peer";
 import { Check, X } from "tabler-icons-react";
+import { useAuth } from "utils/authentication/reactQueryAuth";
 import WhiteboardTeachingSvg from "./WhiteboardTeachingSvg";
 
 interface StudentOutsideClassroomProps {
-    userEmail: string | undefined;
     classroomHub: HubConnection;
     classroomName: string;
     setClassroomName: Dispatch<SetStateAction<string>>;
@@ -15,8 +15,9 @@ interface StudentOutsideClassroomProps {
     localPeerRef: MutableRefObject<Peer.Instance | undefined>;
 }
 
-export const StudentOutsideClassroom: React.FC<StudentOutsideClassroomProps> = ({ userEmail, classroomHub, classroomName, setClassroomName, setIsInsideClassroom, localPeerRef }) => {
+export const StudentOutsideClassroom: React.FC<StudentOutsideClassroomProps> = ({ classroomHub, classroomName, setClassroomName, setIsInsideClassroom, localPeerRef }) => {
     const [isJoiningClassroom, setIsJoiningClassroom] = useState(false);
+    const { user } = useAuth();
 
     useEffect(() => {
         console.log("StudentOutsideRoomInit");
@@ -65,7 +66,7 @@ export const StudentOutsideClassroom: React.FC<StudentOutsideClassroomProps> = (
         setIsJoiningClassroom(true);
 
         console.log("Hub: invoking JoinRoom");
-        await classroomHub.invoke("JoinRoom", classroomName, userEmail);
+        await classroomHub.invoke("JoinRoom", classroomName, user?.id);
 
         localPeerRef.current = new Peer({
             initiator: true
@@ -84,7 +85,7 @@ export const StudentOutsideClassroom: React.FC<StudentOutsideClassroomProps> = (
             setIsJoiningClassroom(false);
             setIsInsideClassroom(true);
 
-            await classroomHub.invoke("ConfirmJoinRoom", classroomName, userEmail);
+            await classroomHub.invoke("ConfirmJoinRoom", classroomName, user?.email);
 
             showNotification({
                 autoClose: 5000,
