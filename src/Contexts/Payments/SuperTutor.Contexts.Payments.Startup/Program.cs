@@ -1,32 +1,123 @@
-var builder = WebApplication.CreateBuilder(args);
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Elastic.CommonSchema.Serilog;
+using MassTransit;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Serilog;
+using Serilog.Debugging;
+using Serilog.Sinks.Elasticsearch;
+using SuperTutor.Contexts.Payments.Api;
+using SuperTutor.Contexts.Payments.Infrastructure;
+using SuperTutor.SharedLibraries.BuildingBlocks.Api.HealthChecks.Extensions;
+using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
 
-// Add services to the container.
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-
-var summaries = new[]
+try
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    var builder = WebApplication.CreateBuilder(args);
 
-app.MapGet("/weatherforecast", () =>
+    var selfLogFileWriter = TextWriter.Synchronized(File.CreateText("/app/logs/serilog-selflog"));
+
+    SelfLog.Enable(message =>
+    {
+        Console.WriteLine(message);
+
+        selfLogFileWriter.WriteLine(message);
+        selfLogFileWriter.Flush();
+    });
+
+    var elasticsearchNodeUrls = builder.Configuration["Elasticsearch:Urls"]
+        .Split(';', StringSplitOptions.RemoveEmptyEntries)
+        .Select(rawElasticsearchNodeUrl => new Uri(rawElasticsearchNodeUrl))
+        .ToList();
+
+    builder.Host.UseSerilog((hostBuilderContext, loggerConfiguration)
+        => loggerConfiguration
+            .WriteTo.Console()
+            .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(elasticsearchNodeUrls)
+            {
+                IndexFormat = $"logs-supertutor-payments",
+                TypeName = null, // This is needed because the _type field for a document has been deprecated and there is no clean way at the moment to configure the Elasticsearch sink to not send it. See https://github.com/serilog-contrib/serilog-sinks-elasticsearch/issues/375#issuecomment-743372374 and https://www.elastic.co/guide/en/elasticsearch/reference/7.17/removal-of-types.html
+                BatchAction = ElasticOpType.Create, // This is needed in order to use data streams instead of aliases https://github.com/serilog-contrib/serilog-sinks-elasticsearch/issues/375#issuecomment-743372374
+                ModifyConnectionSettings = connectionConfiguration => connectionConfiguration.BasicAuthentication(hostBuilderContext.Configuration["Elasticsearch:Username"], hostBuilderContext.Configuration["Elasticsearch:Password"]),
+                BufferBaseFilename = "./logs/elasticsearch/buffer",
+                CustomFormatter = new EcsTextFormatter()
+            })
+            .ReadFrom.Configuration(hostBuilderContext.Configuration));
+
+    builder.Services.AddHealthChecks()
+        .AddRabbitMQ(builder.Configuration["RabbitMq:Url"], name: "RabbitMq")
+        .AddElasticsearch(options => options
+                .UseServer(elasticsearchNodeUrls.First().AbsoluteUri)
+                .UseBasicAuthentication(builder.Configuration["Elasticsearch:Username"], builder.Configuration["Elasticsearch:Password"]),
+        "Elasticsearch");
+
+    // Add library services to the container via extension methods provided by the libraries.
+
+    builder.Services.AddEventStoreClient(builder.Configuration["EventStore:Url"]);
+
+    builder.Services
+        .AddControllers()
+        .AddJsonOptions(jsonOptions =>
+        {
+            jsonOptions.JsonSerializerOptions.Converters.Add(new IdentifierJsonConverterFactory());
+            jsonOptions.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+            jsonOptions.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
+        })
+        .AddApplicationPart(typeof(IPaymentsApiAssemblyMarker).Assembly)
+        .AddControllersAsServices();
+
+    builder.Services.AddMassTransit(busConfigurator =>
+    {
+        busConfigurator.AddConsumers(typeof(IPaymentsInfrastructureAssemblyMarker).Assembly);
+
+        busConfigurator.UsingRabbitMq((busRegistrationContext, rabbitmqConfigurator) =>
+        {
+            rabbitmqConfigurator.Host(builder.Configuration["RabbitMq:Url"]);
+
+            var consumers = typeof(IPaymentsInfrastructureAssemblyMarker).Assembly
+                .GetTypes()
+                .Where(type => type.IsAssignableTo(typeof(IConsumer)));
+
+            foreach (var consumer in consumers)
+            {
+                rabbitmqConfigurator.ReceiveEndpoint(consumer.FullName!, endpointConfigurator => endpointConfigurator.ConfigureConsumer(busRegistrationContext, consumer));
+            }
+        });
+    });
+
+    // Add owned service to the container via Autofac modules.
+
+    builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+    builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterAssemblyModules(typeof(Program).Assembly));
+
+    var app = builder.Build();
+
+    app.UseHealthChecks("/health", new HealthCheckOptions().AddCustomResponseWriter());
+
+    // Configure the HTTP request pipeline.
+
+    app.UseSerilogRequestLogging();
+
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
+    }
+
+    app.UseRouting();
+
+    app.UseEndpoints(endpoints => endpoints.MapControllers());
+
+    app.Run();
+}
+catch (Exception exception)
 {
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-       new WeatherForecast
-       (
-           DateTime.Now.AddDays(index),
-           Random.Shared.Next(-20, 55),
-           summaries[Random.Shared.Next(summaries.Length)]
-       ))
-        .ToArray();
-    return forecast;
-});
-
-app.Run();
-
-internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
+    Log.Fatal(exception, "An unhandled exception was thrown with message {ErrorMessage}", exception.Message);
+}
+finally
 {
-    public int TemperatureF => 32 + (int) (TemperatureC / 0.5556);
+    Log.CloseAndFlush();
 }

@@ -4,7 +4,7 @@ namespace SuperTutor.Contexts.Schedule.Startup.BackgroundServices;
 
 public class EventStoreSubscriptionBackgroundService : BackgroundService
 {
-    private const string SubscriptionId = "schedule_all_subscription";
+    private const string SubscriptionId = "payments_all_subscription";
     private readonly IEventStoreSubscriber eventStoreDBSubscriptionToAll;
 
     public EventStoreSubscriptionBackgroundService(IEventStoreSubscriber eventStoreDBSubscriptionToAll) => this.eventStoreDBSubscriptionToAll = eventStoreDBSubscriptionToAll;

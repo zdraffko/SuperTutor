@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Stripe.net" Version="39.112.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.csproj" />
+    <ProjectReference Include="..\SuperTutor.Contexts.Payments.Application\SuperTutor.Contexts.Payments.Application.csproj" />
+  </ItemGroup>
+
 </Project>
