@@ -1,4 +1,4 @@
-import { Center, createStyles, Paper, TextInput } from "@mantine/core";
+import { Box, Button, Center, createStyles, Paper, TextInput } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { useForm, zodResolver } from "@mantine/form";
 import "dayjs/locale/bg";
@@ -10,7 +10,11 @@ const PersonalInformationFormSchema = z.object({
     dateOfBirth: z.date()
 });
 
-const PersonalInformationStep: React.FC = () => {
+interface PersonalInformationStepProps {
+    goToNextStep: () => void;
+}
+
+const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ goToNextStep }) => {
     const form = useForm({
         schema: zodResolver(PersonalInformationFormSchema),
         initialValues: {
@@ -28,6 +32,7 @@ const PersonalInformationStep: React.FC = () => {
                 <form
                     onSubmit={form.onSubmit(async values => {
                         console.log("first step completed");
+                        goToNextStep();
                     })}
                 >
                     <TextInput
@@ -62,6 +67,13 @@ const PersonalInformationStep: React.FC = () => {
                         //minDate={dayjs(new Date()).startOf("month").add(5, "days").toDate()}
                         //maxDate={dayjs(new Date()).endOf("month").subtract(5, "days").toDate()}
                     />
+                    <Box p="sm" mt="xl">
+                        <Center>
+                            <Button type="submit" fullWidth size="sm" style={{ width: "50%" }}>
+                                Запиши и продължи напред
+                            </Button>
+                        </Center>
+                    </Box>
                 </form>
             </Paper>
         </Center>
