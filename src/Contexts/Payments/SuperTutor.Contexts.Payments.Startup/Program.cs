@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 using Serilog.Debugging;
 using Serilog.Sinks.Elasticsearch;
+using Stripe;
 using SuperTutor.Contexts.Payments.Api;
 using SuperTutor.Contexts.Payments.Infrastructure;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.HealthChecks.Extensions;
@@ -19,7 +20,7 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    var selfLogFileWriter = TextWriter.Synchronized(File.CreateText("/app/logs/serilog-selflog"));
+    var selfLogFileWriter = TextWriter.Synchronized(System.IO.File.CreateText("/app/logs/serilog-selflog"));
 
     SelfLog.Enable(message =>
     {
@@ -93,6 +94,8 @@ try
 
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterAssemblyModules(typeof(Program).Assembly));
+
+    StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
     var app = builder.Build();
 

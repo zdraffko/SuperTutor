@@ -4,7 +4,7 @@ import SideBarFooter from "components/SideBar/SideBarFooter";
 import SideBarHeader from "components/SideBar/SideBarHeader";
 
 const SideBar: React.FC = () => (
-    <Navbar height={"100vh"} p="xs" width={{ base: 300 }}>
+    <Navbar height={"100vh"} width={{ base: 300 }}>
         <Navbar.Section mt="xs">
             <SideBarHeader />
         </Navbar.Section>
