@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
 
@@ -47,14 +48,14 @@ public class FundsController : ApiController
 
             var service = new AccountService();
 
-            var account = service.Create(options);
+            var account = await service.CreateAsync(options, cancellationToken: cancellationToken);
+
+            return new OkResult();
         }
         catch (Exception exception)
         {
             return new BadRequestObjectResult(exception.Message);
         }
-
-        return new OkResult();
     }
 
     [HttpPost]
@@ -76,14 +77,14 @@ public class FundsController : ApiController
 
             var service = new PersonService();
 
-            service.Update(command.ConnectedAccountId, command.ConnectedPersonId, options);
+            await service.UpdateAsync(command.ConnectedAccountId, command.ConnectedPersonId, options, cancellationToken: cancellationToken);
+
+            return new OkResult();
         }
         catch (Exception exception)
         {
             return new BadRequestObjectResult(exception.Message);
         }
-
-        return new OkResult();
     }
 
     [HttpPost]
@@ -105,14 +106,14 @@ public class FundsController : ApiController
 
             var service = new PersonService();
 
-            service.Update(command.ConnectedAccountId, command.ConnectedPersonId, options);
+            await service.UpdateAsync(command.ConnectedAccountId, command.ConnectedPersonId, options, cancellationToken: cancellationToken);
+
+            return new OkResult();
         }
         catch (Exception exception)
         {
             return new BadRequestObjectResult(exception.Message);
         }
-
-        return new OkResult();
     }
 
     [HttpPost]
@@ -133,14 +134,76 @@ public class FundsController : ApiController
                 DefaultForCurrency = true
             };
             var service = new ExternalAccountService();
-            service.Create(command.ConnectedAccountId, options);
+            await service.CreateAsync(command.ConnectedAccountId, options, cancellationToken: cancellationToken);
+
+            return new OkResult();
         }
         catch (Exception exception)
         {
             return new BadRequestObjectResult(exception.Message);
         }
+    }
 
-        return new OkResult();
+    [HttpPost]
+    public async Task<ActionResult> UploadVerificationDocuments(
+        [FromForm] string connectedAccountId,
+        [FromForm] string connectedPersonId,
+        IFormFile identityDocumentFront,
+        IFormFile identityDocumentBack,
+        IFormFile addressDocument,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var fileService = new FileService();
+
+            var identityDocumentFrontOptions = new FileCreateOptions
+            {
+                File = identityDocumentFront.OpenReadStream(),
+                Purpose = FilePurpose.IdentityDocument
+            };
+            var identityDocumentFrontFile = await fileService.CreateAsync(identityDocumentFrontOptions, cancellationToken: cancellationToken);
+
+            var identityDocumentBackOptions = new FileCreateOptions
+            {
+                File = identityDocumentBack.OpenReadStream(),
+                Purpose = FilePurpose.IdentityDocument
+            };
+            var identityDocumentBackFile = await fileService.CreateAsync(identityDocumentBackOptions, cancellationToken: cancellationToken);
+
+            var addressDocumentOptions = new FileCreateOptions
+            {
+                File = addressDocument.OpenReadStream(),
+                Purpose = FilePurpose.IdentityDocument
+            };
+            var addressDocumentFile = await fileService.CreateAsync(addressDocumentOptions, cancellationToken: cancellationToken);
+
+            var personService = new PersonService();
+
+            var personUpdateOptions = new PersonUpdateOptions
+            {
+                Verification = new PersonVerificationOptions
+                {
+                    Document = new PersonVerificationDocumentOptions
+                    {
+                        Front = identityDocumentFrontFile.Id,
+                        Back = identityDocumentBackFile.Id
+                    },
+                    AdditionalDocument = new PersonVerificationAdditionalDocumentOptions
+                    {
+                        Front = addressDocumentFile.Id
+                    }
+                }
+            };
+
+            var account = personService.UpdateAsync(connectedAccountId, connectedPersonId, personUpdateOptions, cancellationToken: cancellationToken);
+
+            return new OkResult();
+        }
+        catch (Exception exception)
+        {
+            return new BadRequestObjectResult(exception.Message);
+        }
     }
 }
 

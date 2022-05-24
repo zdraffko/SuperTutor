@@ -69,4 +69,33 @@ public class PaymentsController : ApiController
 
         return BadRequest(responseErrorMessage);
     }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult> UploadVerificationDocuments(
+        IFormFile identityDocumentFront,
+        IFormFile identityDocumentBack,
+        IFormFile addressDocument,
+        CancellationToken cancellationToken)
+    {
+        var multipartFormDataContent = new MultipartFormDataContent
+        {
+            { new StringContent("acct_1L2FVk2YVsMu2Kbo"), "connectedAccountId" },
+            { new StringContent("person_4L2FVk00Xp24cGdK"), "connectedPersonId" },
+            { new StreamContent(identityDocumentFront.OpenReadStream()), nameof(identityDocumentFront), identityDocumentFront.FileName },
+            { new StreamContent(identityDocumentBack.OpenReadStream()), nameof(identityDocumentBack), identityDocumentBack.FileName },
+            { new StreamContent(addressDocument.OpenReadStream()), nameof(addressDocument), addressDocument.FileName }
+        };
+
+        var response = await httpClient.PostAsync($"{PaymentsApiUrl}/funds/UploadVerificationDocuments", multipartFormDataContent, cancellationToken: cancellationToken);
+
+        if (response.IsSuccessStatusCode)
+        {
+            return Ok();
+        }
+
+        var responseErrorMessage = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        return BadRequest(responseErrorMessage);
+    }
 }

@@ -1,8 +1,11 @@
 import { Box, Button, Center, createStyles, InputWrapper, Paper, Text } from "@mantine/core";
 import { Dropzone, MIME_TYPES } from "@mantine/dropzone";
 import { useForm, zodResolver } from "@mantine/form";
+import { showNotification } from "@mantine/notifications";
 import "dayjs/locale/bg";
-import { useState } from "react";
+import useUploadVerificationDocuments from "modules/payments/hooks/useUploadVerificationDocuments";
+import { useEffect } from "react";
+import { X } from "tabler-icons-react";
 import { z } from "zod";
 
 const VerificationDocumentsFormSchema = z.object({
@@ -16,30 +19,49 @@ interface VerificationDocumentsStepProps {
 }
 
 const VerificationDocumentsStep: React.FC<VerificationDocumentsStepProps> = ({ goToNextStep }) => {
+    const { classes } = useStyles();
+    const {
+        uploadVerificationDocuments,
+        isUploadVerificationDocumentsFailed,
+        isUploadVerificationDocumentsLoading,
+        isUploadVerificationDocumentsSuccessful,
+        uploadVerificationDocumentsErrorMessage,
+        resetUploadVerificationDocumentsRequestState
+    } = useUploadVerificationDocuments();
+
+    const formInitialValue: { identityDocumentFrontFile: File | undefined; identityDocumentBackFile: File | undefined; addressDocumentFile: File | undefined } = {
+        identityDocumentFrontFile: undefined,
+        identityDocumentBackFile: undefined,
+        addressDocumentFile: undefined
+    };
+
     const form = useForm({
         schema: zodResolver(VerificationDocumentsFormSchema),
-        initialValues: {
-            identityDocumentFrontFile: null,
-            identityDocumentBackFile: null,
-            addressDocumentFile: null
-        }
+        initialValues: formInitialValue
     });
 
-    const [identityDocumentFrontFile, setIdentityDocumentFrontFile] = useState<File>();
-    const [identityDocumentBackFile, setIdentityDocumentBackFile] = useState<File>();
-    const [addressDocumentFile, setAddressDocumentFile] = useState<File>();
+    useEffect(() => {
+        if (isUploadVerificationDocumentsSuccessful) {
+            goToNextStep();
+        }
 
-    const { classes } = useStyles();
+        if (isUploadVerificationDocumentsFailed) {
+            showNotification({
+                autoClose: 5000,
+                title: "Възникна проблем при запазването на данните",
+                message: uploadVerificationDocumentsErrorMessage,
+                color: "red",
+                icon: <X />
+            });
+        }
+
+        resetUploadVerificationDocumentsRequestState();
+    }, [goToNextStep, isUploadVerificationDocumentsFailed, isUploadVerificationDocumentsSuccessful, resetUploadVerificationDocumentsRequestState, uploadVerificationDocumentsErrorMessage]);
 
     return (
         <Center m="xl">
             <Paper className={classes.formWrapper} shadow="sm" radius="md" p="md" withBorder>
-                <form
-                    onSubmit={form.onSubmit(async values => {
-                        console.log("4 step completed");
-                        goToNextStep();
-                    })}
-                >
+                <form onSubmit={form.onSubmit(async values => await uploadVerificationDocuments(values))}>
                     <InputWrapper
                         p="sm"
                         label="Документ за верификация на самоличността (Отпред)"
@@ -49,8 +71,19 @@ const VerificationDocumentsStep: React.FC<VerificationDocumentsStepProps> = ({ g
                         onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля избери документ за верификация на самоличността (Отпред)")}
                         onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                     >
-                        <Dropzone multiple={false} onDrop={files => setIdentityDocumentFrontFile(files[0])} accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.pdf]}>
-                            {state => (identityDocumentFrontFile ? <Text>{identityDocumentFrontFile.name}</Text> : <Text>Прикачи снимка или копие от предната страна на документа</Text>)}
+                        <Dropzone
+                            loading={isUploadVerificationDocumentsLoading}
+                            multiple={false}
+                            onDrop={files => form.setFieldValue("identityDocumentFrontFile", files[0])}
+                            accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.pdf]}
+                        >
+                            {() =>
+                                form.values.identityDocumentFrontFile ? (
+                                    <Text>{form.values.identityDocumentFrontFile.name}</Text>
+                                ) : (
+                                    <Text>Прикачи снимка или копие от предната страна на документа</Text>
+                                )
+                            }
                         </Dropzone>
                     </InputWrapper>
                     <InputWrapper
@@ -62,8 +95,15 @@ const VerificationDocumentsStep: React.FC<VerificationDocumentsStepProps> = ({ g
                         onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля избери документ за верификация на самоличността (Отзад)")}
                         onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                     >
-                        <Dropzone multiple={false} onDrop={files => setIdentityDocumentBackFile(files[0])} accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.pdf]}>
-                            {state => (identityDocumentBackFile ? <Text>{identityDocumentBackFile.name}</Text> : <Text>Прикачи снимка или копие от задната страна на документа</Text>)}
+                        <Dropzone
+                            loading={isUploadVerificationDocumentsLoading}
+                            multiple={false}
+                            onDrop={files => form.setFieldValue("identityDocumentBackFile", files[0])}
+                            accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.pdf]}
+                        >
+                            {() =>
+                                form.values.identityDocumentBackFile ? <Text>{form.values.identityDocumentBackFile.name}</Text> : <Text>Прикачи снимка или копие от задната страна на документа</Text>
+                            }
                         </Dropzone>
                     </InputWrapper>
                     <InputWrapper
@@ -76,13 +116,18 @@ const VerificationDocumentsStep: React.FC<VerificationDocumentsStepProps> = ({ g
                         onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля избери документ за верификация на адрес")}
                         onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                     >
-                        <Dropzone multiple={false} onDrop={files => setAddressDocumentFile(files[0])} accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.pdf]}>
-                            {state => (addressDocumentFile ? <Text>{addressDocumentFile.name}</Text> : <Text>Прикачи снимка или копие на документ за верификация на адрес </Text>)}
+                        <Dropzone
+                            loading={isUploadVerificationDocumentsLoading}
+                            multiple={false}
+                            onDrop={files => form.setFieldValue("addressDocumentFile", files[0])}
+                            accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.pdf]}
+                        >
+                            {() => (form.values.addressDocumentFile ? <Text>{form.values.addressDocumentFile.name}</Text> : <Text>Прикачи снимка или копие на документ за верификация на адрес </Text>)}
                         </Dropzone>
                     </InputWrapper>
                     <Box p="sm" mt="xl">
                         <Center>
-                            <Button type="submit" fullWidth size="sm" style={{ width: "50%" }}>
+                            <Button type="submit" fullWidth size="sm" style={{ width: "50%" }} loading={isUploadVerificationDocumentsLoading}>
                                 Запиши и продължи напред
                             </Button>
                         </Center>
