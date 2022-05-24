@@ -62,37 +62,21 @@ public class FundsController : ApiController
     {
         try
         {
-            /*            var options = new PersonUpdateOptions
-                        {
-                            FirstName = command.FirstName,
-                            LastName = command.LastName,
-                            Dob = new DobOptions
-                            {
-                                Day = command.DateOfBirth.Day,
-                                Month = command.DateOfBirth.Month,
-                                Year = command.DateOfBirth.Year
-                            }
-                        };*/
-
-            var options = new AccountUpdateOptions
+            var options = new PersonUpdateOptions
             {
-                Settings = new AccountSettingsOptions
+                FirstName = command.FirstName,
+                LastName = command.LastName,
+                Dob = new DobOptions
                 {
-                    Payouts = new AccountSettingsPayoutsOptions
-                    {
-                        Schedule = new AccountSettingsPayoutsScheduleOptions
-                        {
-                            Interval = "manual"
-                        }
-                    },
-                },
+                    Day = command.DateOfBirth.Day,
+                    Month = command.DateOfBirth.Month,
+                    Year = command.DateOfBirth.Year
+                }
             };
-            var service = new AccountService();
 
-            var account = service.Update(command.ConnectedAccountId, options);
-            /*            var service = new PersonService();
+            var service = new PersonService();
 
-                        service.Update(command.ConnectedAccountId, command.ConnectedPersonId, options);*/
+            service.Update(command.ConnectedAccountId, command.ConnectedPersonId, options);
         }
         catch (Exception exception)
         {
@@ -115,7 +99,7 @@ public class FundsController : ApiController
                     City = command.City,
                     Line1 = command.AddressLineOne,
                     Line2 = command.AddressLineTwo,
-                    PostalCode = command.PostalCode
+                    PostalCode = command.PostalCode.ToString()
                 }
             };
 
@@ -196,7 +180,7 @@ public class UpdateAccountAddressInformationCommand
         string city,
         string addressLineOne,
         string addressLineTwo,
-        string postalCode)
+        int postalCode)
     {
         ConnectedAccountId = connectedAccountId;
         ConnectedPersonId = connectedPersonId;
@@ -219,7 +203,7 @@ public class UpdateAccountAddressInformationCommand
 
     public string AddressLineTwo { get; }
 
-    public string PostalCode { get; }
+    public int PostalCode { get; }
 }
 
 public class UpdateAccountPayoutInformationCommand

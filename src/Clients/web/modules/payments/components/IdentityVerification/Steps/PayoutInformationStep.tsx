@@ -1,6 +1,10 @@
 import { Box, Button, Center, createStyles, Paper, Select, TextInput } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
+import { showNotification } from "@mantine/notifications";
 import "dayjs/locale/bg";
+import useUpdatePayoutInformation from "modules/payments/hooks/useUpdatePayoutInformation";
+import { useEffect } from "react";
+import { X } from "tabler-icons-react";
 import { z } from "zod";
 
 const PayoutInformationFormSchema = z.object({
@@ -14,6 +18,15 @@ interface PayoutInformationStepProps {
 }
 
 const PayoutInformationStep: React.FC<PayoutInformationStepProps> = ({ goToNextStep }) => {
+    const { classes } = useStyles();
+    const {
+        updatePayoutInformation,
+        isUpdatePayoutInformationFailed,
+        isUpdatePayoutInformationLoading,
+        isUpdatePayoutInformationSuccessful,
+        updatePayoutInformationErrorMessage,
+        resetUpdatePayoutInformationRequestState
+    } = useUpdatePayoutInformation();
     const form = useForm({
         schema: zodResolver(PayoutInformationFormSchema),
         initialValues: {
@@ -23,18 +36,30 @@ const PayoutInformationStep: React.FC<PayoutInformationStepProps> = ({ goToNextS
         }
     });
 
-    const { classes } = useStyles();
+    useEffect(() => {
+        if (isUpdatePayoutInformationSuccessful) {
+            goToNextStep();
+        }
+
+        if (isUpdatePayoutInformationFailed) {
+            showNotification({
+                autoClose: 5000,
+                title: "Възникна проблем при запазването на данните",
+                message: updatePayoutInformationErrorMessage,
+                color: "red",
+                icon: <X />
+            });
+        }
+
+        resetUpdatePayoutInformationRequestState();
+    }, [goToNextStep, isUpdatePayoutInformationFailed, isUpdatePayoutInformationSuccessful, resetUpdatePayoutInformationRequestState, updatePayoutInformationErrorMessage]);
 
     return (
         <Center m="xl">
             <Paper className={classes.formWrapper} shadow="sm" radius="md" p="md" withBorder>
-                <form
-                    onSubmit={form.onSubmit(async values => {
-                        console.log("3 step completed");
-                        goToNextStep();
-                    })}
-                >
+                <form onSubmit={form.onSubmit(async values => await updatePayoutInformation(values))}>
                     <TextInput
+                        disabled={isUpdatePayoutInformationLoading}
                         p="sm"
                         label="Притежател на сметката"
                         required
@@ -44,6 +69,7 @@ const PayoutInformationStep: React.FC<PayoutInformationStepProps> = ({ goToNextS
                         onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                     />
                     <Select
+                        disabled={isUpdatePayoutInformationLoading}
                         p="sm"
                         label="Вид на притежателят"
                         required
@@ -57,6 +83,7 @@ const PayoutInformationStep: React.FC<PayoutInformationStepProps> = ({ goToNextS
                         onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                     />
                     <TextInput
+                        disabled={isUpdatePayoutInformationLoading}
                         p="sm"
                         mb="xl"
                         label="IBAN на сметката"
@@ -68,7 +95,7 @@ const PayoutInformationStep: React.FC<PayoutInformationStepProps> = ({ goToNextS
                     />
                     <Box p="sm" mt="xl">
                         <Center>
-                            <Button type="submit" fullWidth size="sm" style={{ width: "50%" }}>
+                            <Button type="submit" fullWidth size="sm" style={{ width: "50%" }} loading={isUpdatePayoutInformationLoading}>
                                 Запиши и продължи напред
                             </Button>
                         </Center>

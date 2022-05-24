@@ -5,4 +5,6 @@ public class ApiUrlsOptions
     public const string SectionName = "ApiUrls";
 
     public string Identity { get; set; } = string.Empty;
+
+    public string Payments { get; set; } = string.Empty;
 }

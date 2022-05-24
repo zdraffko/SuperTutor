@@ -1,5 +1,5 @@
 import { Stack, Stepper } from "@mantine/core";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import AddressInformationStep from "./Steps/AddressInformationStep";
 import PayoutInformationStep from "./Steps/PayoutInformationStep";
 import PersonalInformationStep from "./Steps/PersonalInformationStep";
@@ -7,8 +7,8 @@ import VerificationDocumentsStep from "./Steps/VerificationDocumentsStep";
 
 export const IdentityVerification: React.FC = () => {
     const numberOfSteps = 4;
-    const [activeStep, setActiveStep] = useState(1);
-    const goToNextStep = () => setActiveStep(currentStep => (currentStep < numberOfSteps ? currentStep + 1 : currentStep));
+    const [activeStep, setActiveStep] = useState(0);
+    const goToNextStep = useCallback(() => setActiveStep(currentStep => (currentStep < numberOfSteps ? currentStep + 1 : currentStep)), []);
 
     return (
         <Stack align="center" p="xl" justify="space-between" style={{ height: "100vh" }}>

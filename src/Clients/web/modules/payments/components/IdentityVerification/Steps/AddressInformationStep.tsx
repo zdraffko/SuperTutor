@@ -1,6 +1,10 @@
 import { Box, Button, Center, createStyles, NumberInput, Paper, TextInput } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
+import { showNotification } from "@mantine/notifications";
 import "dayjs/locale/bg";
+import useUpdateAddressInformation from "modules/payments/hooks/useUpdateAddressInformation";
+import { useEffect } from "react";
+import { X } from "tabler-icons-react";
 import { z } from "zod";
 
 const AddressInformationFormSchema = z.object({
@@ -16,6 +20,16 @@ interface AddressInformationStepProps {
 }
 
 const AddressInformationStep: React.FC<AddressInformationStepProps> = ({ goToNextStep }) => {
+    const { classes } = useStyles();
+    const {
+        updateAddressInformation,
+        isUpdateAddressInformationFailed,
+        isUpdateAddressInformationLoading,
+        isUpdateAddressInformationSuccessful,
+        updateAddressInformationErrorMessage,
+        resetUpdateAddressInformationRequestState
+    } = useUpdateAddressInformation();
+
     const form = useForm({
         schema: zodResolver(AddressInformationFormSchema),
         initialValues: {
@@ -27,18 +41,30 @@ const AddressInformationStep: React.FC<AddressInformationStepProps> = ({ goToNex
         }
     });
 
-    const { classes } = useStyles();
+    useEffect(() => {
+        if (isUpdateAddressInformationSuccessful) {
+            goToNextStep();
+        }
+
+        if (isUpdateAddressInformationFailed) {
+            showNotification({
+                autoClose: 5000,
+                title: "Възникна проблем при запазването на данните",
+                message: updateAddressInformationErrorMessage,
+                color: "red",
+                icon: <X />
+            });
+        }
+
+        resetUpdateAddressInformationRequestState();
+    }, [goToNextStep, isUpdateAddressInformationFailed, isUpdateAddressInformationSuccessful, resetUpdateAddressInformationRequestState, updateAddressInformationErrorMessage]);
 
     return (
         <Center m="xl">
             <Paper className={classes.formWrapper} shadow="sm" radius="md" p="md" withBorder>
-                <form
-                    onSubmit={form.onSubmit(async values => {
-                        console.log("2 step completed");
-                        goToNextStep();
-                    })}
-                >
+                <form onSubmit={form.onSubmit(async values => updateAddressInformation(values))}>
                     <TextInput
+                        disabled={isUpdateAddressInformationLoading}
                         p="sm"
                         label="Община"
                         required
@@ -48,6 +74,7 @@ const AddressInformationStep: React.FC<AddressInformationStepProps> = ({ goToNex
                         onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                     />
                     <TextInput
+                        disabled={isUpdateAddressInformationLoading}
                         p="sm"
                         label="Град"
                         required
@@ -57,6 +84,7 @@ const AddressInformationStep: React.FC<AddressInformationStepProps> = ({ goToNex
                         onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                     />
                     <TextInput
+                        disabled={isUpdateAddressInformationLoading}
                         p="sm"
                         label="Улица"
                         required
@@ -66,15 +94,17 @@ const AddressInformationStep: React.FC<AddressInformationStepProps> = ({ goToNex
                         onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                     />
                     <TextInput
+                        disabled={isUpdateAddressInformationLoading}
                         p="sm"
                         label="Сграда"
                         required
                         placeholder='номер 15, вход "А", апартамент 4'
                         {...form.getInputProps("addressLineTwo")}
-                        onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля въведи своята улица")}
+                        onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля въведи информация за своята сграда")}
                         onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                     />
                     <NumberInput
+                        disabled={isUpdateAddressInformationLoading}
                         p="sm"
                         mb="xl"
                         label="Пощенски код"
@@ -82,12 +112,12 @@ const AddressInformationStep: React.FC<AddressInformationStepProps> = ({ goToNex
                         hideControls
                         placeholder="1000"
                         {...form.getInputProps("postalCode")}
-                        onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля въведи своят адрес")}
+                        onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля въведи своят пощенски код")}
                         onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                     />
                     <Box p="sm" mt="xl">
                         <Center>
-                            <Button type="submit" fullWidth size="sm" style={{ width: "50%" }}>
+                            <Button type="submit" fullWidth size="sm" style={{ width: "50%" }} loading={isUpdateAddressInformationLoading}>
                                 Запиши и продължи напред
                             </Button>
                         </Center>

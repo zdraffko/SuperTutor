@@ -9,7 +9,7 @@ internal static class ResultExtensions
     {
         if (result.IsFailed)
         {
-            return new BadRequestObjectResult(result.Errors.Select(error => error.Message));
+            return new BadRequestObjectResult(result.Errors.FirstOrDefault()?.Message);
         }
 
         return new OkResult();
@@ -19,7 +19,7 @@ internal static class ResultExtensions
     {
         if (result.IsFailed)
         {
-            return new BadRequestObjectResult(result.Errors.Select(error => error.Message));
+            return new BadRequestObjectResult(result.Errors.FirstOrDefault()?.Message);
         }
 
         return result.Value;

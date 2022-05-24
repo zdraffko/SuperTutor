@@ -2,10 +2,10 @@ import { ColorScheme, ColorSchemeProvider, Global, MantineProvider } from "@mant
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
 import { NotificationsProvider } from "@mantine/notifications";
 import type { AppProps } from "next/app";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { AuthProvider } from "utils/authentication/reactQueryAuth";
-
-const queryClient = new QueryClient();
+import { queryClient } from "utils/reactQuery";
 
 const App = ({ Component, pageProps }: AppProps) => {
     const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -55,6 +55,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                     </NotificationsProvider>
                 </MantineProvider>
             </ColorSchemeProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
     );
 };

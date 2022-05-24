@@ -9,6 +9,7 @@ using Serilog.Debugging;
 using Serilog.Sinks.Elasticsearch;
 using SuperTutor.ApiGateways.Web.Options;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.HealthChecks.Extensions;
+using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
 using System.Text;
 
 Log.Logger = new LoggerConfiguration()
@@ -58,6 +59,12 @@ try
 
     builder.Services
         .AddControllers()
+        .AddJsonOptions(jsonOptions =>
+        {
+            jsonOptions.JsonSerializerOptions.Converters.Add(new IdentifierJsonConverterFactory());
+            jsonOptions.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+            jsonOptions.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
+        })
         .AddControllersAsServices();
 
     var key = Encoding.ASCII.GetBytes(builder.Configuration["AuthTokenSecretKey"]);
