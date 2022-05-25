@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using SuperTutor.ApiGateways.Web.Models.Payments.AcceptTermsOfService;
 using SuperTutor.ApiGateways.Web.Models.Payments.UpdateAccountAddressInformation;
 using SuperTutor.ApiGateways.Web.Models.Payments.UpdateAccountPayoutInformation;
 using SuperTutor.ApiGateways.Web.Models.Payments.UpdateAccountPersonalInformation;
@@ -88,6 +89,28 @@ public class PaymentsController : ApiController
         };
 
         var response = await httpClient.PostAsync($"{PaymentsApiUrl}/funds/UploadVerificationDocuments", multipartFormDataContent, cancellationToken: cancellationToken);
+
+        if (response.IsSuccessStatusCode)
+        {
+            return Ok();
+        }
+
+        var responseErrorMessage = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        return BadRequest(responseErrorMessage);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult> AcceptTermsOfService(AcceptTermsOfServiceRequest request, CancellationToken cancellationToken)
+    {
+        var paymentsRequest = new
+        {
+            ConnectedAccountId = request.UserId,
+            UserIp = Request.HttpContext.Connection.RemoteIpAddress?.ToString()
+        };
+
+        var response = await httpClient.PostAsJsonAsync($"{PaymentsApiUrl}/funds/AcceptTermsOfService", paymentsRequest, cancellationToken: cancellationToken);
 
         if (response.IsSuccessStatusCode)
         {

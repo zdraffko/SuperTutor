@@ -1,5 +1,6 @@
 import { Stack, Stepper } from "@mantine/core";
 import { useCallback, useState } from "react";
+import AcceptTermsOfServiceStep from "./Steps/AcceptTermsOfServiceStep";
 import AddressInformationStep from "./Steps/AddressInformationStep";
 import PayoutInformationStep from "./Steps/PayoutInformationStep";
 import PersonalInformationStep from "./Steps/PersonalInformationStep";
@@ -25,7 +26,9 @@ export const IdentityVerification: React.FC = () => {
                 <Stepper.Step label="Стъпка 4" description="Документи за верификация" allowStepSelect={false}>
                     <VerificationDocumentsStep goToNextStep={goToNextStep} />
                 </Stepper.Step>
-                <Stepper.Completed>Completed, click back button to get to previous step</Stepper.Completed>
+                <Stepper.Completed>
+                    <AcceptTermsOfServiceStep />
+                </Stepper.Completed>
             </Stepper>
         </Stack>
     );
