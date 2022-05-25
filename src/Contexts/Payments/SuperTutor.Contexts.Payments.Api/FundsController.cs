@@ -8,57 +8,6 @@ namespace SuperTutor.Contexts.Payments.Api;
 public class FundsController : ApiController
 {
     [HttpPost]
-    public async Task<ActionResult> CreateAccount(CreateAccountCommand command, CancellationToken cancellationToken)
-    {
-        try
-        {
-            var options = new AccountCreateOptions
-            {
-                Type = "custom",
-                Country = "BG",
-                Email = "testReg@testReg.com",
-                Capabilities = new AccountCapabilitiesOptions
-                {
-                    Transfers = new AccountCapabilitiesTransfersOptions
-                    {
-                        Requested = true,
-                    },
-                },
-                BusinessType = "individual",
-                BusinessProfile = new AccountBusinessProfileOptions
-                {
-                    Url = "https://superuchitel.bg"
-                },
-                Individual = new AccountIndividualOptions
-                {
-                    Email = "testReg@testReg.com"
-                },
-                DefaultCurrency = "BGN",
-                Settings = new AccountSettingsOptions
-                {
-                    Payouts = new AccountSettingsPayoutsOptions
-                    {
-                        Schedule = new AccountSettingsPayoutsScheduleOptions
-                        {
-                            Interval = "manual"
-                        }
-                    }
-                }
-            };
-
-            var service = new AccountService();
-
-            var account = await service.CreateAsync(options, cancellationToken: cancellationToken);
-
-            return new OkResult();
-        }
-        catch (Exception exception)
-        {
-            return new BadRequestObjectResult(exception.Message);
-        }
-    }
-
-    [HttpPost]
     public async Task<ActionResult> UpdateAccountPersonalInformation(UpdateAccountPersonalInformationCommand command, CancellationToken cancellationToken)
     {
         try
@@ -232,11 +181,6 @@ public class FundsController : ApiController
             return new BadRequestObjectResult(exception.Message);
         }
     }
-}
-
-public class CreateAccountCommand
-{
-
 }
 
 public class UpdateAccountPersonalInformationCommand

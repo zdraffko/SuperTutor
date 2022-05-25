@@ -1,14 +1,21 @@
 ﻿using FluentResults;
 using SuperTutor.Contexts.Identity.Application.Contracts.Users;
+using SuperTutor.Contexts.Identity.IntegrationEvents.Users;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents;
 
 namespace SuperTutor.Contexts.Identity.Application.Features.Users.Commands.RegisterTutor;
 
 internal class RegisterTutorCommandHandler : ICommandHandler<RegisterTutorCommand, RegisterTutorCommandResult>
 {
     private readonly IUserService userService;
+    private readonly IIntegrationEventsService integrationEventsService;
 
-    public RegisterTutorCommandHandler(IUserService userService) => this.userService = userService;
+    public RegisterTutorCommandHandler(IUserService userService, IIntegrationEventsService integrationEventsService)
+    {
+        this.userService = userService;
+        this.integrationEventsService = integrationEventsService;
+    }
 
     public async Task<Result<RegisterTutorCommandResult>> Handle(RegisterTutorCommand command, CancellationToken cancellationToken)
     {
@@ -17,6 +24,8 @@ internal class RegisterTutorCommandHandler : ICommandHandler<RegisterTutorComman
         {
             return registerResult.ToResult<RegisterTutorCommandResult>();
         }
+
+        integrationEventsService.Raise(new TutorRegisteredIntegrationEvent(registerResult.Value, command.Email));
 
         var loginResult = await userService.Login(command.Email, command.Password);
         if (loginResult.IsFailed)

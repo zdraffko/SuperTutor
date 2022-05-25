@@ -42,9 +42,9 @@ public class UserService : IUserService
         return Result.Ok(token);
     }
 
-    public async Task<Result> RegisterTutor(string email, string plainPassword) => await Register(email, UserType.Tutor, plainPassword);
+    public async Task<Result<Guid>> RegisterTutor(string email, string plainPassword) => await Register(email, UserType.Tutor, plainPassword);
 
-    public async Task<Result> RegisterStudent(string email, string plainPassword) => await Register(email, UserType.Student, plainPassword);
+    public async Task<Result<Guid>> RegisterStudent(string email, string plainPassword) => await Register(email, UserType.Student, plainPassword);
 
     public async Task<Result<Guid>> Delete(string email)
     {
@@ -66,7 +66,7 @@ public class UserService : IUserService
         return Result.Ok(user.Id);
     }
 
-    private async Task<Result> Register(string email, UserType userType, string plainPassword)
+    private async Task<Result<Guid>> Register(string email, UserType userType, string plainPassword)
     {
         var user = new User(email, userType);
         var createUserResult = await userManager.CreateAsync(user, plainPassword);
@@ -78,6 +78,6 @@ public class UserService : IUserService
             return new Result().WithErrors(identityErrorDescriptions);
         }
 
-        return Result.Ok();
+        return Result.Ok(user.Id);
     }
 }
