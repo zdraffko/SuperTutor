@@ -7,7 +7,7 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Persistence.Subsc
 
 namespace SuperTutor.Contexts.Schedule.Startup.Modules;
 
-internal class PersistenceModule : Module
+internal class InfrastructureModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

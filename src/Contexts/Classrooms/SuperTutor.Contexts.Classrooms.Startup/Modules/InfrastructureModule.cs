@@ -5,7 +5,7 @@ using SuperTutor.Contexts.Classrooms.Infrastructure.Persistence.Shared;
 
 namespace SuperTutor.Contexts.Catalog.Startup.Modules;
 
-internal class PersistenceModule : Module
+internal class InfrastructureModule : Module
 {
     protected override void Load(ContainerBuilder builder) => builder.RegisterType<ClassroomDbContext>()
         .As<DbContext>()
