@@ -8,35 +8,6 @@ namespace SuperTutor.Contexts.Payments.Api;
 public class FundsController : ApiController
 {
     [HttpPost]
-    public async Task<ActionResult> UpdateAccountPersonalInformation(UpdateAccountPersonalInformationCommand command, CancellationToken cancellationToken)
-    {
-        try
-        {
-            var options = new PersonUpdateOptions
-            {
-                FirstName = command.FirstName,
-                LastName = command.LastName,
-                Dob = new DobOptions
-                {
-                    Day = command.DateOfBirth.Day,
-                    Month = command.DateOfBirth.Month,
-                    Year = command.DateOfBirth.Year
-                }
-            };
-
-            var service = new PersonService();
-
-            await service.UpdateAsync(command.ConnectedAccountId, command.ConnectedPersonId, options, cancellationToken: cancellationToken);
-
-            return new OkResult();
-        }
-        catch (Exception exception)
-        {
-            return new BadRequestObjectResult(exception.Message);
-        }
-    }
-
-    [HttpPost]
     public async Task<ActionResult> UpdateAccountAddressInformation(UpdateAccountAddressInformationCommand command, CancellationToken cancellationToken)
     {
         try
@@ -181,28 +152,6 @@ public class FundsController : ApiController
             return new BadRequestObjectResult(exception.Message);
         }
     }
-}
-
-public class UpdateAccountPersonalInformationCommand
-{
-    public UpdateAccountPersonalInformationCommand(string connectedAccountId, string connectedPersonId, string firstName, string lastName, DateOnly dateOfBirth)
-    {
-        ConnectedAccountId = connectedAccountId;
-        ConnectedPersonId = connectedPersonId;
-        FirstName = firstName;
-        LastName = lastName;
-        DateOfBirth = dateOfBirth;
-    }
-
-    public string ConnectedAccountId { get; }
-
-    public string ConnectedPersonId { get; }
-
-    public string FirstName { get; }
-
-    public string LastName { get; }
-
-    public DateOnly DateOfBirth { get; }
 }
 
 public class UpdateAccountAddressInformationCommand

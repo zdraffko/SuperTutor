@@ -2,18 +2,15 @@
 
 public class UpdateAccountPersonalInformationRequest
 {
-    public UpdateAccountPersonalInformationRequest(string connectedAccountId, string connectedPersonId, string firstName, string lastName, DateOnly dateOfBirth)
+    public UpdateAccountPersonalInformationRequest(string tutorId, string firstName, string lastName, DateOnly dateOfBirth)
     {
-        ConnectedAccountId = connectedAccountId;
-        ConnectedPersonId = connectedPersonId;
+        TutorId = tutorId;
         FirstName = firstName;
         LastName = lastName;
         DateOfBirth = dateOfBirth;
     }
 
-    public string ConnectedAccountId { get; }
-
-    public string ConnectedPersonId { get; }
+    public string TutorId { get; }
 
     public string FirstName { get; }
 

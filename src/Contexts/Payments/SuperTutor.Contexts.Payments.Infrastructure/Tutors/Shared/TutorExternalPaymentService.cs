@@ -1,13 +1,14 @@
 ﻿using FluentResults;
 using Stripe;
 using SuperTutor.Contexts.Payments.Application.Shared;
-using SuperTutor.Contexts.Payments.Domain.Tutors.Models.ValueObjects.Identifiers;
+using SuperTutor.Contexts.Payments.Domain.Tutors;
+using SuperTutor.Contexts.Payments.Domain.Tutors.Models.ValueObjects;
 
 namespace SuperTutor.Contexts.Payments.Infrastructure.Tutors.Shared;
 
 internal class TutorExternalPaymentService : ITutorExternalPaymentService
 {
-    public async Task<Result<(string accountId, string personId)>> CreateAccount(UserId userId, string email, CancellationToken cancellationToken)
+    public async Task<Result<(string accountId, string personId)>> CreateAccount(TutorId tutorId, string tutorEmail, CancellationToken cancellationToken)
     {
         try
         {
@@ -15,7 +16,7 @@ internal class TutorExternalPaymentService : ITutorExternalPaymentService
             {
                 Type = "custom",
                 Country = "BG",
-                Email = email,
+                Email = tutorEmail,
                 Capabilities = new AccountCapabilitiesOptions
                 {
                     Transfers = new AccountCapabilitiesTransfersOptions
@@ -30,7 +31,7 @@ internal class TutorExternalPaymentService : ITutorExternalPaymentService
                 },
                 Individual = new AccountIndividualOptions
                 {
-                    Email = email
+                    Email = tutorEmail
                 },
                 DefaultCurrency = "BGN",
                 Settings = new AccountSettingsOptions
@@ -45,7 +46,7 @@ internal class TutorExternalPaymentService : ITutorExternalPaymentService
                 },
                 Metadata = new Dictionary<string, string>
                 {
-                    { "UserId", userId.Value.ToString() }
+                    { "UserId", tutorId.Value.ToString() }
                 }
             };
 
@@ -54,6 +55,34 @@ internal class TutorExternalPaymentService : ITutorExternalPaymentService
             var account = await accountService.CreateAsync(accountCreateOptions, cancellationToken: cancellationToken);
 
             return Result.Ok((account.Id, account.Individual.Id));
+        }
+        catch (Exception exception)
+        {
+            return Result.Fail(exception.Message);
+        }
+    }
+
+    public async Task<Result> UpdatePersonalInformation(string accountId, string personId, PersonalInformation personalInformation, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var options = new PersonUpdateOptions
+            {
+                FirstName = personalInformation.FirstName,
+                LastName = personalInformation.LastName,
+                Dob = new DobOptions
+                {
+                    Day = personalInformation.DateOfBirthDay,
+                    Month = personalInformation.DateOfBirthMonth,
+                    Year = personalInformation.DateOfBirthYear
+                }
+            };
+
+            var service = new PersonService();
+
+            await service.UpdateAsync(accountId, personId, options, cancellationToken: cancellationToken);
+
+            return Result.Ok();
         }
         catch (Exception exception)
         {

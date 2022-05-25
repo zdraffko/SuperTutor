@@ -1,7 +1,6 @@
 ﻿using SuperTutor.Contexts.Payments.Domain.Tutors.Events;
 using SuperTutor.Contexts.Payments.Domain.Tutors.Invariants;
 using SuperTutor.Contexts.Payments.Domain.Tutors.Models.ValueObjects;
-using SuperTutor.Contexts.Payments.Domain.Tutors.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Aggregates;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Events;
 
@@ -14,19 +13,15 @@ public class Tutor : AggregateRoot<TutorId, Guid>
     private Tutor() : base(new TutorId(Guid.Empty)) { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-    private Tutor(UserId userId, string email) : base(new TutorId(Guid.NewGuid()))
-    {
-        UserId = userId;
-        Email = email;
-    }
-
-    public UserId UserId { get; private set; }
+    private Tutor(TutorId tutorId, string email) : base(tutorId) => Email = email;
 
     public string Email { get; private set; }
 
     public ExternalPaymentAccount? ExternalPaymentAccount { get; private set; }
 
-    public PersonalInformation? PersonalInformation { get; }
+    public PersonalInformation? PersonalInformation { get; private set; }
+
+    public bool? IsPersonalInformationSyncedWithExternalPaymentAccount { get; private set; }
 
     public Address? Address { get; }
 
@@ -40,11 +35,11 @@ public class Tutor : AggregateRoot<TutorId, Guid>
 
     public TermsOfService? TermsOfService { get; }
 
-    public static Tutor Create(UserId userId, string email)
+    public static Tutor Create(TutorId tutorId, string email)
     {
-        var tutor = new Tutor(userId, email);
+        var tutor = new Tutor(tutorId, email);
 
-        tutor.RaiseDomainEvent(new TutorCreatedDomainEvent(tutor.Id, userId, email));
+        tutor.RaiseDomainEvent(new TutorCreatedDomainEvent(tutor.Id, email));
 
         return tutor;
     }
@@ -58,6 +53,20 @@ public class Tutor : AggregateRoot<TutorId, Guid>
         RaiseDomainEvent(new TutorExternalPaymentAccountCreatedDomainEvent(Id, ExternalPaymentAccount));
     }
 
+    public void UpdatePersonalInformation(PersonalInformation personalInformation)
+    {
+        PersonalInformation = personalInformation;
+        IsPersonalInformationSyncedWithExternalPaymentAccount = false;
+
+        RaiseDomainEvent(new TutorPersonalInformationUpdatedDomainEvent(Id, personalInformation, false));
+    }
+
+    public void MarkPersonalInformationAsSyncedWithExternalPaymentAccount()
+    {
+        IsPersonalInformationSyncedWithExternalPaymentAccount = true;
+        RaiseDomainEvent(new TutorPersonalInformationSyncedWithExternalPaymentAccountDomainEvent(true));
+    }
+
     #region Apply Domain Events
 
     public override void ApplyDomainEvent(DomainEvent domainEvent) => Apply((dynamic) domainEvent);
@@ -65,11 +74,18 @@ public class Tutor : AggregateRoot<TutorId, Guid>
     private void Apply(TutorCreatedDomainEvent domainEvent)
     {
         Id = domainEvent.TutorId;
-        UserId = domainEvent.UserId;
         Email = domainEvent.Email;
     }
 
     private void Apply(TutorExternalPaymentAccountCreatedDomainEvent domainEvent) => ExternalPaymentAccount = domainEvent.ExternalPaymentAccount;
+
+    private void Apply(TutorPersonalInformationUpdatedDomainEvent domainEvent)
+    {
+        PersonalInformation = domainEvent.PersonalInformation;
+        IsPersonalInformationSyncedWithExternalPaymentAccount = domainEvent.IsPersonalInformationSyncedWithExternalPaymentAccount;
+    }
+
+    private void Apply(TutorPersonalInformationSyncedWithExternalPaymentAccountDomainEvent domainEvent) => IsPersonalInformationSyncedWithExternalPaymentAccount = domainEvent.IsPersonalInformationSyncedWithExternalPaymentAccount;
 
     #endregion Apply Domain Events
 }

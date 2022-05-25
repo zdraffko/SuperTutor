@@ -19,7 +19,7 @@ internal class CreateExternalPaymentAccountDomainEventHandler : IDomainEventHand
 
     public async Task Handle(TutorCreatedDomainEvent domainEvent, CancellationToken cancellationToken)
     {
-        var createExternalPaymentAccountResult = await tutorExternalPaymentService.CreateAccount(domainEvent.UserId, domainEvent.Email, cancellationToken);
+        var createExternalPaymentAccountResult = await tutorExternalPaymentService.CreateAccount(domainEvent.TutorId, domainEvent.Email, cancellationToken);
         if (createExternalPaymentAccountResult.IsFailed)
         {
             // TODO - Trigger some process to handle this case
