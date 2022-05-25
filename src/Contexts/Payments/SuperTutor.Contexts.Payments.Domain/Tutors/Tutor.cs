@@ -23,7 +23,9 @@ public class Tutor : AggregateRoot<TutorId, Guid>
 
     public bool? IsPersonalInformationSyncedWithExternalPaymentAccount { get; private set; }
 
-    public Address? Address { get; }
+    public Address? Address { get; private set; }
+
+    public bool? IsAddressSyncedWithExternalPaymentAccount { get; private set; }
 
     public BankAccount? BankAccount { get; }
 
@@ -58,13 +60,29 @@ public class Tutor : AggregateRoot<TutorId, Guid>
         PersonalInformation = personalInformation;
         IsPersonalInformationSyncedWithExternalPaymentAccount = false;
 
-        RaiseDomainEvent(new TutorPersonalInformationUpdatedDomainEvent(Id, personalInformation, false));
+        RaiseDomainEvent(new TutorPersonalInformationUpdatedDomainEvent(Id, PersonalInformation, IsPersonalInformationSyncedWithExternalPaymentAccount.Value));
     }
 
     public void MarkPersonalInformationAsSyncedWithExternalPaymentAccount()
     {
         IsPersonalInformationSyncedWithExternalPaymentAccount = true;
-        RaiseDomainEvent(new TutorPersonalInformationSyncedWithExternalPaymentAccountDomainEvent(true));
+
+        RaiseDomainEvent(new TutorPersonalInformationSyncedWithExternalPaymentAccountDomainEvent(IsPersonalInformationSyncedWithExternalPaymentAccount.Value));
+    }
+
+    public void UpdateAddress(Address address)
+    {
+        Address = address;
+        IsAddressSyncedWithExternalPaymentAccount = false;
+
+        RaiseDomainEvent(new TutorAddressUpdatedDomainEvent(Id, Address, IsAddressSyncedWithExternalPaymentAccount.Value));
+    }
+
+    public void MarkAddressAsSyncedWithExternalPaymentAccount()
+    {
+        IsAddressSyncedWithExternalPaymentAccount = true;
+
+        RaiseDomainEvent(new TutorAddressSyncedWithExternalPaymentAccountDomainEvent(IsAddressSyncedWithExternalPaymentAccount.Value));
     }
 
     #region Apply Domain Events
@@ -86,6 +104,14 @@ public class Tutor : AggregateRoot<TutorId, Guid>
     }
 
     private void Apply(TutorPersonalInformationSyncedWithExternalPaymentAccountDomainEvent domainEvent) => IsPersonalInformationSyncedWithExternalPaymentAccount = domainEvent.IsPersonalInformationSyncedWithExternalPaymentAccount;
+
+    private void Apply(TutorAddressUpdatedDomainEvent domainEvent)
+    {
+        Address = domainEvent.Address;
+        IsAddressSyncedWithExternalPaymentAccount = domainEvent.IsAddressSyncedWithExternalPaymentAccount;
+    }
+
+    private void Apply(TutorAddressSyncedWithExternalPaymentAccountDomainEvent domainEvent) => IsAddressSyncedWithExternalPaymentAccount = domainEvent.IsAddressSyncedWithExternalPaymentAccount;
 
     #endregion Apply Domain Events
 }

@@ -41,9 +41,9 @@ public class PaymentsController : ApiController
 
     [Authorize]
     [HttpPost]
-    public async Task<ActionResult> UpdateAccountAddressInformation(UpdateAccountAddressInformationRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult> UpdateTutorAddressInformation(UpdateAccountAddressInformationRequest request, CancellationToken cancellationToken)
     {
-        var response = await httpClient.PostAsJsonAsync($"{PaymentsApiUrl}/funds/UpdateAccountAddressInformation", request, cancellationToken: cancellationToken, options: jsonSerializerOptions);
+        var response = await httpClient.PostAsJsonAsync($"{PaymentsApiUrl}/tutors/UpdateAddress", request, cancellationToken: cancellationToken, options: jsonSerializerOptions);
 
         if (response.IsSuccessStatusCode)
         {

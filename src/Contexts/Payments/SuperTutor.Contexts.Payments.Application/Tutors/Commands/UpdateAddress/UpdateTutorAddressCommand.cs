@@ -1,9 +1,12 @@
-﻿namespace SuperTutor.ApiGateways.Web.Models.Payments.UpdateAccountAddressInformation;
+﻿using SuperTutor.Contexts.Payments.Domain.Tutors;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
-public class UpdateAccountAddressInformationRequest
+namespace SuperTutor.Contexts.Payments.Application.Tutors.Commands.UpdateAddress;
+
+public class UpdateTutorAddressCommand : Command
 {
-    public UpdateAccountAddressInformationRequest(
-        Guid tutorId,
+    public UpdateTutorAddressCommand(
+        TutorId tutorId,
         string state,
         string city,
         string addressLineOne,
@@ -18,7 +21,7 @@ public class UpdateAccountAddressInformationRequest
         PostalCode = postalCode;
     }
 
-    public Guid TutorId { get; }
+    public TutorId TutorId { get; }
 
     public string State { get; }
 

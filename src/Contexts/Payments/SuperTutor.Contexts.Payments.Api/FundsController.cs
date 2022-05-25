@@ -7,34 +7,6 @@ namespace SuperTutor.Contexts.Payments.Api;
 
 public class FundsController : ApiController
 {
-    [HttpPost]
-    public async Task<ActionResult> UpdateAccountAddressInformation(UpdateAccountAddressInformationCommand command, CancellationToken cancellationToken)
-    {
-        try
-        {
-            var options = new PersonUpdateOptions
-            {
-                Address = new AddressOptions
-                {
-                    State = command.State,
-                    City = command.City,
-                    Line1 = command.AddressLineOne,
-                    Line2 = command.AddressLineTwo,
-                    PostalCode = command.PostalCode.ToString()
-                }
-            };
-
-            var service = new PersonService();
-
-            await service.UpdateAsync(command.ConnectedAccountId, command.ConnectedPersonId, options, cancellationToken: cancellationToken);
-
-            return new OkResult();
-        }
-        catch (Exception exception)
-        {
-            return new BadRequestObjectResult(exception.Message);
-        }
-    }
 
     [HttpPost]
     public async Task<ActionResult> UpdateAccountPayoutInformation(UpdateAccountPayoutInformationCommand command, CancellationToken cancellationToken)
@@ -152,41 +124,6 @@ public class FundsController : ApiController
             return new BadRequestObjectResult(exception.Message);
         }
     }
-}
-
-public class UpdateAccountAddressInformationCommand
-{
-    public UpdateAccountAddressInformationCommand(
-        string connectedAccountId,
-        string connectedPersonId,
-        string state,
-        string city,
-        string addressLineOne,
-        string addressLineTwo,
-        int postalCode)
-    {
-        ConnectedAccountId = connectedAccountId;
-        ConnectedPersonId = connectedPersonId;
-        State = state;
-        City = city;
-        AddressLineOne = addressLineOne;
-        AddressLineTwo = addressLineTwo;
-        PostalCode = postalCode;
-    }
-
-    public string ConnectedAccountId { get; }
-
-    public string ConnectedPersonId { get; }
-
-    public string State { get; }
-
-    public string City { get; }
-
-    public string AddressLineOne { get; }
-
-    public string AddressLineTwo { get; }
-
-    public int PostalCode { get; }
 }
 
 public class UpdateAccountPayoutInformationCommand

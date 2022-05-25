@@ -89,4 +89,32 @@ internal class TutorExternalPaymentService : ITutorExternalPaymentService
             return Result.Fail(exception.Message);
         }
     }
+
+    public async Task<Result> UpdateAddressInformation(string accountId, string personId, Domain.Tutors.Models.ValueObjects.Address address, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var options = new PersonUpdateOptions
+            {
+                Address = new AddressOptions
+                {
+                    State = address.State,
+                    City = address.City,
+                    Line1 = address.LineOne,
+                    Line2 = address.LineTwo,
+                    PostalCode = address.PostalCode.ToString()
+                }
+            };
+
+            var service = new PersonService();
+
+            await service.UpdateAsync(accountId, personId, options, cancellationToken: cancellationToken);
+
+            return Result.Ok();
+        }
+        catch (Exception exception)
+        {
+            return Result.Fail(exception.Message);
+        }
+    }
 }

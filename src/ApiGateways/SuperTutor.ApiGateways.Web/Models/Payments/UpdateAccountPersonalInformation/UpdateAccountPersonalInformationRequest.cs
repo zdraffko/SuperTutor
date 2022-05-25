@@ -2,7 +2,7 @@
 
 public class UpdateAccountPersonalInformationRequest
 {
-    public UpdateAccountPersonalInformationRequest(string tutorId, string firstName, string lastName, DateOnly dateOfBirth)
+    public UpdateAccountPersonalInformationRequest(Guid tutorId, string firstName, string lastName, DateOnly dateOfBirth)
     {
         TutorId = tutorId;
         FirstName = firstName;
@@ -10,7 +10,7 @@ public class UpdateAccountPersonalInformationRequest
         DateOfBirth = dateOfBirth;
     }
 
-    public string TutorId { get; }
+    public Guid TutorId { get; }
 
     public string FirstName { get; }
 
