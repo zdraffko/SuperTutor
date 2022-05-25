@@ -1,4 +1,5 @@
 ﻿using SuperTutor.Contexts.Payments.Domain.Tutors.Events;
+using SuperTutor.Contexts.Payments.Domain.Tutors.Invariants;
 using SuperTutor.Contexts.Payments.Domain.Tutors.Models.ValueObjects;
 using SuperTutor.Contexts.Payments.Domain.Tutors.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Aggregates;
@@ -23,9 +24,7 @@ public class Tutor : AggregateRoot<TutorId, Guid>
 
     public string Email { get; private set; }
 
-    public string? ExternalPaymentAccountId { get; private set; }
-
-    public string? ExternalPaymentAccountPersonId { get; }
+    public ExternalPaymentAccount? ExternalPaymentAccount { get; private set; }
 
     public PersonalInformation? PersonalInformation { get; }
 
@@ -50,11 +49,13 @@ public class Tutor : AggregateRoot<TutorId, Guid>
         return tutor;
     }
 
-    public void SetExternalPaymentAccountId(string externalPaymentAccountId)
+    public void CreateExternalPaymentAccount(string externalPaymentAccountId, string externalPaymentAccountPersonId)
     {
-        ExternalPaymentAccountId = externalPaymentAccountId;
+        CheckInvariant(new TutorExternalPaymentAccountCanOnlyBeCreatedOnceInvariant(ExternalPaymentAccount));
 
-        RaiseDomainEvent(new TutorExternalPaymentAccountCreatedDomainEvent(Id, ExternalPaymentAccountId));
+        ExternalPaymentAccount = new ExternalPaymentAccount(externalPaymentAccountId, externalPaymentAccountPersonId);
+
+        RaiseDomainEvent(new TutorExternalPaymentAccountCreatedDomainEvent(Id, ExternalPaymentAccount));
     }
 
     #region Apply Domain Events
@@ -68,7 +69,7 @@ public class Tutor : AggregateRoot<TutorId, Guid>
         Email = domainEvent.Email;
     }
 
-    private void Apply(TutorExternalPaymentAccountCreatedDomainEvent domainEvent) => ExternalPaymentAccountId = domainEvent.ExternalPaymentAccountId;
+    private void Apply(TutorExternalPaymentAccountCreatedDomainEvent domainEvent) => ExternalPaymentAccount = domainEvent.ExternalPaymentAccount;
 
     #endregion Apply Domain Events
 }

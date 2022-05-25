@@ -5,5 +5,5 @@ namespace SuperTutor.Contexts.Payments.Application.Shared;
 
 public interface ITutorExternalPaymentService
 {
-    Task<Result<string>> CreateAccount(UserId userId, string email, CancellationToken cancellationToken);
+    Task<Result<(string accountId, string personId)>> CreateAccount(UserId userId, string email, CancellationToken cancellationToken);
 }

@@ -27,8 +27,13 @@ internal class CreateExternalPaymentAccountDomainEventHandler : IDomainEventHand
         }
 
         var tutor = await tutorRepository.Load(domainEvent.TutorId, cancellationToken);
+        if (tutor is null)
+        {
+            return;
+        }
 
-        tutor.SetExternalPaymentAccountId(createExternalPaymentAccountResult.Value);
+        var (accountId, personId) = createExternalPaymentAccountResult.Value;
+        tutor.CreateExternalPaymentAccount(accountId, personId);
 
         await tutorRepository.Update(tutor, cancellationToken);
     }

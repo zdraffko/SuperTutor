@@ -7,7 +7,7 @@ namespace SuperTutor.Contexts.Payments.Infrastructure.Tutors.Shared;
 
 internal class TutorExternalPaymentService : ITutorExternalPaymentService
 {
-    public async Task<Result<string>> CreateAccount(UserId userId, string email, CancellationToken cancellationToken)
+    public async Task<Result<(string accountId, string personId)>> CreateAccount(UserId userId, string email, CancellationToken cancellationToken)
     {
         try
         {
@@ -53,7 +53,7 @@ internal class TutorExternalPaymentService : ITutorExternalPaymentService
 
             var account = await accountService.CreateAsync(accountCreateOptions, cancellationToken: cancellationToken);
 
-            return Result.Ok(account.Id);
+            return Result.Ok((account.Id, account.Individual.Id));
         }
         catch (Exception exception)
         {
