@@ -66,7 +66,7 @@ internal class TutorExternalPaymentService : ITutorExternalPaymentService
     {
         try
         {
-            var options = new PersonUpdateOptions
+            var personUpdateOptions = new PersonUpdateOptions
             {
                 FirstName = personalInformation.FirstName,
                 LastName = personalInformation.LastName,
@@ -78,9 +78,9 @@ internal class TutorExternalPaymentService : ITutorExternalPaymentService
                 }
             };
 
-            var service = new PersonService();
+            var personService = new PersonService();
 
-            await service.UpdateAsync(accountId, personId, options, cancellationToken: cancellationToken);
+            await personService.UpdateAsync(accountId, personId, personUpdateOptions, cancellationToken: cancellationToken);
 
             return Result.Ok();
         }
@@ -90,11 +90,11 @@ internal class TutorExternalPaymentService : ITutorExternalPaymentService
         }
     }
 
-    public async Task<Result> UpdateAddressInformation(string accountId, string personId, Domain.Tutors.Models.ValueObjects.Address address, CancellationToken cancellationToken)
+    public async Task<Result> UpdateAddress(string accountId, string personId, Domain.Tutors.Models.ValueObjects.Address address, CancellationToken cancellationToken)
     {
         try
         {
-            var options = new PersonUpdateOptions
+            var personUpdateOptions = new PersonUpdateOptions
             {
                 Address = new AddressOptions
                 {
@@ -106,9 +106,37 @@ internal class TutorExternalPaymentService : ITutorExternalPaymentService
                 }
             };
 
-            var service = new PersonService();
+            var personService = new PersonService();
 
-            await service.UpdateAsync(accountId, personId, options, cancellationToken: cancellationToken);
+            await personService.UpdateAsync(accountId, personId, personUpdateOptions, cancellationToken: cancellationToken);
+
+            return Result.Ok();
+        }
+        catch (Exception exception)
+        {
+            return Result.Fail(exception.Message);
+        }
+    }
+
+    public async Task<Result> UpdateBankAccount(string accountId, Domain.Tutors.Models.ValueObjects.BankAccount bankAccount, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var externalAccountCreateOptions = new ExternalAccountCreateOptions
+            {
+                ExternalAccount = new AccountBankAccountOptions
+                {
+                    AccountHolderName = bankAccount.HolderFullName,
+                    AccountHolderType = bankAccount.HolderType,
+                    AccountNumber = bankAccount.Iban,
+                    Country = "BG",
+                    Currency = "BGN"
+                },
+                DefaultForCurrency = true
+            };
+
+            var externalAccountService = new ExternalAccountService();
+            await externalAccountService.CreateAsync(accountId, externalAccountCreateOptions, cancellationToken: cancellationToken);
 
             return Result.Ok();
         }

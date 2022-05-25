@@ -20,7 +20,7 @@ export const IdentityVerification: React.FC = () => {
                 <Stepper.Step label="Стъпка 2" description="Адрес" allowStepSelect={false}>
                     <AddressInformationStep goToNextStep={goToNextStep} />
                 </Stepper.Step>
-                <Stepper.Step label="Стъпка 3" description="Изплащания" allowStepSelect={false}>
+                <Stepper.Step label="Стъпка 3" description="Изплащания" allowStepSelect={true}>
                     <PayoutInformationStep goToNextStep={goToNextStep} />
                 </Stepper.Step>
                 <Stepper.Step label="Стъпка 4" description="Документи за верификация" allowStepSelect={false}>

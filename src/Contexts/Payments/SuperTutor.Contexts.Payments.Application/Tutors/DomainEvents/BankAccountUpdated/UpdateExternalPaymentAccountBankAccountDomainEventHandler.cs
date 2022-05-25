@@ -4,20 +4,20 @@ using SuperTutor.Contexts.Payments.Domain.Tutors.Events;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.DomainEvents;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Repositories.Contracts;
 
-namespace SuperTutor.Contexts.Payments.Application.Tutors.DomainEvents.AddressUpdated;
+namespace SuperTutor.Contexts.Payments.Application.Tutors.DomainEvents.BankAccountUpdated;
 
-internal class UpdaeExternalPaymentAccountAddressDomainEventHandler : IDomainEventHandler<TutorAddressUpdatedDomainEvent>
+internal class UpdateExternalPaymentAccountBankAccountDomainEventHandler : IDomainEventHandler<TutorBankAccountUpdatedDomainEvent>
 {
     private readonly ITutorExternalPaymentService tutorExternalPaymentService;
     private readonly IAggregateRootEventsRepository<Tutor, TutorId, Guid> tutorRepository;
 
-    public UpdaeExternalPaymentAccountAddressDomainEventHandler(ITutorExternalPaymentService tutorExternalPaymentService, IAggregateRootEventsRepository<Tutor, TutorId, Guid> tutorRepository)
+    public UpdateExternalPaymentAccountBankAccountDomainEventHandler(ITutorExternalPaymentService tutorExternalPaymentService, IAggregateRootEventsRepository<Tutor, TutorId, Guid> tutorRepository)
     {
         this.tutorExternalPaymentService = tutorExternalPaymentService;
         this.tutorRepository = tutorRepository;
     }
 
-    public async Task Handle(TutorAddressUpdatedDomainEvent domainEvent, CancellationToken cancellationToken)
+    public async Task Handle(TutorBankAccountUpdatedDomainEvent domainEvent, CancellationToken cancellationToken)
     {
         var tutor = await tutorRepository.Load(domainEvent.TutorId, cancellationToken);
         if (tutor is null)
@@ -30,18 +30,18 @@ internal class UpdaeExternalPaymentAccountAddressDomainEventHandler : IDomainEve
             return;
         }
 
-        if (tutor.Address is null)
+        if (tutor.BankAccount is null)
         {
             return;
         }
 
-        var addressUpdateResult = await tutorExternalPaymentService.UpdateAddressInformation(tutor.ExternalPaymentAccount.Id, tutor.ExternalPaymentAccount.PersonId, tutor.Address, cancellationToken);
-        if (addressUpdateResult.IsFailed)
+        var bankAccountUpdateResult = await tutorExternalPaymentService.UpdateBankAccount(tutor.ExternalPaymentAccount.Id, tutor.BankAccount, cancellationToken);
+        if (bankAccountUpdateResult.IsFailed)
         {
             return;
         }
 
-        tutor.MarkAddressAsSyncedWithExternalPaymentAccount();
+        tutor.MarkBankAccountAsSyncedWithExternalPaymentAccount();
 
         await tutorRepository.Update(tutor, cancellationToken);
     }

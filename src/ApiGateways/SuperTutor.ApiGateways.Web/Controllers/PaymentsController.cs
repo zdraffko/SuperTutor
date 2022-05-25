@@ -43,7 +43,7 @@ public class PaymentsController : ApiController
     [HttpPost]
     public async Task<ActionResult> UpdateTutorAddressInformation(UpdateAccountAddressInformationRequest request, CancellationToken cancellationToken)
     {
-        var response = await httpClient.PostAsJsonAsync($"{PaymentsApiUrl}/tutors/UpdateAddress", request, cancellationToken: cancellationToken, options: jsonSerializerOptions);
+        var response = await httpClient.PostAsJsonAsync($"{PaymentsApiUrl}/tutors/UpdateAddress", request, cancellationToken: cancellationToken);
 
         if (response.IsSuccessStatusCode)
         {
@@ -57,9 +57,9 @@ public class PaymentsController : ApiController
 
     [Authorize]
     [HttpPost]
-    public async Task<ActionResult> UpdateAccountPayoutInformation(UpdateAccountPayoutInformationRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult> UpdateTutorPayoutInformation(UpdateAccountPayoutInformationRequest request, CancellationToken cancellationToken)
     {
-        var response = await httpClient.PostAsJsonAsync($"{PaymentsApiUrl}/funds/UpdateAccountPayoutInformation", request, cancellationToken: cancellationToken, options: jsonSerializerOptions);
+        var response = await httpClient.PostAsJsonAsync($"{PaymentsApiUrl}/tutors/UpdateBankAccount", request, cancellationToken: cancellationToken);
 
         if (response.IsSuccessStatusCode)
         {

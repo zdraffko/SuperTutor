@@ -27,7 +27,9 @@ public class Tutor : AggregateRoot<TutorId, Guid>
 
     public bool? IsAddressSyncedWithExternalPaymentAccount { get; private set; }
 
-    public BankAccount? BankAccount { get; }
+    public BankAccount? BankAccount { get; private set; }
+
+    public bool? IsBankAccountSyncedWithExternalPaymentAccount { get; private set; }
 
     public Document? IdentityFrontVerificationDocument { get; }
 
@@ -85,6 +87,21 @@ public class Tutor : AggregateRoot<TutorId, Guid>
         RaiseDomainEvent(new TutorAddressSyncedWithExternalPaymentAccountDomainEvent(IsAddressSyncedWithExternalPaymentAccount.Value));
     }
 
+    public void UpdateBankAccount(BankAccount bankAccount)
+    {
+        BankAccount = bankAccount;
+        IsBankAccountSyncedWithExternalPaymentAccount = false;
+
+        RaiseDomainEvent(new TutorBankAccountUpdatedDomainEvent(Id, BankAccount, IsBankAccountSyncedWithExternalPaymentAccount.Value));
+    }
+
+    public void MarkBankAccountAsSyncedWithExternalPaymentAccount()
+    {
+        IsBankAccountSyncedWithExternalPaymentAccount = true;
+
+        RaiseDomainEvent(new TutorBankAccountSyncedWithExternalPaymentAccountDomainEvent(IsBankAccountSyncedWithExternalPaymentAccount.Value));
+    }
+
     #region Apply Domain Events
 
     public override void ApplyDomainEvent(DomainEvent domainEvent) => Apply((dynamic) domainEvent);
@@ -112,6 +129,14 @@ public class Tutor : AggregateRoot<TutorId, Guid>
     }
 
     private void Apply(TutorAddressSyncedWithExternalPaymentAccountDomainEvent domainEvent) => IsAddressSyncedWithExternalPaymentAccount = domainEvent.IsAddressSyncedWithExternalPaymentAccount;
+
+    private void Apply(TutorBankAccountUpdatedDomainEvent domainEvent)
+    {
+        BankAccount = domainEvent.BankAccount;
+        IsBankAccountSyncedWithExternalPaymentAccount = domainEvent.IsBankAccountSyncedWithExternalPaymentAccount;
+    }
+
+    private void Apply(TutorBankAccountSyncedWithExternalPaymentAccountDomainEvent domainEvent) => IsBankAccountSyncedWithExternalPaymentAccount = domainEvent.IsBankAccountSyncedWithExternalPaymentAccount;
 
     #endregion Apply Domain Events
 }

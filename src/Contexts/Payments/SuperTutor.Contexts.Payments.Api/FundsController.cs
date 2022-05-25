@@ -7,35 +7,6 @@ namespace SuperTutor.Contexts.Payments.Api;
 
 public class FundsController : ApiController
 {
-
-    [HttpPost]
-    public async Task<ActionResult> UpdateAccountPayoutInformation(UpdateAccountPayoutInformationCommand command, CancellationToken cancellationToken)
-    {
-        try
-        {
-            var options = new ExternalAccountCreateOptions
-            {
-                ExternalAccount = new AccountBankAccountOptions
-                {
-                    AccountHolderName = command.BankAccountHolderFullName,
-                    AccountHolderType = command.BankAccountHolderType,
-                    AccountNumber = command.BankAccountIban,
-                    Country = "BG",
-                    Currency = "BGN"
-                },
-                DefaultForCurrency = true
-            };
-            var service = new ExternalAccountService();
-            await service.CreateAsync(command.ConnectedAccountId, options, cancellationToken: cancellationToken);
-
-            return new OkResult();
-        }
-        catch (Exception exception)
-        {
-            return new BadRequestObjectResult(exception.Message);
-        }
-    }
-
     [HttpPost]
     public async Task<ActionResult> UploadVerificationDocuments(
         [FromForm] string connectedAccountId,
@@ -124,29 +95,6 @@ public class FundsController : ApiController
             return new BadRequestObjectResult(exception.Message);
         }
     }
-}
-
-public class UpdateAccountPayoutInformationCommand
-{
-    public UpdateAccountPayoutInformationCommand(
-        string connectedAccountId,
-        string bankAccountHolderFullName,
-        string bankAccountHolderType,
-        string bankAccountIban)
-    {
-        ConnectedAccountId = connectedAccountId;
-        BankAccountHolderFullName = bankAccountHolderFullName;
-        BankAccountHolderType = bankAccountHolderType;
-        BankAccountIban = bankAccountIban;
-    }
-
-    public string ConnectedAccountId { get; }
-
-    public string BankAccountHolderFullName { get; }
-
-    public string BankAccountHolderType { get; }
-
-    public string BankAccountIban { get; }
 }
 
 public class AcceptTermsOfServiceCommand

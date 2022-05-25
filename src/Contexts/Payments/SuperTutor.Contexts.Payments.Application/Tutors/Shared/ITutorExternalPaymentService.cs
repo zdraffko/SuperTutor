@@ -10,5 +10,7 @@ public interface ITutorExternalPaymentService
 
     Task<Result> UpdatePersonalInformation(string accountId, string personId, PersonalInformation personalInformation, CancellationToken cancellationToken);
 
-    Task<Result> UpdateAddressInformation(string accountId, string personId, Address address, CancellationToken cancellationToken);
+    Task<Result> UpdateAddress(string accountId, string personId, Address address, CancellationToken cancellationToken);
+
+    Task<Result> UpdateBankAccount(string accountId, BankAccount bankAccount, CancellationToken cancellationToken);
 }

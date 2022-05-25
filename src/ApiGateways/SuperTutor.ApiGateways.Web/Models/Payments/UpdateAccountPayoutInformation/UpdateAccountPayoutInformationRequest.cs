@@ -2,19 +2,15 @@
 
 public class UpdateAccountPayoutInformationRequest
 {
-    public UpdateAccountPayoutInformationRequest(
-    string connectedAccountId,
-    string bankAccountHolderFullName,
-    string bankAccountHolderType,
-    string bankAccountIban)
+    public UpdateAccountPayoutInformationRequest(Guid tutorId, string bankAccountHolderFullName, string bankAccountHolderType, string bankAccountIban)
     {
-        ConnectedAccountId = connectedAccountId;
+        TutorId = tutorId;
         BankAccountHolderFullName = bankAccountHolderFullName;
         BankAccountHolderType = bankAccountHolderType;
         BankAccountIban = bankAccountIban;
     }
 
-    public string ConnectedAccountId { get; }
+    public Guid TutorId { get; }
 
     public string BankAccountHolderFullName { get; }
 
