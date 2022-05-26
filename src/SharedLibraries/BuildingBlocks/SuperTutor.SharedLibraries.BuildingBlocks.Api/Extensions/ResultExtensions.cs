@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SuperTutor.SharedLibraries.BuildingBlocks.Api.Extensions;
 
-internal static class ResultExtensions
+public static class ResultExtensions
 {
-    internal static ActionResult ToActionResult(this Result result)
+    public static ActionResult ToActionResult(this Result result)
     {
         if (result.IsFailed)
         {
@@ -15,7 +15,7 @@ internal static class ResultExtensions
         return new OkResult();
     }
 
-    internal static ActionResult<TPayload> ToActionResult<TPayload>(this Result<TPayload> result)
+    public static ActionResult<TPayload> ToActionResult<TPayload>(this Result<TPayload> result)
     {
         if (result.IsFailed)
         {

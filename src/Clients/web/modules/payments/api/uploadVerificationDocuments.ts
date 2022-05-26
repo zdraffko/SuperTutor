@@ -12,7 +12,7 @@ const uploadVerificationDocuments = async (request: UploadVerificationDocumentsR
     formData.append("identityDocumentBack", request.identityDocumentBackFile);
     formData.append("addressDocument", request.addressDocumentFile);
 
-    await axios.post("/payments/UploadVerificationDocuments", formData, {
+    await axios.post("/payments/UploadTutorVerificationDocuments", formData, {
         headers: {
             "Content-Type": "multipart/form-data"
         }

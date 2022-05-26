@@ -5,7 +5,6 @@ import "dayjs/locale/bg";
 import useUpdatePayoutInformation from "modules/payments/hooks/useUpdatePayoutInformation";
 import { useEffect } from "react";
 import { X } from "tabler-icons-react";
-import { useAuth } from "utils/authentication/reactQueryAuth";
 import { z } from "zod";
 
 const PayoutInformationFormSchema = z.object({
@@ -19,7 +18,6 @@ interface PayoutInformationStepProps {
 }
 
 const PayoutInformationStep: React.FC<PayoutInformationStepProps> = ({ goToNextStep }) => {
-    const { user } = useAuth();
     const { classes } = useStyles();
     const {
         updatePayoutInformation,
@@ -59,7 +57,7 @@ const PayoutInformationStep: React.FC<PayoutInformationStepProps> = ({ goToNextS
     return (
         <Center m="xl">
             <Paper className={classes.formWrapper} shadow="sm" radius="md" p="md" withBorder>
-                <form onSubmit={form.onSubmit(async values => await updatePayoutInformation({ tutorId: user!.id, ...values }))}>
+                <form onSubmit={form.onSubmit(async values => await updatePayoutInformation(values))}>
                     <TextInput
                         disabled={isUpdatePayoutInformationLoading}
                         p="sm"

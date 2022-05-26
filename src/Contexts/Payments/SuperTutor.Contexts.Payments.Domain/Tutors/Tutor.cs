@@ -31,11 +31,13 @@ public class Tutor : AggregateRoot<TutorId, Guid>
 
     public bool? IsBankAccountSyncedWithExternalPaymentAccount { get; private set; }
 
-    public Document? IdentityFrontVerificationDocument { get; }
+    public Document? IdentityVerificationDocumentFront { get; private set; }
 
-    public Document? IdentityBackVerificationDocument { get; }
+    public Document? IdentityVerificationDocumentBack { get; private set; }
 
-    public Document? AddressVerificationDocument { get; }
+    public Document? AddressVerificationDocument { get; private set; }
+
+    public bool? AreVerificationDocumentsSyncedWithExternalPaymentAccount { get; private set; }
 
     public TermsOfService? TermsOfService { get; }
 
@@ -102,6 +104,23 @@ public class Tutor : AggregateRoot<TutorId, Guid>
         RaiseDomainEvent(new TutorBankAccountSyncedWithExternalPaymentAccountDomainEvent(IsBankAccountSyncedWithExternalPaymentAccount.Value));
     }
 
+    public void UploadVerificationDocuments(Document identityVerificationDocumentFront, Document identityVerificationDocumentBack, Document addressVerificationDocument)
+    {
+        IdentityVerificationDocumentFront = identityVerificationDocumentFront;
+        IdentityVerificationDocumentBack = identityVerificationDocumentBack;
+        AddressVerificationDocument = addressVerificationDocument;
+        AreVerificationDocumentsSyncedWithExternalPaymentAccount = false;
+
+        RaiseDomainEvent(new TutorVerificationDocumentsUploadedDomainEvent(Id, IdentityVerificationDocumentFront, IdentityVerificationDocumentBack, AddressVerificationDocument, AreVerificationDocumentsSyncedWithExternalPaymentAccount.Value));
+    }
+
+    public void MarkVerificationDocumentsAsSyncedWithExternalPaymentAccount()
+    {
+        AreVerificationDocumentsSyncedWithExternalPaymentAccount = true;
+
+        RaiseDomainEvent(new TutorVerificationDocumentsSyncedWithExternalPaymentAccountDomainEvent(AreVerificationDocumentsSyncedWithExternalPaymentAccount.Value));
+    }
+
     #region Apply Domain Events
 
     public override void ApplyDomainEvent(DomainEvent domainEvent) => Apply((dynamic) domainEvent);
@@ -137,6 +156,15 @@ public class Tutor : AggregateRoot<TutorId, Guid>
     }
 
     private void Apply(TutorBankAccountSyncedWithExternalPaymentAccountDomainEvent domainEvent) => IsBankAccountSyncedWithExternalPaymentAccount = domainEvent.IsBankAccountSyncedWithExternalPaymentAccount;
+
+    private void Apply(TutorVerificationDocumentsUploadedDomainEvent domainEvent)
+    {
+        IdentityVerificationDocumentFront = domainEvent.IdentityVerificationDocumentFront;
+        IdentityVerificationDocumentBack = domainEvent.IdentityVerificationDocumentBack;
+        AddressVerificationDocument = domainEvent.AddressVerificationDocument;
+    }
+
+    private void Apply(TutorVerificationDocumentsSyncedWithExternalPaymentAccountDomainEvent domainEvent) => AreVerificationDocumentsSyncedWithExternalPaymentAccount = domainEvent.AreVerificationDocumentsSyncedWithExternalPaymentAccount;
 
     #endregion Apply Domain Events
 }

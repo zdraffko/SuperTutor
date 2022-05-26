@@ -5,7 +5,6 @@ import "dayjs/locale/bg";
 import useUpdateAddressInformation from "modules/payments/hooks/useUpdateAddressInformation";
 import { useEffect } from "react";
 import { X } from "tabler-icons-react";
-import { useAuth } from "utils/authentication/reactQueryAuth";
 import { z } from "zod";
 
 const AddressInformationFormSchema = z.object({
@@ -21,7 +20,6 @@ interface AddressInformationStepProps {
 }
 
 const AddressInformationStep: React.FC<AddressInformationStepProps> = ({ goToNextStep }) => {
-    const { user } = useAuth();
     const { classes } = useStyles();
     const {
         updateAddressInformation,
@@ -64,7 +62,7 @@ const AddressInformationStep: React.FC<AddressInformationStepProps> = ({ goToNex
     return (
         <Center m="xl">
             <Paper className={classes.formWrapper} shadow="sm" radius="md" p="md" withBorder>
-                <form onSubmit={form.onSubmit(async values => updateAddressInformation({ tutorId: user!.id, ...values }))}>
+                <form onSubmit={form.onSubmit(async values => updateAddressInformation(values))}>
                     <TextInput
                         disabled={isUpdateAddressInformationLoading}
                         p="sm"

@@ -2,15 +2,12 @@
 
 public class UpdateAccountPersonalInformationRequest
 {
-    public UpdateAccountPersonalInformationRequest(Guid tutorId, string firstName, string lastName, DateOnly dateOfBirth)
+    public UpdateAccountPersonalInformationRequest(string firstName, string lastName, DateOnly dateOfBirth)
     {
-        TutorId = tutorId;
         FirstName = firstName;
         LastName = lastName;
         DateOfBirth = dateOfBirth;
     }
-
-    public Guid TutorId { get; }
 
     public string FirstName { get; }
 

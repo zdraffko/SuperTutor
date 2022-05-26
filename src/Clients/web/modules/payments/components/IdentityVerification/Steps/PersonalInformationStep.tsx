@@ -6,7 +6,6 @@ import "dayjs/locale/bg";
 import useUpdatePersonalInformation from "modules/payments/hooks/useUpdatePersonalInformation";
 import { useEffect } from "react";
 import { X } from "tabler-icons-react";
-import { useAuth } from "utils/authentication/reactQueryAuth";
 import { convertDateToDateOnlyString } from "utils/dates";
 import { z } from "zod";
 
@@ -21,7 +20,6 @@ interface PersonalInformationStepProps {
 }
 
 const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ goToNextStep }) => {
-    const { user } = useAuth();
     const { classes } = useStyles();
     const {
         updatePersonalInformation,
@@ -65,7 +63,6 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ goToN
                     onSubmit={form.onSubmit(
                         async values =>
                             await updatePersonalInformation({
-                                tutorId: user!.id,
                                 firstName: values.firstName,
                                 lastName: values.lastName,
                                 dateOfBirth: convertDateToDateOnlyString(new Date(values.dateOfBirth))

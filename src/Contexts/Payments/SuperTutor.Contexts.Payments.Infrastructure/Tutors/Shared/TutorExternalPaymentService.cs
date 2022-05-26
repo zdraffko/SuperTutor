@@ -145,4 +145,59 @@ internal class TutorExternalPaymentService : ITutorExternalPaymentService
             return Result.Fail(exception.Message);
         }
     }
+
+    public async Task<Result> UpdateVerificationDocuments(string accountId, string personId, Document identityVerificationDocumentFront, Document identityVerificationDocumentBack, Document addressVerificationDocument, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var personService = new PersonService();
+
+            var personUpdateOptions = new PersonUpdateOptions
+            {
+                Verification = new PersonVerificationOptions
+                {
+                    Document = new PersonVerificationDocumentOptions
+                    {
+                        Front = identityVerificationDocumentFront.ExternalId,
+                        Back = identityVerificationDocumentBack.ExternalId
+                    },
+                    AdditionalDocument = new PersonVerificationAdditionalDocumentOptions
+                    {
+                        Front = addressVerificationDocument.ExternalId
+                    }
+                }
+            };
+
+            await personService.UpdateAsync(accountId, personId, personUpdateOptions, cancellationToken: cancellationToken);
+
+            return Result.Ok();
+        }
+        catch (Exception exception)
+        {
+            return Result.Fail(exception.Message);
+
+        }
+    }
+
+    public async Task<Result<(string fileId, string fileName, string fileUrl)>> UploadIdentityDocument(Stream identityDocument, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var fileService = new FileService();
+
+            var fileCreateOptions = new FileCreateOptions
+            {
+                File = identityDocument,
+                Purpose = FilePurpose.IdentityDocument
+            };
+
+            var file = await fileService.CreateAsync(fileCreateOptions, cancellationToken: cancellationToken);
+
+            return Result.Ok((file.Id, file.Title, file.Url));
+        }
+        catch (Exception exception)
+        {
+            return Result.Fail(exception.Message);
+        }
+    }
 }

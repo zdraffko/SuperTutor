@@ -1,7 +1,6 @@
 import { axios } from "utils/axios";
 
 export interface UpdatePayoutInformationRequest {
-    tutorId: string;
     bankAccountHolderFullName: string;
     bankAccountHolderType: string;
     bankAccountIban: string;

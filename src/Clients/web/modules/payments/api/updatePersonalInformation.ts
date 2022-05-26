@@ -1,7 +1,6 @@
 import { axios } from "utils/axios";
 
 export interface UpdatePersonalInformationRequest {
-    tutorId: string;
     firstName: string;
     lastName: string;
     dateOfBirth: string;

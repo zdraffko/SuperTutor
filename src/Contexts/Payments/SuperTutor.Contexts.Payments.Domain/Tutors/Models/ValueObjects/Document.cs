@@ -2,11 +2,14 @@
 
 public class Document
 {
-    public Document(string name, string url)
+    public Document(string externalId, string name, string url)
     {
+        ExternalId = externalId;
         Name = name;
         Url = url;
     }
+
+    public string ExternalId { get; }
 
     public string Name { get; }
 

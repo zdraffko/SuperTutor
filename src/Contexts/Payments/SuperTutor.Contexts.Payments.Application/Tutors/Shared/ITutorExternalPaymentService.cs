@@ -13,4 +13,8 @@ public interface ITutorExternalPaymentService
     Task<Result> UpdateAddress(string accountId, string personId, Address address, CancellationToken cancellationToken);
 
     Task<Result> UpdateBankAccount(string accountId, BankAccount bankAccount, CancellationToken cancellationToken);
+
+    Task<Result> UpdateVerificationDocuments(string accountId, string personId, Document identityVerificationDocumentFront, Document identityVerificationDocumentBack, Document addressVerificationDocument, CancellationToken cancellationToken);
+
+    Task<Result<(string fileId, string fileName, string fileUrl)>> UploadIdentityDocument(Stream identityDocument, CancellationToken cancellationToken);
 }
