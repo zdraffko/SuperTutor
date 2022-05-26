@@ -4,7 +4,13 @@ namespace SuperTutor.Contexts.Payments.Domain.Tutors.Events;
 
 public class TutorBankAccountSyncedWithExternalPaymentAccountDomainEvent : DomainEvent
 {
-    public TutorBankAccountSyncedWithExternalPaymentAccountDomainEvent(bool isBankAccountSyncedWithExternalPaymentAccount) => IsBankAccountSyncedWithExternalPaymentAccount = isBankAccountSyncedWithExternalPaymentAccount;
+    public TutorBankAccountSyncedWithExternalPaymentAccountDomainEvent(TutorId tutorId, bool isBankAccountSyncedWithExternalPaymentAccount)
+    {
+        TutorId = tutorId;
+        IsBankAccountSyncedWithExternalPaymentAccount = isBankAccountSyncedWithExternalPaymentAccount;
+    }
+
+    public TutorId TutorId { get; }
 
     public bool IsBankAccountSyncedWithExternalPaymentAccount { get; }
 }

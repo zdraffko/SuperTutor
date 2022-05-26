@@ -73,7 +73,7 @@ public class Tutor : AggregateRoot<TutorId, Guid>
     {
         IsPersonalInformationSyncedWithExternalPaymentAccount = true;
 
-        RaiseDomainEvent(new TutorPersonalInformationSyncedWithExternalPaymentAccountDomainEvent(IsPersonalInformationSyncedWithExternalPaymentAccount.Value));
+        RaiseDomainEvent(new TutorPersonalInformationSyncedWithExternalPaymentAccountDomainEvent(Id, IsPersonalInformationSyncedWithExternalPaymentAccount.Value));
     }
 
     public void UpdateAddress(Address address)
@@ -88,7 +88,7 @@ public class Tutor : AggregateRoot<TutorId, Guid>
     {
         IsAddressSyncedWithExternalPaymentAccount = true;
 
-        RaiseDomainEvent(new TutorAddressSyncedWithExternalPaymentAccountDomainEvent(IsAddressSyncedWithExternalPaymentAccount.Value));
+        RaiseDomainEvent(new TutorAddressSyncedWithExternalPaymentAccountDomainEvent(Id, IsAddressSyncedWithExternalPaymentAccount.Value));
     }
 
     public void UpdateBankAccount(BankAccount bankAccount)
@@ -103,7 +103,7 @@ public class Tutor : AggregateRoot<TutorId, Guid>
     {
         IsBankAccountSyncedWithExternalPaymentAccount = true;
 
-        RaiseDomainEvent(new TutorBankAccountSyncedWithExternalPaymentAccountDomainEvent(IsBankAccountSyncedWithExternalPaymentAccount.Value));
+        RaiseDomainEvent(new TutorBankAccountSyncedWithExternalPaymentAccountDomainEvent(Id, IsBankAccountSyncedWithExternalPaymentAccount.Value));
     }
 
     public void UploadVerificationDocuments(Document identityVerificationDocumentFront, Document identityVerificationDocumentBack, Document addressVerificationDocument)
@@ -120,7 +120,7 @@ public class Tutor : AggregateRoot<TutorId, Guid>
     {
         AreVerificationDocumentsSyncedWithExternalPaymentAccount = true;
 
-        RaiseDomainEvent(new TutorVerificationDocumentsSyncedWithExternalPaymentAccountDomainEvent(AreVerificationDocumentsSyncedWithExternalPaymentAccount.Value));
+        RaiseDomainEvent(new TutorVerificationDocumentsSyncedWithExternalPaymentAccountDomainEvent(Id, AreVerificationDocumentsSyncedWithExternalPaymentAccount.Value));
     }
 
     public void AcceptTermsOfService(string ipOfAcceptance)
@@ -135,7 +135,7 @@ public class Tutor : AggregateRoot<TutorId, Guid>
     {
         AreTermsOfServiceSyncedWithExternalPaymentAccount = true;
 
-        RaiseDomainEvent(new TutorTermsOfServiceSyncedWithExternalPaymentAccountDomainEvent(AreTermsOfServiceSyncedWithExternalPaymentAccount.Value));
+        RaiseDomainEvent(new TutorTermsOfServiceSyncedWithExternalPaymentAccountDomainEvent(Id, AreTermsOfServiceSyncedWithExternalPaymentAccount.Value));
     }
 
     #region Apply Domain Events
