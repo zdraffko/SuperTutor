@@ -3,12 +3,14 @@ using Autofac.Extensions.DependencyInjection;
 using Elastic.CommonSchema.Serilog;
 using MassTransit;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Debugging;
 using Serilog.Sinks.Elasticsearch;
 using Stripe;
 using SuperTutor.Contexts.Payments.Api;
 using SuperTutor.Contexts.Payments.Infrastructure;
+using SuperTutor.Contexts.Payments.Infrastructure.Shared.Persistence;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.HealthChecks.Extensions;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
 
@@ -50,6 +52,7 @@ try
             .ReadFrom.Configuration(hostBuilderContext.Configuration));
 
     builder.Services.AddHealthChecks()
+        .AddSqlServer(builder.Configuration["Database:ConnectionString"], name: "Database", healthQuery: "select top (1) [Id] from payments.Tutors")
         .AddRabbitMQ(builder.Configuration["RabbitMq:Url"], name: "RabbitMq")
         .AddElasticsearch(options => options
                 .UseServer(elasticsearchNodeUrls.First().AbsoluteUri)
@@ -59,6 +62,7 @@ try
     // Add library services to the container via extension methods provided by the libraries.
 
     builder.Services.AddEventStoreClient(builder.Configuration["EventStore:Url"]);
+    builder.Services.AddDbContext<PaymentsDbContext>(options => options.UseSqlServer(builder.Configuration["Database:ConnectionString"]));
 
     builder.Services
         .AddControllers()

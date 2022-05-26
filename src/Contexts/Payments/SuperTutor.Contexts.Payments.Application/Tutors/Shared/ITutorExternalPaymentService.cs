@@ -2,7 +2,7 @@
 using SuperTutor.Contexts.Payments.Domain.Tutors;
 using SuperTutor.Contexts.Payments.Domain.Tutors.Models.ValueObjects;
 
-namespace SuperTutor.Contexts.Payments.Application.Shared;
+namespace SuperTutor.Contexts.Payments.Application.Tutors.Shared;
 
 public interface ITutorExternalPaymentService
 {

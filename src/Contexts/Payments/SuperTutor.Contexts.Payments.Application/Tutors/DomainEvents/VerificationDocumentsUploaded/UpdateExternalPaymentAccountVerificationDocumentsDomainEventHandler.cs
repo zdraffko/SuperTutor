@@ -1,4 +1,4 @@
-﻿using SuperTutor.Contexts.Payments.Application.Shared;
+﻿using SuperTutor.Contexts.Payments.Application.Tutors.Shared;
 using SuperTutor.Contexts.Payments.Domain.Tutors;
 using SuperTutor.Contexts.Payments.Domain.Tutors.Events;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.DomainEvents;

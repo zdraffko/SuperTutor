@@ -137,6 +137,7 @@ services:
             context: .
             dockerfile: ./Contexts/Payments/SuperTutor.Contexts.Payments.Startup/Dockerfile
         environment:
+            - Database__ConnectionString=Server=supertutor-mssqlserver;Database=SuperTutorPayments;User Id=sa;Password=${MSSQLSERVER_SA_PASSWORD};MultipleActiveResultSets=true
             - EventStore__Url=esdb://supertutor-eventstore:2113?tls=false&keepAliveTimeout=10000&keepAliveInterval=10000
             - Elasticsearch__Urls=http://supertutor-elasticsearch-node-1:9200
             - Elasticsearch__Username=${ELASTIC_DEFAULT_USERNAME}
