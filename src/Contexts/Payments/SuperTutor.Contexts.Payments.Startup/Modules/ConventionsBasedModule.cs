@@ -6,7 +6,7 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Api;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure;
 
-namespace SuperTutor.Contexts.Schedule.Startup.Modules;
+namespace SuperTutor.Contexts.Payments.Startup.Modules;
 
 internal class ConventionsBasedModule : Module
 {

@@ -1,6 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using SuperTutor.ApiGateways.Web.Models.Payments.GetAreTutorTermsOfServiceAccepted;
+using SuperTutor.ApiGateways.Web.Models.Payments.GetAreTutorVerificationDocumentsCollected;
+using SuperTutor.ApiGateways.Web.Models.Payments.GetIsTutorAddressInformationCollected;
+using SuperTutor.ApiGateways.Web.Models.Payments.GetIsTutorBankAccountInformationCollected;
+using SuperTutor.ApiGateways.Web.Models.Payments.GetIsTutorPersonalInformationCollected;
 using SuperTutor.ApiGateways.Web.Models.Payments.UpdateAccountAddressInformation;
 using SuperTutor.ApiGateways.Web.Models.Payments.UpdateAccountPayoutInformation;
 using SuperTutor.ApiGateways.Web.Models.Payments.UpdateAccountPersonalInformation;
@@ -33,6 +38,10 @@ public class PaymentsController : ApiController
     public async Task<ActionResult> UpdateTutorPersonalInformation(UpdateAccountPersonalInformationRequest request, CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (tutorId == null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
 
         var paymentsRequest = new
         {
@@ -59,6 +68,10 @@ public class PaymentsController : ApiController
     public async Task<ActionResult> UpdateTutorAddressInformation(UpdateAccountAddressInformationRequest request, CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (tutorId == null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
 
         var paymentsRequest = new
         {
@@ -87,6 +100,10 @@ public class PaymentsController : ApiController
     public async Task<ActionResult> UpdateTutorPayoutInformation(UpdateAccountPayoutInformationRequest request, CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (tutorId == null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
 
         var paymentsRequest = new
         {
@@ -117,6 +134,10 @@ public class PaymentsController : ApiController
         CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (tutorId == null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
 
         var multipartFormDataContent = new MultipartFormDataContent
         {
@@ -143,6 +164,10 @@ public class PaymentsController : ApiController
     public async Task<ActionResult> AcceptTutorTermsOfService(CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (tutorId == null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
 
         var paymentsRequest = new
         {
@@ -160,5 +185,140 @@ public class PaymentsController : ApiController
         var responseErrorMessage = await response.Content.ReadAsStringAsync(cancellationToken);
 
         return BadRequest(responseErrorMessage);
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<ActionResult<bool>> GetAreTutorVerificationDocumentsCollected(CancellationToken cancellationToken)
+    {
+        var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (tutorId == null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        var paymentsRequest = new
+        {
+            TutorId = tutorId
+        };
+
+        var queryString = $"{PaymentsApiUrl}/tutors/GetAreVerificationDocumentsCollected?query={JsonSerializer.Serialize(paymentsRequest)}";
+
+        var response = await httpClient.GetFromJsonAsync<GetAreTutorVerificationDocumentsCollectedResponse>(queryString, cancellationToken: cancellationToken);
+
+        if (response is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        return Ok(response);
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<ActionResult<bool>> GetAreTutorTermsOfServiceAccepted(CancellationToken cancellationToken)
+    {
+        var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (tutorId == null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        var paymentsRequest = new
+        {
+            TutorId = tutorId
+        };
+
+        var queryString = $"{PaymentsApiUrl}/tutors/GetAreTermsOfServiceAccepted?query={JsonSerializer.Serialize(paymentsRequest)}";
+
+        var response = await httpClient.GetFromJsonAsync<GetAreTutorTermsOfServiceAcceptedResponse>(queryString, cancellationToken: cancellationToken);
+
+        if (response is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        return Ok(response);
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<ActionResult<bool>> GetIsTutorAddressInformationCollected(CancellationToken cancellationToken)
+    {
+        var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (tutorId == null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        var paymentsRequest = new
+        {
+            TutorId = tutorId
+        };
+
+        var queryString = $"{PaymentsApiUrl}/tutors/GetIsAddressInformationCollected?query={JsonSerializer.Serialize(paymentsRequest)}";
+
+        var response = await httpClient.GetFromJsonAsync<GetIsTutorAddressInformationCollectedResponse>(queryString, cancellationToken: cancellationToken);
+
+        if (response is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        return Ok(response);
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<ActionResult<bool>> GetIsTutorPersonalInformationCollected(CancellationToken cancellationToken)
+    {
+        var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (tutorId == null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        var paymentsRequest = new
+        {
+            TutorId = tutorId
+        };
+
+        var queryString = $"{PaymentsApiUrl}/tutors/GetIsPersonalInformationCollected?query={JsonSerializer.Serialize(paymentsRequest)}";
+
+        var response = await httpClient.GetFromJsonAsync<GetIsTutorPersonalInformationCollectedResponse>(queryString, cancellationToken: cancellationToken);
+
+        if (response is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        return Ok(response);
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<ActionResult<bool>> GetIsTutorBankAccountInformationCollected(CancellationToken cancellationToken)
+    {
+        var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (tutorId == null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        var paymentsRequest = new
+        {
+            TutorId = tutorId
+        };
+
+        var queryString = $"{PaymentsApiUrl}/tutors/GetIsBankAccountInformationCollected?query={JsonSerializer.Serialize(paymentsRequest)}";
+
+        var response = await httpClient.GetFromJsonAsync<GetIsTutorBankAccountInformationCollectedResponse>(queryString, cancellationToken: cancellationToken);
+
+        if (response is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        return Ok(response);
     }
 }

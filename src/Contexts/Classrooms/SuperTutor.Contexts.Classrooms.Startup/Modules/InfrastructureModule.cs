@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SuperTutor.Contexts.Classrooms.Infrastructure.Persistence.Classrooms;
 using SuperTutor.Contexts.Classrooms.Infrastructure.Persistence.Shared;
 
-namespace SuperTutor.Contexts.Catalog.Startup.Modules;
+namespace SuperTutor.Contexts.Classrooms.Startup.Modules;
 
 internal class InfrastructureModule : Module
 {

@@ -6,7 +6,7 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Application.Errors.Commands.Deco
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.IntegrationEvents.Commands.Decorators;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Validation.Commands.Decorators;
 
-namespace SuperTutor.Contexts.Schedule.Startup.Modules;
+namespace SuperTutor.Contexts.Payments.Startup.Modules;
 
 internal class ApplicationModule : Module
 {

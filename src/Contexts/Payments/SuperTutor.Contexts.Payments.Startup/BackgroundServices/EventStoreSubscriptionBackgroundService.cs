@@ -1,6 +1,6 @@
 ﻿using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Persistence.Subscriptions;
 
-namespace SuperTutor.Contexts.Schedule.Startup.BackgroundServices;
+namespace SuperTutor.Contexts.Payments.Startup.BackgroundServices;
 
 public class EventStoreSubscriptionBackgroundService : BackgroundService
 {

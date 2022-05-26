@@ -65,7 +65,7 @@ public class IdentityController : ApiController
         var userId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (userId == null)
         {
-            return BadRequest("An unexpected error has occurred");
+            return BadRequest("Възнокна неочаквана грешка");
         }
 
         var query = new GetIdentityInfoRequest(userId);

@@ -2,7 +2,7 @@
 using SuperTutor.Contexts.Payments.Domain.Tutors.Events;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.DomainEvents;
 
-namespace SuperTutor.Contexts.Payments.Application.Tutors.DomainEvents.AddressSyncedWithExternalPaymentAccount;
+namespace SuperTutor.Contexts.Payments.Application.Tutors.DomainEvents.VerificationDocumentsSyncedWithExternalPaymentAccount;
 
 internal class SetVerificationDocumentsAsCollectedInTutorQueryModelDomainEventHandler : IDomainEventHandler<TutorVerificationDocumentsSyncedWithExternalPaymentAccountDomainEvent>
 {

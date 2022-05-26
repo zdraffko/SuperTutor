@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using SuperTutor.Contexts.Payments.Domain;
 using SuperTutor.Contexts.Payments.Infrastructure.Shared.Persistence;
 using SuperTutor.Contexts.Payments.Infrastructure.Tutors.Persistence.Models.TutorQuery;
-using SuperTutor.Contexts.Schedule.Startup.BackgroundServices;
+using SuperTutor.Contexts.Payments.Startup.BackgroundServices;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Persistence.Repositories;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Persistence.Serializers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Persistence.Subscriptions;
 
-namespace SuperTutor.Contexts.Schedule.Startup.Modules;
+namespace SuperTutor.Contexts.Payments.Startup.Modules;
 
 internal class InfrastructureModule : Module
 {
