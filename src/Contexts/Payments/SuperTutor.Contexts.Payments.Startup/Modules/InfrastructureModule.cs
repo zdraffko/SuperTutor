@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using SuperTutor.Contexts.Payments.Domain;
 using SuperTutor.Contexts.Payments.Infrastructure.Shared.Persistence;
-using SuperTutor.Contexts.Payments.Infrastructure.Tutors.Persistence.Models.TutorQuery;
 using SuperTutor.Contexts.Payments.Startup.BackgroundServices;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Persistence.Repositories;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Persistence.Serializers;
@@ -16,7 +15,6 @@ internal class InfrastructureModule : Module
     {
         builder.RegisterType<PaymentsDbContext>()
             .As<DbContext>()
-            .As<ITutorQueryModelDbContext>()
             .InstancePerLifetimeScope();
 
         // The services here are registered explicitly because of the singleton lifestyle scope
@@ -26,8 +24,8 @@ internal class InfrastructureModule : Module
             .SingleInstance();
 
         builder.RegisterType<EventStoreSubscriber>()
-            .As<IEventStoreSubscriber>()
-            .SingleInstance();
+             .As<IEventStoreSubscriber>()
+             .SingleInstance();
 
         builder.RegisterType<EventStoreSubscriptionCheckpointRepository>()
             .As<IEventStoreSubscriptionCheckpointRepository>()

@@ -1,10 +1,9 @@
 import { Avatar, Box, Group, Text, UnstyledButton, useMantineTheme } from "@mantine/core";
-import { ChevronLeft, ChevronRight } from "tabler-icons-react";
 import { useAuth } from "utils/authentication/reactQueryAuth";
 
 const SideBarFooter: React.FC = () => {
     const theme = useMantineTheme();
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
 
     return (
         <Box
@@ -14,6 +13,7 @@ const SideBarFooter: React.FC = () => {
             }}
         >
             <UnstyledButton
+                onClick={() => logout()}
                 sx={{
                     display: "block",
                     width: "100%",
@@ -40,7 +40,7 @@ const SideBarFooter: React.FC = () => {
                         </Text>
                     </Box>
 
-                    {theme.dir === "ltr" ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+                    {/*theme.dir === "ltr" ? <ChevronRight size={18} /> : <ChevronLeft size={18} />*/}
                 </Group>
             </UnstyledButton>
         </Box>

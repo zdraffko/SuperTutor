@@ -8,7 +8,7 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => (
     <AppShell padding="0" navbar={<SideBar />}>
-        <ScrollArea type="scroll" style={{ height: "100vh" }}>
+        <ScrollArea type="scroll" style={{ height: "100vh" }} p="xs">
             {children}
         </ScrollArea>
     </AppShell>

@@ -3,7 +3,7 @@ using SuperTutor.Contexts.Payments.Infrastructure.Tutors.Persistence.Models.Tuto
 
 namespace SuperTutor.Contexts.Payments.Infrastructure.Shared.Persistence;
 
-public class PaymentsDbContext : DbContext, ITutorQueryModelDbContext
+public class PaymentsDbContext : DbContext
 {
     public PaymentsDbContext(DbContextOptions<PaymentsDbContext> options) : base(options) { }
 

@@ -1,45 +1,58 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SuperTutor.Contexts.Payments.Application.Tutors.Shared;
 using SuperTutor.Contexts.Payments.Domain.Tutors;
+using SuperTutor.Contexts.Payments.Infrastructure.Shared.Persistence;
 
 namespace SuperTutor.Contexts.Payments.Infrastructure.Tutors.Persistence.Models.TutorQuery;
 
 internal class TutorQueryModelRepository : ITutorQueryModelRepository
 {
-    private readonly ITutorQueryModelDbContext tutorQueryModelDbContext;
+    private readonly PaymentsDbContext paymentsDbContext;
 
-    public TutorQueryModelRepository(ITutorQueryModelDbContext tutorQueryModelDbContext) => this.tutorQueryModelDbContext = tutorQueryModelDbContext;
+    public TutorQueryModelRepository(PaymentsDbContext paymentsDbContext) => this.paymentsDbContext = paymentsDbContext;
+
+    public async Task Create(TutorId tutorId, CancellationToken cancellationToken)
+    {
+        var tutorQueryModel = new TutorQueryModel
+        {
+            Id = tutorId
+        };
+
+        paymentsDbContext.Tutors.Add(tutorQueryModel);
+
+        await paymentsDbContext.SaveChangesAsync(cancellationToken);
+    }
 
     public async Task<bool> GetAreTermsOfServiceAccepted(TutorId tutorId, CancellationToken cancellationToken)
-        => await tutorQueryModelDbContext.Tutors
+        => await paymentsDbContext.Tutors
             .AsNoTracking()
             .Where(tutorQueryModel => tutorQueryModel.Id == tutorId)
             .Select(tutorQueryModel => tutorQueryModel.AreTermsOfServiceAccepted)
             .SingleOrDefaultAsync(cancellationToken: cancellationToken);
 
     public async Task<bool> GetAreVerificationDocumentsCollected(TutorId tutorId, CancellationToken cancellationToken)
-        => await tutorQueryModelDbContext.Tutors
+        => await paymentsDbContext.Tutors
             .AsNoTracking()
             .Where(tutorQueryModel => tutorQueryModel.Id == tutorId)
             .Select(tutorQueryModel => tutorQueryModel.AreVerificationDocumentsCollected)
             .SingleOrDefaultAsync(cancellationToken: cancellationToken);
 
     public async Task<bool> GetIsAddressInformationCollected(TutorId tutorId, CancellationToken cancellationToken)
-        => await tutorQueryModelDbContext.Tutors
+        => await paymentsDbContext.Tutors
             .AsNoTracking()
             .Where(tutorQueryModel => tutorQueryModel.Id == tutorId)
             .Select(tutorQueryModel => tutorQueryModel.IsAddressInformationCollected)
             .SingleOrDefaultAsync(cancellationToken: cancellationToken);
 
     public async Task<bool> GetIsBankAccountInformationCollected(TutorId tutorId, CancellationToken cancellationToken)
-        => await tutorQueryModelDbContext.Tutors
+        => await paymentsDbContext.Tutors
             .AsNoTracking()
             .Where(tutorQueryModel => tutorQueryModel.Id == tutorId)
             .Select(tutorQueryModel => tutorQueryModel.IsBankAccountInformationCollected)
             .SingleOrDefaultAsync(cancellationToken: cancellationToken);
 
     public async Task<bool> GetIsPersonalInformationCollected(TutorId tutorId, CancellationToken cancellationToken)
-        => await tutorQueryModelDbContext.Tutors
+        => await paymentsDbContext.Tutors
             .AsNoTracking()
             .Where(tutorQueryModel => tutorQueryModel.Id == tutorId)
             .Select(tutorQueryModel => tutorQueryModel.IsPersonalInformationCollected)
@@ -53,9 +66,10 @@ internal class TutorQueryModelRepository : ITutorQueryModelRepository
             IsAddressInformationCollected = true
         };
 
-        tutorQueryModelDbContext.Tutors.Update(updatedTutorQueryModel);
+        paymentsDbContext.Attach(updatedTutorQueryModel);
+        paymentsDbContext.Entry(updatedTutorQueryModel).Property(tutorQueryModel => tutorQueryModel.IsAddressInformationCollected).IsModified = true;
 
-        await tutorQueryModelDbContext.SaveChangesAsync(cancellationToken);
+        await paymentsDbContext.SaveChangesAsync(cancellationToken);
     }
     public async Task SetBankAccountInformationAsCollected(TutorId tutorId, CancellationToken cancellationToken)
     {
@@ -65,9 +79,10 @@ internal class TutorQueryModelRepository : ITutorQueryModelRepository
             IsBankAccountInformationCollected = true
         };
 
-        tutorQueryModelDbContext.Tutors.Update(updatedTutorQueryModel);
+        paymentsDbContext.Attach(updatedTutorQueryModel);
+        paymentsDbContext.Entry(updatedTutorQueryModel).Property(tutorQueryModel => tutorQueryModel.IsBankAccountInformationCollected).IsModified = true;
 
-        await tutorQueryModelDbContext.SaveChangesAsync(cancellationToken);
+        await paymentsDbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task SetPersonalInformationAsCollected(TutorId tutorId, CancellationToken cancellationToken)
@@ -78,9 +93,10 @@ internal class TutorQueryModelRepository : ITutorQueryModelRepository
             IsPersonalInformationCollected = true
         };
 
-        tutorQueryModelDbContext.Tutors.Update(updatedTutorQueryModel);
+        paymentsDbContext.Attach(updatedTutorQueryModel);
+        paymentsDbContext.Entry(updatedTutorQueryModel).Property(tutorQueryModel => tutorQueryModel.IsPersonalInformationCollected).IsModified = true;
 
-        await tutorQueryModelDbContext.SaveChangesAsync(cancellationToken);
+        await paymentsDbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task SetTermsOfServiceAsAccepted(TutorId tutorId, CancellationToken cancellationToken)
@@ -91,9 +107,10 @@ internal class TutorQueryModelRepository : ITutorQueryModelRepository
             AreTermsOfServiceAccepted = true
         };
 
-        tutorQueryModelDbContext.Tutors.Update(updatedTutorQueryModel);
+        paymentsDbContext.Attach(updatedTutorQueryModel);
+        paymentsDbContext.Entry(updatedTutorQueryModel).Property(tutorQueryModel => tutorQueryModel.AreTermsOfServiceAccepted).IsModified = true;
 
-        await tutorQueryModelDbContext.SaveChangesAsync(cancellationToken);
+        await paymentsDbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task SetVerificationDocumentsAsCollected(TutorId tutorId, CancellationToken cancellationToken)
@@ -104,8 +121,9 @@ internal class TutorQueryModelRepository : ITutorQueryModelRepository
             AreVerificationDocumentsCollected = true
         };
 
-        tutorQueryModelDbContext.Tutors.Update(updatedTutorQueryModel);
+        paymentsDbContext.Attach(updatedTutorQueryModel);
+        paymentsDbContext.Entry(updatedTutorQueryModel).Property(tutorQueryModel => tutorQueryModel.AreVerificationDocumentsCollected).IsModified = true;
 
-        await tutorQueryModelDbContext.SaveChangesAsync(cancellationToken);
+        await paymentsDbContext.SaveChangesAsync(cancellationToken);
     }
 }

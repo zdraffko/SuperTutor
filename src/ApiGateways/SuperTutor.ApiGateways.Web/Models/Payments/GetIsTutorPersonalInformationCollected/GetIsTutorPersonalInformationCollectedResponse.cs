@@ -4,6 +4,6 @@ namespace SuperTutor.ApiGateways.Web.Models.Payments.GetIsTutorPersonalInformati
 
 public class GetIsTutorPersonalInformationCollectedResponse
 {
-    [JsonPropertyName("isTutorPersonalInformationCollected")]
+    [JsonPropertyName("isPersonalInformationCollected")]
     public bool IsTutorPersonalInformationCollected { get; init; }
 }

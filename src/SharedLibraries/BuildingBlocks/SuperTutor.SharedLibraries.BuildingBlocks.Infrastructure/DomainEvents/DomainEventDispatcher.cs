@@ -18,7 +18,9 @@ internal class DomainEventDispatcher : IDomainEventDispatcher
 
     public async Task Dispatch<TDomainEvent>(TDomainEvent domainEvent, CancellationToken cancellationToken) where TDomainEvent : DomainEvent
     {
-        var domainEventHandlers = GetDomainEventHandlers<TDomainEvent>();
+        await using var scope = serviceProvider.CreateAsyncScope();
+
+        var domainEventHandlers = GetDomainEventHandlers<TDomainEvent>(scope);
 
         foreach (var domainEventHandler in domainEventHandlers)
         {
@@ -26,11 +28,11 @@ internal class DomainEventDispatcher : IDomainEventDispatcher
         }
     }
 
-    private IEnumerable<IDomainEventHandler<TDomainEvent>> GetDomainEventHandlers<TDomainEvent>() where TDomainEvent : DomainEvent
+    private IEnumerable<IDomainEventHandler<TDomainEvent>> GetDomainEventHandlers<TDomainEvent>(AsyncServiceScope scope) where TDomainEvent : DomainEvent
     {
         try
         {
-            return serviceProvider.GetServices<IDomainEventHandler<TDomainEvent>>();
+            return scope.ServiceProvider.GetServices<IDomainEventHandler<TDomainEvent>>();
         }
         catch (Exception exception)
         {

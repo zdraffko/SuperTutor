@@ -1,9 +1,31 @@
 import { AxiosError } from "axios";
 import { useMutation } from "react-query";
+import { queryClient } from "utils/reactQuery";
+import { GetIsTutorBankAccountInformationCollectedResponse } from "../api/getIsTutorBankAccountInformationCollected";
 import updatePayoutInformation, { UpdatePayoutInformationRequest } from "../api/updatePayoutInformation";
 
 const useUpdatePayoutInformation = () => {
-    const mutation = useMutation<unknown, AxiosError<string>, UpdatePayoutInformationRequest, unknown>(updatePayoutInformation);
+    const queryKeyThatIsDependantOnThisMutation = "payments-getIsTutorBankAccountInformationCollected";
+    type OptimisticUpdateContext = {
+        previousValue: GetIsTutorBankAccountInformationCollectedResponse | undefined;
+        newValue: GetIsTutorBankAccountInformationCollectedResponse;
+    };
+
+    const mutation = useMutation<void, AxiosError<string>, UpdatePayoutInformationRequest, OptimisticUpdateContext>(updatePayoutInformation, {
+        onMutate: async () => {
+            await queryClient.cancelQueries(queryKeyThatIsDependantOnThisMutation);
+
+            const previousValue = queryClient.getQueryData<GetIsTutorBankAccountInformationCollectedResponse>(queryKeyThatIsDependantOnThisMutation);
+            const newValue: GetIsTutorBankAccountInformationCollectedResponse = { isBankAccountInformationCollected: true };
+
+            queryClient.setQueryData(queryKeyThatIsDependantOnThisMutation, newValue);
+
+            return { previousValue, newValue };
+        },
+        onError: (error, newValue, context) => {
+            queryClient.setQueryData(queryKeyThatIsDependantOnThisMutation, context?.previousValue);
+        }
+    });
 
     return {
         updatePayoutInformation: mutation.mutateAsync,

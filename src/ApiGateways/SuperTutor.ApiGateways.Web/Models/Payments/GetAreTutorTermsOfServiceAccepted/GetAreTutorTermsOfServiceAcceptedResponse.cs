@@ -4,6 +4,6 @@ namespace SuperTutor.ApiGateways.Web.Models.Payments.GetAreTutorTermsOfServiceAc
 
 public class GetAreTutorTermsOfServiceAcceptedResponse
 {
-    [JsonPropertyName("areTutorTermsOfServiceAccepted")]
+    [JsonPropertyName("areTermsOfServiceAccepted")]
     public bool AreTutorTermsOfServiceAccepted { get; init; }
 }

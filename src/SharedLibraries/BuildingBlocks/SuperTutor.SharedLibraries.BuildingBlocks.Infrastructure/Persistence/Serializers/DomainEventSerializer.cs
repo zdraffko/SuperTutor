@@ -40,10 +40,13 @@ public class DomainEventSerializer : IDomainEventSerializer
 
             var rawDomainEvent = Encoding.UTF8.GetString(resolvedEvent.Event.Data.Span);
 
+            var domainEventTypeFromDomainEventsAssembly = domainEventsAssembly.GetType(domainEventMetadata.EventType, false)!;
+            var domainEventType = Type.GetType(domainEventMetadata.EventType)!;
+
             var eventType = domainEventTypesCache.GetOrAdd(
                 domainEventMetadata.EventType,
-                _ => domainEventsAssembly.GetType(domainEventMetadata.EventType, false)! ??
-                    Type.GetType(domainEventMetadata.EventType)!);
+                _ => domainEventTypeFromDomainEventsAssembly ??
+                    domainEventType);
 
             if (eventType is null)
             {

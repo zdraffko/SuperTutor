@@ -35,7 +35,7 @@ const LandingPage: NextPage = () => {
                         <Logo width="120px" height="120px" />
                         <Title order={1}>Супер Учител</Title>
                     </Group>
-                    <Title order={4}>Започни своето приключение сега</Title>
+                    <Title order={4}>Превърни хобито си в кариера</Title>
                     <Group>
                         <Link href="/identity/register/tutor" passHref>
                             <Button component="a">Регистрация като учител</Button>

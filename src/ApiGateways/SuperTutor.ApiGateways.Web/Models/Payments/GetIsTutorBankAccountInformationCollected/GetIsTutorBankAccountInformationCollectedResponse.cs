@@ -4,6 +4,6 @@ namespace SuperTutor.ApiGateways.Web.Models.Payments.GetIsTutorBankAccountInform
 
 public class GetIsTutorBankAccountInformationCollectedResponse
 {
-    [JsonPropertyName("isTutorBankAccountInformationCollected")]
+    [JsonPropertyName("isBankAccountInformationCollected")]
     public bool IsTutorBankAccountInformationCollected { get; init; }
 }

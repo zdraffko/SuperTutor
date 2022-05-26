@@ -4,6 +4,8 @@ namespace SuperTutor.Contexts.Payments.Application.Tutors.Shared;
 
 public interface ITutorQueryModelRepository
 {
+    Task Create(TutorId tutorId, CancellationToken cancellationToken);
+
     Task<bool> GetIsPersonalInformationCollected(TutorId tutorId, CancellationToken cancellationToken);
 
     Task<bool> GetIsAddressInformationCollected(TutorId tutorId, CancellationToken cancellationToken);
