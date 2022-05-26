@@ -4,10 +4,8 @@ import useAcceptTermsOfService from "modules/payments/hooks/useAcceptTermsOfServ
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Check, X } from "tabler-icons-react";
-import { useAuth } from "utils/authentication/reactQueryAuth";
 
 const AcceptTermsOfServiceStep: React.FC = () => {
-    const { user } = useAuth();
     const router = useRouter();
     const {
         acceptTermsOfService,
@@ -47,7 +45,7 @@ const AcceptTermsOfServiceStep: React.FC = () => {
         <Stack align="center">
             <Text size="xl">Благодарим за попълнената информация</Text>
             <Text size="md">Ще получите обратна връзка относно верификацията в най-скоро време</Text>
-            <Button onClick={async () => await acceptTermsOfService({ userId: user!.id })} loading={isAcceptTermsOfServiceLoading}>
+            <Button onClick={async () => await acceptTermsOfService()} loading={isAcceptTermsOfServiceLoading}>
                 Приключи формуляра
             </Button>
             <Text size="xs" color="dimmed">

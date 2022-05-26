@@ -1,9 +1,9 @@
 import { AxiosError } from "axios";
 import { useMutation } from "react-query";
-import acceptTermsOfService, { AcceptTermsOfServiceRequest } from "../api/acceptTermsOfService";
+import acceptTermsOfService from "../api/acceptTermsOfService";
 
 const useAcceptTermsOfService = () => {
-    const mutation = useMutation<unknown, AxiosError<string>, AcceptTermsOfServiceRequest, unknown>(acceptTermsOfService);
+    const mutation = useMutation<unknown, AxiosError<string>, void, unknown>(acceptTermsOfService);
 
     return {
         acceptTermsOfService: mutation.mutateAsync,

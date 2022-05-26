@@ -7,18 +7,18 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Repositories.Contracts;
 
 namespace SuperTutor.Contexts.Payments.Application.Tutors.Commands.UploadVerificationDocuments;
 
-internal class UploadVerificationDocumentsCommandHandler : ICommandHandler<UploadVerificationDocumentsCommand>
+internal class UploadTutorVerificationDocumentsCommandHandler : ICommandHandler<UploadTutorVerificationDocumentsCommand>
 {
     private readonly IAggregateRootEventsRepository<Tutor, TutorId, Guid> tutorRepository;
     private readonly ITutorExternalPaymentService tutorExternalPaymentService;
 
-    public UploadVerificationDocumentsCommandHandler(IAggregateRootEventsRepository<Tutor, TutorId, Guid> tutorRepository, ITutorExternalPaymentService tutorExternalPaymentService)
+    public UploadTutorVerificationDocumentsCommandHandler(IAggregateRootEventsRepository<Tutor, TutorId, Guid> tutorRepository, ITutorExternalPaymentService tutorExternalPaymentService)
     {
         this.tutorRepository = tutorRepository;
         this.tutorExternalPaymentService = tutorExternalPaymentService;
     }
 
-    public async Task<Result> Handle(UploadVerificationDocumentsCommand command, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UploadTutorVerificationDocumentsCommand command, CancellationToken cancellationToken)
     {
         // TODO - Refactor the file upload
         var tutor = await tutorRepository.Load(command.TutorId, cancellationToken);

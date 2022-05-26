@@ -2,10 +2,10 @@
 
 public class TermsOfService
 {
-    public TermsOfService(string type, DateTime dateOfAcceptance, string ipOfAcceptance)
+    public TermsOfService(string type, string ipOfAcceptance)
     {
         Type = type;
-        DateOfAcceptance = dateOfAcceptance;
+        DateOfAcceptance = DateTime.UtcNow;
         IpOfAcceptance = ipOfAcceptance;
     }
 

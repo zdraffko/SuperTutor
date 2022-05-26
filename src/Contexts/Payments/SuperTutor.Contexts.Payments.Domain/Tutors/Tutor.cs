@@ -39,7 +39,9 @@ public class Tutor : AggregateRoot<TutorId, Guid>
 
     public bool? AreVerificationDocumentsSyncedWithExternalPaymentAccount { get; private set; }
 
-    public TermsOfService? TermsOfService { get; }
+    public TermsOfService? TermsOfService { get; private set; }
+
+    public bool? AreTermsOfServiceSyncedWithExternalPaymentAccount { get; private set; }
 
     public static Tutor Create(TutorId tutorId, string email)
     {
@@ -121,6 +123,21 @@ public class Tutor : AggregateRoot<TutorId, Guid>
         RaiseDomainEvent(new TutorVerificationDocumentsSyncedWithExternalPaymentAccountDomainEvent(AreVerificationDocumentsSyncedWithExternalPaymentAccount.Value));
     }
 
+    public void AcceptTermsOfService(string ipOfAcceptance)
+    {
+        TermsOfService = new TermsOfService("full", ipOfAcceptance);
+        AreTermsOfServiceSyncedWithExternalPaymentAccount = false;
+
+        RaiseDomainEvent(new TutorTermsOfServiceAcceptedDomainEvent(Id, TermsOfService, AreTermsOfServiceSyncedWithExternalPaymentAccount.Value));
+    }
+
+    public void MarkTermsOfServiceAsSyncedWithExternalPaymentAccount()
+    {
+        AreTermsOfServiceSyncedWithExternalPaymentAccount = true;
+
+        RaiseDomainEvent(new TutorTermsOfServiceSyncedWithExternalPaymentAccountDomainEvent(AreTermsOfServiceSyncedWithExternalPaymentAccount.Value));
+    }
+
     #region Apply Domain Events
 
     public override void ApplyDomainEvent(DomainEvent domainEvent) => Apply((dynamic) domainEvent);
@@ -165,6 +182,14 @@ public class Tutor : AggregateRoot<TutorId, Guid>
     }
 
     private void Apply(TutorVerificationDocumentsSyncedWithExternalPaymentAccountDomainEvent domainEvent) => AreVerificationDocumentsSyncedWithExternalPaymentAccount = domainEvent.AreVerificationDocumentsSyncedWithExternalPaymentAccount;
+
+    private void Apply(TutorTermsOfServiceAcceptedDomainEvent domainEvent)
+    {
+        TermsOfService = domainEvent.TermsOfService;
+        AreTermsOfServiceSyncedWithExternalPaymentAccount = domainEvent.AreTermsOfServiceSyncedWithExternalPaymentAccount;
+    }
+
+    private void Apply(TutorTermsOfServiceSyncedWithExternalPaymentAccountDomainEvent domainEvent) => AreTermsOfServiceSyncedWithExternalPaymentAccount = domainEvent.AreTermsOfServiceSyncedWithExternalPaymentAccount;
 
     #endregion Apply Domain Events
 }

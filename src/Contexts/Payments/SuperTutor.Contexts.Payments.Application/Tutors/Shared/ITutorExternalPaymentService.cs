@@ -16,5 +16,7 @@ public interface ITutorExternalPaymentService
 
     Task<Result> UpdateVerificationDocuments(string accountId, string personId, Document identityVerificationDocumentFront, Document identityVerificationDocumentBack, Document addressVerificationDocument, CancellationToken cancellationToken);
 
+    Task<Result> UpdateTermsOfService(string accountId, TermsOfService termsOfService, CancellationToken cancellationToken);
+
     Task<Result<(string fileId, string fileName, string fileUrl)>> UploadIdentityDocument(Stream identityDocument, CancellationToken cancellationToken);
 }

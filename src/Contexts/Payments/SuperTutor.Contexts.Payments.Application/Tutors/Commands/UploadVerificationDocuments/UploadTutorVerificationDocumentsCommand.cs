@@ -3,9 +3,9 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Payments.Application.Tutors.Commands.UploadVerificationDocuments;
 
-public class UploadVerificationDocumentsCommand : Command
+public class UploadTutorVerificationDocumentsCommand : Command
 {
-    public UploadVerificationDocumentsCommand(TutorId tutorId, Stream identityDocumentFront, Stream identityDocumentBack, Stream addressDocument)
+    public UploadTutorVerificationDocumentsCommand(TutorId tutorId, Stream identityDocumentFront, Stream identityDocumentBack, Stream addressDocument)
     {
         TutorId = tutorId;
         IdentityDocumentFront = identityDocumentFront;

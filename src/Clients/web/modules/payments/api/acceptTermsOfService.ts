@@ -1,9 +1,5 @@
 import { axios } from "utils/axios";
 
-export interface AcceptTermsOfServiceRequest {
-    userId: string;
-}
-
-const acceptTermsOfService = async (request: AcceptTermsOfServiceRequest): Promise<void> => await axios.post("/payments/AcceptTermsOfService", request);
+const acceptTermsOfService = async (): Promise<void> => await axios.post("/payments/AcceptTutorTermsOfService");
 
 export default acceptTermsOfService;

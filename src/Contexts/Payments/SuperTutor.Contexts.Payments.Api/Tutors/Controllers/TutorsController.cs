@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SuperTutor.Contexts.Payments.Application.Tutors.Commands.AcceptTermsOfService;
 using SuperTutor.Contexts.Payments.Application.Tutors.Commands.UpdateAddress;
 using SuperTutor.Contexts.Payments.Application.Tutors.Commands.UpdateBankAccount;
 using SuperTutor.Contexts.Payments.Application.Tutors.Commands.UpdatePersonalInformation;
@@ -16,14 +17,21 @@ public class TutorsController : ApiController
     private readonly ICommandHandler<UpdateTutorPersonalInformationCommand> updateTutorPersonalInformationCommandHandler;
     private readonly ICommandHandler<UpdateTutorAddressCommand> updateTutorAddressCommandHandler;
     private readonly ICommandHandler<UpdateTutorBankAccountCommand> updateTutorBankAccountCommandHandler;
-    private readonly ICommandHandler<UploadVerificationDocumentsCommand> uploadVerificationDocumentsCommandHandler;
+    private readonly ICommandHandler<UploadTutorVerificationDocumentsCommand> uploadTutorVerificationDocumentsCommandHandler;
+    private readonly ICommandHandler<AcceptTutorTermsOfServiceCommand> acceptTutorTermsOfServiceCommandHandler;
 
-    public TutorsController(ICommandHandler<UpdateTutorPersonalInformationCommand> updateTutorPersonalInformationCommandHandler, ICommandHandler<UpdateTutorAddressCommand> updateTutorAddressCommandHandler, ICommandHandler<UpdateTutorBankAccountCommand> updateTutorBankAccountCommandHandler, ICommandHandler<UploadVerificationDocumentsCommand> uploadVerificationDocumentsCommandHandler)
+    public TutorsController(
+        ICommandHandler<UpdateTutorPersonalInformationCommand> updateTutorPersonalInformationCommandHandler,
+        ICommandHandler<UpdateTutorAddressCommand> updateTutorAddressCommandHandler,
+        ICommandHandler<UpdateTutorBankAccountCommand> updateTutorBankAccountCommandHandler,
+        ICommandHandler<UploadTutorVerificationDocumentsCommand> uploadTutorVerificationDocumentsCommandHandler,
+        ICommandHandler<AcceptTutorTermsOfServiceCommand> acceptTutorTermsOfServiceCommandHandler)
     {
         this.updateTutorPersonalInformationCommandHandler = updateTutorPersonalInformationCommandHandler;
         this.updateTutorAddressCommandHandler = updateTutorAddressCommandHandler;
         this.updateTutorBankAccountCommandHandler = updateTutorBankAccountCommandHandler;
-        this.uploadVerificationDocumentsCommandHandler = uploadVerificationDocumentsCommandHandler;
+        this.uploadTutorVerificationDocumentsCommandHandler = uploadTutorVerificationDocumentsCommandHandler;
+        this.acceptTutorTermsOfServiceCommandHandler = acceptTutorTermsOfServiceCommandHandler;
     }
 
     [HttpPost]
@@ -46,14 +54,18 @@ public class TutorsController : ApiController
         IFormFile addressDocument,
         CancellationToken cancellationToken)
     {
-        var uploadVerificationDocumentsCommand = new UploadVerificationDocumentsCommand(
+        var uploadTutorVerificationDocumentsCommand = new UploadTutorVerificationDocumentsCommand(
             tutorId,
             identityDocumentFront.OpenReadStream(),
             identityDocumentBack.OpenReadStream(),
             addressDocument.OpenReadStream());
 
-        var uploadVerificationDocumentsCommandResult = await uploadVerificationDocumentsCommandHandler.Handle(uploadVerificationDocumentsCommand, cancellationToken);
+        var uploadVerificationDocumentsCommandResult = await uploadTutorVerificationDocumentsCommandHandler.Handle(uploadTutorVerificationDocumentsCommand, cancellationToken);
 
         return uploadVerificationDocumentsCommandResult.ToActionResult();
     }
+
+    [HttpPost]
+    public async Task<ActionResult> AcceptTermsOfService(AcceptTutorTermsOfServiceCommand command, CancellationToken cancellationToken)
+        => await Handle(acceptTutorTermsOfServiceCommandHandler, command, cancellationToken);
 }

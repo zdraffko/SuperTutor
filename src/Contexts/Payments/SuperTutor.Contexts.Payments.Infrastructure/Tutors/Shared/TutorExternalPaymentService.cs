@@ -179,6 +179,32 @@ internal class TutorExternalPaymentService : ITutorExternalPaymentService
         }
     }
 
+    public async Task<Result> UpdateTermsOfService(string accountId, TermsOfService termsOfService, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var accountUpdateOptions = new AccountUpdateOptions
+            {
+                TosAcceptance = new AccountTosAcceptanceOptions
+                {
+                    ServiceAgreement = termsOfService.Type,
+                    Date = termsOfService.DateOfAcceptance,
+                    Ip = termsOfService.IpOfAcceptance
+                }
+            };
+
+            var accountService = new AccountService();
+
+            await accountService.UpdateAsync(accountId, accountUpdateOptions, cancellationToken: cancellationToken);
+
+            return Result.Ok();
+        }
+        catch (Exception exception)
+        {
+            return Result.Fail(exception.Message);
+        }
+    }
+
     public async Task<Result<(string fileId, string fileName, string fileUrl)>> UploadIdentityDocument(Stream identityDocument, CancellationToken cancellationToken)
     {
         try

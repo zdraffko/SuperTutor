@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using SuperTutor.ApiGateways.Web.Models.Payments.AcceptTermsOfService;
 using SuperTutor.ApiGateways.Web.Models.Payments.UpdateAccountAddressInformation;
 using SuperTutor.ApiGateways.Web.Models.Payments.UpdateAccountPayoutInformation;
 using SuperTutor.ApiGateways.Web.Models.Payments.UpdateAccountPersonalInformation;
@@ -141,15 +140,17 @@ public class PaymentsController : ApiController
 
     [Authorize]
     [HttpPost]
-    public async Task<ActionResult> AcceptTermsOfService(AcceptTermsOfServiceRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult> AcceptTutorTermsOfService(CancellationToken cancellationToken)
     {
+        var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
         var paymentsRequest = new
         {
-            ConnectedAccountId = request.UserId,
-            UserIp = Request.HttpContext.Connection.RemoteIpAddress?.ToString()
+            TutorId = tutorId,
+            IpOfAcceptance = Request.HttpContext.Connection.RemoteIpAddress?.ToString()
         };
 
-        var response = await httpClient.PostAsJsonAsync($"{PaymentsApiUrl}/funds/AcceptTermsOfService", paymentsRequest, cancellationToken: cancellationToken);
+        var response = await httpClient.PostAsJsonAsync($"{PaymentsApiUrl}/tutors/AcceptTermsOfService", paymentsRequest, cancellationToken: cancellationToken);
 
         if (response.IsSuccessStatusCode)
         {
