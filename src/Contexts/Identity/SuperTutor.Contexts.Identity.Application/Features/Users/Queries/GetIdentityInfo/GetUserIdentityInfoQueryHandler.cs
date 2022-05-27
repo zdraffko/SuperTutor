@@ -18,7 +18,7 @@ internal class GetUserIdentityInfoQueryHandler : IQueryHandler<GetUserIdentityIn
             return Result.Fail("User not found");
         }
 
-        var queryPayload = new GetUserIdentityInfoQueryPayload(user.Email, user.Type);
+        var queryPayload = new GetUserIdentityInfoQueryPayload(user.Email, user.Type, user.FirstName, user.LastName);
 
         return Result.Ok(queryPayload);
     }

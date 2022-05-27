@@ -5,6 +5,8 @@ export interface RegisterUserRequest {
     email: string;
     password: string;
     type: UserType;
+    firstName: string;
+    lastName: string;
 }
 
 export interface RegisterUserResponse {

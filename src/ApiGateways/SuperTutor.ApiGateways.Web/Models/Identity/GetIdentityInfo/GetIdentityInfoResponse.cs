@@ -12,4 +12,10 @@ public class GetIdentityInfoResponse
 
     [JsonPropertyName("userType")]
     public int UserType { get; set; }
+
+    [JsonPropertyName("firstName")]
+    public string? FirstName { get; set; }
+
+    [JsonPropertyName("lastName")]
+    public string? LastName { get; set; }
 }

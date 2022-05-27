@@ -33,7 +33,7 @@ const SideBarFooter: React.FC = () => {
                     />
                     <Box sx={{ flex: 1 }}>
                         <Text size="sm" weight={500}>
-                            {user?.email}
+                            {`${user?.firstName} ${user?.lastName}`}
                         </Text>
                         <Text color="dimmed" size="xs">
                             {user?.email}
