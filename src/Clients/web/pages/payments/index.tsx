@@ -8,8 +8,9 @@ import useGetAreTutorVerificationDocumentsCollected from "modules/payments/hooks
 import useGetIsTutorAddressInformationCollected from "modules/payments/hooks/useGetIsTutorAddressInformationCollected";
 import useGetIsTutorBankAccountInformationCollected from "modules/payments/hooks/useGetIsTutorBankAccountInformationCollected";
 import useGetIsTutorPersonalInformationCollected from "modules/payments/hooks/useGetIsTutorPersonalInformationCollected";
+import { NextPage } from "next";
 
-const PaymentsPage: React.FC = () => {
+const PaymentsPage: NextPage = () => {
     const { areTutorTermsOfServiceAccepted, isGetAreTutorTermsOfServiceAcceptedLoading } = useGetAreTutorTermsOfServiceAccepted();
     const { areVerificationDocumentsCollected, isGetAreVerificationDocumentsCollectedLoading } = useGetAreTutorVerificationDocumentsCollected();
     const { isTutorAddressInformationCollected, isGetIsTutorAddressInformationCollectedLoading } = useGetIsTutorAddressInformationCollected();

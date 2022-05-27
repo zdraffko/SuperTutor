@@ -2,12 +2,13 @@ import AuthenticationProtectedPage from "components/AuthenticationProtectedPage"
 import MainLayout from "components/MainLayout";
 import { StudentInsideClassroom, StudentOutsideClassroom, TutorInsideClassroom, TutorOutsideClassroom } from "modules/classroom";
 import useClassroomHub from "modules/classroom/hooks/useClassroomHub";
+import { NextPage } from "next";
 import { useRef, useState } from "react";
 import Peer from "simple-peer";
 import { useAuth } from "utils/authentication/reactQueryAuth";
 import { UserType } from "utils/authentication/types";
 
-const ClassroomPage: React.FC = () => {
+const ClassroomPage: NextPage = () => {
     const [classroomName, setClassroomName] = useState("");
     const [isInsideClassroom, setIsInsideClassroom] = useState(false);
     const { classroomHub } = useClassroomHub();

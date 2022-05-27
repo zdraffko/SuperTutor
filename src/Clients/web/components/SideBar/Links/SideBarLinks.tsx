@@ -7,7 +7,7 @@ const tutorSideBarLinks = [
     { icon: <LayoutDashboard size={16} />, color: "blue", label: "Начално табло", href: "/dashboard" },
     { icon: <DeviceDesktop size={16} />, color: "orange", label: "Класна Стая", href: "/classroom" },
     { icon: <CalendarStats size={16} />, color: "violet", label: "Календар", href: "/" },
-    { icon: <Users size={16} />, color: "grape", label: "Профили", href: "/" },
+    { icon: <Users size={16} />, color: "grape", label: "Профили", href: "/profiles" },
     { icon: <CurrencyDollar size={16} />, color: "teal", label: "Плащания", href: "/payments" }
 ];
 
@@ -16,7 +16,7 @@ const studentSideBarLinks = [
     { icon: <DeviceDesktop size={16} />, color: "orange", label: "Класна Стая", href: "/classroom" },
     { icon: <Search size={16} />, color: "teal", label: "Каталог", href: "/" },
     { icon: <CalendarStats size={16} />, color: "violet", label: "Календар", href: "/" },
-    { icon: <User size={16} />, color: "grape", label: "Профил", href: "/" }
+    { icon: <User size={16} />, color: "grape", label: "Профил", href: "/profiles" }
 ];
 
 const SideBarLinks: React.FC = () => {
