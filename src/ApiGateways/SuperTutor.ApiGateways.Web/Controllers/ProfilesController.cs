@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SuperTutor.ApiGateways.Web.Models.Profiles.CreateTutorProfile;
+using SuperTutor.ApiGateways.Web.Models.Profiles.GetAllTutorProfilesForTutor;
 using SuperTutor.ApiGateways.Web.Options;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace SuperTutor.ApiGateways.Web.Controllers;
 
@@ -52,5 +54,32 @@ public class ProfilesController : ApiController
         var responseErrorMessage = await response.Content.ReadAsStringAsync(cancellationToken);
 
         return BadRequest(responseErrorMessage);
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<ActionResult<GetAllTutorProfilesForTutorResponse>> GetAllTutorProfilesForTutor(CancellationToken cancellationToken)
+    {
+        var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (tutorId == null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        var profilesRequest = new
+        {
+            TutorId = tutorId
+        };
+
+        var queryString = $"{ProfilesApiUrl}/TutorProfiles/GetAllForTutor?query={JsonSerializer.Serialize(profilesRequest)}";
+
+        var response = await httpClient.GetFromJsonAsync<GetAllTutorProfilesForTutorResponse>(queryString, cancellationToken: cancellationToken);
+
+        if (response is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        return Ok(response);
     }
 }
