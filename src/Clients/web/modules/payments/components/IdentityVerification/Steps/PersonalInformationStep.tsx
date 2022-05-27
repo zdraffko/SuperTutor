@@ -1,4 +1,4 @@
-import { Box, Button, Center, createStyles, Paper, TextInput } from "@mantine/core";
+import { Box, Button, Center, createStyles, Paper } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { useForm, zodResolver } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
@@ -10,8 +10,6 @@ import { convertDateToDateOnlyString } from "utils/dates";
 import { z } from "zod";
 
 const PersonalInformationFormSchema = z.object({
-    firstName: z.string(),
-    lastName: z.string(),
     dateOfBirth: z.date()
 });
 
@@ -32,8 +30,6 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ goToN
     const form = useForm({
         schema: zodResolver(PersonalInformationFormSchema),
         initialValues: {
-            firstName: "",
-            lastName: "",
             dateOfBirth: " "
         }
     });
@@ -63,32 +59,10 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ goToN
                     onSubmit={form.onSubmit(
                         async values =>
                             await updatePersonalInformation({
-                                firstName: values.firstName,
-                                lastName: values.lastName,
                                 dateOfBirth: convertDateToDateOnlyString(new Date(values.dateOfBirth))
                             })
                     )}
                 >
-                    <TextInput
-                        disabled={isUpdatePersonalInformationLoading}
-                        p="sm"
-                        label="Име"
-                        required
-                        placeholder="Иван"
-                        {...form.getInputProps("firstName")}
-                        onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля въведи своето име")}
-                        onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
-                    />
-                    <TextInput
-                        disabled={isUpdatePersonalInformationLoading}
-                        p="sm"
-                        label="Фамилия"
-                        required
-                        placeholder="Иванов"
-                        {...form.getInputProps("lastName")}
-                        onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля въведи своята фамилия")}
-                        onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
-                    />
                     <DatePicker
                         disabled={isUpdatePersonalInformationLoading}
                         p="sm"

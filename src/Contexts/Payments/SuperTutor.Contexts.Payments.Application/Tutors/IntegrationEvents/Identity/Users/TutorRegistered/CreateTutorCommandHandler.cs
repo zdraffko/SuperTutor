@@ -13,7 +13,7 @@ public class CreateTutorCommandHandler : ICommandHandler<CreateTutorCommand>
 
     public async Task<Result> Handle(CreateTutorCommand command, CancellationToken cancellationToken)
     {
-        var tutor = Tutor.Create(command.TutorId, command.Email);
+        var tutor = Tutor.Create(command.TutorId, command.Email, command.FirstName, command.LastName);
 
         await tutorRepository.Add(tutor, cancellationToken);
 

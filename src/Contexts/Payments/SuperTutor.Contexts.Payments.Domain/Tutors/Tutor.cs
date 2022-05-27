@@ -13,9 +13,18 @@ public class Tutor : AggregateRoot<TutorId, Guid>
     private Tutor() : base(new TutorId(Guid.Empty)) { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-    private Tutor(TutorId tutorId, string email) : base(tutorId) => Email = email;
+    private Tutor(TutorId tutorId, string email, string firstName, string lastName) : base(tutorId)
+    {
+        Email = email;
+        FirstName = firstName;
+        LastName = lastName;
+    }
 
     public string Email { get; private set; }
+
+    public string FirstName { get; private set; }
+
+    public string LastName { get; private set; }
 
     public ExternalPaymentAccount? ExternalPaymentAccount { get; private set; }
 
@@ -43,11 +52,11 @@ public class Tutor : AggregateRoot<TutorId, Guid>
 
     public bool? AreTermsOfServiceSyncedWithExternalPaymentAccount { get; private set; }
 
-    public static Tutor Create(TutorId tutorId, string email)
+    public static Tutor Create(TutorId tutorId, string email, string firstName, string lastName)
     {
-        var tutor = new Tutor(tutorId, email);
+        var tutor = new Tutor(tutorId, email, firstName, lastName);
 
-        tutor.RaiseDomainEvent(new TutorCreatedDomainEvent(tutor.Id, email));
+        tutor.RaiseDomainEvent(new TutorCreatedDomainEvent(tutor.Id, tutor.Email, tutor.FirstName, tutor.LastName));
 
         return tutor;
     }
@@ -146,6 +155,8 @@ public class Tutor : AggregateRoot<TutorId, Guid>
     {
         Id = domainEvent.TutorId;
         Email = domainEvent.Email;
+        FirstName = domainEvent.FirstName;
+        LastName = domainEvent.LastName;
     }
 
     private void Apply(TutorExternalPaymentAccountCreatedDomainEvent domainEvent) => ExternalPaymentAccount = domainEvent.ExternalPaymentAccount;

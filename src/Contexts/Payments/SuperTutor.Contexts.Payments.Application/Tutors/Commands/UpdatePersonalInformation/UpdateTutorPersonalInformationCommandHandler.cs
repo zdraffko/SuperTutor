@@ -20,7 +20,7 @@ internal class UpdateTutorPersonalInformationCommandHandler : ICommandHandler<Up
             return Result.Fail($"Tutor with Id {command.TutorId} was not found");
         }
 
-        var personalInformation = new PersonalInformation(command.FirstName, command.LastName, command.DateOfBirth.Day, command.DateOfBirth.Month, command.DateOfBirth.Year);
+        var personalInformation = new PersonalInformation(command.DateOfBirth.Day, command.DateOfBirth.Month, command.DateOfBirth.Year);
 
         tutor.UpdatePersonalInformation(personalInformation);
 

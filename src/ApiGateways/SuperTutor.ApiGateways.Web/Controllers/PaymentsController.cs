@@ -46,8 +46,6 @@ public class PaymentsController : ApiController
         var paymentsRequest = new
         {
             TutorId = tutorId,
-            request.FirstName,
-            request.LastName,
             request.DateOfBirth
         };
 

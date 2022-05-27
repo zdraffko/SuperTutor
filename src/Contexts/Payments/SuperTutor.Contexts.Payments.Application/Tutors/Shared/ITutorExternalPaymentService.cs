@@ -6,7 +6,7 @@ namespace SuperTutor.Contexts.Payments.Application.Tutors.Shared;
 
 public interface ITutorExternalPaymentService
 {
-    Task<Result<(string accountId, string personId)>> CreateAccount(TutorId tutorId, string tutorEmail, CancellationToken cancellationToken);
+    Task<Result<(string accountId, string personId)>> CreateAccount(TutorId tutorId, string tutorEmail, string firstName, string lastName, CancellationToken cancellationToken);
 
     Task<Result> UpdatePersonalInformation(string accountId, string personId, PersonalInformation personalInformation, CancellationToken cancellationToken);
 

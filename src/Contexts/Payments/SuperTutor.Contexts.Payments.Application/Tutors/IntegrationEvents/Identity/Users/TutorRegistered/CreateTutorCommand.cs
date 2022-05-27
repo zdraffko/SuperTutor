@@ -5,13 +5,19 @@ namespace SuperTutor.Contexts.Payments.Application.Tutors.IntegrationEvents.Iden
 
 public class CreateTutorCommand : Command
 {
-    public CreateTutorCommand(TutorId tutorId, string email)
+    public CreateTutorCommand(TutorId tutorId, string email, string firstName, string lastName)
     {
         TutorId = tutorId;
         Email = email;
+        FirstName = firstName;
+        LastName = lastName;
     }
 
     public TutorId TutorId { get; }
 
     public string Email { get; }
+
+    public string FirstName { get; }
+
+    public string LastName { get; }
 }

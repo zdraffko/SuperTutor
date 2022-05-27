@@ -8,7 +8,7 @@ namespace SuperTutor.Contexts.Payments.Infrastructure.Tutors.Shared;
 
 internal class TutorExternalPaymentService : ITutorExternalPaymentService
 {
-    public async Task<Result<(string accountId, string personId)>> CreateAccount(TutorId tutorId, string tutorEmail, CancellationToken cancellationToken)
+    public async Task<Result<(string accountId, string personId)>> CreateAccount(TutorId tutorId, string tutorEmail, string firstName, string lastName, CancellationToken cancellationToken)
     {
         try
         {
@@ -31,7 +31,9 @@ internal class TutorExternalPaymentService : ITutorExternalPaymentService
                 },
                 Individual = new AccountIndividualOptions
                 {
-                    Email = tutorEmail
+                    Email = tutorEmail,
+                    FirstName = firstName,
+                    LastName = lastName
                 },
                 DefaultCurrency = "BGN",
                 Settings = new AccountSettingsOptions
@@ -68,8 +70,6 @@ internal class TutorExternalPaymentService : ITutorExternalPaymentService
         {
             var personUpdateOptions = new PersonUpdateOptions
             {
-                FirstName = personalInformation.FirstName,
-                LastName = personalInformation.LastName,
                 Dob = new DobOptions
                 {
                     Day = personalInformation.DateOfBirthDay,
