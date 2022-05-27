@@ -19,13 +19,13 @@ internal class RegisterTutorCommandHandler : ICommandHandler<RegisterTutorComman
 
     public async Task<Result<RegisterTutorCommandResult>> Handle(RegisterTutorCommand command, CancellationToken cancellationToken)
     {
-        var registerResult = await userService.RegisterTutor(command.Email, command.Password);
+        var registerResult = await userService.RegisterTutor(command.Email, command.Password, command.FirstName, command.LastName);
         if (registerResult.IsFailed)
         {
             return registerResult.ToResult<RegisterTutorCommandResult>();
         }
 
-        integrationEventsService.Raise(new TutorRegisteredIntegrationEvent(registerResult.Value, command.Email));
+        integrationEventsService.Raise(new TutorRegisteredIntegrationEvent(registerResult.Value, command.Email, command.FirstName, command.LastName));
 
         var loginResult = await userService.Login(command.Email, command.Password);
         if (loginResult.IsFailed)

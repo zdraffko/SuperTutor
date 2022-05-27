@@ -47,7 +47,9 @@ public class IdentityController : ApiController
         var identityRegisterRequest = new
         {
             request.Email,
-            request.Password
+            request.Password,
+            request.FirstName,
+            request.LastName
         };
 
         var response = await httpClient.PostAsJsonAsync($"{IdentityApiUrl}{registerEndpoint}", identityRegisterRequest, cancellationToken: cancellationToken);

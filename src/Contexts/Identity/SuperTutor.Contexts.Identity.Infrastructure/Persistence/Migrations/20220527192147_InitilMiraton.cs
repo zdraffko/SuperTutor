@@ -4,7 +4,7 @@
 
 namespace SuperTutor.Contexts.Identity.Infrastructure.Persistence.Migrations;
 
-public partial class InitialMigration : Migration
+public partial class InitilMiraton : Migration
 {
     protected override void Up(MigrationBuilder migrationBuilder)
     {
@@ -30,6 +30,8 @@ public partial class InitialMigration : Migration
             {
                 Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                 Type = table.Column<int>(type: "int", nullable: false),
+                FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                 NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                 Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),

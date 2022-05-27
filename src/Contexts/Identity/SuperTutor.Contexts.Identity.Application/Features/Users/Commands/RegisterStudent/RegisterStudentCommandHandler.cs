@@ -12,7 +12,7 @@ internal class RegisterStudentCommandHandler : ICommandHandler<RegisterStudentCo
 
     public async Task<Result<RegisterStudentCommandResult>> Handle(RegisterStudentCommand command, CancellationToken cancellationToken)
     {
-        var registerResult = await userService.RegisterStudent(command.Email, command.Password);
+        var registerResult = await userService.RegisterStudent(command.Email, command.Password, command.FirstName, command.LastName);
         if (registerResult.IsFailed)
         {
             return registerResult.ToResult<RegisterStudentCommandResult>();

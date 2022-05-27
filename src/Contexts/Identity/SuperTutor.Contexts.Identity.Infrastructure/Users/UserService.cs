@@ -42,9 +42,11 @@ public class UserService : IUserService
         return Result.Ok(token);
     }
 
-    public async Task<Result<Guid>> RegisterTutor(string email, string plainPassword) => await Register(email, UserType.Tutor, plainPassword);
+    public async Task<Result<Guid>> RegisterTutor(string email, string plainPassword, string firstName, string lastName)
+        => await Register(email, UserType.Tutor, plainPassword, firstName, lastName);
 
-    public async Task<Result<Guid>> RegisterStudent(string email, string plainPassword) => await Register(email, UserType.Student, plainPassword);
+    public async Task<Result<Guid>> RegisterStudent(string email, string plainPassword, string firstName, string lastName)
+        => await Register(email, UserType.Student, plainPassword, firstName, lastName);
 
     public async Task<Result<Guid>> Delete(string email)
     {
@@ -66,9 +68,9 @@ public class UserService : IUserService
         return Result.Ok(user.Id);
     }
 
-    private async Task<Result<Guid>> Register(string email, UserType userType, string plainPassword)
+    private async Task<Result<Guid>> Register(string email, UserType userType, string plainPassword, string firstName, string lastName)
     {
-        var user = new User(email, userType);
+        var user = new User(email, userType, firstName, lastName);
         var createUserResult = await userManager.CreateAsync(user, plainPassword);
 
         if (!createUserResult.Succeeded)

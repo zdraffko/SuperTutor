@@ -12,8 +12,8 @@ using SuperTutor.Contexts.Identity.Infrastructure.Persistence;
 namespace SuperTutor.Contexts.Identity.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20220510185130_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20220527192147_InitilMiraton")]
+    partial class InitilMiraton
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -177,6 +177,14 @@ namespace SuperTutor.Contexts.Identity.Infrastructure.Persistence.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");

@@ -15,6 +15,8 @@ internal class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
         builder.Property(user => user.NormalizedEmail).IsRequired();
         builder.Property(user => user.UserName).IsRequired();
         builder.Property(user => user.NormalizedUserName).IsRequired();
+        builder.Property(user => user.FirstName).IsRequired();
+        builder.Property(user => user.LastName).IsRequired();
         builder.Property(user => user.PasswordHash).IsRequired();
         builder.Property(user => user.SecurityStamp).IsRequired();
         builder.Property(user => user.ConcurrencyStamp).IsRequired();

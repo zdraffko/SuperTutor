@@ -13,6 +13,8 @@ interface RegisterFormProps {
 
 const registerFormSchema = z
     .object({
+        firstName: z.string().min(1, "Моля въведи име"),
+        lastName: z.string().min(1, "Моля въведи фамилия"),
         email: z.string().email({ message: "Невалиден имейл" }),
         password: z.string().min(12, { message: "Паролата трябва да е с дължина поне 12 символа" }),
         confirmPassword: z.string()
@@ -26,6 +28,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ isTutorRegistration 
     const form = useForm({
         schema: zodResolver(registerFormSchema),
         initialValues: {
+            firstName: "",
+            lastName: "",
             email: "",
             password: "",
             confirmPassword: "",
@@ -39,7 +43,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ isTutorRegistration 
     const router = useRouter();
 
     return (
-        <Stack align="center">
+        <Stack align="center" mb="xl">
             <Group mt="xl">
                 <Logo width="70px" height="70px" />
                 <Title order={2} mt="xl" mb="xl">
@@ -71,6 +75,28 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ isTutorRegistration 
                 >
                     <TextInput
                         p="sm"
+                        label="Име"
+                        required
+                        placeholder="Иван"
+                        {...form.getInputProps("firstName")}
+                        onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля въведи име")}
+                        onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
+                    />
+                    <TextInput
+                        pl="sm"
+                        pr="sm"
+                        pb="sm"
+                        label="Фамилия"
+                        required
+                        placeholder="Иванов"
+                        {...form.getInputProps("lastName")}
+                        onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля въведи фамилия")}
+                        onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
+                    />
+                    <TextInput
+                        pl="sm"
+                        pr="sm"
+                        pb="sm"
                         label="Имейл"
                         required
                         placeholder="exampleuser@example.com"
@@ -82,6 +108,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ isTutorRegistration 
                         description="Паролата трябва да е с дължина поне 12 символа"
                         pl="sm"
                         pr="sm"
+                        pb="sm"
                         label="Парола"
                         required
                         {...form.getInputProps("password")}
@@ -89,7 +116,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ isTutorRegistration 
                         onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                     />
                     <PasswordInput
-                        p="sm"
+                        pl="sm"
+                        pr="sm"
+                        pb="sm"
                         label="Потвърди паролата"
                         required
                         {...form.getInputProps("confirmPassword")}
