@@ -3,7 +3,7 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.Create;
 
-public class CreateTutorProfileCommand : Command
+public class CreateTutorProfileCommand : Command<CreateTutorProfileCommandPayload>
 {
     public CreateTutorProfileCommand(TutorId tutorId, string about, int tutoringSubject, IEnumerable<int> tutoringGrades, decimal rateForOneHour)
     {

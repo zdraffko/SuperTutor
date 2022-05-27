@@ -5,7 +5,7 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.Create.Validators;
 
-internal class TutoringGradesValidator : ICommandValidator<CreateTutorProfileCommand>
+internal class TutoringGradesValidator : ICommandValidator<CreateTutorProfileCommand, CreateTutorProfileCommandPayload>
 {
     public Result Validate(CreateTutorProfileCommand command)
     {

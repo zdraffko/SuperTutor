@@ -18,7 +18,7 @@ namespace SuperTutor.Contexts.Profiles.Api.Controllers;
 
 public class TutorProfilesController : ApiController
 {
-    private readonly ICommandHandler<CreateTutorProfileCommand> createTutorProfileCommandHandler;
+    private readonly ICommandHandler<CreateTutorProfileCommand, CreateTutorProfileCommandPayload> createTutorProfileCommandHandler;
     private readonly ICommandHandler<DeleteTutorProfileCommand> deleteTutorProfileCommandHandler;
     private readonly ICommandHandler<ApproveTutorProfileCommand> approveTutorProfileCommandHandler;
     private readonly ICommandHandler<RequestTutorProfileRedactionCommand> requestTutorProfileRedactionCommandHandler;
@@ -32,7 +32,7 @@ public class TutorProfilesController : ApiController
     private readonly ICommandHandler<DecreaseTutorProfileRateForOneHourCommand> decreaseTutorProfileRateForOneHourCommandHandler;
 
     public TutorProfilesController(
-        ICommandHandler<CreateTutorProfileCommand> createTutorProfileCommandHandler,
+        ICommandHandler<CreateTutorProfileCommand, CreateTutorProfileCommandPayload> createTutorProfileCommandHandler,
         ICommandHandler<DeleteTutorProfileCommand> deleteTutorProfileCommandHandler,
         ICommandHandler<ApproveTutorProfileCommand> approveTutorProfileCommandHandler,
         ICommandHandler<RequestTutorProfileRedactionCommand> requestTutorProfileRedactionCommandHandler,
@@ -60,7 +60,7 @@ public class TutorProfilesController : ApiController
     }
 
     [HttpPost]
-    public async Task<ActionResult> Create(CreateTutorProfileCommand command, CancellationToken cancellationToken)
+    public async Task<ActionResult<CreateTutorProfileCommandPayload>> Create(CreateTutorProfileCommand command, CancellationToken cancellationToken)
         => await Handle(createTutorProfileCommandHandler, command, cancellationToken);
 
     [HttpPost]

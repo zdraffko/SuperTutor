@@ -1,0 +1,56 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using SuperTutor.ApiGateways.Web.Models.Profiles.CreateTutorProfile;
+using SuperTutor.ApiGateways.Web.Options;
+using SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
+using System.Security.Claims;
+
+namespace SuperTutor.ApiGateways.Web.Controllers;
+
+public class ProfilesController : ApiController
+{
+    private static readonly HttpClient httpClient = new();
+
+    private readonly string ProfilesApiUrl;
+    private readonly IHttpContextAccessor httpContextAccessor;
+
+    public ProfilesController(IOptionsSnapshot<ApiUrlsOptions> apiUrlsOptions, IHttpContextAccessor httpContextAccessor)
+    {
+        ProfilesApiUrl = apiUrlsOptions.Value.Profiles;
+        this.httpContextAccessor = httpContextAccessor;
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult> CreateTutorProfile(CreateTutorProfileRequest request, CancellationToken cancellationToken)
+    {
+        var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (tutorId == null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        var profilesRequest = new
+        {
+            TutorId = tutorId,
+            request.TutoringSubject,
+            request.TutoringGrades,
+            request.RateForOneHour,
+            request.About
+        };
+
+        var response = await httpClient.PostAsJsonAsync($"{ProfilesApiUrl}/TutorProfiles/Create", profilesRequest, cancellationToken: cancellationToken);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var responsePayload = await response.Content.ReadFromJsonAsync<CreateTutorProfileResponse>(cancellationToken: cancellationToken);
+
+            return Ok(responsePayload);
+        }
+
+        var responseErrorMessage = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        return BadRequest(responseErrorMessage);
+    }
+}

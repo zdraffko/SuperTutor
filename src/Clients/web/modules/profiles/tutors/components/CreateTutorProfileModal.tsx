@@ -1,8 +1,12 @@
 import { Button, Center, Modal, MultiSelect, NumberInput, Select, Textarea } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
+import { showNotification } from "@mantine/notifications";
+import { useEffect } from "react";
+import { Check, X } from "tabler-icons-react";
 import { tutoringGrades } from "types/tutoringGrades";
 import { tutoringSubjects } from "types/tutoringSubjects";
 import { z } from "zod";
+import useCreateTutorProfile from "../hooks/useCreateTutorProfile";
 
 const CreateTutorProfileFormSchema = z.object({
     tutoringSubject: z.string().min(1, "Моля избери предмет на преподаване"),
@@ -27,6 +31,9 @@ const CreateTutorProfileModal: React.FC<CreateTutorProfileModalProps> = ({ isOpe
         }
     });
 
+    const { createTutorProfile, isCreateTutorProfileFailed, isCreateTutorProfileLoading, isCreateTutorProfileSuccessful, createTutorProfileErrorMessage, resetCreateTutorProfileRequestState } =
+        useCreateTutorProfile();
+
     const tutoringSubjectSelectData = tutoringSubjects.map(tutoringSubject => ({
         value: tutoringSubject.value.toString(),
         label: tutoringSubject.name
@@ -37,10 +44,40 @@ const CreateTutorProfileModal: React.FC<CreateTutorProfileModalProps> = ({ isOpe
         label: tutoringGrade.name
     }));
 
+    useEffect(() => {
+        if (isCreateTutorProfileSuccessful) {
+            showNotification({
+                autoClose: 5000,
+                message: "Профилът бе създаден успешно",
+                color: "teal",
+                icon: <Check />
+            });
+
+            resetCreateTutorProfileRequestState();
+            form.reset();
+            onClose();
+
+            return;
+        }
+
+        if (isCreateTutorProfileFailed) {
+            showNotification({
+                autoClose: 5000,
+                title: "Възникна проблем при запазването на данните",
+                message: createTutorProfileErrorMessage,
+                color: "red",
+                icon: <X />
+            });
+
+            resetCreateTutorProfileRequestState();
+        }
+    }, [createTutorProfileErrorMessage, form, isCreateTutorProfileFailed, isCreateTutorProfileSuccessful, onClose, resetCreateTutorProfileRequestState]);
+
     return (
         <Modal size="xl" opened={isOpened} onClose={onClose} title="Създай нов профил">
-            <form onSubmit={form.onSubmit(async values => console.log(values))}>
+            <form onSubmit={form.onSubmit(async values => createTutorProfile(values))}>
                 <Select
+                    disabled={isCreateTutorProfileLoading}
                     required
                     label="Предмет"
                     placeholder="Избери предмет на перподаване"
@@ -51,6 +88,7 @@ const CreateTutorProfileModal: React.FC<CreateTutorProfileModalProps> = ({ isOpe
                     onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                 />
                 <MultiSelect
+                    disabled={isCreateTutorProfileLoading}
                     required
                     data={tutoringGradesSelectData}
                     label="Клас"
@@ -61,6 +99,7 @@ const CreateTutorProfileModal: React.FC<CreateTutorProfileModalProps> = ({ isOpe
                     onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                 />
                 <NumberInput
+                    disabled={isCreateTutorProfileLoading}
                     defaultValue={20}
                     label="Цена за час (лв)"
                     required
@@ -70,6 +109,7 @@ const CreateTutorProfileModal: React.FC<CreateTutorProfileModalProps> = ({ isOpe
                     onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                 />
                 <Textarea
+                    disabled={isCreateTutorProfileLoading}
                     minRows={4}
                     placeholder="Кратко описание за опита Ви по предмета"
                     label="Описание"
@@ -80,7 +120,7 @@ const CreateTutorProfileModal: React.FC<CreateTutorProfileModalProps> = ({ isOpe
                     onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                 />
                 <Center>
-                    <Button type="submit" fullWidth size="sm" style={{ width: "50%" }}>
+                    <Button type="submit" fullWidth size="sm" style={{ width: "50%" }} loading={isCreateTutorProfileLoading}>
                         Създай
                     </Button>
                 </Center>

@@ -11,7 +11,7 @@ const useAcceptTermsOfService = () => {
         newValue: GetAreTutorTermsOfServiceAcceptedResponse;
     };
 
-    const mutation = useMutation<void, AxiosError<string>, GetAreTutorTermsOfServiceAcceptedResponse, OptimisticUpdateContext>(acceptTermsOfService, {
+    const mutation = useMutation<void, AxiosError<string>, void, OptimisticUpdateContext>(acceptTermsOfService, {
         onMutate: async () => {
             await queryClient.cancelQueries(queryKeyThatIsDependantOnThisMutation);
 

@@ -4,7 +4,7 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Application.Validation.Commands;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.Create.Validators;
 
-internal class RateForOneHourValidator : ICommandValidator<CreateTutorProfileCommand>
+internal class RateForOneHourValidator : ICommandValidator<CreateTutorProfileCommand, CreateTutorProfileCommandPayload>
 {
     public Result Validate(CreateTutorProfileCommand command)
     {

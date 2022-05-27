@@ -9,7 +9,7 @@ using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
 namespace SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.Create;
 
-internal class CreateTutorProfileCommandHandler : ICommandHandler<CreateTutorProfileCommand>
+internal class CreateTutorProfileCommandHandler : ICommandHandler<CreateTutorProfileCommand, CreateTutorProfileCommandPayload>
 {
     private readonly ITutorProfileRepository tutorProfileRepository;
     private readonly IIntegrationEventsService integrationEventsService;
@@ -20,7 +20,7 @@ internal class CreateTutorProfileCommandHandler : ICommandHandler<CreateTutorPro
         this.integrationEventsService = integrationEventsService;
     }
 
-    public async Task<Result> Handle(CreateTutorProfileCommand command, CancellationToken cancellationToken)
+    public async Task<Result<CreateTutorProfileCommandPayload>> Handle(CreateTutorProfileCommand command, CancellationToken cancellationToken)
     {
         var tutoringSubject = Enumeration.FromValue<Subject>(command.TutoringSubject);
         var tutoringGrades = Enumeration.FromValues<Grade>(command.TutoringGrades).ToHashSet();
@@ -39,6 +39,8 @@ internal class CreateTutorProfileCommandHandler : ICommandHandler<CreateTutorPro
 
         integrationEventsService.Raise(tutorProfileCreatedIntegrationEvent);
 
-        return await Task.FromResult(Result.Ok());
+        var payload = new CreateTutorProfileCommandPayload(tutorProfile.Id);
+
+        return await Task.FromResult(Result.Ok(payload));
     }
 }

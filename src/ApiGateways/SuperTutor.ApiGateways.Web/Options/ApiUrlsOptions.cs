@@ -7,4 +7,6 @@ public class ApiUrlsOptions
     public string Identity { get; set; } = string.Empty;
 
     public string Payments { get; set; } = string.Empty;
+
+    public string Profiles { get; set; } = string.Empty;
 }
