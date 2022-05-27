@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace SuperTutor.Contexts.Catalog.Persistence.Shared.Migrations;
+namespace SuperTutor.Contexts.Catalog.Infrastructure.Persistence.Shared.Migrations;
 
 public partial class InitialMigration : Migration
 {
@@ -33,6 +33,17 @@ public partial class InitialMigration : Migration
                 IsActive = table.Column<bool>(type: "bit", nullable: false)
             },
             constraints: table => table.PrimaryKey("PK_TutorProfiles", x => x.Id));
+
+        migrationBuilder.CreateTable(
+            name: "Tutors",
+            schema: "catalog",
+            columns: table => new
+            {
+                Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                LastName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+            },
+            constraints: table => table.PrimaryKey("PK_Tutors", x => x.Id));
 
         migrationBuilder.CreateTable(
             name: "FavoriteFilters",
@@ -88,6 +99,10 @@ public partial class InitialMigration : Migration
 
         migrationBuilder.DropTable(
             name: "TutorProfileTutoringGrades",
+            schema: "catalog");
+
+        migrationBuilder.DropTable(
+            name: "Tutors",
             schema: "catalog");
 
         migrationBuilder.DropTable(

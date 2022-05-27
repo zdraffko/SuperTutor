@@ -17,8 +17,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Identity\SuperTutor.Contexts.Identity.IntegrationEvents\SuperTutor.Contexts.Identity.IntegrationEvents.csproj" />
     <ProjectReference Include="..\..\Profiles\SuperTutor.Contexts.Profiles.IntegrationEvents\SuperTutor.Contexts.Profiles.IntegrationEvents.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Catalog.Application\SuperTutor.Contexts.Catalog.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Persistence\Shared\Migrations\" />
   </ItemGroup>
 
 </Project>

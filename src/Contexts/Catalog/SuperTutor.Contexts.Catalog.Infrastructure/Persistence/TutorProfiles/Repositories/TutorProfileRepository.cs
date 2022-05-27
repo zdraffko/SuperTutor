@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SuperTutor.Contexts.Catalog.Domain.TutorProfiles;
-using SuperTutor.Contexts.Catalog.Infrastructure.Persistence.TutorProfiles;
 
 namespace SuperTutor.Contexts.Catalog.Infrastructure.Persistence.TutorProfiles.Repositories;
 

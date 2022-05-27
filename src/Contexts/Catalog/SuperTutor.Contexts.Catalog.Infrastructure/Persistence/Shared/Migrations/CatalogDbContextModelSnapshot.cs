@@ -8,7 +8,7 @@ using SuperTutor.Contexts.Catalog.Infrastructure.Persistence.Shared;
 
 #nullable disable
 
-namespace SuperTutor.Contexts.Catalog.Persistence.Shared.Migrations
+namespace SuperTutor.Contexts.Catalog.Infrastructure.Persistence.Shared.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
     partial class CatalogDbContextModelSnapshot : ModelSnapshot
@@ -53,6 +53,24 @@ namespace SuperTutor.Contexts.Catalog.Persistence.Shared.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TutorProfiles", "catalog");
+                });
+
+            modelBuilder.Entity("SuperTutor.Contexts.Catalog.Domain.Tutors.Tutor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tutors", "catalog");
                 });
 
             modelBuilder.Entity("SuperTutor.Contexts.Catalog.Domain.Students.Student", b =>

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SuperTutor.Contexts.Catalog.Infrastructure.Persistence.Shared;
 using SuperTutor.Contexts.Catalog.Infrastructure.Persistence.Students;
 using SuperTutor.Contexts.Catalog.Infrastructure.Persistence.TutorProfiles;
+using SuperTutor.Contexts.Catalog.Infrastructure.Persistence.Tutors;
 
 namespace SuperTutor.Contexts.Catalog.Startup.Modules;
 
@@ -12,5 +13,6 @@ internal class InfrastructureModule : Module
         .As<DbContext>()
         .As<IStudentsDbContext>()
         .As<ITutorProfilesDbContext>()
+        .As<ITutorsDbContext>()
         .InstancePerLifetimeScope();
 }
