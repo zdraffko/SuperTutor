@@ -104,7 +104,11 @@ public class ClassroomHub : Hub
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, classroomName, cancellationToken);
 
         var queryResult = await getClassroomStudentConnectionIdQueryHandler.Handle(new GetClassroomStudentConnectionIdQuery(classroomName), cancellationToken);
-        await Groups.RemoveFromGroupAsync(queryResult.Value.StudentConnectionId, classroomName, cancellationToken);
+
+        if (queryResult.Value.StudentConnectionId is not null)
+        {
+            await Groups.RemoveFromGroupAsync(queryResult.Value.StudentConnectionId, classroomName, cancellationToken);
+        }
     }
 
     public async Task LeaveRoom(string classroomName, string studentName)
