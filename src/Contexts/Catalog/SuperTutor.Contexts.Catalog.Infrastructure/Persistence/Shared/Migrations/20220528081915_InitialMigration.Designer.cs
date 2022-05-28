@@ -12,7 +12,7 @@ using SuperTutor.Contexts.Catalog.Infrastructure.Persistence.Shared;
 namespace SuperTutor.Contexts.Catalog.Infrastructure.Persistence.Shared.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20220527205945_InitialMigration")]
+    [Migration("20220528081915_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,9 @@ namespace SuperTutor.Contexts.Catalog.Infrastructure.Persistence.Shared.Migratio
                     b.Property<decimal>("RateForOneHour")
                         .HasPrecision(19, 4)
                         .HasColumnType("decimal(19,4)");
+
+                    b.Property<Guid>("TutorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 

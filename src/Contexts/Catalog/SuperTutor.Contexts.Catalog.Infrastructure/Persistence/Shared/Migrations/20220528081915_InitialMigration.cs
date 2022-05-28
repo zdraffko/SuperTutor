@@ -26,6 +26,7 @@ public partial class InitialMigration : Migration
             columns: table => new
             {
                 Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                TutorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                 About = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                 TutoringSubject_Value = table.Column<int>(type: "int", nullable: false),
                 TutoringSubject_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),

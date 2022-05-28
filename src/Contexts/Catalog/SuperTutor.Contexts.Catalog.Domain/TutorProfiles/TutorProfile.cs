@@ -1,5 +1,6 @@
 ﻿using SuperTutor.Contexts.Catalog.Domain.TutorProfiles.Constants;
 using SuperTutor.Contexts.Catalog.Domain.TutorProfiles.Models.ValueObjects;
+using SuperTutor.Contexts.Catalog.Domain.Tutors;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Aggregates;
 
@@ -14,14 +15,17 @@ public class TutorProfile : Entity<TutorProfileId, Guid>, IAggregateRoot
     private TutorProfile() : base(new TutorProfileId(Guid.Empty)) { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-    public TutorProfile(TutorProfileId id, string about, TutoringSubject tutoringSubject, List<TutoringGrade> tutoringGrades, decimal rateForOneHour, bool isActive) : base(id)
+    public TutorProfile(TutorId tutorId, TutorProfileId id, string about, TutoringSubject tutoringSubject, List<TutoringGrade> tutoringGrades, decimal rateForOneHour, bool isActive) : base(id)
     {
+        TutorId = tutorId;
         About = about.Length > 100 ? about[..TutorProfileConstants.AboutMaxLength] : about;
         TutoringSubject = tutoringSubject;
         this.tutoringGrades = tutoringGrades;
         RateForOneHour = rateForOneHour;
         IsActive = isActive;
     }
+
+    public TutorId TutorId { get; }
 
     public string About { get; private set; }
 

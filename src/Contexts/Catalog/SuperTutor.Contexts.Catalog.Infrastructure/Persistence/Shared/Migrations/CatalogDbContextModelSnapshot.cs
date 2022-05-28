@@ -50,6 +50,9 @@ namespace SuperTutor.Contexts.Catalog.Infrastructure.Persistence.Shared.Migratio
                         .HasPrecision(19, 4)
                         .HasColumnType("decimal(19,4)");
 
+                    b.Property<Guid>("TutorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.ToTable("TutorProfiles", "catalog");

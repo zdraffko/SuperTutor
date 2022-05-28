@@ -30,6 +30,7 @@ internal class CreateTutorProfileCommandHandler : ICommandHandler<CreateTutorPro
         tutorProfileRepository.Add(tutorProfile);
 
         var tutorProfileCreatedIntegrationEvent = new TutorProfileCreatedIntegrationEvent(
+            tutorProfile.TutorId.Value,
             tutorProfile.Id.Value,
             tutorProfile.About,
             new TutorProfileCreatedIntegrationEvent.Subject(tutorProfile.TutoringSubject.Value, tutorProfile.TutoringSubject.Name),

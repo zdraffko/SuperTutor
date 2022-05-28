@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SuperTutor.Contexts.Catalog.Domain.TutorProfiles;
 using SuperTutor.Contexts.Catalog.Domain.TutorProfiles.Constants;
+using SuperTutor.Contexts.Catalog.Domain.Tutors;
 
 namespace SuperTutor.Contexts.Catalog.Infrastructure.Persistence.TutorProfiles.EntityTypeConfigurations;
 
@@ -17,6 +18,12 @@ internal class TutorProfileEntityTypeConfiguration : IEntityTypeConfiguration<Tu
             .HasConversion(
                 tutorProfileId => tutorProfileId.Value,
                 tutorProfileIdValue => new TutorProfileId(tutorProfileIdValue))
+            .IsRequired();
+
+        builder.Property(tutorProfile => tutorProfile.TutorId)
+            .HasConversion(
+                tutorId => tutorId.Value,
+                tutorIdValue => new TutorId(tutorIdValue))
             .IsRequired();
 
         builder.Property(tutorProfile => tutorProfile.About)

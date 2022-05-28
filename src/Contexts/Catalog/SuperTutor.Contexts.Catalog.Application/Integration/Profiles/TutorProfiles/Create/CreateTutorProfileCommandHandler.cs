@@ -13,6 +13,7 @@ internal class CreateTutorProfileCommandHandler : ICommandHandler<CreateTutorPro
     public Task<Result> Handle(CreateTutorProfileCommand command, CancellationToken cancellationToken)
     {
         var tutorProfile = new TutorProfile(
+            command.TutorId,
             command.TutorProfileId,
             command.About,
             command.TutoringSubject,
