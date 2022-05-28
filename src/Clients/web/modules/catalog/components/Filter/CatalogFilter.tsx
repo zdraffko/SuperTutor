@@ -60,6 +60,8 @@ const CatalogFilter: React.FC<CatalogFilterProps> = ({ setTutorProfiles }) => {
             <Group position="apart">
                 <Group>
                     <Select
+                        searchable
+                        clearable
                         value={tutoringSubjectFilter}
                         onChange={setTutoringSubjectFilter}
                         disabled={isGetTutorProfilesByFilterLoading}
