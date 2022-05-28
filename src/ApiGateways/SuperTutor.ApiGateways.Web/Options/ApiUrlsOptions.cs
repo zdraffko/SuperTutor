@@ -9,4 +9,6 @@ public class ApiUrlsOptions
     public string Payments { get; set; } = string.Empty;
 
     public string Profiles { get; set; } = string.Empty;
+
+    public string Catalog { get; set; } = string.Empty;
 }
