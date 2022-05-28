@@ -12,7 +12,7 @@ internal class GetTutorProfilesByFilterQueryHandler : IQueryHandler<GetTutorProf
 
     public async Task<Result<GetTutorProfilesByFilterQueryPayload>> Handle(GetTutorProfilesByFilterQuery query, CancellationToken cancellationToken)
     {
-        var tutorProfiles = await tutorProfilesQueryRepository.GetByFilter(query.TutoringGrades, query.TutoringSubjects, query.MinRateForOneHour, query.MaxRateForOneHour, cancellationToken);
+        var tutorProfiles = await tutorProfilesQueryRepository.GetByFilter(query, cancellationToken);
         var payload = new GetTutorProfilesByFilterQueryPayload(tutorProfiles);
 
         return Result.Ok(payload);

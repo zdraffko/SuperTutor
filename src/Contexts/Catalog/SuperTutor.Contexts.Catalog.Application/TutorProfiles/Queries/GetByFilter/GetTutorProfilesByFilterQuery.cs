@@ -5,22 +5,22 @@ namespace SuperTutor.Contexts.Catalog.Application.TutorProfiles.Queries.GetByFil
 public class GetTutorProfilesByFilterQuery : Query<GetTutorProfilesByFilterQueryPayload>
 {
     public GetTutorProfilesByFilterQuery(
-        IEnumerable<int> tutoringSubjects,
-        IEnumerable<int> tutoringGrades,
-        decimal minRateForOneHour,
-        decimal maxRateForOneHour)
+        int? tutoringSubject,
+        IEnumerable<int>? tutoringGrades,
+        decimal? minRateForOneHour,
+        decimal? maxRateForOneHour)
     {
-        TutoringSubjects = tutoringSubjects;
+        TutoringSubject = tutoringSubject;
         TutoringGrades = tutoringGrades;
         MinRateForOneHour = minRateForOneHour;
         MaxRateForOneHour = maxRateForOneHour;
     }
 
-    public IEnumerable<int> TutoringSubjects { get; }
+    public int? TutoringSubject { get; }
 
-    public IEnumerable<int> TutoringGrades { get; }
+    public IEnumerable<int>? TutoringGrades { get; }
 
-    public decimal MinRateForOneHour { get; }
+    public decimal? MinRateForOneHour { get; }
 
-    public decimal MaxRateForOneHour { get; }
+    public decimal? MaxRateForOneHour { get; }
 }

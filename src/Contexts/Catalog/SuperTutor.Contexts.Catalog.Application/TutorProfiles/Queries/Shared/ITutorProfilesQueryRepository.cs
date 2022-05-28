@@ -4,5 +4,5 @@ namespace SuperTutor.Contexts.Catalog.Application.TutorProfiles.Queries.Shared;
 
 public interface ITutorProfilesQueryRepository
 {
-    Task<IEnumerable<GetTutorProfilesByFilterQueryPayload.TutorProfile>> GetByFilter(IEnumerable<int> tutoringGrades, IEnumerable<int> tutoringSubjects, decimal minRateForOneHour, decimal maxRateForOneHour, CancellationToken cancellationToken);
+    Task<IEnumerable<GetTutorProfilesByFilterQueryPayload.TutorProfile>> GetByFilter(GetTutorProfilesByFilterQuery query, CancellationToken cancellationToken);
 }
