@@ -4,7 +4,7 @@ namespace SuperTutor.Contexts.Schedule.Domain.TimeSlots.Models.Enumerations;
 
 public sealed class TimeSlotStatus : Enumeration
 {
-    private TimeSlotStatus(int value, string name) : base(value, name) { }
+    public TimeSlotStatus(int value, string name) : base(value, name) { }
 
     public static readonly TimeSlotStatus Assigned = new(1, nameof(Assigned));
 

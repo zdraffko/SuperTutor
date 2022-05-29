@@ -45,7 +45,9 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
             addedTimeSlot.Id,
             addedTimeSlot.TutorId,
             addedTimeSlot.Date,
-            addedTimeSlot.StartTime
+            addedTimeSlot.StartTime,
+            addedTimeSlot.Type,
+            addedTimeSlot.Status
         ));
 
         return addedTimeSlot;
@@ -106,8 +108,8 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
         TutorId = domainEvent.TutorId;
         Date = domainEvent.Date;
         StartTime = domainEvent.StartTime;
-        Type = TimeSlotType.Availability;
-        Status = TimeSlotStatus.Unassigned;
+        Type = domainEvent.Type;
+        Status = domainEvent.Status;
     }
 
     private void Apply(TimeSlotTimeOffTakenDomainEvent domainEvent)

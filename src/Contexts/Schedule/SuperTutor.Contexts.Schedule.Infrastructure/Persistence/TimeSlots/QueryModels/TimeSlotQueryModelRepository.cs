@@ -11,19 +11,29 @@ internal class TimeSlotQueryModelRepository : ITimeSlotQueryModelRepository
 
     public TimeSlotQueryModelRepository(ScheduleDbContext scheduleDbContext) => this.scheduleDbContext = scheduleDbContext;
 
+    public async Task Create(TimeSlotQueryModel timeSlotQueryModel, CancellationToken cancellationToken)
+    {
+        scheduleDbContext.TimeSlots.Add(timeSlotQueryModel);
+
+        await scheduleDbContext.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task<IEnumerable<GetTimeSlotsForWeekQueryPayload.TimeSlot>> GetForWeek(GetTimeSlotsForWeekQuery query, CancellationToken cancellationToken)
-        => await scheduleDbContext.TimeSlots
+    {
+        var res = await scheduleDbContext.TimeSlots
             .AsNoTracking()
             .Where(timeSlot
                 => timeSlot.TutorId == query.TutorId
-                && timeSlot.Date >= query.WeekStartDate
-                && timeSlot.Date <= query.WeekStartDate.AddDays(7))
-            .Select(timeSlot => new GetTimeSlotsForWeekQueryPayload.TimeSlot(
+                && timeSlot.Date >= query.WeekStartDate.ToDateTime(TimeOnly.MinValue)
+                && timeSlot.Date <= query.WeekStartDate.AddDays(7).ToDateTime(TimeOnly.MinValue))
+            .ToListAsync(cancellationToken);
+
+        return res.Select(timeSlot => new GetTimeSlotsForWeekQueryPayload.TimeSlot(
                     timeSlot.Id,
                     timeSlot.TutorId,
-                    timeSlot.Date,
-                    timeSlot.StartTime,
-                    timeSlot.Type.Name,
-                    timeSlot.Status.Name))
-            .ToListAsync(cancellationToken);
+                    DateOnly.FromDateTime(timeSlot.Date),
+                    TimeOnly.FromTimeSpan(timeSlot.StartTime),
+                    timeSlot.Type,
+                    timeSlot.Status));
+    }
 }

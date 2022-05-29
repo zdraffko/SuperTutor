@@ -20,8 +20,8 @@ public partial class InitialMigration : Migration
                 TutorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                 Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                 StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                Type = table.Column<int>(type: "int", nullable: false),
-                Status = table.Column<int>(type: "int", nullable: false)
+                Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
             },
             constraints: table => table.PrimaryKey("PK_TimeSlots", x => x.Id));
     }

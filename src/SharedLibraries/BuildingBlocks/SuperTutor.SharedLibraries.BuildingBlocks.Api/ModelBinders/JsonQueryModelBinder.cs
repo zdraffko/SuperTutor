@@ -29,6 +29,8 @@ internal class JsonQueryModelBinder : IModelBinder
 
             var jsonSerializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web);
             jsonSerializerOptions.Converters.Add(new IdentifierJsonConverterFactory());
+            jsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+            jsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
 
             var query = JsonSerializer.Deserialize(rawQuery, bindingContext.ModelType, jsonSerializerOptions);
             bindingContext.Result = ModelBindingResult.Success(query);

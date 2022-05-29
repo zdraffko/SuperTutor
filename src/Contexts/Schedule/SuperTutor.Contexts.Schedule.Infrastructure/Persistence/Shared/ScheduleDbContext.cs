@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SuperTutor.Contexts.Schedule.Infrastructure.Persistence.TimeSlots.QueryModels;
+using SuperTutor.Contexts.Schedule.Application.TimeSlots.Shared;
 
 namespace SuperTutor.Contexts.Schedule.Infrastructure.Persistence.Shared;
 

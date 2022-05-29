@@ -4,6 +4,7 @@ using SuperTutor.Contexts.Schedule.Application.TimeSlots.Commands.RemoveAvailabi
 using SuperTutor.Contexts.Schedule.Application.TimeSlots.Commands.RemoveTimeOff;
 using SuperTutor.Contexts.Schedule.Application.TimeSlots.Commands.TakeTimeOff;
 using SuperTutor.Contexts.Schedule.Application.TimeSlots.Queries.GetForWeek;
+using SuperTutor.SharedLibraries.BuildingBlocks.Api.Attributes;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Queries;
@@ -49,6 +50,6 @@ public class TimeSlotsController : ApiController
         => await Handle(removeTimeSlotTimeOffCommandHandler, command, cancellationToken);
 
     [HttpGet]
-    public async Task<ActionResult<GetTimeSlotsForWeekQueryPayload>> GetForWeek(GetTimeSlotsForWeekQuery command, CancellationToken cancellationToken)
-        => await Handle(getTimeSlotsForWeekQueryHandler, command, cancellationToken);
+    public async Task<ActionResult<GetTimeSlotsForWeekQueryPayload>> GetForWeek([FromJsonQuery] GetTimeSlotsForWeekQuery query, CancellationToken cancellationToken)
+        => await Handle(getTimeSlotsForWeekQueryHandler, query, cancellationToken);
 }

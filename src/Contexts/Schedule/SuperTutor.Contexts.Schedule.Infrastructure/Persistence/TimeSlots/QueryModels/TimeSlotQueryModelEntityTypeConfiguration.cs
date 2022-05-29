@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SuperTutor.Contexts.Schedule.Application.TimeSlots.Shared;
 using SuperTutor.Contexts.Schedule.Domain.TimeSlots;
-using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Models.Enumerations;
 using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Models.ValueObjects.Identifiers;
-using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Enumerations;
 
 namespace SuperTutor.Contexts.Schedule.Infrastructure.Persistence.TimeSlots.QueryModels;
 
@@ -27,28 +26,12 @@ internal class TimeSlotQueryModelEntityTypeConfiguration : IEntityTypeConfigurat
                 tutorIdValue => new TutorId(tutorIdValue))
             .IsRequired();
 
-        builder.Property(timeSlot => timeSlot.Date)
-            .HasConversion(
-                date => date.ToDateTime(TimeOnly.MinValue),
-                dateTime => DateOnly.FromDateTime(dateTime))
-            .IsRequired();
+        builder.Property(timeSlot => timeSlot.Date).IsRequired();
 
-        builder.Property(timeSlot => timeSlot.StartTime)
-            .HasConversion(
-                time => time.ToTimeSpan(),
-                timeSpan => TimeOnly.FromTimeSpan(timeSpan))
-            .IsRequired();
+        builder.Property(timeSlot => timeSlot.StartTime).IsRequired();
 
-        builder.Property(timeSlot => timeSlot.Type)
-            .HasConversion(
-                timeSlotType => timeSlotType.Value,
-                timeSlotTypeValue => Enumeration.FromValue<TimeSlotType>(timeSlotTypeValue)!)
-            .IsRequired();
+        builder.Property(timeSlot => timeSlot.Type).IsRequired();
 
-        builder.Property(timeSlot => timeSlot.Status)
-            .HasConversion(
-                timeSlotStatus => timeSlotStatus.Value,
-                timeSlotStatusValue => Enumeration.FromValue<TimeSlotStatus>(timeSlotStatusValue)!)
-            .IsRequired();
+        builder.Property(timeSlot => timeSlot.Status).IsRequired();
     }
 }

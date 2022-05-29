@@ -12,7 +12,7 @@ using SuperTutor.Contexts.Schedule.Infrastructure.Persistence.Shared;
 namespace SuperTutor.Contexts.Schedule.Infrastructure.Persistence.Shared.Migrations
 {
     [DbContext(typeof(ScheduleDbContext))]
-    [Migration("20220529181342_InitialMigration")]
+    [Migration("20220529200106_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace SuperTutor.Contexts.Schedule.Infrastructure.Persistence.Shared.Migrati
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("SuperTutor.Contexts.Schedule.Infrastructure.Persistence.TimeSlots.QueryModels.TimeSlotQueryModel", b =>
+            modelBuilder.Entity("SuperTutor.Contexts.Schedule.Application.TimeSlots.Shared.TimeSlotQueryModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -36,14 +36,16 @@ namespace SuperTutor.Contexts.Schedule.Infrastructure.Persistence.Shared.Migrati
                     b.Property<TimeSpan>("StartTime")
                         .HasColumnType("time");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("TutorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
