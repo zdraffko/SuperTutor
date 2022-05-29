@@ -13,7 +13,7 @@ internal class GetUserIdentityInfoQueryHandler : IQueryHandler<GetUserIdentityIn
     public async Task<Result<GetUserIdentityInfoQueryPayload>> Handle(GetUserIdentityInfoQuery query, CancellationToken cancellationToken)
     {
         var user = await userService.GetById(query.UserId);
-        if (user == null)
+        if (user is null)
         {
             return Result.Fail("User not found");
         }

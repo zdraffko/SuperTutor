@@ -11,4 +11,6 @@ public class ApiUrlsOptions
     public string Profiles { get; set; } = string.Empty;
 
     public string Catalog { get; set; } = string.Empty;
+
+    public string Schedule { get; set; } = string.Empty;
 }

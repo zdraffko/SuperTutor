@@ -38,7 +38,7 @@ public class PaymentsController : ApiController
     public async Task<ActionResult> UpdateTutorPersonalInformation(UpdateAccountPersonalInformationRequest request, CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (tutorId == null)
+        if (tutorId is null)
         {
             return BadRequest("Възнокна неочаквана грешка");
         }
@@ -66,7 +66,7 @@ public class PaymentsController : ApiController
     public async Task<ActionResult> UpdateTutorAddressInformation(UpdateAccountAddressInformationRequest request, CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (tutorId == null)
+        if (tutorId is null)
         {
             return BadRequest("Възнокна неочаквана грешка");
         }
@@ -98,7 +98,7 @@ public class PaymentsController : ApiController
     public async Task<ActionResult> UpdateTutorPayoutInformation(UpdateAccountPayoutInformationRequest request, CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (tutorId == null)
+        if (tutorId is null)
         {
             return BadRequest("Възнокна неочаквана грешка");
         }
@@ -132,7 +132,7 @@ public class PaymentsController : ApiController
         CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (tutorId == null)
+        if (tutorId is null)
         {
             return BadRequest("Възнокна неочаквана грешка");
         }
@@ -162,7 +162,7 @@ public class PaymentsController : ApiController
     public async Task<ActionResult> AcceptTutorTermsOfService(CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (tutorId == null)
+        if (tutorId is null)
         {
             return BadRequest("Възнокна неочаквана грешка");
         }
@@ -190,7 +190,7 @@ public class PaymentsController : ApiController
     public async Task<ActionResult<bool>> GetAreTutorVerificationDocumentsCollected(CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (tutorId == null)
+        if (tutorId is null)
         {
             return BadRequest("Възнокна неочаквана грешка");
         }
@@ -217,7 +217,7 @@ public class PaymentsController : ApiController
     public async Task<ActionResult<bool>> GetAreTutorTermsOfServiceAccepted(CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (tutorId == null)
+        if (tutorId is null)
         {
             return BadRequest("Възнокна неочаквана грешка");
         }
@@ -244,7 +244,7 @@ public class PaymentsController : ApiController
     public async Task<ActionResult<bool>> GetIsTutorAddressInformationCollected(CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (tutorId == null)
+        if (tutorId is null)
         {
             return BadRequest("Възнокна неочаквана грешка");
         }
@@ -271,7 +271,7 @@ public class PaymentsController : ApiController
     public async Task<ActionResult<bool>> GetIsTutorPersonalInformationCollected(CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (tutorId == null)
+        if (tutorId is null)
         {
             return BadRequest("Възнокна неочаквана грешка");
         }
@@ -298,7 +298,7 @@ public class PaymentsController : ApiController
     public async Task<ActionResult<bool>> GetIsTutorBankAccountInformationCollected(CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (tutorId == null)
+        if (tutorId is null)
         {
             return BadRequest("Възнокна неочаквана грешка");
         }

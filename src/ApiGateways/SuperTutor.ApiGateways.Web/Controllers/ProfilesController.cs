@@ -28,7 +28,7 @@ public class ProfilesController : ApiController
     public async Task<ActionResult> CreateTutorProfile(CreateTutorProfileRequest request, CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (tutorId == null)
+        if (tutorId is null)
         {
             return BadRequest("Възнокна неочаквана грешка");
         }
@@ -61,7 +61,7 @@ public class ProfilesController : ApiController
     public async Task<ActionResult<GetAllTutorProfilesForTutorResponse>> GetAllTutorProfilesForTutor(CancellationToken cancellationToken)
     {
         var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (tutorId == null)
+        if (tutorId is null)
         {
             return BadRequest("Възнокна неочаквана грешка");
         }

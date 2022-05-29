@@ -65,7 +65,7 @@ public class IdentityController : ApiController
     public async Task<ActionResult<GetIdentityInfoResponse>> GetIdentityInfo(CancellationToken cancellationToken)
     {
         var userId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (userId == null)
+        if (userId is null)
         {
             return BadRequest("Възнокна неочаквана грешка");
         }
