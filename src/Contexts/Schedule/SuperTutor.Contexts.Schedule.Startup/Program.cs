@@ -3,11 +3,13 @@ using Autofac.Extensions.DependencyInjection;
 using Elastic.CommonSchema.Serilog;
 using MassTransit;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Debugging;
 using Serilog.Sinks.Elasticsearch;
 using SuperTutor.Contexts.Schedule.Api;
 using SuperTutor.Contexts.Schedule.Infrastructure;
+using SuperTutor.Contexts.Schedule.Infrastructure.Persistence.Shared;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.HealthChecks.Extensions;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
 
@@ -49,6 +51,7 @@ try
             .ReadFrom.Configuration(hostBuilderContext.Configuration));
 
     builder.Services.AddHealthChecks()
+        .AddSqlServer(builder.Configuration["Database:ConnectionString"], name: "Database", healthQuery: "select top (1) [Id] from schedule.TimeSlots")
         .AddRabbitMQ(builder.Configuration["RabbitMq:Url"], name: "RabbitMq")
         .AddElasticsearch(options => options
                 .UseServer(elasticsearchNodeUrls.First().AbsoluteUri)
@@ -58,6 +61,7 @@ try
     // Add library services to the container via extension methods provided by the libraries.
 
     builder.Services.AddEventStoreClient(builder.Configuration["EventStore:Url"]);
+    builder.Services.AddDbContext<ScheduleDbContext>(options => options.UseSqlServer(builder.Configuration["Database:ConnectionString"]));
 
     builder.Services
         .AddControllers()
