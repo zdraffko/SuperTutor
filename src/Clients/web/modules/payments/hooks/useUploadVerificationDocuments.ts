@@ -32,7 +32,7 @@ const useUploadVerificationDocuments = () => {
         isUploadVerificationDocumentsLoading: mutation.isLoading,
         isUploadVerificationDocumentsSuccessful: mutation.isSuccess,
         isUploadVerificationDocumentsFailed: mutation.isError,
-        uploadVerificationDocumentsErrorMessage: typeof mutation.error?.response?.data === typeof String ? mutation.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно.",
+        uploadVerificationDocumentsErrorMessage: typeof mutation.error?.response?.data === "string" ? mutation.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно.",
         resetUploadVerificationDocumentsRequestState: mutation.reset
     };
 };

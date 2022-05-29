@@ -32,7 +32,7 @@ const useAcceptTermsOfService = () => {
         isAcceptTermsOfServiceLoading: mutation.isLoading,
         isAcceptTermsOfServiceSuccessful: mutation.isSuccess,
         isAcceptTermsOfServiceFailed: mutation.isError,
-        acceptTermsOfServiceErrorMessage: typeof mutation.error?.response?.data === typeof String ? mutation.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно.",
+        acceptTermsOfServiceErrorMessage: typeof mutation.error?.response?.data === "string" ? mutation.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно.",
         resetAcceptTermsOfServiceRequestState: mutation.reset
     };
 };

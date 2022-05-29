@@ -32,7 +32,7 @@ const useUpdatePersonalInformation = () => {
         isUpdatePersonalInformationLoading: mutation.isLoading,
         isUpdatePersonalInformationSuccessful: mutation.isSuccess,
         isUpdatePersonalInformationFailed: mutation.isError,
-        updatePersonalInformationErrorMessage: typeof mutation.error?.response?.data === typeof String ? mutation.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно.",
+        updatePersonalInformationErrorMessage: typeof mutation.error?.response?.data === "string" ? mutation.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно.",
         resetUpdatePersonalInformationRequestState: mutation.reset
     };
 };

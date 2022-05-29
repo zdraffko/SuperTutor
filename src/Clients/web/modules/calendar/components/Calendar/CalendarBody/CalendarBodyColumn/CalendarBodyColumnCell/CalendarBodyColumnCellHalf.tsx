@@ -24,7 +24,7 @@ const CalendarBodyColumnCellHalf: React.FC<CalendarBodyColumnCellHalfProps> = ({
         if (isAddAvailabilityFailed) {
             showNotification({
                 autoClose: 5000,
-                title: "Възникна проблем при запазването на данните",
+                title: "Възникна проблем при добавянето на наличност",
                 message: addAvailabilityErrorMessage,
                 color: "red",
                 icon: <X />

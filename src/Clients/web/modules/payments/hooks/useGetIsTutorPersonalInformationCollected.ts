@@ -12,7 +12,7 @@ const useGetIsTutorPersonalInformationCollected = () => {
         isGetIsTutorPersonalInformationCollectedLoading: query.isLoading,
         isGetIsTutorPersonalInformationCollectedSuccessful: query.isSuccess,
         isGetIsTutorPersonalInformationCollectedFailed: query.isError,
-        getIsTutorPersonalInformationCollectedErrorMessage: typeof query.error?.response?.data === typeof String ? query.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно."
+        getIsTutorPersonalInformationCollectedErrorMessage: typeof query.error?.response?.data === "string" ? query.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно."
     };
 };
 

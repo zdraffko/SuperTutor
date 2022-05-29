@@ -12,7 +12,7 @@ const useGetIsTutorBankAccountInformationCollected = () => {
         isGetIsTutorBankAccountInformationCollectedLoading: query.isLoading,
         isGetIsTutorBankAccountInformationCollectedSuccessful: query.isSuccess,
         isGetIsTutorBankAccountInformationCollectedFailed: query.isError,
-        getIsTutorBankAccountInformationCollectedErrorMessage: typeof query.error?.response?.data === typeof String ? query.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно."
+        getIsTutorBankAccountInformationCollectedErrorMessage: typeof query.error?.response?.data === "string" ? query.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно."
     };
 };
 

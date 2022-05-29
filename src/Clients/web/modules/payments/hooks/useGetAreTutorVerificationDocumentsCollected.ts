@@ -12,7 +12,7 @@ const useGetAreTutorVerificationDocumentsCollected = () => {
         isGetAreVerificationDocumentsCollectedLoading: query.isLoading,
         isGetAreVerificationDocumentsCollectedSuccessful: query.isSuccess,
         isGetAreVerificationDocumentsCollectedFailed: query.isError,
-        getAreVerificationDocumentsCollectedErrorMessage: typeof query.error?.response?.data === typeof String ? query.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно."
+        getAreVerificationDocumentsCollectedErrorMessage: typeof query.error?.response?.data === "string" ? query.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно."
     };
 };
 

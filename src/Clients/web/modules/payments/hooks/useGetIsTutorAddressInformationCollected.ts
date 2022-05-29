@@ -12,7 +12,7 @@ const useGetIsTutorAddressInformationCollected = () => {
         isGetIsTutorAddressInformationCollectedLoading: query.isLoading,
         isGetIsTutorAddressInformationCollectedSuccessful: query.isSuccess,
         isGetIsTutorAddressInformationCollectedFailed: query.isError,
-        getIsTutorAddressInformationCollectedErrorMessage: typeof query.error?.response?.data === typeof String ? query.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно."
+        getIsTutorAddressInformationCollectedErrorMessage: typeof query.error?.response?.data === "string" ? query.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно."
     };
 };
 

@@ -32,7 +32,7 @@ const useUpdateAddressInformation = () => {
         isUpdateAddressInformationLoading: mutation.isLoading,
         isUpdateAddressInformationSuccessful: mutation.isSuccess,
         isUpdateAddressInformationFailed: mutation.isError,
-        updateAddressInformationErrorMessage: typeof mutation.error?.response?.data === typeof String ? mutation.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно.",
+        updateAddressInformationErrorMessage: typeof mutation.error?.response?.data === "string" ? mutation.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно.",
         resetUpdateAddressInformationRequestState: mutation.reset
     };
 };

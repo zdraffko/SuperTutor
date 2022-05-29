@@ -15,7 +15,7 @@ const useGetTutorProfilesByFilter = (request: GetTutorProfilesByFilterRequest) =
         isGetTutorProfilesByFilterLoading: query.isFetching,
         isGetTutorProfilesByFilterSuccessful: query.isSuccess,
         isGetTutorProfilesByFilterFailed: query.isError,
-        getTutorProfilesByFilterErrorMessage: typeof query.error?.response?.data === typeof String ? query.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно."
+        getTutorProfilesByFilterErrorMessage: typeof query.error?.response?.data === "string" ? query.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно."
     };
 };
 

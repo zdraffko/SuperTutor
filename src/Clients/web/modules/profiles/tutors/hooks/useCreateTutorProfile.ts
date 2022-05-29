@@ -16,7 +16,7 @@ const useCreateTutorProfile = () => {
         isCreateTutorProfileLoading: mutation.isLoading,
         isCreateTutorProfileSuccessful: mutation.isSuccess,
         isCreateTutorProfileFailed: mutation.isError,
-        createTutorProfileErrorMessage: typeof mutation.error?.response?.data === typeof String ? mutation.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно.",
+        createTutorProfileErrorMessage: typeof mutation.error?.response?.data === "string" ? mutation.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно.",
         resetCreateTutorProfileRequestState: mutation.reset
     };
 };

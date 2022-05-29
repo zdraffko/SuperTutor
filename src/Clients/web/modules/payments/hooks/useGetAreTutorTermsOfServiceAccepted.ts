@@ -10,7 +10,7 @@ const useGetAreTutorTermsOfServiceAccepted = () => {
         isGetAreTutorTermsOfServiceAcceptedLoading: query.isLoading,
         isGetAreTutorTermsOfServiceAcceptedSuccessful: query.isSuccess,
         isGetAreTutorTermsOfServiceAcceptedFailed: query.isError,
-        getAreTutorTermsOfServiceAcceptedErrorMessage: typeof query.error?.response?.data === typeof String ? query.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно."
+        getAreTutorTermsOfServiceAcceptedErrorMessage: typeof query.error?.response?.data === "string" ? query.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно."
     };
 };
 

@@ -32,7 +32,7 @@ const useUpdatePayoutInformation = () => {
         isUpdatePayoutInformationLoading: mutation.isLoading,
         isUpdatePayoutInformationSuccessful: mutation.isSuccess,
         isUpdatePayoutInformationFailed: mutation.isError,
-        updatePayoutInformationErrorMessage: typeof mutation.error?.response?.data === typeof String ? mutation.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно.",
+        updatePayoutInformationErrorMessage: typeof mutation.error?.response?.data === "string" ? mutation.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно.",
         resetUpdatePayoutInformationRequestState: mutation.reset
     };
 };

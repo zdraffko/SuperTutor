@@ -10,7 +10,7 @@ const useAddAvailability = () => {
         isAddAvailabilityLoading: mutation.isLoading,
         isAddAvailabilitySuccessful: mutation.isSuccess,
         isAddAvailabilityFailed: mutation.isError,
-        addAvailabilityErrorMessage: typeof mutation.error?.response?.data === typeof String ? mutation.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно.",
+        addAvailabilityErrorMessage: typeof mutation.error?.response?.data === "string" ? mutation.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно.",
         resetAddAvailabilityRequestState: mutation.reset
     };
 };

@@ -10,7 +10,7 @@ const useGetAllTutorProfilesForTutor = () => {
         isGetAllTutorProfilesForTutorLoading: query.isLoading,
         isGetAllTutorProfilesForTutorSuccessful: query.isSuccess,
         isGetAllTutorProfilesForTutorFailed: query.isError,
-        getAllTutorProfilesForTutorErrorMessage: typeof query.error?.response?.data === typeof String ? query.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно."
+        getAllTutorProfilesForTutorErrorMessage: typeof query.error?.response?.data === "string" ? query.error?.response?.data : "Неочаквана грешка. Опитай пак по-късно."
     };
 };
 
