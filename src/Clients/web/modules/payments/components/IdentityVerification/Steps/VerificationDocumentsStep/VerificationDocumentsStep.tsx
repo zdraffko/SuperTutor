@@ -2,7 +2,6 @@ import { Box, Button, Center, createStyles, InputWrapper, Paper, Text } from "@m
 import { Dropzone, MIME_TYPES } from "@mantine/dropzone";
 import { useForm, zodResolver } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
-import "dayjs/locale/bg";
 import useUploadVerificationDocuments from "modules/payments/hooks/useUploadVerificationDocuments";
 import { useEffect } from "react";
 import { X } from "tabler-icons-react";

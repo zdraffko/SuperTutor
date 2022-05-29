@@ -5,12 +5,14 @@ export const CalendarSideBar: React.FC = () => (
         <Grid.Col span={1}>
             <Paper style={{ height: "103px" }}></Paper>
         </Grid.Col>
-        {Array.from(Array(23).keys()).map(index => (
-            <Grid.Col key={index} span={1}>
-                <Paper style={{ height: "103px" }}>
-                    <Center>{index + 1 < 10 ? `0${index + 1}` : index + 1}:00</Center>
-                </Paper>
-            </Grid.Col>
-        ))}
+        {Array.from(Array(23).keys())
+            .map(index => ++index)
+            .map(hour => (
+                <Grid.Col key={hour} span={1}>
+                    <Paper style={{ height: "103px" }}>
+                        <Center>{hour < 10 ? `0${hour}` : hour}:00</Center>
+                    </Paper>
+                </Grid.Col>
+            ))}
     </Grid>
 );

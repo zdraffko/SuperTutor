@@ -1,7 +1,6 @@
 import { Box, Button, Center, createStyles, Paper, Select, TextInput } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
-import "dayjs/locale/bg";
 import useUpdatePayoutInformation from "modules/payments/hooks/useUpdatePayoutInformation";
 import { useEffect } from "react";
 import { X } from "tabler-icons-react";
