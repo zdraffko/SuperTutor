@@ -6,7 +6,7 @@ import { UserType } from "utils/authentication/types";
 const tutorSideBarLinks = [
     { icon: <LayoutDashboard size={16} />, color: "blue", label: "Начално табло", href: "/dashboard" },
     { icon: <DeviceDesktop size={16} />, color: "orange", label: "Класна Стая", href: "/classroom" },
-    { icon: <CalendarStats size={16} />, color: "violet", label: "Календар", href: "/" },
+    { icon: <CalendarStats size={16} />, color: "violet", label: "Календар", href: "/calendar" },
     { icon: <Users size={16} />, color: "grape", label: "Профили", href: "/profiles" },
     { icon: <CurrencyDollar size={16} />, color: "teal", label: "Плащания", href: "/payments" }
 ];
@@ -15,7 +15,7 @@ const studentSideBarLinks = [
     { icon: <LayoutDashboard size={16} />, color: "blue", label: "Начално табло", href: "/dashboard" },
     { icon: <DeviceDesktop size={16} />, color: "orange", label: "Класна Стая", href: "/classroom" },
     { icon: <Search size={16} />, color: "teal", label: "Каталог", href: "/catalog" },
-    { icon: <CalendarStats size={16} />, color: "violet", label: "Календар", href: "/" },
+    { icon: <CalendarStats size={16} />, color: "violet", label: "Календар", href: "/calendar" },
     { icon: <User size={16} />, color: "grape", label: "Профил", href: "/profiles" }
 ];
 
