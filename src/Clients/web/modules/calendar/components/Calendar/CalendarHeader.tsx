@@ -5,7 +5,7 @@ interface CalendarHeaderProps {
     selectedDateRange: Dayjs[];
 }
 
-export const CalendarHeader: React.FC<CalendarHeaderProps> = ({ selectedDateRange }) => (
+const CalendarHeader: React.FC<CalendarHeaderProps> = ({ selectedDateRange }) => (
     <Grid columns={8} gutter={0}>
         <Grid.Col span={1}>
             <Paper style={{ height: "100%" }}></Paper>
@@ -24,3 +24,5 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({ selectedDateRang
         ))}
     </Grid>
 );
+
+export default CalendarHeader;

@@ -1,29 +1,20 @@
-import { Grid, Paper } from "@mantine/core";
 import AuthenticationProtectedPage from "components/AuthenticationProtectedPage";
 import MainLayout from "components/MainLayout";
-import { CalendarBody, CalendarHeader, CalendarSideBar } from "modules/calendar";
+import { Calendar, CalendarToolbar } from "modules/calendar";
+import { CalendarRedactionMode } from "modules/calendar/types";
 import { NextPage } from "next";
+import { useState } from "react";
 import { DayJs, dayJsRange } from "utils/dates";
 
 const CalendarPage: NextPage = () => {
     const selectedDateRange = dayJsRange(DayJs(), DayJs().add(5, "days"));
+    const [selectedRedactionMode, setSelectedRedactionMode] = useState<CalendarRedactionMode>("AddAvailability");
 
     return (
         <AuthenticationProtectedPage>
             <MainLayout>
-                <Paper m="xs">
-                    <Grid columns={8} gutter={0}>
-                        <Grid.Col span={8} style={{ position: "sticky", top: "0" }}>
-                            <CalendarHeader selectedDateRange={selectedDateRange} />
-                        </Grid.Col>
-                        <Grid.Col span={1}>
-                            <CalendarSideBar />
-                        </Grid.Col>
-                        <Grid.Col span={7}>
-                            <CalendarBody selectedDateRange={selectedDateRange} />
-                        </Grid.Col>
-                    </Grid>
-                </Paper>
+                <CalendarToolbar selectedRedactionMode={selectedRedactionMode} setSelectedRedactionMode={setSelectedRedactionMode} />
+                <Calendar selectedDateRange={selectedDateRange} selectedRedactionMode={selectedRedactionMode} />
             </MainLayout>
         </AuthenticationProtectedPage>
     );

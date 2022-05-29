@@ -10,9 +10,11 @@ export const TutorProfilesDashboard: React.FC = () => {
     const [isCreateTutorProfileModalOpened, setIsCreateTutorProfileModalOpened] = useState(false);
 
     if (isGetAllTutorProfilesForTutorLoading) {
-        <Center style={{ height: "100vh" }}>
-            <Loader size="xl" />
-        </Center>;
+        return (
+            <Center style={{ height: "100vh" }}>
+                <Loader size="xl" />
+            </Center>
+        );
     }
 
     return (

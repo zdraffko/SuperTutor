@@ -1,6 +1,6 @@
 import { Center, Grid, Paper } from "@mantine/core";
 
-export const CalendarSideBar: React.FC = () => (
+const CalendarSideBar: React.FC = () => (
     <Grid columns={1} gutter={0}>
         <Grid.Col span={1}>
             <Paper style={{ height: "103px" }}></Paper>
@@ -16,3 +16,5 @@ export const CalendarSideBar: React.FC = () => (
             ))}
     </Grid>
 );
+
+export default CalendarSideBar;

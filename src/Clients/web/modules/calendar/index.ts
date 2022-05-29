@@ -1,3 +1,2 @@
-export * from "./components/CalendarBody/CalendarBody";
-export * from "./components/CalendarHeader";
-export * from "./components/CalendarSideBar";
+export * from "./components/Calendar/Calendar";
+export * from "./components/CalendarToolbar";
