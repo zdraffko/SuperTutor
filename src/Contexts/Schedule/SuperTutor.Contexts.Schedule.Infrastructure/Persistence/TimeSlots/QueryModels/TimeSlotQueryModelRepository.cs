@@ -34,6 +34,8 @@ internal class TimeSlotQueryModelRepository : ITimeSlotQueryModelRepository
                     DateOnly.FromDateTime(timeSlot.Date),
                     TimeOnly.FromTimeSpan(timeSlot.StartTime),
                     timeSlot.Type,
-                    timeSlot.Status));
+                    timeSlot.Status))
+                .OrderBy(timeSlot => timeSlot.Date)
+                .ThenBy(timeSlot => timeSlot.StartTime);
     }
 }

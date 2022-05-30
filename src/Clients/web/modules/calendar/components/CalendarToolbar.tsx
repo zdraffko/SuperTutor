@@ -5,8 +5,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 const RedactionModes: { label: string; value: CalendarRedactionMode }[] = [
     { label: "Добавяне на наличност", value: "AddAvailability" },
-    { label: "Добавяне на почивка", value: "TakeTimeOff" },
-    { label: "Изтриване на прозорец", value: "RemoveTimeSlot" }
+    { label: "Добавяне на почивка", value: "TakeTimeOff" }
 ];
 
 interface CalendarToolbarProps {

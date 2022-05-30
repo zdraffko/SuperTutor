@@ -1,4 +1,4 @@
-﻿namespace SuperTutor.ApiGateways.Web.Models.Schedule;
+﻿namespace SuperTutor.ApiGateways.Web.Models.Schedule.AddTutorAvailability;
 
 public class AddTutorAvailabilityRequest
 {

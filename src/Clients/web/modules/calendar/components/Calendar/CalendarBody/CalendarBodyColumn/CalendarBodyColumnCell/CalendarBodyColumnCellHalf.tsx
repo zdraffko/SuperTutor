@@ -1,9 +1,9 @@
 import { Center, Container, Loader } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { Dayjs } from "dayjs";
-import { RedactionModeColors } from "modules/calendar/constants";
+import { CellColors, RedactionModeColors } from "modules/calendar/constants";
 import useAddAvailability from "modules/calendar/hooks/useAddAvailability";
-import { CalendarRedactionMode } from "modules/calendar/types";
+import { CalendarRedactionMode, TimeSlot } from "modules/calendar/types";
 import { useEffect } from "react";
 import { X } from "tabler-icons-react";
 import { DayJs } from "utils/dates";
@@ -13,9 +13,10 @@ interface CalendarBodyColumnCellHalfProps {
     hour: number;
     minute: number;
     selectedRedactionMode: CalendarRedactionMode;
+    timeSlot: TimeSlot | undefined;
 }
 
-const CalendarBodyColumnCellHalf: React.FC<CalendarBodyColumnCellHalfProps> = ({ date, hour, minute, selectedRedactionMode }) => {
+const CalendarBodyColumnCellHalf: React.FC<CalendarBodyColumnCellHalfProps> = ({ date, hour, minute, selectedRedactionMode, timeSlot }) => {
     const formattedDate = date.format("DD/MM/YYYY");
     const formattedTime = DayJs().hour(hour).minute(minute).format("HH:mm:00");
     const { addAvailability, isAddAvailabilityFailed, isAddAvailabilityLoading, addAvailabilityErrorMessage, resetAddAvailabilityRequestState } = useAddAvailability();
@@ -53,7 +54,14 @@ const CalendarBodyColumnCellHalf: React.FC<CalendarBodyColumnCellHalfProps> = ({
         );
     }
 
-    return (
+    return timeSlot ? (
+        <Container
+            style={{ height: "50px" }}
+            sx={theme => ({
+                backgroundColor: theme.colors[CellColors[timeSlot.type]][3]
+            })}
+        ></Container>
+    ) : (
         <Container
             onClick={handleOnClick}
             style={{ height: "50px" }}

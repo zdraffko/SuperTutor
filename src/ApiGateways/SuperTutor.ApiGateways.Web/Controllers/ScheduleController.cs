@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using SuperTutor.ApiGateways.Web.Models.Schedule;
+using SuperTutor.ApiGateways.Web.Models.Schedule.AddTutorAvailability;
+using SuperTutor.ApiGateways.Web.Models.Schedule.GetTutorTimeSlotsForWeek;
 using SuperTutor.ApiGateways.Web.Options;
+using SuperTutor.SharedLibraries.BuildingBlocks.Api.Attributes;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
 using System.Security.Claims;
@@ -57,5 +59,32 @@ public class ScheduleController : ApiController
         var responseErrorMessage = await response.Content.ReadAsStringAsync(cancellationToken);
 
         return BadRequest(responseErrorMessage);
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<ActionResult<GetTutorTimeSlotsForWeekResponse>> GetTutorTimeSlotsForWeek([FromJsonQuery] GetTutorTimeSlotsForWeekRequest query, CancellationToken cancellationToken)
+    {
+        var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (tutorId is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        var scheduleRequest = new
+        {
+            TutorId = tutorId,
+            query.WeekStartDate
+        };
+
+        var queryString = $"{ScheduleApiUrl}/TimeSlots/GetForWeek?query={JsonSerializer.Serialize(scheduleRequest, options: jsonSerializerOptions)}";
+
+        var response = await httpClient.GetFromJsonAsync<GetTutorTimeSlotsForWeekResponse>(queryString, options: jsonSerializerOptions, cancellationToken: cancellationToken);
+        if (response is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        return Ok(response);
     }
 }

@@ -1,6 +1,10 @@
-import { Grid, Paper } from "@mantine/core";
+import { Center, Grid, Loader, Paper } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import { Dayjs } from "dayjs";
+import useGetTutorTimeSlotsForWeek from "modules/calendar/hooks/useGetTutorTimeSlotsForWeek";
 import { CalendarRedactionMode } from "modules/calendar/types";
+import { useEffect } from "react";
+import { X } from "tabler-icons-react";
 import CalendarBody from "./CalendarBody/CalendarBody";
 import CalendarHeader from "./CalendarHeader";
 import CalendarSideBar from "./CalendarSideBar";
@@ -10,18 +14,44 @@ interface CalendarProps {
     selectedRedactionMode: CalendarRedactionMode;
 }
 
-export const Calendar: React.FC<CalendarProps> = ({ selectedDateRange, selectedRedactionMode }) => (
-    <Paper m="xs">
-        <Grid columns={8} gutter={0}>
-            <Grid.Col span={8} style={{ position: "sticky", top: "0" }}>
-                <CalendarHeader selectedDateRange={selectedDateRange} />
-            </Grid.Col>
-            <Grid.Col span={1}>
-                <CalendarSideBar />
-            </Grid.Col>
-            <Grid.Col span={7}>
-                <CalendarBody selectedDateRange={selectedDateRange} selectedRedactionMode={selectedRedactionMode} />
-            </Grid.Col>
-        </Grid>
-    </Paper>
-);
+export const Calendar: React.FC<CalendarProps> = ({ selectedDateRange, selectedRedactionMode }) => {
+    const { timeSlotsForWeek, isGetTutorTimeSlotsForWeekFailed, isGetTutorTimeSlotsForWeekLoading, getTutorTimeSlotsForWeekErrorMessage } = useGetTutorTimeSlotsForWeek({
+        weekStartDate: selectedDateRange[0].format("DD/MM/YYYY")
+    });
+
+    useEffect(() => {
+        if (isGetTutorTimeSlotsForWeekFailed) {
+            showNotification({
+                autoClose: 5000,
+                title: "Възникна проблем при зареждането на графика",
+                message: getTutorTimeSlotsForWeekErrorMessage,
+                color: "red",
+                icon: <X />
+            });
+        }
+    }, [getTutorTimeSlotsForWeekErrorMessage, isGetTutorTimeSlotsForWeekFailed]);
+
+    if (isGetTutorTimeSlotsForWeekLoading || !timeSlotsForWeek) {
+        return (
+            <Center style={{ height: "50vh" }}>
+                <Loader size="xl" />
+            </Center>
+        );
+    }
+
+    return (
+        <Paper m="xs">
+            <Grid columns={8} gutter={0}>
+                <Grid.Col span={8} style={{ position: "sticky", top: "0" }}>
+                    <CalendarHeader selectedDateRange={selectedDateRange} />
+                </Grid.Col>
+                <Grid.Col span={1}>
+                    <CalendarSideBar />
+                </Grid.Col>
+                <Grid.Col span={7}>
+                    <CalendarBody selectedDateRange={selectedDateRange} selectedRedactionMode={selectedRedactionMode} timeSlotsForWeek={timeSlotsForWeek} />
+                </Grid.Col>
+            </Grid>
+        </Paper>
+    );
+};

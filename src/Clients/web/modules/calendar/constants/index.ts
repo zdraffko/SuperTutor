@@ -1,5 +1,9 @@
 export const RedactionModeColors: { [key: string]: string } = {
     AddAvailability: "cyan",
-    TakeTimeOff: "yellow",
-    RemoveTimeSlot: "red"
+    TakeTimeOff: "yellow"
+};
+
+export const CellColors: { [key: string]: string } = {
+    Availability: "cyan",
+    TimeOff: "yellow"
 };
