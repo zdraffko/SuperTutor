@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SuperTutor.Contexts.Schedule.Application.TimeSlots.Queries.GetAvailability;
 using SuperTutor.Contexts.Schedule.Application.TimeSlots.Queries.GetForWeek;
 using SuperTutor.Contexts.Schedule.Application.TimeSlots.Shared;
 using SuperTutor.Contexts.Schedule.Infrastructure.Persistence.Shared;
@@ -37,5 +38,21 @@ internal class TimeSlotQueryModelRepository : ITimeSlotQueryModelRepository
                     timeSlot.Status))
                 .OrderBy(timeSlot => timeSlot.Date)
                 .ThenBy(timeSlot => timeSlot.StartTime);
+    }
+
+    public async Task<IEnumerable<GetTutorAvailabilityQueryPayload.Availability>> GetTutorAvailability(GetTutorAvailabilityQuery query, CancellationToken cancellationToken)
+    {
+        var queryResult = await scheduleDbContext.TimeSlots
+            .AsNoTracking()
+            .Where(timeSlot
+                => timeSlot.TutorId == query.TutorId
+                && timeSlot.Date >= DateTime.UtcNow
+                && timeSlot.Type == "Availability"
+                && timeSlot.Status == "Unassigned")
+            .ToListAsync(cancellationToken);
+
+        return queryResult.GroupBy(timeSlot => timeSlot.Date.Date)
+                .Select(group => new GetTutorAvailabilityQueryPayload.Availability(DateOnly.FromDateTime(group.Key), group.Select(timeSlot => TimeOnly.FromTimeSpan(timeSlot.StartTime)).OrderBy(startTime => startTime)))
+                .ToList();
     }
 }
