@@ -1,5 +1,5 @@
 import { Stack, Title } from "@mantine/core";
-import { CatalogTutorProfile } from "modules/catalog/types/catalogTutorProfile";
+import { CatalogTutorProfile } from "modules/catalog/types";
 import CatalogNoResultsForFilterSvg from "./CatalogNoResultsForFilterSvg";
 import TutorProfilesListItem from "./CatalogTutorProfilesListItem";
 

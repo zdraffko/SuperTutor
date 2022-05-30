@@ -1,5 +1,6 @@
 import { Avatar, Badge, Button, Grid, Group, Paper, Spoiler, Stack, Text } from "@mantine/core";
-import { CatalogTutorProfile } from "modules/catalog/types/catalogTutorProfile";
+import { CatalogTutorProfile } from "modules/catalog/types";
+import Link from "next/link";
 
 interface CatalogTutorProfilesListItemProps {
     tutorProfile: CatalogTutorProfile;
@@ -47,7 +48,9 @@ const CatalogTutorProfilesListItem: React.FC<CatalogTutorProfilesListItemProps> 
                 </Stack>
             </Group>
             <Stack>
-                <Button>Виж още</Button>
+                <Link href={`/catalog/${tutorProfile.tutorId}`}>
+                    <Button>Виж още</Button>
+                </Link>
             </Stack>
         </Group>
     </Paper>

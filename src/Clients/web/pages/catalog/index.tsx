@@ -4,7 +4,7 @@ import MainLayout from "components/MainLayout";
 import CatalogFilter from "modules/catalog/components/Filter/CatalogFilter";
 import CatalogTutorProfilesList from "modules/catalog/components/TutorProfilesList/CatalogTutorProfilesList";
 import useGetTutorProfilesByFilter from "modules/catalog/hooks/useGetTutorProfilesByFilter";
-import { CatalogTutorProfile } from "modules/catalog/types/catalogTutorProfile";
+import { CatalogTutorProfile } from "modules/catalog/types";
 import { NextPage } from "next";
 import { useState } from "react";
 

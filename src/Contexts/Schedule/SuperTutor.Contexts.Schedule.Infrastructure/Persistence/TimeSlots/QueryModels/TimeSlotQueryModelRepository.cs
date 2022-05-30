@@ -53,6 +53,7 @@ internal class TimeSlotQueryModelRepository : ITimeSlotQueryModelRepository
 
         return queryResult.GroupBy(timeSlot => timeSlot.Date.Date)
                 .Select(group => new GetTutorAvailabilityQueryPayload.Availability(DateOnly.FromDateTime(group.Key), group.Select(timeSlot => TimeOnly.FromTimeSpan(timeSlot.StartTime)).OrderBy(startTime => startTime)))
+                .OrderBy(availability => availability.Date)
                 .ToList();
     }
 }

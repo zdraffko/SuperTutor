@@ -1,5 +1,5 @@
 import { axios } from "utils/axios";
-import { CatalogTutorProfile } from "../types/catalogTutorProfile";
+import { CatalogTutorProfile } from "../types";
 
 export interface GetTutorProfilesByFilterRequest {
     tutoringSubject: string | null;

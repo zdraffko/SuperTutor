@@ -8,3 +8,8 @@ export interface CatalogTutorProfile {
     about: string;
     rateForOneHour: number;
 }
+
+export interface TutorAvailability {
+    date: string;
+    hours: string[];
+}

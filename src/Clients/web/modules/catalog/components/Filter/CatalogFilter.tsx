@@ -1,7 +1,7 @@
 import { Button, Group, MultiSelect, NumberInput, Paper, Select } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import useGetTutorProfilesByFilter from "modules/catalog/hooks/useGetTutorProfilesByFilter";
-import { CatalogTutorProfile } from "modules/catalog/types/catalogTutorProfile";
+import { CatalogTutorProfile } from "modules/catalog/types";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { X } from "tabler-icons-react";
 import { tutoringGrades } from "types/tutoringGrades";
