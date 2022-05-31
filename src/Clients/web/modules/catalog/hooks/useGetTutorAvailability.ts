@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import getTutorAvailability, { GetTutorAvailabilityResponse } from "../api/getTutorAvailability";
 
 const useGetTutorAvailability = (tutorId: string | undefined) => {
-    const query = useQuery<GetTutorAvailabilityResponse, AxiosError<string>>("catalog-getTutorAvailability", () => getTutorAvailability({ tutorId: tutorId! }), {
+    const query = useQuery<GetTutorAvailabilityResponse, AxiosError<string>>(["catalog", "getTutorAvailability", tutorId], () => getTutorAvailability({ tutorId: tutorId! }), {
         staleTime: 5000,
         enabled: !!tutorId
     });

@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import getTutorProfileById, { GetTutorProfileByIdRequest, GetTutorProfileByIdResponse } from "../api/getTutorProfileById";
 
 const useGetTutorProfileById = (request: GetTutorProfileByIdRequest) => {
-    const query = useQuery<GetTutorProfileByIdResponse, AxiosError<string>>("catalog-getTutorProfileById", () => getTutorProfileById(request), {
+    const query = useQuery<GetTutorProfileByIdResponse, AxiosError<string>>(["catalog", "getTutorProfileById", request.tutorProfileId], () => getTutorProfileById(request), {
         staleTime: 5000
     });
 
