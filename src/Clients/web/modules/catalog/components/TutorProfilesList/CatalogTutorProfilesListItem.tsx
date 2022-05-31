@@ -48,8 +48,8 @@ const CatalogTutorProfilesListItem: React.FC<CatalogTutorProfilesListItemProps> 
                 </Stack>
             </Group>
             <Stack>
-                <Link href={`/catalog/${tutorProfile.tutorId}`}>
-                    <Button>Виж още</Button>
+                <Link href={`/catalog/${tutorProfile.id}`}>
+                    <Button>Виж график</Button>
                 </Link>
             </Stack>
         </Group>

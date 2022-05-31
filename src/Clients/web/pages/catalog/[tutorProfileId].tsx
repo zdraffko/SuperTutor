@@ -1,17 +1,32 @@
-import { Center, Group, Loader, Paper, Stack, Text, Title } from "@mantine/core";
+import { Center, Group, Loader, Paper, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import AuthenticationProtectedPage from "components/AuthenticationProtectedPage";
 import MainLayout from "components/MainLayout";
 import useGetTutorAvailability from "modules/catalog/hooks/useGetTutorAvailability";
+import useGetTutorProfileById from "modules/catalog/hooks/useGetTutorProfileById";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { X } from "tabler-icons-react";
 
 const TutorCatalogPage: NextPage = () => {
+    const theme = useMantineTheme();
     const router = useRouter();
-    const { tutorId } = router.query;
-    const { tutorAvailabilities, isGetTutorAvailabilityFailed, isGetTutorAvailabilityLoading, getTutorAvailabilityErrorMessage } = useGetTutorAvailability({ tutorId: `${tutorId}` });
+    const { tutorProfileId } = router.query;
+    const { tutorProfile, isGetTutorProfileByIdFailed, isGetTutorProfileByIdLoading, getTutorProfileByIdErrorMessage } = useGetTutorProfileById({ tutorProfileId: `${tutorProfileId}` });
+    const { tutorAvailabilities, isGetTutorAvailabilityFailed, isGetTutorAvailabilityLoading, getTutorAvailabilityErrorMessage } = useGetTutorAvailability(tutorProfile?.tutorId);
+
+    useEffect(() => {
+        if (isGetTutorProfileByIdFailed) {
+            showNotification({
+                autoClose: 5000,
+                title: "Възникна проблем при зареждането на профила на учителят",
+                message: getTutorProfileByIdErrorMessage,
+                color: "red",
+                icon: <X />
+            });
+        }
+    }, [getTutorAvailabilityErrorMessage, getTutorProfileByIdErrorMessage, isGetTutorAvailabilityFailed, isGetTutorProfileByIdFailed]);
 
     useEffect(() => {
         if (isGetTutorAvailabilityFailed) {
@@ -25,7 +40,7 @@ const TutorCatalogPage: NextPage = () => {
         }
     }, [getTutorAvailabilityErrorMessage, isGetTutorAvailabilityFailed]);
 
-    if (isGetTutorAvailabilityLoading || !tutorAvailabilities) {
+    if (isGetTutorProfileByIdLoading || isGetTutorAvailabilityLoading || !tutorAvailabilities) {
         return (
             <Center style={{ height: "50vh" }}>
                 <Loader size="xl" />
@@ -43,7 +58,9 @@ const TutorCatalogPage: NextPage = () => {
                             <Stack key={tutorAvailability.date}>
                                 <Title order={4}>{tutorAvailability.date}</Title>
                                 {tutorAvailability.hours.map(hour => (
-                                    <Text key={`${tutorAvailability.date}-${hour}`}>{hour}</Text>
+                                    <Text onClick={() => console.log("Clicked")} color={theme.primaryColor} key={`${tutorAvailability.date}-${hour}`}>
+                                        {hour}
+                                    </Text>
                                 ))}
                             </Stack>
                         ))}

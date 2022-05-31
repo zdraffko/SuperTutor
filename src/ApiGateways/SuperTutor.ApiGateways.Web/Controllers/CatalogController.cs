@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SuperTutor.ApiGateways.Web.Models.Catalog.GetTutorAvailability;
+using SuperTutor.ApiGateways.Web.Models.Catalog.GetTutorProfileById;
 using SuperTutor.ApiGateways.Web.Models.Catalog.GetTutorProfilesByFilter;
 using SuperTutor.ApiGateways.Web.Options;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Attributes;
@@ -39,6 +40,19 @@ public class CatalogController : ApiController
         var queryString = $"{CatalogApiUrl}/TutorProfiles/GetByFilter?query={JsonSerializer.Serialize(query)}";
 
         var response = await httpClient.GetFromJsonAsync<GetTutorProfilesByFilterResponse>(queryString, cancellationToken: cancellationToken);
+        if (response is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        return Ok(response);
+    }
+
+    public async Task<ActionResult<GetTutorProfileByIdResponse>> GetTutorProfileById([FromJsonQuery] GetTutorProfileByIdRequest query, CancellationToken cancellationToken)
+    {
+        var queryString = $"{CatalogApiUrl}/TutorProfiles/GetById?query={JsonSerializer.Serialize(query)}";
+
+        var response = await httpClient.GetFromJsonAsync<GetTutorProfileByIdResponse>(queryString, cancellationToken: cancellationToken);
         if (response is null)
         {
             return BadRequest("Възнокна неочаквана грешка");

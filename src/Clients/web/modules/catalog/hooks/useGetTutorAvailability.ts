@@ -1,9 +1,12 @@
 import { AxiosError } from "axios";
 import { useQuery } from "react-query";
-import getTutorAvailability, { GetTutorAvailabilityRequest, GetTutorAvailabilityResponse } from "../api/getTutorAvailability";
+import getTutorAvailability, { GetTutorAvailabilityResponse } from "../api/getTutorAvailability";
 
-const useGetTutorAvailability = (request: GetTutorAvailabilityRequest) => {
-    const query = useQuery<GetTutorAvailabilityResponse, AxiosError<string>>("catalog-getTutorAvailability", () => getTutorAvailability(request), { staleTime: 5000 });
+const useGetTutorAvailability = (tutorId: string | undefined) => {
+    const query = useQuery<GetTutorAvailabilityResponse, AxiosError<string>>("catalog-getTutorAvailability", () => getTutorAvailability({ tutorId: tutorId! }), {
+        staleTime: 5000,
+        enabled: !!tutorId
+    });
 
     return {
         tutorAvailabilities: query.data?.availabilities,
