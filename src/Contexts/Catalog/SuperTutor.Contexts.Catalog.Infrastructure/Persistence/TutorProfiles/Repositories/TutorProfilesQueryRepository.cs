@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SuperTutor.Contexts.Catalog.Application.TutorProfiles.Queries.GetByFilter;
+using SuperTutor.Contexts.Catalog.Application.TutorProfiles.Queries.GetById;
 using SuperTutor.Contexts.Catalog.Application.TutorProfiles.Queries.Shared;
 using SuperTutor.Contexts.Catalog.Infrastructure.Persistence.Tutors;
 
@@ -70,5 +71,43 @@ internal class TutorProfilesQueryRepository : ITutorProfilesQueryRepository
             ));
 
         return await queryResult.ToListAsync(cancellationToken: cancellationToken);
+    }
+
+    public async Task<GetTutorProfileByIdQueryPayload.TutorProfile?> GetById(GetTutorProfileByIdQuery query, CancellationToken cancellationToken)
+    {
+        var databaseQueryResult = await tutorProfilesDbContext.TutorProfiles
+            .AsNoTracking()
+            .Join(
+                tutorsDbContext.Tutors,
+                tutorProfile => tutorProfile.TutorId,
+                tutor => tutor.Id,
+                (tutorProfile, tutor) => new
+                {
+                    tutorProfile.Id,
+                    tutorProfile.TutorId,
+                    TutorFirstName = tutor.FirstName,
+                    TutorLastName = tutor.LastName,
+                    tutorProfile.About,
+                    tutorProfile.TutoringSubject,
+                    tutorProfile.TutoringGrades,
+                    tutorProfile.RateForOneHour
+                }
+             )
+            .SingleOrDefaultAsync(tutorProfile => tutorProfile.Id == query.TutorProfileId, cancellationToken);
+
+        if (databaseQueryResult is null)
+        {
+            return null;
+        }
+
+        return new GetTutorProfileByIdQueryPayload.TutorProfile(
+                databaseQueryResult.Id,
+                databaseQueryResult.TutorId,
+                databaseQueryResult.TutorFirstName,
+                databaseQueryResult.TutorLastName,
+                databaseQueryResult.About,
+                databaseQueryResult.TutoringSubject.Name,
+                databaseQueryResult.TutoringGrades.Select(tutoringGrade => tutoringGrade.Name),
+                databaseQueryResult.RateForOneHour);
     }
 }
