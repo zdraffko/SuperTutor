@@ -75,7 +75,7 @@ const CreateTutorProfileModal: React.FC<CreateTutorProfileModalProps> = ({ isOpe
 
     return (
         <Modal size="xl" opened={isOpened} onClose={onClose} title="Създай нов профил">
-            <form onSubmit={form.onSubmit(async values => createTutorProfile(values))}>
+            <form onSubmit={form.onSubmit(async values => await createTutorProfile(values))}>
                 <Select
                     disabled={isCreateTutorProfileLoading}
                     required

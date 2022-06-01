@@ -8,7 +8,7 @@ interface TutorProfileAvailabilityProps {
     tutorProfile: CatalogTutorProfile;
 }
 
-export const TutorProfileAvailability: React.FC<TutorProfileAvailabilityProps> = ({ tutorAvailabilities, tutorProfile }) => {
+export const TrialLessonPaymentModel: React.FC<TutorProfileAvailabilityProps> = ({ tutorAvailabilities, tutorProfile }) => {
     const theme = useMantineTheme();
     const [isReserveTrialLessonModalOpened, setIsReserveTrialLessonModalOpened] = useState(false);
     // const hourRef = useRef("");

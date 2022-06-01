@@ -7,11 +7,11 @@ namespace SuperTutor.Contexts.Schedule.Api.Lessons.Controllers;
 
 public class LessonsController : ApiController
 {
-    private readonly ICommandHandler<ReserveTrialLessonCommand> reserveTrialLessonCommandHandler;
+    private readonly ICommandHandler<ReserveTrialLessonCommand, ReserveTrialLessonCommandPayload> reserveTrialLessonCommandHandler;
 
-    public LessonsController(ICommandHandler<ReserveTrialLessonCommand> reserveTrialLessonCommandHandler) => this.reserveTrialLessonCommandHandler = reserveTrialLessonCommandHandler;
+    public LessonsController(ICommandHandler<ReserveTrialLessonCommand, ReserveTrialLessonCommandPayload> reserveTrialLessonCommandHandler) => this.reserveTrialLessonCommandHandler = reserveTrialLessonCommandHandler;
 
     [HttpPost]
-    public async Task<ActionResult> ReserveTrialLesson(ReserveTrialLessonCommand command, CancellationToken cancellationToken)
+    public async Task<ActionResult<ReserveTrialLessonCommandPayload>> ReserveTrialLesson(ReserveTrialLessonCommand command, CancellationToken cancellationToken)
         => await Handle(reserveTrialLessonCommandHandler, command, cancellationToken);
 }

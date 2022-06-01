@@ -4,10 +4,12 @@ using Microsoft.Extensions.Options;
 using SuperTutor.ApiGateways.Web.Models.Catalog.GetTutorAvailability;
 using SuperTutor.ApiGateways.Web.Models.Catalog.GetTutorProfileById;
 using SuperTutor.ApiGateways.Web.Models.Catalog.GetTutorProfilesByFilter;
+using SuperTutor.ApiGateways.Web.Models.Catalog.ReserveTrialLesson;
 using SuperTutor.ApiGateways.Web.Options;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Attributes;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace SuperTutor.ApiGateways.Web.Controllers;
@@ -48,6 +50,8 @@ public class CatalogController : ApiController
         return Ok(response);
     }
 
+    [Authorize]
+    [HttpGet]
     public async Task<ActionResult<GetTutorProfileByIdResponse>> GetTutorProfileById([FromJsonQuery] GetTutorProfileByIdRequest query, CancellationToken cancellationToken)
     {
         var queryString = $"{CatalogApiUrl}/TutorProfiles/GetById?query={JsonSerializer.Serialize(query)}";
@@ -79,5 +83,39 @@ public class CatalogController : ApiController
         }
 
         return Ok(response);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult> ReserveTrialLesson(ReserveTrialLessonRequest request, CancellationToken cancellationToken)
+    {
+        var studentId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (studentId is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        var scheduleRequest = new
+        {
+            StudentId = studentId,
+            request.TutorId,
+            request.Date,
+            request.StartTime,
+            request.Subject,
+            request.Grade
+        };
+
+        var response = await httpClient.PostAsJsonAsync($"{ScheduleApiUrl}/Lessons/ReserveTrialLesson", scheduleRequest, options: jsonSerializerOptions, cancellationToken: cancellationToken);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var responsePayload = await response.Content.ReadFromJsonAsync<ReserveTrialLessonResponse>(cancellationToken: cancellationToken);
+
+            return Ok(responsePayload);
+        }
+
+        var responseErrorMessage = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        return BadRequest(responseErrorMessage);
     }
 }

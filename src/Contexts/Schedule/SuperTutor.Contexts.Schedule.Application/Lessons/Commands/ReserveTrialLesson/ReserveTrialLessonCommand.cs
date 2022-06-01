@@ -1,17 +1,15 @@
 ﻿using SuperTutor.Contexts.Schedule.Domain.Lessons.Models.ValueObjects.Identifiers;
-using SuperTutor.Contexts.Schedule.Domain.TimeSlots;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Schedule.Application.Lessons.Commands.ReserveTrialLesson;
 
-public class ReserveTrialLessonCommand : Command
+public class ReserveTrialLessonCommand : Command<ReserveTrialLessonCommandPayload>
 {
     public ReserveTrialLessonCommand(
         TutorId tutorId,
         StudentId studentId,
         DateOnly date,
         TimeOnly startTime,
-        IEnumerable<TimeSlotId> timeSlotIds,
         string subject,
         string grade)
     {
@@ -19,7 +17,6 @@ public class ReserveTrialLessonCommand : Command
         StudentId = studentId;
         Date = date;
         StartTime = startTime;
-        TimeSlotIds = timeSlotIds;
         Subject = subject;
         Grade = grade;
     }
@@ -31,8 +28,6 @@ public class ReserveTrialLessonCommand : Command
     public DateOnly Date { get; }
 
     public TimeOnly StartTime { get; }
-
-    public IEnumerable<TimeSlotId> TimeSlotIds { get; }
 
     public string Subject { get; }
 

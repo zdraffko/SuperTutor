@@ -2,7 +2,6 @@
 using SuperTutor.Contexts.Schedule.Domain.Lessons.Invariants;
 using SuperTutor.Contexts.Schedule.Domain.Lessons.Models.Enumerations;
 using SuperTutor.Contexts.Schedule.Domain.Lessons.Models.ValueObjects.Identifiers;
-using SuperTutor.Contexts.Schedule.Domain.TimeSlots;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Aggregates;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Events;
 
@@ -18,7 +17,6 @@ public class Lesson : AggregateRoot<LessonId, Guid>
         DateOnly date,
         TimeOnly startTime,
         TimeSpan duration,
-        IEnumerable<TimeSlotId> timeSlotIds,
         string subject,
         string grade,
         LessonType type) : base(new LessonId(Guid.NewGuid()))
@@ -28,7 +26,6 @@ public class Lesson : AggregateRoot<LessonId, Guid>
         Date = date;
         StartTime = startTime;
         Duration = duration;
-        TimeSlotIds = timeSlotIds;
         Subject = subject;
         Grade = grade;
         Type = type;
@@ -46,8 +43,6 @@ public class Lesson : AggregateRoot<LessonId, Guid>
 
     public TimeSpan Duration { get; private set; }
 
-    public IEnumerable<TimeSlotId> TimeSlotIds { get; private set; }
-
     public string Subject { get; private set; }
 
     public string Grade { get; private set; }
@@ -63,7 +58,6 @@ public class Lesson : AggregateRoot<LessonId, Guid>
         StudentId studentId,
         DateOnly date,
         TimeOnly startTime,
-        IEnumerable<TimeSlotId> timeSlotIds,
         string subject,
         string grade)
     {
@@ -73,7 +67,6 @@ public class Lesson : AggregateRoot<LessonId, Guid>
             date,
             startTime,
             TrialLessonDuration,
-            timeSlotIds,
             subject,
             grade,
             LessonType.Trial);
@@ -86,7 +79,6 @@ public class Lesson : AggregateRoot<LessonId, Guid>
             trialLesson.StudentId,
             trialLesson.Date,
             trialLesson.StartTime,
-            trialLesson.TimeSlotIds,
             trialLesson.Subject,
             trialLesson.Grade));
 
@@ -99,9 +91,8 @@ public class Lesson : AggregateRoot<LessonId, Guid>
         DateOnly date,
         TimeOnly startTime,
         TimeSpan duration,
-        IEnumerable<TimeSlotId> timeSlotIds,
         string subject,
-        string grade) => new(tutorId, studentId, date, startTime, duration, timeSlotIds, subject, grade, LessonType.Regular);
+        string grade) => new(tutorId, studentId, date, startTime, duration, subject, grade, LessonType.Regular);
 
     #region Apply Domain Events
 
@@ -115,7 +106,6 @@ public class Lesson : AggregateRoot<LessonId, Guid>
         Date = domainEvent.Date;
         StartTime = domainEvent.StartTime;
         Duration = TrialLessonDuration;
-        TimeSlotIds = domainEvent.TimeSlotIds;
         Subject = domainEvent.Subject;
         Grade = domainEvent.Grade;
         Type = LessonType.Trial;
