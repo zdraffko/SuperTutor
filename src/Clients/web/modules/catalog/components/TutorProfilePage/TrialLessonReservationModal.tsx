@@ -1,8 +1,10 @@
 import { Button, Center, Group, Modal, Select, Text } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
+import useCreateCharge from "modules/catalog/hooks/useCreateCharge";
 import useReserveTrialLesson from "modules/catalog/hooks/useReserveTrialLesson";
 import { CatalogTutorProfile } from "modules/catalog/types";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Check, X } from "tabler-icons-react";
 import { z } from "zod";
@@ -29,6 +31,7 @@ export const TrialLessonReservationModal: React.FC<ReserveTrialLessonModalProps>
 
     const { reserveTrialLesson, isReserveTrialLessonFailed, isReserveTrialLessonLoading, isReserveTrialLessonSuccessful, reserveTrialLessonErrorMessage, resetReserveTrialLessonRequestState } =
         useReserveTrialLesson();
+    const { createCharge } = useCreateCharge();
 
     useEffect(() => {
         if (isReserveTrialLessonSuccessful) {
@@ -58,23 +61,25 @@ export const TrialLessonReservationModal: React.FC<ReserveTrialLessonModalProps>
         }
     }, [isReserveTrialLessonFailed, isReserveTrialLessonSuccessful, onClose, reserveTrialLessonErrorMessage, resetReserveTrialLessonRequestState]);
 
+    const router = useRouter();
+
     return (
         <Modal size="xl" opened={isOpened} onClose={onClose} title="Запази пробен урок">
-            <Group>
+            <Group mb="sm">
                 <Text>Учител:</Text>
                 <Text>
                     {tutorProfile.tutorFirstName} {tutorProfile.tutorLastName}
                 </Text>
             </Group>
-            <Group>
+            <Group mb="sm">
                 <Text>Предмет:</Text>
                 <Text>{tutorProfile.tutoringSubject}</Text>
             </Group>
-            <Group>
+            <Group mb="sm">
                 <Text>Дата:</Text>
                 <Text>{trialLessonDate}</Text>
             </Group>
-            <Group>
+            <Group mb="sm">
                 <Text>Час:</Text>
                 <Text>{trialLessonHour}</Text>
             </Group>
@@ -88,7 +93,9 @@ export const TrialLessonReservationModal: React.FC<ReserveTrialLessonModalProps>
                         grade: values.tutoringGrade
                     });
 
-                    console.log(lessonId);
+                    const response = await createCharge({ chargeAmount: tutorProfile.rateForOneHour, lessonId: lessonId, tutorId: tutorProfile.tutorId });
+
+                    router.push(`/payments/pay/${response.paymentIntentSecret}`);
                 })}
             >
                 <Select
@@ -102,7 +109,7 @@ export const TrialLessonReservationModal: React.FC<ReserveTrialLessonModalProps>
                     onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                 />
                 <Center>
-                    <Button type="submit" fullWidth size="sm" style={{ width: "50%" }} loading={isReserveTrialLessonLoading}>
+                    <Button mt="xl" type="submit" fullWidth size="sm" style={{ width: "50%" }} loading={isReserveTrialLessonLoading}>
                         Запази час
                     </Button>
                 </Center>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using SuperTutor.ApiGateways.Web.Models.Payments.CreateCharge;
 using SuperTutor.ApiGateways.Web.Models.Payments.GetAreTutorTermsOfServiceAccepted;
 using SuperTutor.ApiGateways.Web.Models.Payments.GetAreTutorVerificationDocumentsCollected;
 using SuperTutor.ApiGateways.Web.Models.Payments.GetIsTutorAddressInformationCollected;
@@ -318,5 +319,37 @@ public class PaymentsController : ApiController
         }
 
         return Ok(response);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult<CreateChargeResponse>> CreateCharge(CreateChargeRequest request, CancellationToken cancellationToken)
+    {
+        var studentId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (studentId is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        var paymentsRequest = new
+        {
+            request.ChargeAmount,
+            request.LessonId,
+            request.TutorId,
+            StudentId = studentId
+        };
+
+        var response = await httpClient.PostAsJsonAsync($"{PaymentsApiUrl}/charges/Create", paymentsRequest, cancellationToken: cancellationToken, options: jsonSerializerOptions);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var responsePayload = await response.Content.ReadFromJsonAsync<CreateChargeResponse>(cancellationToken: cancellationToken);
+
+            return Ok(responsePayload);
+        }
+
+        var responseErrorMessage = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        return BadRequest(responseErrorMessage);
     }
 }
