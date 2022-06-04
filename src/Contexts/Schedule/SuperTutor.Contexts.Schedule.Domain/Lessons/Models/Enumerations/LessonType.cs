@@ -4,7 +4,7 @@ namespace SuperTutor.Contexts.Schedule.Domain.Lessons.Models.Enumerations;
 
 public sealed class LessonType : Enumeration
 {
-    private LessonType(int value, string name) : base(value, name) { }
+    public LessonType(int value, string name) : base(value, name) { }
 
     public static readonly LessonType Trial = new(1, nameof(Trial));
 

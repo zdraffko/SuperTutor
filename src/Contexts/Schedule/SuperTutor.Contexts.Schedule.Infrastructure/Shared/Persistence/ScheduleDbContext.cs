@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SuperTutor.Contexts.Schedule.Application.TimeSlots.Shared;
 
-namespace SuperTutor.Contexts.Schedule.Infrastructure.Persistence.Shared;
+namespace SuperTutor.Contexts.Schedule.Infrastructure.Shared.Persistence;
 
 public class ScheduleDbContext : DbContext
 {

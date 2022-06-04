@@ -3,7 +3,7 @@ using SuperTutor.Contexts.Schedule.Domain.Lessons;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Persistence.Repositories;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Persistence.Serializers;
 
-namespace SuperTutor.Contexts.Schedule.Infrastructure.Persistence.Lessons;
+namespace SuperTutor.Contexts.Schedule.Infrastructure.Lessons.Persistence;
 
 public class LessonRepository : AggregateRootEventsRepository<Lesson, LessonId, Guid>
 {

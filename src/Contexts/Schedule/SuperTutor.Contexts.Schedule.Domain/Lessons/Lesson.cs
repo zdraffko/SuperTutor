@@ -11,6 +11,11 @@ public class Lesson : AggregateRoot<LessonId, Guid>
 {
     private static readonly TimeSpan TrialLessonDuration = TimeSpan.FromHours(1);
 
+    // Required for loading the aggregate root from the event store 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    private Lesson() : base(new LessonId(Guid.Empty)) { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
     private Lesson(
         TutorId tutorId,
         StudentId studentId,
@@ -53,6 +58,8 @@ public class Lesson : AggregateRoot<LessonId, Guid>
 
     public LessonPaymentStatus PaymentStatus { get; private set; }
 
+    public PaymentId? PaymentId { get; private set; }
+
     public static Lesson ReserveTrialLesson(
         TutorId tutorId,
         StudentId studentId,
@@ -73,14 +80,17 @@ public class Lesson : AggregateRoot<LessonId, Guid>
 
         trialLesson.CheckInvariant(new LessonDateAndTimeMustBeIntoTheFutureInvariant(trialLesson.Date, trialLesson.StartTime));
 
-        trialLesson.RaiseDomainEvent(new TrialLessonReservedDomainEvent(
+        trialLesson.RaiseDomainEvent(new LessonReservedDomainEvent(
             trialLesson.Id,
             trialLesson.TutorId,
             trialLesson.StudentId,
             trialLesson.Date,
             trialLesson.StartTime,
             trialLesson.Subject,
-            trialLesson.Grade));
+            trialLesson.Grade,
+            trialLesson.Type,
+            trialLesson.Status,
+            trialLesson.PaymentStatus));
 
         return trialLesson;
     }
@@ -94,11 +104,20 @@ public class Lesson : AggregateRoot<LessonId, Guid>
         string subject,
         string grade) => new(tutorId, studentId, date, startTime, duration, subject, grade, LessonType.Regular);
 
+    public void Schedule(PaymentId paymentId)
+    {
+        PaymentId = paymentId;
+        PaymentStatus = LessonPaymentStatus.Paid;
+        Status = LessonStatus.Scheduled;
+
+        RaiseDomainEvent(new LessonScheduledDomainEvent(Id, PaymentId, PaymentStatus, Status));
+    }
+
     #region Apply Domain Events
 
     public override void ApplyDomainEvent(DomainEvent domainEvent) => Apply((dynamic) domainEvent);
 
-    private void Apply(TrialLessonReservedDomainEvent domainEvent)
+    private void Apply(LessonReservedDomainEvent domainEvent)
     {
         Id = domainEvent.LessonId;
         TutorId = domainEvent.TutorId;
@@ -108,9 +127,17 @@ public class Lesson : AggregateRoot<LessonId, Guid>
         Duration = TrialLessonDuration;
         Subject = domainEvent.Subject;
         Grade = domainEvent.Grade;
-        Type = LessonType.Trial;
-        Status = LessonStatus.Reserved;
-        PaymentStatus = LessonPaymentStatus.WaitingPayment;
+        Type = domainEvent.Type;
+        Status = domainEvent.Status;
+        PaymentStatus = domainEvent.PaymentStatus;
+    }
+
+    private void Apply(LessonScheduledDomainEvent domainEvent)
+    {
+        Id = domainEvent.LessonId;
+        Status = domainEvent.Status;
+        PaymentStatus = domainEvent.PaymentStatus;
+        PaymentId = domainEvent.PaymentId;
     }
 
     #endregion Apply Domain Events

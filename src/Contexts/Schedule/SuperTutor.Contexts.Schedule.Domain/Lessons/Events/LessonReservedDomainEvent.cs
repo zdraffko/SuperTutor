@@ -1,18 +1,22 @@
-﻿using SuperTutor.Contexts.Schedule.Domain.Lessons.Models.ValueObjects.Identifiers;
+﻿using SuperTutor.Contexts.Schedule.Domain.Lessons.Models.Enumerations;
+using SuperTutor.Contexts.Schedule.Domain.Lessons.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Events;
 
 namespace SuperTutor.Contexts.Schedule.Domain.Lessons.Events;
 
-public class TrialLessonReservedDomainEvent : DomainEvent
+public class LessonReservedDomainEvent : DomainEvent
 {
-    public TrialLessonReservedDomainEvent(
+    public LessonReservedDomainEvent(
         LessonId lessonId,
         TutorId tutorId,
         StudentId studentId,
         DateOnly date,
         TimeOnly startTime,
         string subject,
-        string grade)
+        string grade,
+        LessonType type,
+        LessonStatus status,
+        LessonPaymentStatus paymentStatus)
     {
         LessonId = lessonId;
         TutorId = tutorId;
@@ -21,6 +25,9 @@ public class TrialLessonReservedDomainEvent : DomainEvent
         StartTime = startTime;
         Subject = subject;
         Grade = grade;
+        Type = type;
+        Status = status;
+        PaymentStatus = paymentStatus;
     }
 
     public LessonId LessonId { get; }
@@ -36,4 +43,10 @@ public class TrialLessonReservedDomainEvent : DomainEvent
     public string Subject { get; }
 
     public string Grade { get; }
+
+    public LessonType Type { get; }
+
+    public LessonStatus Status { get; }
+
+    public LessonPaymentStatus PaymentStatus { get; }
 }

@@ -2,9 +2,9 @@
 using SuperTutor.Contexts.Schedule.Application.TimeSlots.Queries.GetAvailability;
 using SuperTutor.Contexts.Schedule.Application.TimeSlots.Queries.GetForWeek;
 using SuperTutor.Contexts.Schedule.Application.TimeSlots.Shared;
-using SuperTutor.Contexts.Schedule.Infrastructure.Persistence.Shared;
+using SuperTutor.Contexts.Schedule.Infrastructure.Shared.Persistence;
 
-namespace SuperTutor.Contexts.Schedule.Infrastructure.Persistence.TimeSlots.QueryModels;
+namespace SuperTutor.Contexts.Schedule.Infrastructure.TimeSlots.Persistence.QueryModels;
 
 internal class TimeSlotQueryModelRepository : ITimeSlotQueryModelRepository
 {

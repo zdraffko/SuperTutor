@@ -4,7 +4,7 @@ using SuperTutor.Contexts.Schedule.Application.TimeSlots.Shared;
 using SuperTutor.Contexts.Schedule.Domain.TimeSlots;
 using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Models.ValueObjects.Identifiers;
 
-namespace SuperTutor.Contexts.Schedule.Infrastructure.Persistence.TimeSlots.QueryModels;
+namespace SuperTutor.Contexts.Schedule.Infrastructure.TimeSlots.Persistence.QueryModels;
 
 internal class TimeSlotQueryModelEntityTypeConfiguration : IEntityTypeConfiguration<TimeSlotQueryModel>
 {

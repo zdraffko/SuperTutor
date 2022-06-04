@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SuperTutor.Contexts.Schedule.Infrastructure.Persistence.Shared;
+using SuperTutor.Contexts.Schedule.Infrastructure.Shared.Persistence;
 
 #nullable disable
 

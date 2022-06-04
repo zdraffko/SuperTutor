@@ -4,7 +4,7 @@ namespace SuperTutor.Contexts.Schedule.Domain.Lessons.Models.Enumerations;
 
 public class LessonPaymentStatus : Enumeration
 {
-    private LessonPaymentStatus(int value, string name) : base(value, name) { }
+    public LessonPaymentStatus(int value, string name) : base(value, name) { }
 
     public static readonly LessonPaymentStatus WaitingPayment = new(1, nameof(WaitingPayment));
 

@@ -16,11 +16,8 @@
     
   <ItemGroup>
     <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Payments\SuperTutor.Contexts.Payments.IntegrationEvents\SuperTutor.Contexts.Payments.IntegrationEvents.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Schedule.Application\SuperTutor.Contexts.Schedule.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Persistence\Shared\Migrations\" />
   </ItemGroup>
 
 </Project>
