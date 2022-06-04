@@ -9,10 +9,10 @@ using SuperTutor.Contexts.Schedule.Infrastructure.Shared.Persistence;
 
 #nullable disable
 
-namespace SuperTutor.Contexts.Schedule.Infrastructure.Persistence.Shared.Migrations
+namespace SuperTutor.Contexts.Schedule.Infrastructure.Shared.Persistence.Migrations
 {
     [DbContext(typeof(ScheduleDbContext))]
-    [Migration("20220529200106_InitialMigration")]
+    [Migration("20220604081140_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,51 @@ namespace SuperTutor.Contexts.Schedule.Infrastructure.Persistence.Shared.Migrati
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("SuperTutor.Contexts.Schedule.Application.Lessons.Queries.LessonQueryModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Grade")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TutorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Lessons", "schedule");
+                });
 
             modelBuilder.Entity("SuperTutor.Contexts.Schedule.Application.TimeSlots.Shared.TimeSlotQueryModel", b =>
                 {

@@ -19,5 +19,9 @@
     <ProjectReference Include="..\..\Payments\SuperTutor.Contexts.Payments.IntegrationEvents\SuperTutor.Contexts.Payments.IntegrationEvents.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Schedule.Application\SuperTutor.Contexts.Schedule.Application.csproj" />
   </ItemGroup>
+    
+  <ItemGroup>
+    <Folder Include="Shared\Persistence\Migrations\" />
+  </ItemGroup>
 
 </Project>
