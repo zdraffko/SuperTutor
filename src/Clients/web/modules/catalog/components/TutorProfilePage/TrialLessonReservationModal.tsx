@@ -110,7 +110,7 @@ export const TrialLessonReservationModal: React.FC<ReserveTrialLessonModalProps>
                 />
                 <Center>
                     <Button mt="xl" type="submit" fullWidth size="sm" style={{ width: "50%" }} loading={isReserveTrialLessonLoading}>
-                        Запази час
+                        Запази урокът
                     </Button>
                 </Center>
             </form>

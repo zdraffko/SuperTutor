@@ -1,4 +1,4 @@
-import { Button, Center, Loader, Paper } from "@mantine/core";
+import { Button, Center, Loader, Paper, Space, Title } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { FormEvent, useState } from "react";
@@ -54,10 +54,16 @@ export const Checkout: React.FC = () => {
                         await handleSubmit(event);
                     }}
                 >
+                    <Title align="center">Урокът е запазен!</Title>
+                    <Title order={4} align="center" mb="xl">
+                        Направи плащането за да го потвърдиш
+                    </Title>
+                    <Space h="xl" />
                     {stripe ? <PaymentElement /> : <Loader size="lg" />}
+                    <Space h="xl" />
                     <Center>
                         <Button mt="xl" type="submit" fullWidth size="sm" style={{ width: "50%" }} loading={isCheckoutStarted || !stripe}>
-                            Плати
+                            Плати урокът
                         </Button>
                     </Center>
                 </form>
