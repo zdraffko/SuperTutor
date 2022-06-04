@@ -9,7 +9,11 @@ public interface ILessonQueryModelRepository
 
     Task<IEnumerable<LessonId>> GetStartingLessonsIds(CancellationToken cancellationToken);
 
+    Task<IEnumerable<LessonId>> GetEndingLessonsIds(CancellationToken cancellationToken);
+
     Task SetAsScheduled(LessonId lessonId, LessonStatus status, LessonPaymentStatus paymentStatus, CancellationToken cancellationToken);
 
     Task SetAsStarted(LessonId lessonId, LessonStatus status, CancellationToken cancellationToken);
+
+    Task SetAsEnded(LessonId lessonId, LessonStatus status, CancellationToken cancellationToken);
 }

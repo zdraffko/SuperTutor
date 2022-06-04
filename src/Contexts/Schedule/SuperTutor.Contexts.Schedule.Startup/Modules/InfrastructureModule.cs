@@ -22,6 +22,10 @@ internal class InfrastructureModule : Module
             .As<IHostedService>()
             .SingleInstance();
 
+        builder.RegisterType<LessonEndBackgroundService>()
+            .As<IHostedService>()
+            .SingleInstance();
+
         builder.RegisterType<EventStoreSubscriber>()
             .As<IEventStoreSubscriber>()
             .SingleInstance();

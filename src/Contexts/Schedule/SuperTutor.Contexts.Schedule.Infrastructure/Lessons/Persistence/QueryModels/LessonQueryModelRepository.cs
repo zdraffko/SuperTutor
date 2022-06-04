@@ -27,6 +27,14 @@ internal class LessonQueryModelRepository : ILessonQueryModelRepository
             .Select(lesson => lesson.Id)
             .ToListAsync(cancellationToken: cancellationToken);
 
+    public async Task<IEnumerable<LessonId>> GetEndingLessonsIds(CancellationToken cancellationToken)
+        => await scheduleDbContext.Lessons
+            .Where(lesson
+                => lesson.Status == LessonStatus.Scheduled.Name
+                && lesson.Date <= DateTime.UtcNow.AddHours(3 + 1)) // TODO - Fix the timezones, Fix hardcoded lesson duration
+            .Select(lesson => lesson.Id)
+            .ToListAsync(cancellationToken: cancellationToken);
+
     public async Task SetAsScheduled(LessonId lessonId, LessonStatus status, LessonPaymentStatus paymentStatus, CancellationToken cancellationToken)
     {
         var updatedLessonQueryModel = new LessonQueryModel
@@ -44,6 +52,20 @@ internal class LessonQueryModelRepository : ILessonQueryModelRepository
     }
 
     public async Task SetAsStarted(LessonId lessonId, LessonStatus status, CancellationToken cancellationToken)
+    {
+        var updatedLessonQueryModel = new LessonQueryModel
+        {
+            Id = lessonId,
+            Status = status.Name,
+        };
+
+        scheduleDbContext.Attach(updatedLessonQueryModel);
+        scheduleDbContext.Entry(updatedLessonQueryModel).Property(lessonQueryModel => lessonQueryModel.Status).IsModified = true;
+
+        await scheduleDbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task SetAsEnded(LessonId lessonId, LessonStatus status, CancellationToken cancellationToken)
     {
         var updatedLessonQueryModel = new LessonQueryModel
         {
