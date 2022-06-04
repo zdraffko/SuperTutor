@@ -128,6 +128,13 @@ public class Lesson : AggregateRoot<LessonId, Guid>
         RaiseDomainEvent(new LessonEndedDomainEvent(Id, Status));
     }
 
+    public void Complete()
+    {
+        Status = LessonStatus.Completed;
+
+        RaiseDomainEvent(new LessonCompletedDomainEvent(Id, Status));
+    }
+
     #region Apply Domain Events
 
     public override void ApplyDomainEvent(DomainEvent domainEvent) => Apply((dynamic) domainEvent);
@@ -162,6 +169,12 @@ public class Lesson : AggregateRoot<LessonId, Guid>
     }
 
     private void Apply(LessonEndedDomainEvent domainEvent)
+    {
+        Id = domainEvent.LessonId;
+        Status = domainEvent.Status;
+    }
+
+    private void Apply(LessonCompletedDomainEvent domainEvent)
     {
         Id = domainEvent.LessonId;
         Status = domainEvent.Status;

@@ -1,5 +1,5 @@
 import SideBarLink from "components/SideBar/Links/SideBarLink";
-import { CalendarStats, CurrencyDollar, DeviceDesktop, LayoutDashboard, Search, User, Users } from "tabler-icons-react";
+import { CalendarStats, CurrencyDollar, DeviceDesktop, LayoutDashboard, Search, Users } from "tabler-icons-react";
 import { useAuth } from "utils/authentication/reactQueryAuth";
 import { UserType } from "utils/authentication/types";
 
@@ -15,8 +15,8 @@ const studentSideBarLinks = [
     { icon: <LayoutDashboard size={16} />, color: "blue", label: "Начално табло", href: "/dashboard" },
     { icon: <DeviceDesktop size={16} />, color: "orange", label: "Класна Стая", href: "/classroom" },
     { icon: <Search size={16} />, color: "teal", label: "Каталог", href: "/catalog" },
-    { icon: <CalendarStats size={16} />, color: "violet", label: "Календар", href: "/calendar" },
-    { icon: <User size={16} />, color: "grape", label: "Профил", href: "/profiles" }
+    { icon: <CalendarStats size={16} />, color: "violet", label: "Календар", href: "/calendar" }
+    // { icon: <User size={16} />, color: "grape", label: "Профил", href: "/profiles" }
 ];
 
 const SideBarLinks: React.FC = () => {

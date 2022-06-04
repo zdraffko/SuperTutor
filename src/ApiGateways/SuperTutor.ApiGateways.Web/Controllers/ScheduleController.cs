@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SuperTutor.ApiGateways.Web.Models.Schedule.AddTutorAvailability;
+using SuperTutor.ApiGateways.Web.Models.Schedule.CompleteLesson;
 using SuperTutor.ApiGateways.Web.Models.Schedule.GetScheduledLessonsForStudent;
 using SuperTutor.ApiGateways.Web.Models.Schedule.GetTutorTimeSlotsForWeek;
 using SuperTutor.ApiGateways.Web.Options;
@@ -51,6 +52,22 @@ public class ScheduleController : ApiController
         };
 
         var response = await httpClient.PostAsJsonAsync($"{ScheduleApiUrl}/TimeSlots/AddAvailability", scheduleRequest, options: jsonSerializerOptions, cancellationToken: cancellationToken);
+
+        if (response.IsSuccessStatusCode)
+        {
+            return Ok();
+        }
+
+        var responseErrorMessage = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        return BadRequest(responseErrorMessage);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult> CompleteLesson(CompleteLessonRequest request, CancellationToken cancellationToken)
+    {
+        var response = await httpClient.PostAsJsonAsync($"{ScheduleApiUrl}/Lessons/Complete", request, options: jsonSerializerOptions, cancellationToken: cancellationToken);
 
         if (response.IsSuccessStatusCode)
         {

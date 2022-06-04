@@ -38,7 +38,7 @@ public class LessonEndBackgroundService : IHostedService, IDisposable
         logger.LogInformation("Ending Lessons");
 
         // Aways check for lessons to be ended on the first run when the app starts
-        if (IsFirstRun)
+        if (true) // if (IsFirstRun) For demonstration purposes
         {
             logger.LogInformation("Ending Lessons Job First Run");
 

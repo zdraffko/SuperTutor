@@ -38,7 +38,7 @@ public sealed class LessonStartBackgroundService : IHostedService, IDisposable
         logger.LogInformation("Starting Scheduled Lessons");
 
         // Aways check for lessons to be started on the first run when the app starts
-        if (IsFirstRun)
+        if (true) // if (IsFirstRun) For demonstration purposes
         {
             logger.LogInformation("Starting Scheduled Lessons First Run");
 

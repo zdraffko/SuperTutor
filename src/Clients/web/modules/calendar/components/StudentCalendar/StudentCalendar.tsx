@@ -33,8 +33,8 @@ export const StudentCalendar: React.FC = () => {
     return (
         <Paper p="xl" m="xl">
             <Stack>
-                <Title align="center">Предстоящи уроци</Title>
-                {scheduledLessonsForStudent.length == 0 ? <Title order={4}>Нямате предстоящи уроци</Title> : <ScheduledLessons scheduledLessons={scheduledLessonsForStudent} />}
+                <Title align="center">Моите уроци</Title>
+                {scheduledLessonsForStudent.length == 0 ? <Title order={4}>Нямате уроци за момента</Title> : <ScheduledLessons scheduledLessons={scheduledLessonsForStudent} />}
             </Stack>
         </Paper>
     );

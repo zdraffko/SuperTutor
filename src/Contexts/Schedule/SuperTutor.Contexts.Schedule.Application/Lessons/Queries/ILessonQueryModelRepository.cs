@@ -19,4 +19,6 @@ public interface ILessonQueryModelRepository
     Task SetAsStarted(LessonId lessonId, LessonStatus status, CancellationToken cancellationToken);
 
     Task SetAsEnded(LessonId lessonId, LessonStatus status, CancellationToken cancellationToken);
+
+    Task SetAsCompleted(LessonId lessonId, LessonStatus status, CancellationToken cancellationToken);
 }
