@@ -4,7 +4,7 @@ namespace SuperTutor.Contexts.Payments.Domain.Charges.Models.Enumerations;
 
 public class ChargeStatus : Enumeration
 {
-    private ChargeStatus(int value, string name) : base(value, name) { }
+    public ChargeStatus(int value, string name) : base(value, name) { }
 
     public static readonly ChargeStatus Pending = new(1, nameof(Pending));
 

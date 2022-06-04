@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -8,8 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Application\SuperTutor.SharedLibraries.BuildingBlocks.Application.csproj" />
-    <ProjectReference Include="..\SuperTutor.Contexts.Payments.Domain\SuperTutor.Contexts.Payments.Domain.csproj" />
-    <ProjectReference Include="..\SuperTutor.Contexts.Payments.IntegrationEvents\SuperTutor.Contexts.Payments.IntegrationEvents.csproj" />
   </ItemGroup>
 
 </Project>

@@ -57,6 +57,13 @@ public class Charge : AggregateRoot<ChargeId, Guid>
 
     public ChargeStatus Status { get; private set; }
 
+    public void Complete()
+    {
+        Status = ChargeStatus.Completed;
+
+        RaiseDomainEvent(new ChargeCompletedDomainEvent(Id, Status));
+    }
+
     #region Apply Domain Events
 
     public override void ApplyDomainEvent(DomainEvent domainEvent) => Apply((dynamic) domainEvent);
@@ -70,6 +77,12 @@ public class Charge : AggregateRoot<ChargeId, Guid>
         Amount = domainEvent.Amount;
         Currency = domainEvent.Currency;
         ExternalPayment = domainEvent.ExternalPayment;
+        Status = domainEvent.Status;
+    }
+
+    private void Apply(ChargeCompletedDomainEvent domainEvent)
+    {
+        Id = domainEvent.ChargeId;
         Status = domainEvent.Status;
     }
 

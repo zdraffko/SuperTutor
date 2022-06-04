@@ -20,7 +20,7 @@ internal class ChargeExternalPaymentService : IChargeExternalPaymentService
                 {
                     Enabled = true,
                 },
-                TransferGroup = chargeId.ToString()
+                TransferGroup = chargeId.Value.ToString()
             };
 
             var service = new PaymentIntentService();

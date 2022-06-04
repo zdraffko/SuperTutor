@@ -10,6 +10,7 @@ using Serilog.Sinks.Elasticsearch;
 using Stripe;
 using SuperTutor.Contexts.Payments.Api;
 using SuperTutor.Contexts.Payments.Infrastructure;
+using SuperTutor.Contexts.Payments.Infrastructure.Shared.Options;
 using SuperTutor.Contexts.Payments.Infrastructure.Shared.Persistence;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.HealthChecks.Extensions;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Utility.IdentifierConversion.JsonConversion;
@@ -100,6 +101,8 @@ try
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterAssemblyModules(typeof(Program).Assembly));
 
     StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+
+    builder.Services.Configure<ChargesWebhookEndpointsSecretsOptions>(builder.Configuration.GetSection(ChargesWebhookEndpointsSecretsOptions.SectionName));
 
     var app = builder.Build();
 

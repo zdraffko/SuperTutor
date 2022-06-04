@@ -148,6 +148,7 @@ services:
             - Elasticsearch__Password=${ELASTIC_DEFAULT_PASSWORD}
             - RabbitMq__Url=amqp://${RABBITMQ_DEFAULT_USERNAME}:${RABBITMQ_DEFAULT_PASSWORD}@supertutor-rabbitmq:5672
             - Stripe__SecretKey=${STRIPE_SECRET_KEY}
+            - ChargesWebhookEndpointsSecrets__Succeeded=${CHARGES_SUCCCEEDED_WEBHOOK_ENDPOINT_SECRET}
         volumes:
             - ./.aspnet/payments/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
             - /var/log/supertutor/payments:/app/logs
