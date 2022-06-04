@@ -1,21 +1,16 @@
 import AuthenticationProtectedPage from "components/AuthenticationProtectedPage";
 import MainLayout from "components/MainLayout";
-import { Calendar, CalendarToolbar } from "modules/calendar";
-import { CalendarRedactionMode } from "modules/calendar/types";
+import { StudentCalendar, TutorCalendar } from "modules/calendar";
 import { NextPage } from "next";
-import { useState } from "react";
-import { DayJs, dayJsRange } from "utils/dates";
+import { useAuth } from "utils/authentication/reactQueryAuth";
+import { UserType } from "utils/authentication/types";
 
 const CalendarPage: NextPage = () => {
-    const selectedDateRange = dayJsRange(DayJs(), DayJs().add(5, "days"));
-    const [selectedRedactionMode, setSelectedRedactionMode] = useState<CalendarRedactionMode>("AddAvailability");
+    const { user } = useAuth();
 
     return (
         <AuthenticationProtectedPage>
-            <MainLayout>
-                <CalendarToolbar selectedRedactionMode={selectedRedactionMode} setSelectedRedactionMode={setSelectedRedactionMode} />
-                <Calendar selectedDateRange={selectedDateRange} selectedRedactionMode={selectedRedactionMode} />
-            </MainLayout>
+            <MainLayout>{user?.type == UserType.Tutor ? <TutorCalendar /> : <StudentCalendar />}</MainLayout>
         </AuthenticationProtectedPage>
     );
 };

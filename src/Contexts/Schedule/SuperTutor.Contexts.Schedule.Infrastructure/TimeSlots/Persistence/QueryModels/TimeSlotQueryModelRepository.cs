@@ -21,7 +21,7 @@ internal class TimeSlotQueryModelRepository : ITimeSlotQueryModelRepository
 
     public async Task<IEnumerable<GetTimeSlotsForWeekQueryPayload.TimeSlot>> GetForWeek(GetTimeSlotsForWeekQuery query, CancellationToken cancellationToken)
     {
-        var res = await scheduleDbContext.TimeSlots
+        var databaseQueryResult = await scheduleDbContext.TimeSlots
             .AsNoTracking()
             .Where(timeSlot
                 => timeSlot.TutorId == query.TutorId
@@ -29,7 +29,7 @@ internal class TimeSlotQueryModelRepository : ITimeSlotQueryModelRepository
                 && timeSlot.Date <= query.WeekStartDate.AddDays(7).ToDateTime(TimeOnly.MinValue))
             .ToListAsync(cancellationToken);
 
-        return res.Select(timeSlot => new GetTimeSlotsForWeekQueryPayload.TimeSlot(
+        return databaseQueryResult.Select(timeSlot => new GetTimeSlotsForWeekQueryPayload.TimeSlot(
                     timeSlot.Id,
                     timeSlot.TutorId,
                     DateOnly.FromDateTime(timeSlot.Date),
@@ -42,7 +42,7 @@ internal class TimeSlotQueryModelRepository : ITimeSlotQueryModelRepository
 
     public async Task<IEnumerable<GetTutorAvailabilityQueryPayload.Availability>> GetTutorAvailability(GetTutorAvailabilityQuery query, CancellationToken cancellationToken)
     {
-        var queryResult = await scheduleDbContext.TimeSlots
+        var databaseQueryResult = await scheduleDbContext.TimeSlots
             .AsNoTracking()
             .Where(timeSlot
                 => timeSlot.TutorId == query.TutorId
@@ -51,7 +51,7 @@ internal class TimeSlotQueryModelRepository : ITimeSlotQueryModelRepository
                 && timeSlot.Status == "Unassigned")
             .ToListAsync(cancellationToken);
 
-        return queryResult.GroupBy(timeSlot => timeSlot.Date.Date)
+        return databaseQueryResult.GroupBy(timeSlot => timeSlot.Date.Date)
                 .Select(group => new GetTutorAvailabilityQueryPayload.Availability(DateOnly.FromDateTime(group.Key), group.Select(timeSlot => TimeOnly.FromTimeSpan(timeSlot.StartTime)).OrderBy(startTime => startTime)))
                 .OrderBy(availability => availability.Date)
                 .ToList();

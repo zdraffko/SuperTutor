@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SuperTutor.ApiGateways.Web.Models.Schedule.AddTutorAvailability;
+using SuperTutor.ApiGateways.Web.Models.Schedule.GetScheduledLessonsForStudent;
 using SuperTutor.ApiGateways.Web.Models.Schedule.GetTutorTimeSlotsForWeek;
 using SuperTutor.ApiGateways.Web.Options;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Attributes;
@@ -80,6 +81,32 @@ public class ScheduleController : ApiController
         var queryString = $"{ScheduleApiUrl}/TimeSlots/GetForWeek?query={JsonSerializer.Serialize(scheduleRequest, options: jsonSerializerOptions)}";
 
         var response = await httpClient.GetFromJsonAsync<GetTutorTimeSlotsForWeekResponse>(queryString, options: jsonSerializerOptions, cancellationToken: cancellationToken);
+        if (response is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        return Ok(response);
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<ActionResult<GetScheduledLessonsForStudentResponse>> GetScheduledLessonsForStudent(CancellationToken cancellationToken)
+    {
+        var studentId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (studentId is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        var scheduleRequest = new
+        {
+            StudentId = studentId
+        };
+
+        var queryString = $"{ScheduleApiUrl}/Lessons/GetScheduledLessonsForStudent?query={JsonSerializer.Serialize(scheduleRequest, options: jsonSerializerOptions)}";
+
+        var response = await httpClient.GetFromJsonAsync<GetScheduledLessonsForStudentResponse>(queryString, options: jsonSerializerOptions, cancellationToken: cancellationToken);
         if (response is null)
         {
             return BadRequest("Възнокна неочаквана грешка");

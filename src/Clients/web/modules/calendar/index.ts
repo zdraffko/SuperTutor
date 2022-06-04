@@ -1,2 +1,2 @@
-export * from "./components/Calendar/Calendar";
-export * from "./components/CalendarToolbar";
+export * from "./components/StudentCalendar/StudentCalendar";
+export * from "./components/TutorCalendar/TutorCalendar";

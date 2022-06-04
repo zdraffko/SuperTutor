@@ -6,13 +6,13 @@ public class LessonPaymentStatus : Enumeration
 {
     public LessonPaymentStatus(int value, string name) : base(value, name) { }
 
-    public static readonly LessonPaymentStatus WaitingPayment = new(1, nameof(WaitingPayment));
+    public static readonly LessonPaymentStatus WaitingPayment = new(1, "Чака плащане");
 
-    public static readonly LessonPaymentStatus Paid = new(2, nameof(Paid));
+    public static readonly LessonPaymentStatus Paid = new(2, "Платен");
 
-    public static readonly LessonPaymentStatus Prepaid = new(3, nameof(Prepaid));
+    public static readonly LessonPaymentStatus Prepaid = new(3, "Предплатен");
 
-    public static readonly LessonPaymentStatus NotPaidOnTime = new(4, nameof(NotPaidOnTime));
+    public static readonly LessonPaymentStatus NotPaidOnTime = new(4, "Не е платен навреме");
 
-    public static readonly LessonPaymentStatus Refunded = new(5, nameof(Refunded));
+    public static readonly LessonPaymentStatus Refunded = new(5, "Възстановен");
 }

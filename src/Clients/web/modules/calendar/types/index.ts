@@ -12,3 +12,17 @@ export interface TimeSlot {
     type: TimeSlotType;
     status: TimeSlotStatus;
 }
+
+export interface Lesson {
+    id: string;
+    tutorId: string;
+    studentId: string;
+    date: string;
+    startTime: string;
+    duration: string;
+    subject: string;
+    grade: string;
+    type: string;
+    status: string;
+    paymentStatus: string;
+}

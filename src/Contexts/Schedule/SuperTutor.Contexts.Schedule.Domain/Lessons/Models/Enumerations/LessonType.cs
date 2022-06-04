@@ -6,7 +6,7 @@ public sealed class LessonType : Enumeration
 {
     public LessonType(int value, string name) : base(value, name) { }
 
-    public static readonly LessonType Trial = new(1, nameof(Trial));
+    public static readonly LessonType Trial = new(1, "Пробен");
 
-    public static readonly LessonType Regular = new(2, nameof(Regular));
+    public static readonly LessonType Regular = new(2, "Обикновен");
 }
