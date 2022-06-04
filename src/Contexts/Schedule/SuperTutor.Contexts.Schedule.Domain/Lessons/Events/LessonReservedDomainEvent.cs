@@ -12,6 +12,7 @@ public class LessonReservedDomainEvent : DomainEvent
         StudentId studentId,
         DateOnly date,
         TimeOnly startTime,
+        TimeSpan duration,
         string subject,
         string grade,
         LessonType type,
@@ -23,6 +24,7 @@ public class LessonReservedDomainEvent : DomainEvent
         StudentId = studentId;
         Date = date;
         StartTime = startTime;
+        Duration = duration;
         Subject = subject;
         Grade = grade;
         Type = type;
@@ -39,6 +41,8 @@ public class LessonReservedDomainEvent : DomainEvent
     public DateOnly Date { get; }
 
     public TimeOnly StartTime { get; }
+
+    public TimeSpan Duration { get; }
 
     public string Subject { get; }
 

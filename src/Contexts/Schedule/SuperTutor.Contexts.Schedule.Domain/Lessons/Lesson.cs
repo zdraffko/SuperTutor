@@ -86,6 +86,7 @@ public class Lesson : AggregateRoot<LessonId, Guid>
             trialLesson.StudentId,
             trialLesson.Date,
             trialLesson.StartTime,
+            trialLesson.Duration,
             trialLesson.Subject,
             trialLesson.Grade,
             trialLesson.Type,
@@ -124,7 +125,7 @@ public class Lesson : AggregateRoot<LessonId, Guid>
         StudentId = domainEvent.StudentId;
         Date = domainEvent.Date;
         StartTime = domainEvent.StartTime;
-        Duration = TrialLessonDuration;
+        Duration = domainEvent.Duration;
         Subject = domainEvent.Subject;
         Grade = domainEvent.Grade;
         Type = domainEvent.Type;
