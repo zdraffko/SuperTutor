@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using SuperTutor.Contexts.Schedule.Domain;
 using SuperTutor.Contexts.Schedule.Startup.BackgroundServices;
+using SuperTutor.Contexts.Schedule.Startup.BackgroundServices.Lessons;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Persistence.Repositories;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Persistence.Serializers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.Persistence.Subscriptions;
@@ -14,6 +15,10 @@ internal class InfrastructureModule : Module
         // The services here are registered explicitly because of the singleton lifestyle scope
 
         builder.RegisterType<EventStoreSubscriptionBackgroundService>()
+            .As<IHostedService>()
+            .SingleInstance();
+
+        builder.RegisterType<LessonStartBackgroundService>()
             .As<IHostedService>()
             .SingleInstance();
 
