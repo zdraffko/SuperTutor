@@ -12,7 +12,7 @@ using SuperTutor.Contexts.Payments.Infrastructure.Shared.Persistence;
 namespace SuperTutor.Contexts.Payments.Infrastructure.Shared.Persistence.Migrations
 {
     [DbContext(typeof(PaymentsDbContext))]
-    [Migration("20220526082306_InitialMigration")]
+    [Migration("20220605080307_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,35 @@ namespace SuperTutor.Contexts.Payments.Infrastructure.Shared.Persistence.Migrati
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("SuperTutor.Contexts.Payments.Application.Transfers.Queries.TransferQueryModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ChargeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("LessonId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TutorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Transfers", "payments");
+                });
 
             modelBuilder.Entity("SuperTutor.Contexts.Payments.Infrastructure.Tutors.Persistence.Models.TutorQuery.TutorQueryModel", b =>
                 {
