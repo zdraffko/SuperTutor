@@ -12,7 +12,7 @@ internal class GetAllTutorProfilesForTutorQueryHandler : IQueryHandler<GetAllTut
 
     public async Task<Result<GetAllTutorProfilesForTutorQueryPayload>> Handle(GetAllTutorProfilesForTutorQuery query, CancellationToken cancellationToken)
     {
-        var tutorProfiles = await tutorProfilesQueryRepository.GetAllForTutor(query.TutorId);
+        var tutorProfiles = await tutorProfilesQueryRepository.GetAllForTutor(query.TutorId, cancellationToken);
         var paylaod = new GetAllTutorProfilesForTutorQueryPayload(tutorProfiles);
 
         return Result.Ok(paylaod);

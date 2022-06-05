@@ -11,6 +11,7 @@ using SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.R
 using SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.RequestRedaction;
 using SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.SubmitForReview;
 using SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Commands.UpdateAbout;
+using SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Queries.GetAllForReview;
 using SuperTutor.Contexts.Profiles.Application.Features.TutorProfiles.Queries.GetAllForTutor;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Attributes;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
@@ -34,6 +35,7 @@ public class TutorProfilesController : ApiController
     private readonly ICommandHandler<IncreaseTutorProfileRateForOneHourCommand> increaseTutorProfileRateForOneHourCommandHandler;
     private readonly ICommandHandler<DecreaseTutorProfileRateForOneHourCommand> decreaseTutorProfileRateForOneHourCommandHandler;
     private readonly IQueryHandler<GetAllTutorProfilesForTutorQuery, GetAllTutorProfilesForTutorQueryPayload> getAllTutorProfilesForTutorQueryHandler;
+    private readonly IQueryHandler<GetAllTutorProfilesForReviewQuery, GetAllTutorProfilesForReviewQueryPayload> getAllTutorProfilesForReviewQueryHandler;
 
     public TutorProfilesController(
         ICommandHandler<CreateTutorProfileCommand, CreateTutorProfileCommandPayload> createTutorProfileCommandHandler,
@@ -48,7 +50,8 @@ public class TutorProfilesController : ApiController
         ICommandHandler<RemoveTutoringGradesFromTutorProfileCommand> removeTutoringGradesFromTutorProfileCommandHandler,
         ICommandHandler<IncreaseTutorProfileRateForOneHourCommand> increaseTutorProfileRateForOneHourCommandHandler,
         ICommandHandler<DecreaseTutorProfileRateForOneHourCommand> decreaseTutorProfileRateForOneHourCommandHandler,
-        IQueryHandler<GetAllTutorProfilesForTutorQuery, GetAllTutorProfilesForTutorQueryPayload> getAllTutorProfilesForTutorQueryHandler)
+        IQueryHandler<GetAllTutorProfilesForTutorQuery, GetAllTutorProfilesForTutorQueryPayload> getAllTutorProfilesForTutorQueryHandler,
+        IQueryHandler<GetAllTutorProfilesForReviewQuery, GetAllTutorProfilesForReviewQueryPayload> getAllTutorProfilesForReviewQueryHandler)
     {
         this.createTutorProfileCommandHandler = createTutorProfileCommandHandler;
         this.deleteTutorProfileCommandHandler = deleteTutorProfileCommandHandler;
@@ -63,6 +66,7 @@ public class TutorProfilesController : ApiController
         this.increaseTutorProfileRateForOneHourCommandHandler = increaseTutorProfileRateForOneHourCommandHandler;
         this.decreaseTutorProfileRateForOneHourCommandHandler = decreaseTutorProfileRateForOneHourCommandHandler;
         this.getAllTutorProfilesForTutorQueryHandler = getAllTutorProfilesForTutorQueryHandler;
+        this.getAllTutorProfilesForReviewQueryHandler = getAllTutorProfilesForReviewQueryHandler;
     }
 
     [HttpPost]
@@ -116,4 +120,8 @@ public class TutorProfilesController : ApiController
     [HttpGet]
     public async Task<ActionResult<GetAllTutorProfilesForTutorQueryPayload>> GetAllForTutor([FromJsonQuery] GetAllTutorProfilesForTutorQuery query, CancellationToken cancellationToken)
         => await Handle(getAllTutorProfilesForTutorQueryHandler, query, cancellationToken);
+
+    [HttpGet]
+    public async Task<ActionResult<GetAllTutorProfilesForReviewQueryPayload>> GetAllForReview([FromJsonQuery] GetAllTutorProfilesForReviewQuery query, CancellationToken cancellationToken)
+        => await Handle(getAllTutorProfilesForReviewQueryHandler, query, cancellationToken);
 }
