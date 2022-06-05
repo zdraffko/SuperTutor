@@ -10,7 +10,7 @@ public class GetAllTutorProfilesForReviewQueryPayload
 
     public class TutorProfile
     {
-        public TutorProfile(TutorProfileId id, string about, int tutoringSubject, IEnumerable<int> tutoringGrades, decimal rateForOneHour, string status)
+        public TutorProfile(TutorProfileId id, string about, string tutoringSubject, IEnumerable<string> tutoringGrades, decimal rateForOneHour, string status)
         {
             Id = id;
             About = about;
@@ -24,9 +24,9 @@ public class GetAllTutorProfilesForReviewQueryPayload
 
         public string About { get; }
 
-        public int TutoringSubject { get; }
+        public string TutoringSubject { get; }
 
-        public IEnumerable<int> TutoringGrades { get; }
+        public IEnumerable<string> TutoringGrades { get; }
 
         public decimal RateForOneHour { get; }
 

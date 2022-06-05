@@ -13,6 +13,7 @@ internal class TutorProfilesQueryRepository : ITutorProfilesQueryRepository
     private readonly ITutorProfilesDbContext tutorProfilesDbContext;
 
     public TutorProfilesQueryRepository(ITutorProfilesDbContext tutorProfilesDbContext) => this.tutorProfilesDbContext = tutorProfilesDbContext;
+
     public async Task<IEnumerable<GetAllTutorProfilesForTutorQueryPayload.TutorProfile>> GetAllForTutor(TutorId tutorId, CancellationToken cancellationToken)
     {
         var queryResult = await tutorProfilesDbContext.TutorProfiles
@@ -56,8 +57,8 @@ internal class TutorProfilesQueryRepository : ITutorProfilesQueryRepository
         return queryResult.Select(tutorProfile => new GetAllTutorProfilesForReviewQueryPayload.TutorProfile(
                     tutorProfile.Id,
                     tutorProfile.About,
-                    tutorProfile.TutoringSubject.Value,
-                    tutorProfile.TutoringGrades.Select(tutoringGrade => tutoringGrade.Value),
+                    tutorProfile.TutoringSubject.Name,
+                    tutorProfile.TutoringGrades.Select(tutoringGrade => tutoringGrade.Name),
                     tutorProfile.RateForOneHour,
                     tutorProfile.Status.Name));
     }

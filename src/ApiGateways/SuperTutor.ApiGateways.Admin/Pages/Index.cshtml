@@ -6,4 +6,31 @@
 
 <div class="text-center">
     <h1 class="display-4">Профили за верификация</h1>
+    @if (!Model.TutorProfiles.Any())
+    {
+        <h4 class="display-4">В момента няма профили за верификация</h4>
+    }
+    else
+    {
+        foreach (var tutorProfile in Model.TutorProfiles)
+        {
+            <p>
+                <strong>Id:</strong> @tutorProfile.Id
+                <strong>Цена за час:</strong> @tutorProfile.RateForOneHour
+
+            </p>
+
+            <p>
+                <strong>Предмет:</strong> @tutorProfile.TutoringSubject
+                <strong>Класове:</strong> @string.Join(", ", tutorProfile.TutoringGrades)
+            </p>
+
+            <p>
+                <strong>Относно:</strong> @tutorProfile.About
+                <strong>Статус:</strong> @tutorProfile.Status
+            </p>
+
+            <button>Одобри</button>
+        }
+    }
 </div>
