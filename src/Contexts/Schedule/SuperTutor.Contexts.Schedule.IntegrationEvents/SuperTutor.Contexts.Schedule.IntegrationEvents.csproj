@@ -8,8 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Application\SuperTutor.SharedLibraries.BuildingBlocks.Application.csproj" />
-    <ProjectReference Include="..\SuperTutor.Contexts.Schedule.Domain\SuperTutor.Contexts.Schedule.Domain.csproj" />
-    <ProjectReference Include="..\SuperTutor.Contexts.Schedule.IntegrationEvents\SuperTutor.Contexts.Schedule.IntegrationEvents.csproj" />
   </ItemGroup>
 
 </Project>

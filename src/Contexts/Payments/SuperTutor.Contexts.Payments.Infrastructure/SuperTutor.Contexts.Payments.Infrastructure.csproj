@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Identity\SuperTutor.Contexts.Identity.IntegrationEvents\SuperTutor.Contexts.Identity.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\..\Schedule\SuperTutor.Contexts.Schedule.IntegrationEvents\SuperTutor.Contexts.Schedule.IntegrationEvents.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Payments.Application\SuperTutor.Contexts.Payments.Application.csproj" />
   </ItemGroup>
 

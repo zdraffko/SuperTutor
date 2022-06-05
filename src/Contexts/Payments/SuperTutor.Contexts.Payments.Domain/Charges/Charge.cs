@@ -1,7 +1,7 @@
 ﻿using SuperTutor.Contexts.Payments.Domain.Charges.Events;
 using SuperTutor.Contexts.Payments.Domain.Charges.Models.Enumerations;
 using SuperTutor.Contexts.Payments.Domain.Charges.Models.ValueObjects;
-using SuperTutor.Contexts.Payments.Domain.Charges.Models.ValueObjects.Identifiers;
+using SuperTutor.Contexts.Payments.Domain.Shared.Models.ValueObjects.Identifiers;
 using SuperTutor.Contexts.Payments.Domain.Tutors;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Aggregates;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Events;

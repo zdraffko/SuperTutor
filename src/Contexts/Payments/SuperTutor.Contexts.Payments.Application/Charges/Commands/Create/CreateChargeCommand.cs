@@ -1,4 +1,4 @@
-﻿using SuperTutor.Contexts.Payments.Domain.Charges.Models.ValueObjects.Identifiers;
+﻿using SuperTutor.Contexts.Payments.Domain.Shared.Models.ValueObjects.Identifiers;
 using SuperTutor.Contexts.Payments.Domain.Tutors;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
