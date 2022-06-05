@@ -26,6 +26,31 @@ services:
         networks:
             - supertutor-infrastructure_default
 
+    supertutor-apigateway-admin:
+        container_name: supertutor-apigateway-admin
+        image: zdraffko/supertutor:apigateway-admin
+        build:
+            context: .
+            dockerfile: ./ApiGateways/SuperTutor.ApiGateways.Admin/Dockerfile
+        environment:
+            - Elasticsearch__Urls=http://supertutor-elasticsearch-node-1:9200
+            - Elasticsearch__Username=${ELASTIC_DEFAULT_USERNAME}
+            - Elasticsearch__Password=${ELASTIC_DEFAULT_PASSWORD}
+            - ApiUrls__Identity=http://supertutor-identity/api
+            - ApiUrls__Payments=http://supertutor-payments/api
+            - ApiUrls__Profiles=http://supertutor-profiles/api
+            - ApiUrls__Catalog=http://supertutor-catalog/api
+            - ApiUrls__Schedule=http://supertutor-schedule/api
+            - AuthTokenSecretKey=${AUTH_TOKEN_SECRET_KEY}
+        volumes:
+            - ./.aspnet/apigateway-admin/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+            - /var/log/supertutor/apigateway-admin:/app/logs
+        ports: 
+            - 4001:80
+        restart: on-failure
+        networks:
+            - supertutor-infrastructure_default
+
     supertutor-identity:
         container_name: supertutor-identity
         image: zdraffko/supertutor:identity
