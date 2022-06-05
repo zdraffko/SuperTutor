@@ -48,6 +48,9 @@ public class UserService : IUserService
     public async Task<Result<Guid>> RegisterStudent(string email, string plainPassword, string firstName, string lastName)
         => await Register(email, UserType.Student, plainPassword, firstName, lastName);
 
+    public async Task<Result<Guid>> RegisterAdmin(string email, string plainPassword, string firstName, string lastName)
+        => await Register(email, UserType.Admin, plainPassword, firstName, lastName);
+
     public async Task<Result<Guid>> Delete(string email)
     {
         var user = await userManager.FindByEmailAsync(email);

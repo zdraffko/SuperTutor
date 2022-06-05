@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
 using SuperTutor.ApiGateways.Admin.Models.Profiles;
@@ -7,6 +8,7 @@ using System.Security.Claims;
 using System.Text.Json;
 
 namespace SuperTutor.ApiGateways.Admin.Pages;
+
 public class IndexModel : PageModel
 {
     private static readonly HttpClient httpClient = new();
@@ -20,13 +22,21 @@ public class IndexModel : PageModel
         this.httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task OnGet()
+    public async Task<ActionResult> OnGet()
     {
+        var authenticationResult = await httpContextAccessor.HttpContext.AuthenticateAsync("Cookies");
+        if (!authenticationResult.Succeeded)
+        {
+            return RedirectToPage("Register");
+        }
+
         var cancellationToken = new CancellationTokenSource().Token;
         var queryString = $"{ProfilesApiUrl}/TutorProfiles/GetAllForReview?query={JsonSerializer.Serialize(new { })}";
 
         var response = await httpClient.GetFromJsonAsync<GetAllTutorProfilesForReviewResponse>(queryString, cancellationToken: cancellationToken);
         TutorProfiles = response?.TutorProfiles ?? Enumerable.Empty<TutorProfile>();
+
+        return Page();
     }
 
     public IEnumerable<TutorProfile> TutorProfiles { get; set; }
@@ -35,8 +45,9 @@ public class IndexModel : PageModel
     {
         var cancellationToken = new CancellationTokenSource().Token;
 
-        var adminId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
+        var authenticationResult = await httpContextAccessor.HttpContext.AuthenticateAsync("Cookies");
+        var claim = authenticationResult.Principal.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
+        var adminId = claim.Value;
         var profilesRequest = new
         {
             TutorProfileId = tutorProfileId,

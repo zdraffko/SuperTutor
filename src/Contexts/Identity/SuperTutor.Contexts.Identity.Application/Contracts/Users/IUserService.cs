@@ -13,5 +13,7 @@ public interface IUserService
 
     Task<Result<Guid>> RegisterStudent(string email, string plainPassword, string firstName, string lastName);
 
+    Task<Result<Guid>> RegisterAdmin(string email, string plainPassword, string firstName, string lastName);
+
     Task<Result<Guid>> Delete(string email);
 }

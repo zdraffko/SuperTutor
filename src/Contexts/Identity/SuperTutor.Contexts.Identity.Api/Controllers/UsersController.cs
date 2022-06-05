@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SuperTutor.Contexts.Identity.Application.Features.Users.Commands.Delete;
 using SuperTutor.Contexts.Identity.Application.Features.Users.Commands.Login;
+using SuperTutor.Contexts.Identity.Application.Features.Users.Commands.RegisterAdmin;
 using SuperTutor.Contexts.Identity.Application.Features.Users.Commands.RegisterStudent;
 using SuperTutor.Contexts.Identity.Application.Features.Users.Commands.RegisterTutor;
 using SuperTutor.Contexts.Identity.Application.Features.Users.Queries.GetIdentityInfo;
@@ -16,6 +17,7 @@ public class UsersController : ApiController
     private readonly ICommandHandler<LoginUserCommand, LoginUserCommandResult> loginUserCommandHandler;
     private readonly ICommandHandler<RegisterTutorCommand, RegisterTutorCommandResult> registerTutorCommandHandler;
     private readonly ICommandHandler<RegisterStudentCommand, RegisterStudentCommandResult> registerStudentCommandHandler;
+    private readonly ICommandHandler<RegisterAdminCommand, RegisterAdminCommandResult> registerAdminCommandHandler;
     private readonly ICommandHandler<DeleteUserCommand> deleteUserCommandHandler;
     private readonly IQueryHandler<GetUserIdentityInfoQuery, GetUserIdentityInfoQueryPayload> getUserIdentityInfoQueryHandler;
 
@@ -23,12 +25,14 @@ public class UsersController : ApiController
         ICommandHandler<LoginUserCommand, LoginUserCommandResult> loginUserCommandHandler,
         ICommandHandler<RegisterTutorCommand, RegisterTutorCommandResult> registerTutorCommandHandler,
         ICommandHandler<RegisterStudentCommand, RegisterStudentCommandResult> registerStudentCommandHandler,
+        ICommandHandler<RegisterAdminCommand, RegisterAdminCommandResult> registerAdminCommandHandler,
         ICommandHandler<DeleteUserCommand> deleteUserCommandHandler,
         IQueryHandler<GetUserIdentityInfoQuery, GetUserIdentityInfoQueryPayload> getUserIdentityInfoQueryHandler)
     {
         this.loginUserCommandHandler = loginUserCommandHandler;
         this.registerTutorCommandHandler = registerTutorCommandHandler;
         this.registerStudentCommandHandler = registerStudentCommandHandler;
+        this.registerAdminCommandHandler = registerAdminCommandHandler;
         this.deleteUserCommandHandler = deleteUserCommandHandler;
         this.getUserIdentityInfoQueryHandler = getUserIdentityInfoQueryHandler;
     }
@@ -44,6 +48,10 @@ public class UsersController : ApiController
     [HttpPost]
     public async Task<ActionResult<RegisterStudentCommandResult>> RegisterStudent(RegisterStudentCommand command, CancellationToken cancellationToken)
         => await Handle(registerStudentCommandHandler, command, cancellationToken);
+
+    [HttpPost]
+    public async Task<ActionResult<RegisterAdminCommandResult>> RegisterAdmin(RegisterAdminCommand command, CancellationToken cancellationToken)
+        => await Handle(registerAdminCommandHandler, command, cancellationToken);
 
     [HttpPost]
     public async Task<ActionResult> Delete(DeleteUserCommand command, CancellationToken cancellationToken)

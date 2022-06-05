@@ -1,6 +1,4 @@
 using Elastic.CommonSchema.Serilog;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Debugging;
 using Serilog.Sinks.Elasticsearch;
@@ -65,22 +63,21 @@ try
 
     builder.Services
         .AddAuthentication(authentication =>
-        {
-            authentication.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            authentication.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddJwtBearer(bearer =>
-        {
-            bearer.RequireHttpsMetadata = false;
-            bearer.SaveToken = true;
-            bearer.TokenValidationParameters = new TokenValidationParameters
+            /*            authentication.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                        authentication.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;*/
+            authentication.RequireAuthenticatedSignIn = false).AddCookie("Cookies");
+    /*        .AddJwtBearer(bearer =>
             {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = false,
-                ValidateAudience = false
-            };
-        });
+                bearer.RequireHttpsMetadata = false;
+                bearer.SaveToken = true;
+                bearer.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });*/
 
     builder.Services.AddHttpContextAccessor();
 
