@@ -7,6 +7,7 @@ using SuperTutor.ApiGateways.Web.Models.Payments.GetAreTutorVerificationDocument
 using SuperTutor.ApiGateways.Web.Models.Payments.GetIsTutorAddressInformationCollected;
 using SuperTutor.ApiGateways.Web.Models.Payments.GetIsTutorBankAccountInformationCollected;
 using SuperTutor.ApiGateways.Web.Models.Payments.GetIsTutorPersonalInformationCollected;
+using SuperTutor.ApiGateways.Web.Models.Payments.GetTransfersForTutor;
 using SuperTutor.ApiGateways.Web.Models.Payments.UpdateAccountAddressInformation;
 using SuperTutor.ApiGateways.Web.Models.Payments.UpdateAccountPayoutInformation;
 using SuperTutor.ApiGateways.Web.Models.Payments.UpdateAccountPersonalInformation;
@@ -351,5 +352,32 @@ public class PaymentsController : ApiController
         var responseErrorMessage = await response.Content.ReadAsStringAsync(cancellationToken);
 
         return BadRequest(responseErrorMessage);
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<ActionResult<GetTransfersForTutorResponse>> GetTransfersForTutor(CancellationToken cancellationToken)
+    {
+        var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (tutorId is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        var paymentsRequest = new
+        {
+            TutorId = tutorId
+        };
+
+        var queryString = $"{PaymentsApiUrl}/transfers/GetForTutor?query={JsonSerializer.Serialize(paymentsRequest)}";
+
+        var response = await httpClient.GetFromJsonAsync<GetTransfersForTutorResponse>(queryString, cancellationToken: cancellationToken);
+
+        if (response is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        return Ok(response);
     }
 }
