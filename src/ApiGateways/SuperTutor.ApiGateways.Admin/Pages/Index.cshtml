@@ -30,7 +30,9 @@
                 <strong>Статус:</strong> @tutorProfile.Status
             </p>
 
-            <button>Одобри</button>
+            <form method="post" asp-page-handler="ApproveTutorProfile" asp-route-tutorProfileId="@tutorProfile.Id">
+                <button>Одобри</button>
+            </form>
         }
     }
 </div>
