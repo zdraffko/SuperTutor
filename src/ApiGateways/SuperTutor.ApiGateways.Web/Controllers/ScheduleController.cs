@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using SuperTutor.ApiGateways.Web.Models.Schedule.AddTutorAvailability;
 using SuperTutor.ApiGateways.Web.Models.Schedule.CompleteLesson;
 using SuperTutor.ApiGateways.Web.Models.Schedule.GetScheduledLessonsForStudent;
+using SuperTutor.ApiGateways.Web.Models.Schedule.GetScheduledLessonsForTutor;
 using SuperTutor.ApiGateways.Web.Models.Schedule.GetTutorTimeSlotsForWeek;
 using SuperTutor.ApiGateways.Web.Options;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Attributes;
@@ -124,6 +125,32 @@ public class ScheduleController : ApiController
         var queryString = $"{ScheduleApiUrl}/Lessons/GetScheduledLessonsForStudent?query={JsonSerializer.Serialize(scheduleRequest, options: jsonSerializerOptions)}";
 
         var response = await httpClient.GetFromJsonAsync<GetScheduledLessonsForStudentResponse>(queryString, options: jsonSerializerOptions, cancellationToken: cancellationToken);
+        if (response is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        return Ok(response);
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<ActionResult<GetScheduledLessonsForTutorResponse>> GetScheduledLessonsForTutor(CancellationToken cancellationToken)
+    {
+        var tutorId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (tutorId is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        var scheduleRequest = new
+        {
+            TutorId = tutorId
+        };
+
+        var queryString = $"{ScheduleApiUrl}/Lessons/GetScheduledLessonsForTutor?query={JsonSerializer.Serialize(scheduleRequest, options: jsonSerializerOptions)}";
+
+        var response = await httpClient.GetFromJsonAsync<GetScheduledLessonsForTutorResponse>(queryString, options: jsonSerializerOptions, cancellationToken: cancellationToken);
         if (response is null)
         {
             return BadRequest("Възнокна неочаквана грешка");

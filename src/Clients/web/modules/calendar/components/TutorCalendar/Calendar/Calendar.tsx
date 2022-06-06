@@ -1,6 +1,7 @@
 import { Center, Grid, Loader, Paper } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { Dayjs } from "dayjs";
+import useGetScheduledLessonsForTutor from "modules/calendar/hooks/useGetScheduledLessonsForTutor";
 import useGetTutorTimeSlotsForWeek from "modules/calendar/hooks/useGetTutorTimeSlotsForWeek";
 import { CalendarRedactionMode } from "modules/calendar/types";
 import { useEffect } from "react";
@@ -18,20 +19,21 @@ export const Calendar: React.FC<CalendarProps> = ({ selectedDateRange, selectedR
     const { timeSlotsForWeek, isGetTutorTimeSlotsForWeekFailed, isGetTutorTimeSlotsForWeekLoading, getTutorTimeSlotsForWeekErrorMessage } = useGetTutorTimeSlotsForWeek({
         weekStartDate: selectedDateRange[0].format("DD/MM/YYYY")
     });
+    const { scheduledLessonsForTutor, getScheduledLessonsForTutorErrorMessage, isGetScheduledLessonsForTutorFailed, isGetScheduledLessonsForTutorLoading } = useGetScheduledLessonsForTutor();
 
     useEffect(() => {
-        if (isGetTutorTimeSlotsForWeekFailed) {
+        if (isGetTutorTimeSlotsForWeekFailed || isGetScheduledLessonsForTutorFailed) {
             showNotification({
                 autoClose: 5000,
                 title: "Възникна проблем при зареждането на графика",
-                message: getTutorTimeSlotsForWeekErrorMessage,
+                message: getTutorTimeSlotsForWeekErrorMessage ?? getScheduledLessonsForTutorErrorMessage,
                 color: "red",
                 icon: <X />
             });
         }
-    }, [getTutorTimeSlotsForWeekErrorMessage, isGetTutorTimeSlotsForWeekFailed]);
+    }, [getScheduledLessonsForTutorErrorMessage, getTutorTimeSlotsForWeekErrorMessage, isGetScheduledLessonsForTutorFailed, isGetTutorTimeSlotsForWeekFailed]);
 
-    if (isGetTutorTimeSlotsForWeekLoading || !timeSlotsForWeek) {
+    if (isGetTutorTimeSlotsForWeekLoading || !timeSlotsForWeek || isGetScheduledLessonsForTutorLoading || !scheduledLessonsForTutor) {
         return (
             <Center style={{ height: "50vh" }}>
                 <Loader size="xl" />
@@ -49,7 +51,7 @@ export const Calendar: React.FC<CalendarProps> = ({ selectedDateRange, selectedR
                     <CalendarSideBar />
                 </Grid.Col>
                 <Grid.Col span={7}>
-                    <CalendarBody selectedDateRange={selectedDateRange} selectedRedactionMode={selectedRedactionMode} timeSlotsForWeek={timeSlotsForWeek} />
+                    <CalendarBody selectedDateRange={selectedDateRange} selectedRedactionMode={selectedRedactionMode} timeSlotsForWeek={timeSlotsForWeek} scheduledLessons={scheduledLessonsForTutor} />
                 </Grid.Col>
             </Grid>
         </Paper>

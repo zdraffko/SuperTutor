@@ -1,9 +1,9 @@
-import { Center, Container, Loader } from "@mantine/core";
+import { Center, Container, Loader, Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { Dayjs } from "dayjs";
 import { CellColors, RedactionModeColors } from "modules/calendar/constants";
 import useAddAvailability from "modules/calendar/hooks/useAddAvailability";
-import { CalendarRedactionMode, TimeSlot } from "modules/calendar/types";
+import { CalendarRedactionMode, Lesson, TimeSlot } from "modules/calendar/types";
 import { useEffect } from "react";
 import { X } from "tabler-icons-react";
 import { DayJs } from "utils/dates";
@@ -14,13 +14,15 @@ interface CalendarBodyColumnCellHalfProps {
     minute: number;
     selectedRedactionMode: CalendarRedactionMode;
     timeSlot: TimeSlot | undefined;
+    scheduledLesson: Lesson | undefined;
 }
 
-const CalendarBodyColumnCellHalf: React.FC<CalendarBodyColumnCellHalfProps> = ({ date, hour, minute, selectedRedactionMode, timeSlot }) => {
+const CalendarBodyColumnCellHalf: React.FC<CalendarBodyColumnCellHalfProps> = ({ date, hour, minute, selectedRedactionMode, timeSlot, scheduledLesson }) => {
     const formattedDate = date.format("DD/MM/YYYY");
     const formattedTime = DayJs().hour(hour).minute(minute).format("HH:mm:00");
     const { addAvailability, isAddAvailabilityFailed, isAddAvailabilityLoading, addAvailabilityErrorMessage, resetAddAvailabilityRequestState } = useAddAvailability();
-
+    console.log(scheduledLesson);
+    console.log(timeSlot);
     useEffect(() => {
         if (isAddAvailabilityFailed) {
             showNotification({
@@ -56,11 +58,18 @@ const CalendarBodyColumnCellHalf: React.FC<CalendarBodyColumnCellHalfProps> = ({
 
     return timeSlot ? (
         <Container
-            style={{ height: "50px" }}
+            style={{ height: "50px", padding: "1px" }}
             sx={theme => ({
-                backgroundColor: theme.colors[CellColors[timeSlot.type]][3]
+                backgroundColor: scheduledLesson ? theme.colors.teal[5] : theme.colors[CellColors[timeSlot.type]][2]
             })}
-        ></Container>
+        >
+            {scheduledLesson && scheduledLesson.startTime === timeSlot.startTime && (
+                <>
+                    <Text size="xs">Предмет: {scheduledLesson?.subject}</Text>
+                    <Text size="xs">Клас: {scheduledLesson?.grade}</Text>
+                </>
+            )}
+        </Container>
     ) : (
         <Container
             onClick={handleOnClick}
@@ -68,7 +77,7 @@ const CalendarBodyColumnCellHalf: React.FC<CalendarBodyColumnCellHalfProps> = ({
             sx={theme => ({
                 "&:hover": {
                     cursor: "pointer",
-                    backgroundColor: theme.colors[RedactionModeColors[selectedRedactionMode]][3]
+                    backgroundColor: theme.colors[RedactionModeColors[selectedRedactionMode]][4]
                 }
             })}
         ></Container>

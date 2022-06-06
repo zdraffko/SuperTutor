@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SuperTutor.Contexts.Schedule.Application.Lessons.Queries;
 using SuperTutor.Contexts.Schedule.Application.Lessons.Queries.GetScheduledLessonsForStudent;
+using SuperTutor.Contexts.Schedule.Application.Lessons.Queries.GetScheduledLessonsForTutor;
 using SuperTutor.Contexts.Schedule.Domain.Lessons;
 using SuperTutor.Contexts.Schedule.Domain.Lessons.Models.Enumerations;
 using SuperTutor.Contexts.Schedule.Infrastructure.Shared.Persistence;
@@ -45,6 +46,29 @@ internal class LessonQueryModelRepository : ILessonQueryModelRepository
             .ToListAsync();
 
         return databaseQueryResult.Select(lesson => new GetScheduledLessonsForStudentQueryPayload.ScheduledLesson(
+                lesson.Id,
+                lesson.TutorId,
+                lesson.StudentId,
+                DateOnly.FromDateTime(lesson.Date),
+                TimeOnly.FromTimeSpan(lesson.StartTime),
+                lesson.Duration,
+                lesson.Subject,
+                lesson.Grade,
+                lesson.Type,
+                lesson.Status,
+                lesson.PaymentStatus
+            ));
+    }
+
+    public async Task<IEnumerable<GetScheduledLessonsForTutorQueryPayload.ScheduledLesson>> GetScheduledLessonsForTutor(GetScheduledLessonsForTutorQuery query, CancellationToken cancellationToken)
+    {
+        var databaseQueryResult = await scheduleDbContext.Lessons
+            .AsNoTracking()
+            //.Where(lesson => lesson.StudentId == query.StudentId && lesson.Status == LessonStatus.Scheduled.Name && lesson.Date >= DateTime.UtcNow.AddHours(3)) TODO - Refactor this. This is just a dirty quick way to get the required functionality working on time
+            .Where(lesson => lesson.TutorId == query.TutorId)
+            .ToListAsync();
+
+        return databaseQueryResult.Select(lesson => new GetScheduledLessonsForTutorQueryPayload.ScheduledLesson(
                 lesson.Id,
                 lesson.TutorId,
                 lesson.StudentId,
