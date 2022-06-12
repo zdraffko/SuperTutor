@@ -1,4 +1,4 @@
-﻿Feature: As a student, I want to be able to use a filter when searching for a tutor, in order to get better search results
+﻿Feature: As a student, I want to be able to use a filter when searching for a tutor, in order to find the perfect tutor for me more easily
 
 Background:
 	Given There are tutor profiles in the catalog
