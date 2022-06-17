@@ -2,14 +2,14 @@ import { Group, Text, ThemeIcon, UnstyledButton, useMantineTheme } from "@mantin
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-interface SideBarLinkProps {
+interface NavBarLinkProps {
     icon: React.ReactNode;
     color: string;
     label: string;
     href: string;
 }
 
-const SideBarLink: React.FC<SideBarLinkProps> = ({ icon, color, label, href }) => {
+const NavBarLink: React.FC<NavBarLinkProps> = ({ icon, color, label, href }) => {
     const router = useRouter();
     const isLinkActive = router.pathname === href;
 
@@ -21,7 +21,6 @@ const SideBarLink: React.FC<SideBarLinkProps> = ({ icon, color, label, href }) =
             <UnstyledButton
                 sx={theme => ({
                     display: "block",
-                    width: "100%",
                     padding: theme.spacing.xs,
                     borderRadius: theme.radius.sm,
                     color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
@@ -43,4 +42,4 @@ const SideBarLink: React.FC<SideBarLinkProps> = ({ icon, color, label, href }) =
         </Link>
     );
 };
-export default SideBarLink;
+export default NavBarLink;
