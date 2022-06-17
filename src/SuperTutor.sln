@@ -128,19 +128,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Payment
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Schedule.IntegrationEvents", "Contexts\Schedule\SuperTutor.Contexts.Schedule.IntegrationEvents\SuperTutor.Contexts.Schedule.IntegrationEvents.csproj", "{59246E02-DCD7-4F65-90C8-2BB950F74728}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.ApiGateways.Admin", "ApiGateways\SuperTutor.ApiGateways.Admin\SuperTutor.ApiGateways.Admin.csproj", "{0019A9F2-CD20-4725-BFCB-AE0AEE55753D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{743795FB-3E5E-46DB-9109-9E70250D3BD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Classrooms.Tests.Acceptance", "Contexts\Classrooms\Tests\SuperTutor.Contexts.Classrooms.Tests.Acceptance\SuperTutor.Contexts.Classrooms.Tests.Acceptance.csproj", "{0A16D1DE-594F-482A-AD7A-AAB6FB3460A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Classrooms.Tests.Acceptance", "Contexts\Classrooms\Tests\SuperTutor.Contexts.Classrooms.Tests.Acceptance\SuperTutor.Contexts.Classrooms.Tests.Acceptance.csproj", "{0A16D1DE-594F-482A-AD7A-AAB6FB3460A7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7AB9EC54-7C11-4685-9D21-99DA064C9C72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Identity.Tests.Acceptance", "Contexts\Identity\Tests\SuperTutor.Contexts.Identity.Tests.Acceptance\SuperTutor.Contexts.Identity.Tests.Acceptance.csproj", "{8CBD2E3C-83CC-4FAE-A4C3-380D14342A71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Identity.Tests.Acceptance", "Contexts\Identity\Tests\SuperTutor.Contexts.Identity.Tests.Acceptance\SuperTutor.Contexts.Identity.Tests.Acceptance.csproj", "{8CBD2E3C-83CC-4FAE-A4C3-380D14342A71}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{85C44F9C-4B81-40A2-A96D-08717F3A8D2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.Contexts.Payments.Tests.Acceptance", "Contexts\Payments\Tests\SuperTutor.Contexts.Payments.Tests.Acceptance\SuperTutor.Contexts.Payments.Tests.Acceptance.csproj", "{249328A8-1280-4AED-A5AE-9885610E3DE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Payments.Tests.Acceptance", "Contexts\Payments\Tests\SuperTutor.Contexts.Payments.Tests.Acceptance\SuperTutor.Contexts.Payments.Tests.Acceptance.csproj", "{249328A8-1280-4AED-A5AE-9885610E3DE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -332,10 +330,6 @@ Global
 		{59246E02-DCD7-4F65-90C8-2BB950F74728}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59246E02-DCD7-4F65-90C8-2BB950F74728}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59246E02-DCD7-4F65-90C8-2BB950F74728}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0019A9F2-CD20-4725-BFCB-AE0AEE55753D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0019A9F2-CD20-4725-BFCB-AE0AEE55753D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0019A9F2-CD20-4725-BFCB-AE0AEE55753D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0019A9F2-CD20-4725-BFCB-AE0AEE55753D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0A16D1DE-594F-482A-AD7A-AAB6FB3460A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0A16D1DE-594F-482A-AD7A-AAB6FB3460A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A16D1DE-594F-482A-AD7A-AAB6FB3460A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -409,7 +403,6 @@ Global
 		{AA1F2A6E-729A-4074-A44E-FA2E42967048} = {22DD0B4A-D343-42CC-8C42-6AB72FC9D3F0}
 		{9A162CBF-B2A9-4C89-8368-1915FBC6F029} = {E0D528FE-1976-413B-A785-D8980A394369}
 		{59246E02-DCD7-4F65-90C8-2BB950F74728} = {D7B6D655-A6A9-47A6-850C-91D96960C944}
-		{0019A9F2-CD20-4725-BFCB-AE0AEE55753D} = {27C8F3DE-3BBD-4740-BC57-01869069A728}
 		{743795FB-3E5E-46DB-9109-9E70250D3BD4} = {22DD0B4A-D343-42CC-8C42-6AB72FC9D3F0}
 		{0A16D1DE-594F-482A-AD7A-AAB6FB3460A7} = {743795FB-3E5E-46DB-9109-9E70250D3BD4}
 		{7AB9EC54-7C11-4685-9D21-99DA064C9C72} = {DB167D28-A138-4B9C-B3D3-14F93D999CC3}
