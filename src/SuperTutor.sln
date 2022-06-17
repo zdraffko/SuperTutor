@@ -140,6 +140,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{85C44F9C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperTutor.Contexts.Payments.Tests.Acceptance", "Contexts\Payments\Tests\SuperTutor.Contexts.Payments.Tests.Acceptance\SuperTutor.Contexts.Payments.Tests.Acceptance.csproj", "{249328A8-1280-4AED-A5AE-9885610E3DE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperTutor.ApiGateways.Admin", "ApiGateways\SuperTutor.ApiGateways.Admin\SuperTutor.ApiGateways.Admin.csproj", "{666C94CF-0840-463B-AD17-A88224C27BEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -342,6 +344,10 @@ Global
 		{249328A8-1280-4AED-A5AE-9885610E3DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{249328A8-1280-4AED-A5AE-9885610E3DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{249328A8-1280-4AED-A5AE-9885610E3DE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{666C94CF-0840-463B-AD17-A88224C27BEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{666C94CF-0840-463B-AD17-A88224C27BEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{666C94CF-0840-463B-AD17-A88224C27BEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{666C94CF-0840-463B-AD17-A88224C27BEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -409,6 +415,7 @@ Global
 		{8CBD2E3C-83CC-4FAE-A4C3-380D14342A71} = {7AB9EC54-7C11-4685-9D21-99DA064C9C72}
 		{85C44F9C-4B81-40A2-A96D-08717F3A8D2A} = {E0D528FE-1976-413B-A785-D8980A394369}
 		{249328A8-1280-4AED-A5AE-9885610E3DE9} = {85C44F9C-4B81-40A2-A96D-08717F3A8D2A}
+		{666C94CF-0840-463B-AD17-A88224C27BEB} = {27C8F3DE-3BBD-4740-BC57-01869069A728}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4CB9FFAA-0741-40AA-BFA6-60CC8D6EC98F}
