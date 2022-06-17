@@ -24,7 +24,7 @@ internal class RegisterAdminCommandHandler : ICommandHandler<RegisterAdminComman
             return loginResult.ToResult<RegisterAdminCommandResult>();
         }
 
-        var commandResult = new RegisterAdminCommandResult(registerResult.Value.ToString()); // TODO - Fix this once the admin panel app is migrated to NextJs
+        var commandResult = new RegisterAdminCommandResult(loginResult.Value);
 
         return Result.Ok(commandResult);
     }
