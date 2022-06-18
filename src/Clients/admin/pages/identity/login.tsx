@@ -1,4 +1,4 @@
-import { LoginForm } from "modules/identiy";
+import { LoginForm } from "modules/identity";
 import type { NextPage } from "next";
 import Head from "next/head";
 

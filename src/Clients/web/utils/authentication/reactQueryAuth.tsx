@@ -1,7 +1,7 @@
 import { Alert, Center, Loader } from "@mantine/core";
-import { getIdentityInfo } from "modules/identiy/api/getIdentityInfo";
-import { loginUser, LoginUserRequest } from "modules/identiy/api/login";
-import { registerUser, RegisterUserRequest } from "modules/identiy/api/register";
+import { getIdentityInfo } from "modules/identity/api/getIdentityInfo";
+import { loginUser, LoginUserRequest } from "modules/identity/api/login";
+import { registerUser, RegisterUserRequest } from "modules/identity/api/register";
 import { initReactQueryAuth } from "react-query-auth";
 import { AlertCircle } from "tabler-icons-react";
 import authTokenStorage from "utils/authTokenStorage";

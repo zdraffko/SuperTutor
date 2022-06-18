@@ -1,4 +1,4 @@
-import { RegisterForm } from "modules/identiy";
+import { RegisterForm } from "modules/identity";
 import type { NextPage } from "next";
 import Head from "next/head";
 
