@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using SuperTutor.ApiGateways.Admin.Models.Profiles.ApproveTutorProfile;
 using SuperTutor.ApiGateways.Admin.Models.Profiles.GetAllTutorProfilesForReview;
 using SuperTutor.ApiGateways.Admin.Options;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
+using System.Security.Claims;
 
 namespace SuperTutor.ApiGateways.Admin.Controllers;
 
@@ -28,5 +30,33 @@ public class ProfilesController : ApiController
         var response = await httpClient.GetFromJsonAsync<GetAllTutorProfilesForReviewResponse>(queryString, cancellationToken: cancellationToken);
 
         return Ok(response);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult> ApproveTutorProfile(ApproveTutorProfileRequest request, CancellationToken cancellationToken)
+    {
+        var adminId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (adminId is null)
+        {
+            return BadRequest("Възнокна неочаквана грешка");
+        }
+
+        var profilesRequest = new
+        {
+            AdminId = adminId,
+            request.TutorProfileId
+        };
+
+        var response = await httpClient.PostAsJsonAsync($"{ProfilesApiUrl}/TutorProfiles/Approve", profilesRequest, cancellationToken: cancellationToken);
+
+        if (response.IsSuccessStatusCode)
+        {
+            return Ok();
+        }
+
+        var responseErrorMessage = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        return BadRequest(responseErrorMessage);
     }
 }
