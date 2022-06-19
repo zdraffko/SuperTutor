@@ -54,8 +54,10 @@ export const LoginForm: React.FC = () => {
                 <Divider m="sm" />
                 <form
                     onSubmit={form.onSubmit(async values => {
-                        await login(values);
-                        router.push("/dashboard");
+                        const user = await login(values);
+                        if (user) {
+                            router.push("/dashboard");
+                        }
                     })}
                 >
                     <TextInput

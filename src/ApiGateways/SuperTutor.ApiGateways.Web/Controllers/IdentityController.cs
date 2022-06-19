@@ -27,11 +27,17 @@ public class IdentityController : ApiController
     public async Task<ActionResult<LoginResponse>> Login(LoginRequest request, CancellationToken cancellationToken)
     {
         var response = await httpClient.PostAsJsonAsync($"{IdentityApiUrl}/users/login", request, cancellationToken: cancellationToken);
-        var rawResponseContent = await response.Content.ReadAsStringAsync(cancellationToken);
 
-        var result = JsonSerializer.Deserialize<LoginResponse>(rawResponseContent);
+        if (response.IsSuccessStatusCode)
+        {
+            var responsePayload = await response.Content.ReadFromJsonAsync<LoginResponse>(cancellationToken: cancellationToken);
 
-        return Ok(result);
+            return Ok(responsePayload);
+        }
+
+        var responseErrorMessage = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        return BadRequest(responseErrorMessage);
     }
 
     [HttpPost]
@@ -53,11 +59,17 @@ public class IdentityController : ApiController
         };
 
         var response = await httpClient.PostAsJsonAsync($"{IdentityApiUrl}{registerEndpoint}", identityRegisterRequest, cancellationToken: cancellationToken);
-        var rawResponseContent = await response.Content.ReadAsStringAsync(cancellationToken);
 
-        var result = JsonSerializer.Deserialize<RegisterResponse>(rawResponseContent);
+        if (response.IsSuccessStatusCode)
+        {
+            var responsePayload = await response.Content.ReadFromJsonAsync<RegisterResponse>(cancellationToken: cancellationToken);
 
-        return Ok(result);
+            return Ok(responsePayload);
+        }
+
+        var responseErrorMessage = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        return BadRequest(responseErrorMessage);
     }
 
     [Authorize]

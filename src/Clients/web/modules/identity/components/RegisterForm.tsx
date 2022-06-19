@@ -68,9 +68,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ isTutorRegistration 
                         const userType = isTutorRegistration ? UserType.Tutor : UserType.Student;
                         const registerRequest = { ...values, type: userType };
 
-                        await register(registerRequest);
-
-                        router.push("/dashboard");
+                        const user = await register(registerRequest);
+                        if (user) {
+                            router.push("/dashboard");
+                        }
                     })}
                 >
                     <TextInput

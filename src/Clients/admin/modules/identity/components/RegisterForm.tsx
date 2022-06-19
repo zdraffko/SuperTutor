@@ -62,9 +62,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ isTutorRegistration 
                 <Divider m="sm" />
                 <form
                     onSubmit={form.onSubmit(async values => {
-                        await register({ ...values });
-
-                        router.push("/dashboard");
+                        const user = await register({ ...values });
+                        if (user) {
+                            router.push("/dashboard");
+                        }
                     })}
                 >
                     <TextInput

@@ -1,9 +1,10 @@
 import { Alert, Center, Loader } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import { getIdentityInfo } from "modules/identity/api/getIdentityInfo";
 import { loginUser, LoginUserRequest } from "modules/identity/api/login";
 import { registerUser, RegisterUserRequest } from "modules/identity/api/register";
 import { initReactQueryAuth } from "react-query-auth";
-import { AlertCircle } from "tabler-icons-react";
+import { AlertCircle, X } from "tabler-icons-react";
 import authTokenStorage from "utils/authTokenStorage";
 import { User } from "./types";
 
@@ -21,21 +22,45 @@ const load = async (): Promise<User | null> => {
 };
 
 const login = async (loginUserRequest: LoginUserRequest): Promise<User | null> => {
-    const loginUserResponse = await loginUser(loginUserRequest);
-    const { authToken } = loginUserResponse;
+    try {
+        const loginUserResponse = await loginUser(loginUserRequest);
+        const { authToken } = loginUserResponse;
 
-    authTokenStorage.set(authToken);
+        authTokenStorage.set(authToken);
 
-    return await getIdentityInfo();
+        return await getIdentityInfo();
+    } catch (error) {
+        showNotification({
+            autoClose: 5000,
+            title: "Възникна проблем при влизането",
+            message: error.response?.data,
+            color: "red",
+            icon: <X />
+        });
+
+        return null;
+    }
 };
 
 const register = async (registerUserRequest: RegisterUserRequest): Promise<User | null> => {
-    const registerUserResponse = await registerUser(registerUserRequest);
-    const { authToken } = registerUserResponse;
+    try {
+        const registerUserResponse = await registerUser(registerUserRequest);
+        const { authToken } = registerUserResponse;
 
-    authTokenStorage.set(authToken);
+        authTokenStorage.set(authToken);
 
-    return await getIdentityInfo();
+        return await getIdentityInfo();
+    } catch (error) {
+        showNotification({
+            autoClose: 5000,
+            title: "Възникна проблем при регистрацията",
+            message: error.response?.data,
+            color: "red",
+            icon: <X />
+        });
+
+        return null;
+    }
 };
 
 const logout = async (): Promise<any> => {
