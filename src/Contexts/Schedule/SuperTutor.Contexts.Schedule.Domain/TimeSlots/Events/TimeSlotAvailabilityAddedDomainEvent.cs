@@ -1,5 +1,5 @@
-﻿using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Models.Enumerations;
-using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Models.ValueObjects.Identifiers;
+﻿using SuperTutor.Contexts.Schedule.Domain.Common.Models.ValueObjects.Identifiers;
+using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Models.Enumerations;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Events;
 
 namespace SuperTutor.Contexts.Schedule.Domain.TimeSlots.Events;

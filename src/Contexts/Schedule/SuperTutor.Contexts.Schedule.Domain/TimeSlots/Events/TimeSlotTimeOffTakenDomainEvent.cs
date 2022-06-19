@@ -1,4 +1,4 @@
-﻿using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Models.ValueObjects.Identifiers;
+﻿using SuperTutor.Contexts.Schedule.Domain.Common.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Events;
 
 namespace SuperTutor.Contexts.Schedule.Domain.TimeSlots.Events;

@@ -1,5 +1,5 @@
-﻿using SuperTutor.Contexts.Schedule.Domain.TimeSlots;
-using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Models.ValueObjects.Identifiers;
+﻿using SuperTutor.Contexts.Schedule.Domain.Common.Models.ValueObjects.Identifiers;
+using SuperTutor.Contexts.Schedule.Domain.TimeSlots;
 
 namespace SuperTutor.Contexts.Schedule.Application.TimeSlots.Shared;
 

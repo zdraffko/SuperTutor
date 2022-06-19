@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SuperTutor.Contexts.Schedule.Application.Lessons.Queries;
+using SuperTutor.Contexts.Schedule.Domain.Common.Models.ValueObjects.Identifiers;
 using SuperTutor.Contexts.Schedule.Domain.Lessons;
 using SuperTutor.Contexts.Schedule.Domain.Lessons.Models.ValueObjects.Identifiers;
 

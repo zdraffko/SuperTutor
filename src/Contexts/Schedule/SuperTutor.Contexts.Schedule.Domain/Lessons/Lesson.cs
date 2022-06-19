@@ -1,4 +1,5 @@
-﻿using SuperTutor.Contexts.Schedule.Domain.Lessons.Events;
+﻿using SuperTutor.Contexts.Schedule.Domain.Common.Models.ValueObjects.Identifiers;
+using SuperTutor.Contexts.Schedule.Domain.Lessons.Events;
 using SuperTutor.Contexts.Schedule.Domain.Lessons.Invariants;
 using SuperTutor.Contexts.Schedule.Domain.Lessons.Models.Enumerations;
 using SuperTutor.Contexts.Schedule.Domain.Lessons.Models.ValueObjects.Identifiers;

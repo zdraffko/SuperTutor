@@ -2,6 +2,9 @@
 using SuperTutor.Contexts.Schedule.Application.TimeSlots.Queries.GetAvailability;
 using SuperTutor.Contexts.Schedule.Application.TimeSlots.Queries.GetForWeek;
 using SuperTutor.Contexts.Schedule.Application.TimeSlots.Shared;
+using SuperTutor.Contexts.Schedule.Domain.Common.Models.ValueObjects.Identifiers;
+using SuperTutor.Contexts.Schedule.Domain.TimeSlots;
+using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Models.Enumerations;
 using SuperTutor.Contexts.Schedule.Infrastructure.Shared.Persistence;
 
 namespace SuperTutor.Contexts.Schedule.Infrastructure.TimeSlots.Persistence.QueryModels;
@@ -55,5 +58,29 @@ internal class TimeSlotQueryModelRepository : ITimeSlotQueryModelRepository
                 .Select(group => new GetTutorAvailabilityQueryPayload.Availability(DateOnly.FromDateTime(group.Key), group.Select(timeSlot => TimeOnly.FromTimeSpan(timeSlot.StartTime)).OrderBy(startTime => startTime)))
                 .OrderBy(availability => availability.Date)
                 .ToList();
+    }
+
+    public async Task<IEnumerable<TimeSlotId>> GetIdsForLesson(TutorId tutorId, DateTime lessonStart, DateTime lessonEnd, CancellationToken cancellationToken)
+        => await scheduleDbContext.TimeSlots
+            .AsNoTracking()
+            .Where(timeSlot
+                => timeSlot.TutorId == tutorId
+                && timeSlot.Date >= lessonStart
+                && timeSlot.Date < lessonEnd)
+            .Select(timeSlot => timeSlot.Id)
+            .ToListAsync(cancellationToken);
+
+    public async Task SetAvailabilityAsAssigned(TimeSlotId timeSlotId, CancellationToken cancellationToken)
+    {
+        var updatedTimeSlotQueryModel = new TimeSlotQueryModel
+        {
+            Id = timeSlotId,
+            Status = TimeSlotStatus.Assigned.Name,
+        };
+
+        scheduleDbContext.Attach(updatedTimeSlotQueryModel);
+        scheduleDbContext.Entry(updatedTimeSlotQueryModel).Property(timeSlotQueryModel => timeSlotQueryModel.Status).IsModified = true;
+
+        await scheduleDbContext.SaveChangesAsync(cancellationToken);
     }
 }

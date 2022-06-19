@@ -1,7 +1,7 @@
-﻿using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Events;
+﻿using SuperTutor.Contexts.Schedule.Domain.Common.Models.ValueObjects.Identifiers;
+using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Events;
 using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Invariants;
 using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Models.Enumerations;
-using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Entities.Aggregates;
 using SuperTutor.SharedLibraries.BuildingBlocks.Domain.Events;
 
@@ -69,6 +69,13 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
         return addedTimeSlot;
     }
 
+    public void AssignAvailability()
+    {
+        Status = TimeSlotStatus.Assigned;
+
+        RaiseDomainEvent(new TimeSlotAvailabilityAssignedDomainEvent(Id, Status));
+    }
+
     public void RemoveAvailability()
     {
         if (Status == TimeSlotStatus.Removed)
@@ -125,6 +132,8 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
     private void Apply(TimeSlotAvailabilityRemovedDomainEvent _) => Status = TimeSlotStatus.Removed;
 
     private void Apply(TimeSlotTimeOffRemovedDomainEvent _) => Status = TimeSlotStatus.Removed;
+
+    private void Apply(TimeSlotAvailabilityAssignedDomainEvent domainEvent) => Status = domainEvent.Status;
 
     #endregion Apply Domain Events
 }

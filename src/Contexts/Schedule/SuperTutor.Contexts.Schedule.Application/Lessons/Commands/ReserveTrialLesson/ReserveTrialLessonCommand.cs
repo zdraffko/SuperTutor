@@ -1,4 +1,5 @@
-﻿using SuperTutor.Contexts.Schedule.Domain.Lessons.Models.ValueObjects.Identifiers;
+﻿using SuperTutor.Contexts.Schedule.Domain.Common.Models.ValueObjects.Identifiers;
+using SuperTutor.Contexts.Schedule.Domain.Lessons.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Schedule.Application.Lessons.Commands.ReserveTrialLesson;

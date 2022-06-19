@@ -1,4 +1,4 @@
-﻿using SuperTutor.Contexts.Schedule.Domain.Lessons.Models.ValueObjects.Identifiers;
+﻿using SuperTutor.Contexts.Schedule.Domain.Common.Models.ValueObjects.Identifiers;
 using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Queries;
 
 namespace SuperTutor.Contexts.Schedule.Application.Lessons.Queries.GetScheduledLessonsForTutor;

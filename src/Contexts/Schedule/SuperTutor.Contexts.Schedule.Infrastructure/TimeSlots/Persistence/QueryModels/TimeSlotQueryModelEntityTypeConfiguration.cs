@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SuperTutor.Contexts.Schedule.Application.TimeSlots.Shared;
+using SuperTutor.Contexts.Schedule.Domain.Common.Models.ValueObjects.Identifiers;
 using SuperTutor.Contexts.Schedule.Domain.TimeSlots;
-using SuperTutor.Contexts.Schedule.Domain.TimeSlots.Models.ValueObjects.Identifiers;
 
 namespace SuperTutor.Contexts.Schedule.Infrastructure.TimeSlots.Persistence.QueryModels;
 
