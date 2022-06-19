@@ -28,11 +28,13 @@ export const PaymentsDashboard: React.FC = () => {
         );
     }
 
-    if (transfers.length == 0) {
-        <Stack align="center" justify="space-between" style={{ height: "95vh" }}>
-            <Title>Изглежда все още нямаш осъществени плащания</Title>
-            <PaymentsMakeItRainSvg />
-        </Stack>;
+    if (transfers.length === 0) {
+        return (
+            <Stack align="center" justify="space-between" style={{ height: "95vh" }}>
+                <Title>Изглежда все още нямаш осъществени плащания</Title>
+                <PaymentsMakeItRainSvg />
+            </Stack>
+        );
     }
 
     return (
