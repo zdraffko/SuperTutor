@@ -4,4 +4,6 @@ export interface TutorProfile {
     tutoringGrades: number[];
     about: string;
     rateForOneHour: number;
+    status: "Inactive" | "Active" | "ForReview" | "ForRedaction";
+    redactionComment: string | null;
 }

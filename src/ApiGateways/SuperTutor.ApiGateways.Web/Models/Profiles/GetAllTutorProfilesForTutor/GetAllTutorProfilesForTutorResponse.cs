@@ -23,5 +23,11 @@ public class GetAllTutorProfilesForTutorResponse
 
         [JsonPropertyName("rateForOneHour")]
         public decimal RateForOneHour { get; init; }
+
+        [JsonPropertyName("status")]
+        public string Status { get; init; }
+
+        [JsonPropertyName("redactionComment")]
+        public string? RedactionComment { get; init; }
     }
 }

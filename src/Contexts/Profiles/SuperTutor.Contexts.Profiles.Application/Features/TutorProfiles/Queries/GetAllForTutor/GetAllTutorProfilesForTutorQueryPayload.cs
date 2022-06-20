@@ -10,13 +10,22 @@ public class GetAllTutorProfilesForTutorQueryPayload
 
     public class TutorProfile
     {
-        public TutorProfile(TutorProfileId id, string about, int tutoringSubject, IEnumerable<int> tutoringGrades, decimal rateForOneHour)
+        public TutorProfile(
+            TutorProfileId id,
+            string about,
+            int tutoringSubject,
+            IEnumerable<int> tutoringGrades,
+            decimal rateForOneHour,
+            string status,
+            string? redactionComment)
         {
             Id = id;
             About = about;
             TutoringSubject = tutoringSubject;
             TutoringGrades = tutoringGrades;
             RateForOneHour = rateForOneHour;
+            Status = status;
+            RedactionComment = redactionComment;
         }
 
         public TutorProfileId Id { get; }
@@ -28,5 +37,9 @@ public class GetAllTutorProfilesForTutorQueryPayload
         public IEnumerable<int> TutoringGrades { get; }
 
         public decimal RateForOneHour { get; }
+
+        public string Status { get; }
+
+        public string? RedactionComment { get; }
     }
 }

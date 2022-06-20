@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SuperTutor.ApiGateways.Web.Models.Profiles.CreateTutorProfile;
 using SuperTutor.ApiGateways.Web.Models.Profiles.GetAllTutorProfilesForTutor;
+using SuperTutor.ApiGateways.Web.Models.Profiles.SubmitTutorProfileForReview;
+using SuperTutor.ApiGateways.Web.Models.Profiles.UpdateTutorProfileAbout;
 using SuperTutor.ApiGateways.Web.Options;
 using SuperTutor.SharedLibraries.BuildingBlocks.Api.Controllers;
 using System.Security.Claims;
@@ -81,5 +83,48 @@ public class ProfilesController : ApiController
         }
 
         return Ok(response);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult> UpdateTutorProfileAbout(UpdateTutorProfileAboutRequest request, CancellationToken cancellationToken)
+    {
+        var profilesRequest = new
+        {
+            request.TutorProfileId,
+            request.NewAbout
+        };
+
+        var response = await httpClient.PostAsJsonAsync($"{ProfilesApiUrl}/TutorProfiles/UpdateAbout", profilesRequest, cancellationToken: cancellationToken);
+
+        if (response.IsSuccessStatusCode)
+        {
+            return Ok();
+        }
+
+        var responseErrorMessage = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        return BadRequest(responseErrorMessage);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult> SubmitTutorProfileForReview(SubmitTutorProfileForReviewRequest request, CancellationToken cancellationToken)
+    {
+        var profilesRequest = new
+        {
+            request.TutorProfileId
+        };
+
+        var response = await httpClient.PostAsJsonAsync($"{ProfilesApiUrl}/TutorProfiles/SubmitForReview", profilesRequest, cancellationToken: cancellationToken);
+
+        if (response.IsSuccessStatusCode)
+        {
+            return Ok();
+        }
+
+        var responseErrorMessage = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        return BadRequest(responseErrorMessage);
     }
 }

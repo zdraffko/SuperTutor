@@ -18,6 +18,7 @@ internal class TutorProfilesQueryRepository : ITutorProfilesQueryRepository
     {
         var queryResult = await tutorProfilesDbContext.TutorProfiles
             .AsNoTracking()
+            .Include(tutorProfile => tutorProfile.RedactionComments)
             .Where(tutorProfile => tutorProfile.TutorId == tutorId)
             .Select(tutorProfile => new
             {
@@ -25,7 +26,9 @@ internal class TutorProfilesQueryRepository : ITutorProfilesQueryRepository
                 tutorProfile.About,
                 tutorProfile.TutoringSubject,
                 tutorProfile.TutoringGrades,
-                tutorProfile.RateForOneHour
+                tutorProfile.RateForOneHour,
+                tutorProfile.Status,
+                tutorProfile.RedactionComments
             })
             .ToListAsync(cancellationToken);
 
@@ -34,7 +37,9 @@ internal class TutorProfilesQueryRepository : ITutorProfilesQueryRepository
                     tutorProfile.About,
                     tutorProfile.TutoringSubject.Value,
                     tutorProfile.TutoringGrades.Select(tutoringGrade => tutoringGrade.Value),
-                    tutorProfile.RateForOneHour));
+                    tutorProfile.RateForOneHour,
+                    tutorProfile.Status.Name,
+                    tutorProfile.RedactionComments.SingleOrDefault(redactionComment => !redactionComment.IsSettled)?.Content));
     }
 
     public async Task<IEnumerable<GetAllTutorProfilesForReviewQueryPayload.TutorProfile>> GetAllForReview(CancellationToken cancellationToken)

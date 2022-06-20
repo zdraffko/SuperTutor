@@ -137,7 +137,6 @@ const TutorProfileForReview: React.FC<TutorProfileForReviewProps> = ({ tutorProf
                     })}
                 >
                     <Textarea
-                        p="sm"
                         label="Причина"
                         required
                         placeholder="Причина за поисканата редакция"
@@ -145,7 +144,7 @@ const TutorProfileForReview: React.FC<TutorProfileForReviewProps> = ({ tutorProf
                         onInvalid={event => (event?.target as HTMLSelectElement).setCustomValidity("Моля въведи причина")}
                         onInput={event => (event?.target as HTMLSelectElement).setCustomValidity("")}
                     />
-                    <Box p="sm" mt="xl">
+                    <Box mt="xl">
                         <Button type="submit" fullWidth size="lg" loading={isRequestTutorProfileRedactionLoading}>
                             Поискай Редакция
                         </Button>
