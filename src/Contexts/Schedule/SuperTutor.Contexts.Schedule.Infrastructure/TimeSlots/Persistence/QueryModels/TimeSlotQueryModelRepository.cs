@@ -83,4 +83,18 @@ internal class TimeSlotQueryModelRepository : ITimeSlotQueryModelRepository
 
         await scheduleDbContext.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task SetAvailabilityAsUnassigned(TimeSlotId timeSlotId, CancellationToken cancellationToken)
+    {
+        var updatedTimeSlotQueryModel = new TimeSlotQueryModel
+        {
+            Id = timeSlotId,
+            Status = TimeSlotStatus.Unassigned.Name,
+        };
+
+        scheduleDbContext.Attach(updatedTimeSlotQueryModel);
+        scheduleDbContext.Entry(updatedTimeSlotQueryModel).Property(timeSlotQueryModel => timeSlotQueryModel.Status).IsModified = true;
+
+        await scheduleDbContext.SaveChangesAsync(cancellationToken);
+    }
 }

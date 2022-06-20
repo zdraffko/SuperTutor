@@ -33,6 +33,8 @@ internal class LessonQueryModelEntityTypeConfiguration : IEntityTypeConfiguratio
                 studentIdValue => new StudentId(studentIdValue))
             .IsRequired();
 
+        builder.Property(timeSlot => timeSlot.DateOfReservation).IsRequired();
+
         builder.Property(timeSlot => timeSlot.Date).IsRequired();
 
         builder.Property(timeSlot => timeSlot.StartTime).IsRequired();

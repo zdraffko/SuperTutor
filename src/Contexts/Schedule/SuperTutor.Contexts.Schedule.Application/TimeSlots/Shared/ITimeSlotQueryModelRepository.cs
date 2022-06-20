@@ -16,4 +16,6 @@ public interface ITimeSlotQueryModelRepository
     Task<IEnumerable<TimeSlotId>> GetIdsForLesson(TutorId tutorId, DateTime lessonStart, DateTime lessonEnd, CancellationToken cancellationToken);
 
     Task SetAvailabilityAsAssigned(TimeSlotId timeSlotId, CancellationToken cancellationToken);
+
+    Task SetAvailabilityAsUnassigned(TimeSlotId timeSlotId, CancellationToken cancellationToken);
 }

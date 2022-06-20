@@ -11,6 +11,7 @@ public class LessonReservedDomainEvent : DomainEvent
         LessonId lessonId,
         TutorId tutorId,
         StudentId studentId,
+        DateTime dateOfReservation,
         DateOnly date,
         TimeOnly startTime,
         TimeSpan duration,
@@ -23,6 +24,7 @@ public class LessonReservedDomainEvent : DomainEvent
         LessonId = lessonId;
         TutorId = tutorId;
         StudentId = studentId;
+        DateOfReservation = dateOfReservation;
         Date = date;
         StartTime = startTime;
         Duration = duration;
@@ -38,6 +40,8 @@ public class LessonReservedDomainEvent : DomainEvent
     public TutorId TutorId { get; }
 
     public StudentId StudentId { get; }
+
+    public DateTime DateOfReservation { get; }
 
     public DateOnly Date { get; }
 

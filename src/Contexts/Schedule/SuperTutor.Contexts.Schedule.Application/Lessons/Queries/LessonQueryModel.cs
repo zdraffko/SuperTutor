@@ -12,6 +12,8 @@ public class LessonQueryModel
 
     public StudentId StudentId { get; init; }
 
+    public DateTime DateOfReservation { get; init; }
+
     public DateTime Date { get; init; }
 
     public TimeSpan StartTime { get; init; }

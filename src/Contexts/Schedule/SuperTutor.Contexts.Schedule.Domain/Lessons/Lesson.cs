@@ -29,6 +29,7 @@ public class Lesson : AggregateRoot<LessonId, Guid>
     {
         TutorId = tutorId;
         StudentId = studentId;
+        DateOfReservation = DateTime.UtcNow;
         Date = date;
         StartTime = startTime;
         Duration = duration;
@@ -42,6 +43,8 @@ public class Lesson : AggregateRoot<LessonId, Guid>
     public TutorId TutorId { get; private set; }
 
     public StudentId StudentId { get; private set; }
+
+    public DateTime DateOfReservation { get; private set; }
 
     public DateOnly Date { get; private set; }
 
@@ -85,6 +88,7 @@ public class Lesson : AggregateRoot<LessonId, Guid>
             trialLesson.Id,
             trialLesson.TutorId,
             trialLesson.StudentId,
+            trialLesson.DateOfReservation,
             trialLesson.Date,
             trialLesson.StartTime,
             trialLesson.Duration,
@@ -127,6 +131,14 @@ public class Lesson : AggregateRoot<LessonId, Guid>
         Status = LessonStatus.Ended;
 
         RaiseDomainEvent(new LessonEndedDomainEvent(Id, Status));
+    }
+
+    public void Abandon()
+    {
+        Status = LessonStatus.Abandoned;
+        PaymentStatus = LessonPaymentStatus.NotPaidOnTime;
+
+        RaiseDomainEvent(new LessonAbandonedDomainEvent(Id, Status, PaymentStatus));
     }
 
     public void Complete()
@@ -179,6 +191,13 @@ public class Lesson : AggregateRoot<LessonId, Guid>
     {
         Id = domainEvent.LessonId;
         Status = domainEvent.Status;
+    }
+
+    private void Apply(LessonAbandonedDomainEvent domainEvent)
+    {
+        Id = domainEvent.LessonId;
+        Status = domainEvent.Status;
+        PaymentStatus = domainEvent.PaymentStatus;
     }
 
     #endregion Apply Domain Events

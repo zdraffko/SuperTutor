@@ -29,10 +29,14 @@ internal class AssignAvailabilityTimeSlotsDomainEventHandler : IDomainEventHandl
         foreach (var timeSlotId in timeSlotIdsForLesson)
         {
             var timeSlot = await timeSlotRepository.Load(timeSlotId, cancellationToken);
+            if (timeSlot is null)
+            {
+                continue;
+            }
 
             timeSlot.AssignAvailability();
 
-            timeSlotRepository.Update(timeSlot, cancellationToken);
+            await timeSlotRepository.Update(timeSlot, cancellationToken);
         }
     }
 }

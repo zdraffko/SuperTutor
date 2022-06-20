@@ -76,6 +76,13 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
         RaiseDomainEvent(new TimeSlotAvailabilityAssignedDomainEvent(Id, Status));
     }
 
+    public void UnassignAvailability()
+    {
+        Status = TimeSlotStatus.Unassigned;
+
+        RaiseDomainEvent(new TimeSlotAvailabilityUnassignedDomainEvent(Id, Status));
+    }
+
     public void RemoveAvailability()
     {
         if (Status == TimeSlotStatus.Removed)
@@ -134,6 +141,8 @@ public class TimeSlot : AggregateRoot<TimeSlotId, Guid>
     private void Apply(TimeSlotTimeOffRemovedDomainEvent _) => Status = TimeSlotStatus.Removed;
 
     private void Apply(TimeSlotAvailabilityAssignedDomainEvent domainEvent) => Status = domainEvent.Status;
+
+    private void Apply(TimeSlotAvailabilityUnassignedDomainEvent domainEvent) => Status = domainEvent.Status;
 
     #endregion Apply Domain Events
 }

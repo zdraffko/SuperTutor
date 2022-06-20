@@ -13,6 +13,8 @@ public interface ILessonQueryModelRepository
 
     Task<IEnumerable<LessonId>> GetEndingLessonsIds(CancellationToken cancellationToken);
 
+    Task<IEnumerable<LessonId>> GetAbandonedLessonsIds(CancellationToken cancellationToken);
+
     Task<IEnumerable<GetScheduledLessonsForStudentQueryPayload.ScheduledLesson>> GetScheduledLessonsForStudent(GetScheduledLessonsForStudentQuery query, CancellationToken cancellationToken);
 
     Task<IEnumerable<GetScheduledLessonsForTutorQueryPayload.ScheduledLesson>> GetScheduledLessonsForTutor(GetScheduledLessonsForTutorQuery query, CancellationToken cancellationToken);
@@ -24,4 +26,6 @@ public interface ILessonQueryModelRepository
     Task SetAsEnded(LessonId lessonId, LessonStatus status, CancellationToken cancellationToken);
 
     Task SetAsCompleted(LessonId lessonId, LessonStatus status, CancellationToken cancellationToken);
+
+    Task SetAsAbandoned(LessonId lessonId, LessonStatus status, LessonPaymentStatus paymentStatus, CancellationToken cancellationToken);
 }

@@ -19,6 +19,7 @@ public partial class InitialMigration : Migration
                 Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                 TutorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                 StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                DateOfReservation = table.Column<DateTime>(type: "datetime2", nullable: false),
                 Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                 StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
                 Duration = table.Column<TimeSpan>(type: "time", nullable: false),

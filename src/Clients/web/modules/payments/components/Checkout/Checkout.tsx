@@ -56,7 +56,7 @@ export const Checkout: React.FC = () => {
                 >
                     <Title align="center">Урокът е запазен!</Title>
                     <Title order={4} align="center" mb="xl">
-                        Направи плащането за да го потвърдиш
+                        Направи плащането до 10 минути за да го потвърдиш
                     </Title>
                     <Space h="xl" />
                     {stripe ? <PaymentElement /> : <Loader size="lg" />}

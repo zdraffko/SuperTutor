@@ -37,6 +37,14 @@ internal class LessonQueryModelRepository : ILessonQueryModelRepository
             .Select(lesson => lesson.Id)
             .ToListAsync(cancellationToken: cancellationToken);
 
+    public async Task<IEnumerable<LessonId>> GetAbandonedLessonsIds(CancellationToken cancellationToken)
+        => await scheduleDbContext.Lessons
+            .Where(lesson
+                => lesson.PaymentStatus == LessonPaymentStatus.WaitingPayment.Name
+                && lesson.DateOfReservation <= DateTime.UtcNow.AddMinutes(-10))
+            .Select(lesson => lesson.Id)
+            .ToListAsync(cancellationToken: cancellationToken);
+
     public async Task<IEnumerable<GetScheduledLessonsForStudentQueryPayload.ScheduledLesson>> GetScheduledLessonsForStudent(GetScheduledLessonsForStudentQuery query, CancellationToken cancellationToken)
     {
         var databaseQueryResult = await scheduleDbContext.Lessons
@@ -65,7 +73,7 @@ internal class LessonQueryModelRepository : ILessonQueryModelRepository
         var databaseQueryResult = await scheduleDbContext.Lessons
             .AsNoTracking()
             //.Where(lesson => lesson.StudentId == query.StudentId && lesson.Status == LessonStatus.Scheduled.Name && lesson.Date >= DateTime.UtcNow.AddHours(3)) TODO - Refactor this. This is just a dirty quick way to get the required functionality working on time
-            .Where(lesson => lesson.TutorId == query.TutorId)
+            .Where(lesson => lesson.TutorId == query.TutorId && lesson.Status == LessonStatus.Scheduled.Name)
             .ToListAsync();
 
         return databaseQueryResult.Select(lesson => new GetScheduledLessonsForTutorQueryPayload.ScheduledLesson(
@@ -137,6 +145,22 @@ internal class LessonQueryModelRepository : ILessonQueryModelRepository
 
         scheduleDbContext.Attach(updatedLessonQueryModel);
         scheduleDbContext.Entry(updatedLessonQueryModel).Property(lessonQueryModel => lessonQueryModel.Status).IsModified = true;
+
+        await scheduleDbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task SetAsAbandoned(LessonId lessonId, LessonStatus status, LessonPaymentStatus paymentStatus, CancellationToken cancellationToken)
+    {
+        var updatedLessonQueryModel = new LessonQueryModel
+        {
+            Id = lessonId,
+            Status = status.Name,
+            PaymentStatus = paymentStatus.Name
+        };
+
+        scheduleDbContext.Attach(updatedLessonQueryModel);
+        scheduleDbContext.Entry(updatedLessonQueryModel).Property(lessonQueryModel => lessonQueryModel.Status).IsModified = true;
+        scheduleDbContext.Entry(updatedLessonQueryModel).Property(lessonQueryModel => lessonQueryModel.PaymentStatus).IsModified = true;
 
         await scheduleDbContext.SaveChangesAsync(cancellationToken);
     }

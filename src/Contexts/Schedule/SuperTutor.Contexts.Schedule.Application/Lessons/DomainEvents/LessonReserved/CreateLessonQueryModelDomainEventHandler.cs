@@ -17,6 +17,7 @@ internal class CreateLessonQueryModelDomainEventHandler : IDomainEventHandler<Le
             Id = domainEvent.LessonId,
             TutorId = domainEvent.TutorId,
             StudentId = domainEvent.StudentId,
+            DateOfReservation = domainEvent.DateOfReservation,
             Date = domainEvent.Date.ToDateTime(domainEvent.StartTime),
             StartTime = domainEvent.StartTime.ToTimeSpan(),
             Duration = domainEvent.Duration,
