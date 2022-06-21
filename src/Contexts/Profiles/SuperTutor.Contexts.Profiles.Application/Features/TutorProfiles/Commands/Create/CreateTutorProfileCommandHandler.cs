@@ -25,6 +25,12 @@ internal class CreateTutorProfileCommandHandler : ICommandHandler<CreateTutorPro
         var tutoringSubject = Enumeration.FromValue<Subject>(command.TutoringSubject);
         var tutoringGrades = Enumeration.FromValues<Grade>(command.TutoringGrades).ToHashSet();
 
+        var tutorProfiles = await tutorProfileRepository.GetAllForTutor(command.TutorId, cancellationToken); // TODO - Fix this validation for unique tutoring subject
+        if (tutorProfiles.Any(tutorProfile => tutorProfile.TutoringSubject == tutoringSubject))
+        {
+            return Result.Fail($"Профил за предмет '{tutoringSubject?.Name}' вече съществува");
+        }
+
         var tutorProfile = new TutorProfile(command.TutorId, command.About, tutoringSubject!, tutoringGrades, command.RateForOneHour);
 
         tutorProfileRepository.Add(tutorProfile);
@@ -42,6 +48,6 @@ internal class CreateTutorProfileCommandHandler : ICommandHandler<CreateTutorPro
 
         var payload = new CreateTutorProfileCommandPayload(tutorProfile.Id);
 
-        return await Task.FromResult(Result.Ok(payload));
+        return Result.Ok(payload);
     }
 }
