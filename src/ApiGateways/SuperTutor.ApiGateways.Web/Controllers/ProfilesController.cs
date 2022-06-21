@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SuperTutor.ApiGateways.Web.Models.Profiles.CreateTutorProfile;
+using SuperTutor.ApiGateways.Web.Models.Profiles.DeleteTutorProfile;
 using SuperTutor.ApiGateways.Web.Models.Profiles.GetAllTutorProfilesForTutor;
 using SuperTutor.ApiGateways.Web.Models.Profiles.SubmitTutorProfileForReview;
 using SuperTutor.ApiGateways.Web.Models.Profiles.UpdateTutorProfileAbout;
@@ -117,6 +118,27 @@ public class ProfilesController : ApiController
         };
 
         var response = await httpClient.PostAsJsonAsync($"{ProfilesApiUrl}/TutorProfiles/SubmitForReview", profilesRequest, cancellationToken: cancellationToken);
+
+        if (response.IsSuccessStatusCode)
+        {
+            return Ok();
+        }
+
+        var responseErrorMessage = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        return BadRequest(responseErrorMessage);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult> DeleteTutorProfile(DeleteTutorProfileRequest request, CancellationToken cancellationToken)
+    {
+        var profilesRequest = new
+        {
+            request.TutorProfileId
+        };
+
+        var response = await httpClient.PostAsJsonAsync($"{ProfilesApiUrl}/TutorProfiles/Delete", profilesRequest, cancellationToken: cancellationToken);
 
         if (response.IsSuccessStatusCode)
         {

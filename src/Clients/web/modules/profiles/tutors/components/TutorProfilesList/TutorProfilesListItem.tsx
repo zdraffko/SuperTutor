@@ -6,6 +6,7 @@ import { Check, X } from "tabler-icons-react";
 import { tutoringGrades } from "types/tutoringGrades";
 import { tutoringSubjects } from "types/tutoringSubjects";
 import { z } from "zod";
+import useDeleteTutorProfile from "../../hooks/useDeleteTutorProfile";
 import useSubmitTutorProfileForReview from "../../hooks/useSubmitTutorProfileForReview";
 import useUpdateTutorProfileAbout from "../../hooks/useUpdateTutorProfileAbout";
 import { TutorProfile } from "../../types/tutorProfile";
@@ -48,6 +49,36 @@ const TutorProfilesListItem: React.FC<TutorProfilesListItemProps> = ({ tutorProf
         submitTutorProfileForReviewErrorMessage,
         resetSubmitTutorProfileForReviewRequestState
     } = useSubmitTutorProfileForReview();
+
+    const { deleteTutorProfile, isDeleteTutorProfileFailed, isDeleteTutorProfileLoading, isDeleteTutorProfileSuccessful, resetDeleteTutorProfileRequestState, deleteTutorProfileErrorMessage } =
+        useDeleteTutorProfile();
+
+    useEffect(() => {
+        if (isDeleteTutorProfileSuccessful) {
+            showNotification({
+                autoClose: 5000,
+                message: "Профилът бе изтрит успешно",
+                color: "teal",
+                icon: <Check />
+            });
+
+            resetDeleteTutorProfileRequestState();
+
+            return;
+        }
+
+        if (isDeleteTutorProfileFailed) {
+            showNotification({
+                autoClose: 5000,
+                title: "Възникна проблем при изтриването на профила",
+                message: deleteTutorProfileErrorMessage,
+                color: "red",
+                icon: <X />
+            });
+
+            resetDeleteTutorProfileRequestState();
+        }
+    }, [deleteTutorProfileErrorMessage, isDeleteTutorProfileFailed, isDeleteTutorProfileSuccessful, resetDeleteTutorProfileRequestState]);
 
     useEffect(() => {
         if (isUpdateTutorProfileAboutSuccessful) {
@@ -126,7 +157,9 @@ const TutorProfilesListItem: React.FC<TutorProfilesListItemProps> = ({ tutorProf
                     </Group>
                     <Stack>
                         {isProfileForRedaction && <Button onClick={() => setIsEditModalOpened(true)}>Редактирай</Button>}
-                        <Button color="red">Изтрий</Button>
+                        <Button color="red" loading={isDeleteTutorProfileLoading} onClick={async () => await deleteTutorProfile({ tutorProfileId: tutorProfile.id })}>
+                            Изтрий
+                        </Button>
                     </Stack>
                 </Group>
             </Paper>
