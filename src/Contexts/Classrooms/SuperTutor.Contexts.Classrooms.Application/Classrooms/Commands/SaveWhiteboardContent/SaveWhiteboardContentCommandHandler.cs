@@ -12,10 +12,10 @@ internal class SaveWhiteboardContentCommandHandler : ICommandHandler<SaveWhitebo
 
     public async Task<Result> Handle(SaveWhiteboardContentCommand command, CancellationToken cancellationToken)
     {
-        var classroom = await classroomRepository.GetByName(command.ClassroomName, cancellationToken);
+        var classroom = await classroomRepository.GetById(command.ClassroomId, cancellationToken);
         if (classroom is null)
         {
-            return Result.Fail($"Класна стая с име '{command.ClassroomName}' не съществува");
+            return Result.Fail($"Класна стая с Id '{command.ClassroomId}' не съществува");
         }
 
         classroom.SaveWhiteboardContent(command.WhiteboardContent);

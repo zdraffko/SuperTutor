@@ -5,13 +5,16 @@ namespace SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.Create;
 
 public class CreateClassroomCommand : Command
 {
-    public CreateClassroomCommand(string classroomName, TutorId tutorId)
+    public CreateClassroomCommand(LessonId lessonId, TutorId tutorId, StudentId studentId)
     {
-        ClassroomName = classroomName;
+        LessonId = lessonId;
         TutorId = tutorId;
+        StudentId = studentId;
     }
 
-    public string ClassroomName { get; }
+    public LessonId LessonId { get; }
 
     public TutorId TutorId { get; }
+
+    public StudentId StudentId { get; }
 }

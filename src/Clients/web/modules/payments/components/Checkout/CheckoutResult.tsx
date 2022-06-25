@@ -31,7 +31,7 @@ export const CheckoutResult: React.FC = () => {
             // confirmation, while others will first enter a `processing` state.
             //
             // [0]: https://stripe.com/docs/payments/payment-methods#payment-notification
-            console.log("paymentIntent.status" + paymentIntent?.status);
+
             switch (paymentIntent?.status) {
                 case "succeeded":
                     setIsPaymentSuccessful(true);

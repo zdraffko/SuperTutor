@@ -1,30 +1,29 @@
 import { Paper, ScrollArea, useMantineColorScheme } from "@mantine/core";
 import { useIdle } from "@mantine/hooks";
+import { HubConnection } from "@microsoft/signalr";
 import { TDDocument, Tldraw, TldrawApp } from "@tldraw/tldraw";
-import useClassroomHub from "modules/classroom/hooks/useClassroomHub";
 import { Dispatch, MutableRefObject, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import Peer from "simple-peer";
 import { PeerDataChannelMessage } from "types/peerTypes";
 import { useAuth } from "utils/authentication/reactQueryAuth";
-import { UserType } from "utils/authentication/types";
 
 interface WhiteboardUpdatePayload {
     document: TDDocument;
 }
 
 interface WhiteboardProps {
-    classroomName: string;
+    classroomHub: HubConnection;
+    classroomId: string;
     localPeerRef: MutableRefObject<Peer.Instance | undefined>;
     isRemotePeerConnected: boolean;
     setIsWhiteboardSavingChanges: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Whiteboard: React.FC<WhiteboardProps> = ({ classroomName, localPeerRef, isRemotePeerConnected, setIsWhiteboardSavingChanges }) => {
+export const Whiteboard: React.FC<WhiteboardProps> = ({ classroomHub, classroomId, localPeerRef, isRemotePeerConnected, setIsWhiteboardSavingChanges }) => {
     const { colorScheme } = useMantineColorScheme();
     const drawApp = useRef<TldrawApp>();
     const [drawDocument, setDrawDocument] = useState<TDDocument>();
     const { user } = useAuth();
-    const { classroomHub, isHubConnected } = useClassroomHub();
     const isUserIdle = useIdle(2000, { events: ["mousedown", "mouseup"] });
     const lastSavedWhiteboardContent = useRef("");
 
@@ -37,10 +36,6 @@ export const Whiteboard: React.FC<WhiteboardProps> = ({ classroomName, localPeer
             if (!reason || reason === "replace" || reason === "panned") {
                 return;
             }
-
-            console.log("$$$$$$$$$$$$$$$$$$$ " + reason);
-
-            console.log("Updating remote whiteboard - " + document);
 
             const peerMessage: PeerDataChannelMessage<WhiteboardUpdatePayload> = {
                 type: "WhiteboardUpdate",
@@ -55,21 +50,16 @@ export const Whiteboard: React.FC<WhiteboardProps> = ({ classroomName, localPeer
     );
 
     useEffect(() => {
-        console.log("isUserIdle " + isUserIdle);
-
         const whiteboardContent = JSON.stringify(drawDocument);
 
-        console.log("diff " + whiteboardContent !== lastSavedWhiteboardContent.current);
-        console.log("conn" + isHubConnected());
-        if (isHubConnected() && isUserIdle && whiteboardContent !== lastSavedWhiteboardContent.current) {
-            console.log("saving");
+        if (isUserIdle && whiteboardContent !== lastSavedWhiteboardContent.current) {
             setIsWhiteboardSavingChanges(true);
 
-            classroomHub.invoke("SaveWhiteboardContent", classroomName, whiteboardContent).then(() => {
+            classroomHub.invoke("SaveWhiteboardContent", classroomId, whiteboardContent).then(() => {
                 lastSavedWhiteboardContent.current = whiteboardContent;
             });
         }
-    }, [isUserIdle, classroomHub, isHubConnected, , setIsWhiteboardSavingChanges]);
+    }, [isUserIdle, classroomHub, setIsWhiteboardSavingChanges]);
 
     useEffect(() => {
         classroomHub.off("WhiteboardContentSaved");
@@ -78,7 +68,7 @@ export const Whiteboard: React.FC<WhiteboardProps> = ({ classroomName, localPeer
             setIsWhiteboardSavingChanges(false);
         });
 
-        if (isRemotePeerConnected && user?.type === UserType.Tutor) {
+        if (isRemotePeerConnected) {
             localPeerRef.current?.on("data", (remoteData: string) => {
                 try {
                     const peerMessage: PeerDataChannelMessage<WhiteboardUpdatePayload> = JSON.parse(remoteData);
@@ -97,21 +87,21 @@ export const Whiteboard: React.FC<WhiteboardProps> = ({ classroomName, localPeer
             }
         }
 
-        if (user?.type === UserType.Student) {
-            localPeerRef.current?.on("data", (remoteData: string) => {
-                console.log("Peer Local: Recieved whiteboard data " + remoteData);
-                try {
-                    const peerMessage: PeerDataChannelMessage<WhiteboardUpdatePayload> = JSON.parse(remoteData);
-                    if (peerMessage.type !== "WhiteboardUpdate") {
-                        return;
-                    }
+        // if (user?.type === UserType.Student) {
+        //     localPeerRef.current?.on("data", (remoteData: string) => {
+        //         console.log("Peer Local: Recieved whiteboard data " + remoteData);
+        //         try {
+        //             const peerMessage: PeerDataChannelMessage<WhiteboardUpdatePayload> = JSON.parse(remoteData);
+        //             if (peerMessage.type !== "WhiteboardUpdate") {
+        //                 return;
+        //             }
 
-                    console.log("Peer Local: Recieved whiteboard data " + peerMessage.payload.document);
+        //             console.log("Peer Local: Recieved whiteboard data " + peerMessage.payload.document);
 
-                    setDrawDocument(peerMessage.payload.document);
-                } catch (error) {} // Message not for us
-            });
-        }
+        //             setDrawDocument(peerMessage.payload.document);
+        //         } catch (error) {} // Message not for us
+        //     });
+        // }
     }, [isRemotePeerConnected]);
 
     return (

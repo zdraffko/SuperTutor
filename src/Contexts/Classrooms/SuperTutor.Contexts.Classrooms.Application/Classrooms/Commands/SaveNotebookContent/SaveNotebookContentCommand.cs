@@ -1,16 +1,17 @@
-﻿using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
+﻿using SuperTutor.Contexts.Classrooms.Domain.Classrooms;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.SaveNotebookContent;
 
 public class SaveNotebookContentCommand : Command
 {
-    public SaveNotebookContentCommand(string classroomName, string notebookContent)
+    public SaveNotebookContentCommand(ClassroomId classroomId, string notebookContent)
     {
-        ClassroomName = classroomName;
+        ClassroomId = classroomId;
         NotebookContent = notebookContent;
     }
 
-    public string ClassroomName { get; }
+    public ClassroomId ClassroomId { get; }
 
     public string NotebookContent { get; }
 }

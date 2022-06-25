@@ -20,6 +20,7 @@
     
   <ItemGroup>
     <ProjectReference Include="..\..\..\SharedLibraries\BuildingBlocks\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure\SuperTutor.SharedLibraries.BuildingBlocks.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Schedule\SuperTutor.Contexts.Schedule.IntegrationEvents\SuperTutor.Contexts.Schedule.IntegrationEvents.csproj" />
     <ProjectReference Include="..\SuperTutor.Contexts.Classrooms.Application\SuperTutor.Contexts.Classrooms.Application.csproj" />
   </ItemGroup>
 

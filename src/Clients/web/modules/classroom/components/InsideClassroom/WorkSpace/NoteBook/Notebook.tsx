@@ -1,6 +1,6 @@
 import { Paper, ScrollArea, useMantineColorScheme } from "@mantine/core";
 import { useIdle } from "@mantine/hooks";
-import useClassroomHub from "modules/classroom/hooks/useClassroomHub";
+import { HubConnection } from "@microsoft/signalr";
 import { Dispatch, MutableRefObject, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import Peer from "simple-peer";
 import { PeerDataChannelMessage } from "types/peerTypes";
@@ -11,17 +11,17 @@ import RichTextEditor from "./TextEditor";
 const initialValue = "<p>Моята <b>супер</b> тетрадка</p>";
 
 interface NotebookProps {
-    classroomName: string;
+    classroomHub: HubConnection;
+    classroomId: string;
     localPeerRef: MutableRefObject<Peer.Instance | undefined>;
     isRemotePeerConnected: boolean;
     setIsNotebookSavingChanges: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Notebook: React.FC<NotebookProps> = ({ classroomName, localPeerRef, isRemotePeerConnected, setIsNotebookSavingChanges }) => {
+export const Notebook: React.FC<NotebookProps> = ({ classroomHub, classroomId, localPeerRef, isRemotePeerConnected, setIsNotebookSavingChanges }) => {
     const [notebookContent, setNotebookContent] = useState(initialValue);
     const { colorScheme } = useMantineColorScheme();
     const { user } = useAuth();
-    const { classroomHub, isHubConnected } = useClassroomHub();
     const isUserIdle = useIdle(2000, { events: ["keydown"] });
     const lastSavedNotebookContent = useRef(initialValue);
 
@@ -41,14 +41,14 @@ export const Notebook: React.FC<NotebookProps> = ({ classroomName, localPeerRef,
     useEffect(() => {
         console.log("isUserIdle " + isUserIdle);
         console.log("diff " + notebookContent !== lastSavedNotebookContent.current);
-        if (isHubConnected() && isUserIdle && notebookContent !== lastSavedNotebookContent.current) {
+        if (isUserIdle && notebookContent !== lastSavedNotebookContent.current) {
             setIsNotebookSavingChanges(true);
 
-            classroomHub.invoke("SaveNotebookContent", classroomName, notebookContent).then(() => {
+            classroomHub.invoke("SaveNotebookContent", classroomId, notebookContent).then(() => {
                 lastSavedNotebookContent.current = notebookContent;
             });
         }
-    }, [isUserIdle, classroomHub, isHubConnected, setIsNotebookSavingChanges]);
+    }, [isUserIdle, classroomHub, setIsNotebookSavingChanges]);
 
     // Used to update the student's notebook with the contents from the tutor's notebook when the students joins a room
     // Also used to setup the listener for on data events only once for the lifetime of the component

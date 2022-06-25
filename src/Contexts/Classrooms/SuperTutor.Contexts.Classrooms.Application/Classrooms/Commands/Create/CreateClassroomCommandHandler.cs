@@ -12,7 +12,7 @@ internal class CreateClassroomCommandHandler : ICommandHandler<CreateClassroomCo
 
     public async Task<Result> Handle(CreateClassroomCommand command, CancellationToken cancellationToken)
     {
-        var classroom = new Classroom(command.ClassroomName, command.TutorId);
+        var classroom = new Classroom(command.LessonId, command.TutorId, command.StudentId);
 
         classroomRepository.Add(classroom);
 

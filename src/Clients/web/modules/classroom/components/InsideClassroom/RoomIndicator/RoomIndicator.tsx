@@ -2,11 +2,10 @@ import { Badge, Center, Loader } from "@mantine/core";
 import { Check } from "tabler-icons-react";
 
 interface RoomIndicatorProps {
-    classroomName: string;
     isClassroomSavingChanges: boolean;
 }
 
-const RoomIndicator: React.FC<RoomIndicatorProps> = ({ classroomName, isClassroomSavingChanges }) => (
+const RoomIndicator: React.FC<RoomIndicatorProps> = ({ isClassroomSavingChanges }) => (
     <Badge
         variant="outline"
         size="lg"
@@ -21,9 +20,7 @@ const RoomIndicator: React.FC<RoomIndicatorProps> = ({ classroomName, isClassroo
                 </Center>
             )
         }
-    >
-        {classroomName}
-    </Badge>
+    ></Badge>
 );
 
 export default RoomIndicator;

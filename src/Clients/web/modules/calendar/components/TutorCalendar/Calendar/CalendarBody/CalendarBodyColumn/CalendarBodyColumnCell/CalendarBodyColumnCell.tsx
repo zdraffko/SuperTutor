@@ -30,7 +30,7 @@ const CalendarBodyColumnCell: React.FC<CalendarBodyColumnCellProps> = ({ date, h
 
     return (
         <Grid.Col span={1}>
-            <Paper style={{ height: "101px" }} onClick={() => console.log(scheduledLessonForHour)}>
+            <Paper style={{ height: "101px" }}>
                 <CalendarBodyColumnCellHalf
                     date={date}
                     hour={hour}

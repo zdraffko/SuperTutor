@@ -31,18 +31,13 @@ namespace SuperTutor.Contexts.Classrooms.Infrastructure.Persistence.Shared.Migra
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("LessonId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("NotebookContent")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StudentConnectionId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("StudentId")
+                    b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TutorId")

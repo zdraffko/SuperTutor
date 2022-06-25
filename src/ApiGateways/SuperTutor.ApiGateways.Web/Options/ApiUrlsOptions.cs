@@ -13,4 +13,6 @@ public class ApiUrlsOptions
     public string Catalog { get; set; } = string.Empty;
 
     public string Schedule { get; set; } = string.Empty;
+
+    public string Classrooms { get; set; } = string.Empty;
 }

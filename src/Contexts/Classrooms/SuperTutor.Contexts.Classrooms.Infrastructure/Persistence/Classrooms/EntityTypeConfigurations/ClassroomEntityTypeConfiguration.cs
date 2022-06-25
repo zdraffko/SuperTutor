@@ -19,7 +19,11 @@ internal class ClassroomEntityTypeConfiguration : IEntityTypeConfiguration<Class
                 classroomIdValue => new ClassroomId(classroomIdValue))
             .IsRequired();
 
-        builder.Property(classroom => classroom.Name).IsRequired();
+        builder.Property(classroom => classroom.LessonId)
+            .HasConversion(
+                lessonId => lessonId.Value,
+                lessonIdValue => new LessonId(lessonIdValue))
+            .IsRequired();
 
         builder.Property(classroom => classroom.TutorId)
             .HasConversion(
@@ -31,8 +35,6 @@ internal class ClassroomEntityTypeConfiguration : IEntityTypeConfiguration<Class
             .HasConversion(
                 studentId => studentId!.Value,
                 studentIdValue => new StudentId(studentIdValue));
-
-        builder.Property(classroom => classroom.StudentConnectionId);
 
         builder.Property(classroom => classroom.NotebookContent);
 

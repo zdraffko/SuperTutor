@@ -21,8 +21,7 @@ const CalendarBodyColumnCellHalf: React.FC<CalendarBodyColumnCellHalfProps> = ({
     const formattedDate = date.format("DD/MM/YYYY");
     const formattedTime = DayJs().hour(hour).minute(minute).format("HH:mm:00");
     const { addAvailability, isAddAvailabilityFailed, isAddAvailabilityLoading, addAvailabilityErrorMessage, resetAddAvailabilityRequestState } = useAddAvailability();
-    console.log(scheduledLesson);
-    console.log(timeSlot);
+
     useEffect(() => {
         if (isAddAvailabilityFailed) {
             showNotification({
@@ -41,7 +40,6 @@ const CalendarBodyColumnCellHalf: React.FC<CalendarBodyColumnCellHalfProps> = ({
 
     const handleOnClick = async () => {
         if (selectedRedactionMode === "AddAvailability") {
-            console.log("AddAvailability");
             await addAvailability({ date: formattedDate, startTime: formattedTime });
         }
     };

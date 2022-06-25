@@ -16,6 +16,7 @@ services:
             - ApiUrls__Profiles=http://supertutor-profiles/api
             - ApiUrls__Catalog=http://supertutor-catalog/api
             - ApiUrls__Schedule=http://supertutor-schedule/api
+            - ApiUrls__Classrooms=http://supertutor-classrooms/api
             - AuthTokenSecretKey=${AUTH_TOKEN_SECRET_KEY}
         volumes:
             - ./.aspnet/apigateway-web/DataProtection-Keys:/root/.aspnet/DataProtection-Keys

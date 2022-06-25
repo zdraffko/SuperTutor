@@ -1,48 +1,34 @@
 import AuthenticationProtectedPage from "components/AuthenticationProtectedPage";
 import MainLayout from "components/MainLayout";
-import { StudentInsideClassroom, StudentOutsideClassroom, TutorInsideClassroom, TutorOutsideClassroom } from "modules/classroom";
+import { InsideClassroom, OutsideClassroom } from "modules/classroom";
 import useClassroomHub from "modules/classroom/hooks/useClassroomHub";
 import { NextPage } from "next";
 import { useRef, useState } from "react";
 import Peer from "simple-peer";
-import { useAuth } from "utils/authentication/reactQueryAuth";
-import { UserType } from "utils/authentication/types";
 
 const ClassroomPage: NextPage = () => {
-    const [classroomName, setClassroomName] = useState("");
     const [isInsideClassroom, setIsInsideClassroom] = useState(false);
     const { classroomHub } = useClassroomHub();
     const localPeerRef = useRef<Peer.Instance>();
-    const { user } = useAuth();
+    const classroomIdRef = useRef<string | null>(null);
+    const isInitiatorRef = useRef<boolean>(false);
 
     return (
         <AuthenticationProtectedPage>
             <MainLayout>
-                {isInsideClassroom ? (
-                    user?.type === UserType.Tutor ? (
-                        <TutorInsideClassroom classroomHub={classroomHub} classroomName={classroomName} setIsInsideClassroom={setIsInsideClassroom} localPeerRef={localPeerRef} />
-                    ) : (
-                        <StudentInsideClassroom
-                            userEmail={user?.email}
-                            classroomHub={classroomHub}
-                            classroomName={classroomName}
-                            setIsInsideClassroom={setIsInsideClassroom}
-                            localPeerRef={localPeerRef}
-                        />
-                    )
-                ) : user?.type === UserType.Tutor ? (
-                    <TutorOutsideClassroom
+                {isInsideClassroom && classroomIdRef.current ? (
+                    <InsideClassroom
+                        isInitiatorRef={isInitiatorRef}
                         classroomHub={classroomHub}
-                        classroomName={classroomName}
-                        setClassroomName={setClassroomName}
+                        classroomId={classroomIdRef.current}
                         setIsInsideClassroom={setIsInsideClassroom}
                         localPeerRef={localPeerRef}
                     />
                 ) : (
-                    <StudentOutsideClassroom
+                    <OutsideClassroom
+                        isInitiatorRef={isInitiatorRef}
                         classroomHub={classroomHub}
-                        classroomName={classroomName}
-                        setClassroomName={setClassroomName}
+                        classroomIdRef={classroomIdRef}
                         setIsInsideClassroom={setIsInsideClassroom}
                         localPeerRef={localPeerRef}
                     />

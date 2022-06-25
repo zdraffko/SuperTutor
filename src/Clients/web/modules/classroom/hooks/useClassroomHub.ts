@@ -24,8 +24,6 @@ const useClassroomHub = () => {
             }
         });
 
-        classroomHub.on("log", logMessage => console.log(`Log from hub: ${logMessage}`));
-
         console.log("starting");
         classroomHub
             .start()

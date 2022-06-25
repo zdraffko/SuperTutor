@@ -1,16 +1,17 @@
-﻿using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
+﻿using SuperTutor.Contexts.Classrooms.Domain.Classrooms;
+using SuperTutor.SharedLibraries.BuildingBlocks.Application.Cqs.Commands;
 
 namespace SuperTutor.Contexts.Classrooms.Application.Classrooms.Commands.SaveWhiteboardContent;
 
 public class SaveWhiteboardContentCommand : Command
 {
-    public SaveWhiteboardContentCommand(string classroomName, string whiteboardContent)
+    public SaveWhiteboardContentCommand(ClassroomId classroomId, string whiteboardContent)
     {
-        ClassroomName = classroomName;
+        ClassroomId = classroomId;
         WhiteboardContent = whiteboardContent;
     }
 
-    public string ClassroomName { get; }
+    public ClassroomId ClassroomId { get; }
 
     public string WhiteboardContent { get; }
 }
