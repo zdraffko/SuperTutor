@@ -12,5 +12,5 @@ internal class ClassroomHubService : IClassroomHubService
     public ClassroomHubService(IHubContext<ClassroomHub> classroomHubContext) => this.classroomHubContext = classroomHubContext;
 
     public async Task CloseClassroom(ClassroomId classroomId)
-        => await classroomHubContext.Clients.Group(classroomId.Value.ToString()).SendAsync("RoomClosed");
+        => await classroomHubContext.Clients.Group(classroomId.Value.ToString()).SendAsync("ClassroomClosed");
 }

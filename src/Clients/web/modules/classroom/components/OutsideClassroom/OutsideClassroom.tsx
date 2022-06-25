@@ -2,7 +2,7 @@ import { Button, Center, Group, Loader, Stack, Title } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { HubConnection } from "@microsoft/signalr";
 import useGetActiveClassroom from "modules/classroom/hooks/useGetActiveClassroom";
-import { Dispatch, MutableRefObject, SetStateAction, useEffect } from "react";
+import { Dispatch, MutableRefObject, SetStateAction, useEffect, useState } from "react";
 import Peer from "simple-peer";
 import { Check, X } from "tabler-icons-react";
 import { useAuth } from "utils/authentication/reactQueryAuth";
@@ -19,6 +19,7 @@ interface OutsideClassroomProps {
 export const OutsideClassroom: React.FC<OutsideClassroomProps> = ({ isInitiatorRef, classroomHub, classroomIdRef, setIsInsideClassroom, localPeerRef }) => {
     const { classroomId, isGetActiveClassroomFailed, isGetActiveClassroomLoading, isGetActiveClassroomSuccessful, getActiveClassroomErrorMessage } = useGetActiveClassroom();
     const { user } = useAuth();
+    const [isJoiningClassroom, setIsJoiningClassroom] = useState(false);
 
     useEffect(() => {
         if (isGetActiveClassroomSuccessful && classroomId) {
@@ -49,6 +50,7 @@ export const OutsideClassroom: React.FC<OutsideClassroomProps> = ({ isInitiatorR
 
             isInitiatorRef.current = isInitiator;
             if (!isInitiator) {
+                setIsJoiningClassroom(false);
                 setIsInsideClassroom(true);
 
                 showNotification({
@@ -64,15 +66,17 @@ export const OutsideClassroom: React.FC<OutsideClassroomProps> = ({ isInitiatorR
         classroomHub.on("SignalReceived", (studentSignalData: string) => {
             localPeerRef.current?.signal(studentSignalData);
         });
-    }, [classroomHub, classroomId, localPeerRef, setIsInsideClassroom]);
+    }, [classroomHub, classroomId, isInitiatorRef, localPeerRef, setIsInsideClassroom]);
 
     const joinClassroom = async () => {
+        setIsJoiningClassroom(true);
         await classroomHub.invoke("JoinClassroom", classroomId, `${user?.firstName} ${user?.lastName}`);
 
         localPeerRef.current?.on("connect", async () => {
             console.log("Peer remote: Recieved connect event");
 
             if (isInitiatorRef.current) {
+                setIsJoiningClassroom(false);
                 setIsInsideClassroom(true);
                 await classroomHub.invoke("ConfirmClassroomJoin", classroomId, `${user?.firstName} ${user?.lastName}`);
 
@@ -99,7 +103,9 @@ export const OutsideClassroom: React.FC<OutsideClassroomProps> = ({ isInitiatorR
             <Stack align="center" justify="space-around" style={{ height: "100%" }}>
                 <Title order={3}>Имаш активен урок в момента</Title>
                 <Group>
-                    <Button onClick={joinClassroom}>Влез в класната стая</Button>
+                    <Button loading={isJoiningClassroom} onClick={joinClassroom}>
+                        Влез в класната стая
+                    </Button>
                 </Group>
                 <WhiteboardTeachingSvg />
             </Stack>

@@ -5,7 +5,6 @@ import { TDDocument, Tldraw, TldrawApp } from "@tldraw/tldraw";
 import { Dispatch, MutableRefObject, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import Peer from "simple-peer";
 import { PeerDataChannelMessage } from "types/peerTypes";
-import { useAuth } from "utils/authentication/reactQueryAuth";
 
 interface WhiteboardUpdatePayload {
     document: TDDocument;
@@ -17,13 +16,13 @@ interface WhiteboardProps {
     localPeerRef: MutableRefObject<Peer.Instance | undefined>;
     isRemotePeerConnected: boolean;
     setIsWhiteboardSavingChanges: Dispatch<SetStateAction<boolean>>;
+    isInitiatorRef: MutableRefObject<boolean>;
 }
 
-export const Whiteboard: React.FC<WhiteboardProps> = ({ classroomHub, classroomId, localPeerRef, isRemotePeerConnected, setIsWhiteboardSavingChanges }) => {
+export const Whiteboard: React.FC<WhiteboardProps> = ({ isInitiatorRef, classroomHub, classroomId, localPeerRef, isRemotePeerConnected, setIsWhiteboardSavingChanges }) => {
     const { colorScheme } = useMantineColorScheme();
     const drawApp = useRef<TldrawApp>();
     const [drawDocument, setDrawDocument] = useState<TDDocument>();
-    const { user } = useAuth();
     const isUserIdle = useIdle(2000, { events: ["mousedown", "mouseup"] });
     const lastSavedWhiteboardContent = useRef("");
 
@@ -82,26 +81,10 @@ export const Whiteboard: React.FC<WhiteboardProps> = ({ classroomHub, classroomI
                 } catch (error) {} // Message not for us
             });
 
-            if (drawApp.current?.document) {
+            if (!isInitiatorRef && drawApp.current?.document) {
                 updateRemoteWhiteboard(drawApp.current.document, "init");
             }
         }
-
-        // if (user?.type === UserType.Student) {
-        //     localPeerRef.current?.on("data", (remoteData: string) => {
-        //         console.log("Peer Local: Recieved whiteboard data " + remoteData);
-        //         try {
-        //             const peerMessage: PeerDataChannelMessage<WhiteboardUpdatePayload> = JSON.parse(remoteData);
-        //             if (peerMessage.type !== "WhiteboardUpdate") {
-        //                 return;
-        //             }
-
-        //             console.log("Peer Local: Recieved whiteboard data " + peerMessage.payload.document);
-
-        //             setDrawDocument(peerMessage.payload.document);
-        //         } catch (error) {} // Message not for us
-        //     });
-        // }
     }, [isRemotePeerConnected]);
 
     return (

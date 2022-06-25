@@ -12,12 +12,14 @@ interface WorkSpaceProps {
     localPeerRef: MutableRefObject<Peer.Instance | undefined>;
     isRemotePeerConnected: boolean;
     setIsWorkSpaceSavingChanges: Dispatch<SetStateAction<boolean>>;
+    isInitiatorRef: MutableRefObject<boolean>;
 }
 
-export const WorkSpace: React.FC<WorkSpaceProps> = ({ classroomHub, classroomId, localPeerRef, isRemotePeerConnected, setIsWorkSpaceSavingChanges }) => (
+export const WorkSpace: React.FC<WorkSpaceProps> = ({ isInitiatorRef, classroomHub, classroomId, localPeerRef, isRemotePeerConnected, setIsWorkSpaceSavingChanges }) => (
     <Tabs position="center" grow>
         <Tabs.Tab label="Бяла дъска" tabKey="Whiteboard" icon={<Perspective size={20} />}>
             <Whiteboard
+                isInitiatorRef={isInitiatorRef}
                 classroomHub={classroomHub}
                 classroomId={classroomId}
                 localPeerRef={localPeerRef}

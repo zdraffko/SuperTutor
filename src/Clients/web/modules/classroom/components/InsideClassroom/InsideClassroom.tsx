@@ -37,6 +37,7 @@ export const InsideClassroom: React.FC<InsideClassroomProps> = ({ isInitiatorRef
         classroomHub.off("ClassroomClosed");
         classroomHub.on("ClassroomClosed", () => {
             localPeerRef.current?.destroy();
+            localPeerRef.current = undefined;
 
             setIsInsideClassroom(false);
 
@@ -51,6 +52,7 @@ export const InsideClassroom: React.FC<InsideClassroomProps> = ({ isInitiatorRef
         classroomHub.off("ClassroomLeft");
         classroomHub.on("ClassroomLeft", () => {
             localPeerRef.current?.destroy();
+            localPeerRef.current = undefined;
 
             setIsLeavingClassroom(false);
             setIsInsideClassroom(false);
@@ -106,6 +108,7 @@ export const InsideClassroom: React.FC<InsideClassroomProps> = ({ isInitiatorRef
         <Grid>
             <Grid.Col span={8}>
                 <WorkSpace
+                    isInitiatorRef={isInitiatorRef}
                     classroomHub={classroomHub}
                     classroomId={classroomId}
                     localPeerRef={localPeerRef}
