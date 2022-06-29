@@ -6,7 +6,7 @@ services:
         image: mcr.microsoft.com/mssql/server:2019-latest
         environment:
             - ACCEPT_EULA=Y
-            - SA_PASSWORD=devPass123!
+            - SA_PASSWORD=${MSSQLSERVER_SA_PASSWORD}
         volumes: 
             - mssqlserver-data:/var/opt/mssql
         ports:
