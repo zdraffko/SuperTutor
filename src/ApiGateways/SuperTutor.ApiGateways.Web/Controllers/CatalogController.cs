@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using SuperTutor.ApiGateways.Web.Constants;
 using SuperTutor.ApiGateways.Web.Models.Catalog.GetTutorAvailability;
 using SuperTutor.ApiGateways.Web.Models.Catalog.GetTutorProfileById;
 using SuperTutor.ApiGateways.Web.Models.Catalog.GetTutorProfilesByFilter;
@@ -35,7 +36,7 @@ public class CatalogController : ApiController
         this.httpContextAccessor = httpContextAccessor;
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Student)]
     [HttpGet]
     public async Task<ActionResult<GetTutorProfilesByFilterResponse>> GetTutorProfilesByFilter([FromJsonQuery] GetTutorProfilesByFilterRequest query, CancellationToken cancellationToken)
     {
@@ -50,7 +51,7 @@ public class CatalogController : ApiController
         return Ok(response);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Student)]
     [HttpGet]
     public async Task<ActionResult<GetTutorProfileByIdResponse>> GetTutorProfileById([FromJsonQuery] GetTutorProfileByIdRequest query, CancellationToken cancellationToken)
     {
@@ -65,7 +66,7 @@ public class CatalogController : ApiController
         return Ok(response);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Student)]
     [HttpGet]
     public async Task<ActionResult<GetTutorAvailabilityResponse>> GetTutorAvailability([FromJsonQuery] GetTutorAvailabilityQuery query, CancellationToken cancellationToken)
     {
@@ -85,7 +86,7 @@ public class CatalogController : ApiController
         return Ok(response);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Student)]
     [HttpPost]
     public async Task<ActionResult> ReserveTrialLesson(ReserveTrialLessonRequest request, CancellationToken cancellationToken)
     {

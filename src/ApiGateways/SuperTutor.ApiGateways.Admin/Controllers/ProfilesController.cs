@@ -22,7 +22,7 @@ public class ProfilesController : ApiController
         ProfilesApiUrl = apiUrlsOptions.Value.Profiles;
     }
 
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<GetAllTutorProfilesForReviewResponse>> GetAllTutorProfilesForReview(CancellationToken cancellationToken)
     {
@@ -33,7 +33,7 @@ public class ProfilesController : ApiController
         return Ok(response);
     }
 
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult> ApproveTutorProfile(ApproveTutorProfileRequest request, CancellationToken cancellationToken)
     {
@@ -61,7 +61,7 @@ public class ProfilesController : ApiController
         return BadRequest(responseErrorMessage);
     }
 
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult> RequestTutorProfileRedaction(RequestTutorProfileRedactionRequest request, CancellationToken cancellationToken)
     {

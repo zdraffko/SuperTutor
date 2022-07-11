@@ -93,7 +93,7 @@ export const TrialLessonReservationModal: React.FC<ReserveTrialLessonModalProps>
                         grade: values.tutoringGrade
                     });
 
-                    const response = await createCharge({ chargeAmount: tutorProfile.rateForOneHour, lessonId: lessonId, tutorId: tutorProfile.tutorId });
+                    const response = await createCharge({ chargeAmount: tutorProfile.rateForOneHour, lessonId: lessonId, tutorId: tutorProfile.tutorId }); // TODO - chargeAmount should not be send from the frontend
 
                     router.push(`/payments/pay/${response.paymentIntentSecret}`);
                 })}

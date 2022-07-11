@@ -67,7 +67,7 @@ public class IdentityController : ApiController
         return BadRequest(responseErrorMessage);
     }
 
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<GetIdentityInfoResponse>> GetIdentityInfo(CancellationToken cancellationToken)
     {

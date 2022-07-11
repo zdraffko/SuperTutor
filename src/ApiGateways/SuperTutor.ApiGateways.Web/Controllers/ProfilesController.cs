@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using SuperTutor.ApiGateways.Web.Constants;
 using SuperTutor.ApiGateways.Web.Models.Profiles.CreateTutorProfile;
 using SuperTutor.ApiGateways.Web.Models.Profiles.DeleteTutorProfile;
 using SuperTutor.ApiGateways.Web.Models.Profiles.GetAllTutorProfilesForTutor;
@@ -26,7 +27,7 @@ public class ProfilesController : ApiController
         this.httpContextAccessor = httpContextAccessor;
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpPost]
     public async Task<ActionResult> CreateTutorProfile(CreateTutorProfileRequest request, CancellationToken cancellationToken)
     {
@@ -59,7 +60,7 @@ public class ProfilesController : ApiController
         return BadRequest(responseErrorMessage);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpGet]
     public async Task<ActionResult<GetAllTutorProfilesForTutorResponse>> GetAllTutorProfilesForTutor(CancellationToken cancellationToken)
     {
@@ -86,7 +87,7 @@ public class ProfilesController : ApiController
         return Ok(response);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpPost]
     public async Task<ActionResult> UpdateTutorProfileAbout(UpdateTutorProfileAboutRequest request, CancellationToken cancellationToken)
     {
@@ -108,7 +109,7 @@ public class ProfilesController : ApiController
         return BadRequest(responseErrorMessage);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpPost]
     public async Task<ActionResult> SubmitTutorProfileForReview(SubmitTutorProfileForReviewRequest request, CancellationToken cancellationToken)
     {
@@ -129,7 +130,7 @@ public class ProfilesController : ApiController
         return BadRequest(responseErrorMessage);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpPost]
     public async Task<ActionResult> DeleteTutorProfile(DeleteTutorProfileRequest request, CancellationToken cancellationToken)
     {

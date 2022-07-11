@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using SuperTutor.ApiGateways.Web.Constants;
 using SuperTutor.ApiGateways.Web.Models.Payments.CreateCharge;
 using SuperTutor.ApiGateways.Web.Models.Payments.GetAreTutorTermsOfServiceAccepted;
 using SuperTutor.ApiGateways.Web.Models.Payments.GetAreTutorVerificationDocumentsCollected;
@@ -35,7 +36,7 @@ public class PaymentsController : ApiController
         this.httpContextAccessor = httpContextAccessor;
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpPost]
     public async Task<ActionResult> UpdateTutorPersonalInformation(UpdateAccountPersonalInformationRequest request, CancellationToken cancellationToken)
     {
@@ -63,7 +64,7 @@ public class PaymentsController : ApiController
         return BadRequest(responseErrorMessage);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpPost]
     public async Task<ActionResult> UpdateTutorAddressInformation(UpdateAccountAddressInformationRequest request, CancellationToken cancellationToken)
     {
@@ -95,7 +96,7 @@ public class PaymentsController : ApiController
         return BadRequest(responseErrorMessage);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpPost]
     public async Task<ActionResult> UpdateTutorPayoutInformation(UpdateAccountPayoutInformationRequest request, CancellationToken cancellationToken)
     {
@@ -125,7 +126,7 @@ public class PaymentsController : ApiController
         return BadRequest(responseErrorMessage);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpPost]
     public async Task<ActionResult> UploadTutorVerificationDocuments(
         IFormFile identityDocumentFront,
@@ -159,7 +160,7 @@ public class PaymentsController : ApiController
         return BadRequest(responseErrorMessage);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpPost]
     public async Task<ActionResult> AcceptTutorTermsOfService(CancellationToken cancellationToken)
     {
@@ -187,7 +188,7 @@ public class PaymentsController : ApiController
         return BadRequest(responseErrorMessage);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpGet]
     public async Task<ActionResult<bool>> GetAreTutorVerificationDocumentsCollected(CancellationToken cancellationToken)
     {
@@ -214,7 +215,7 @@ public class PaymentsController : ApiController
         return Ok(response);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpGet]
     public async Task<ActionResult<bool>> GetAreTutorTermsOfServiceAccepted(CancellationToken cancellationToken)
     {
@@ -241,7 +242,7 @@ public class PaymentsController : ApiController
         return Ok(response);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpGet]
     public async Task<ActionResult<bool>> GetIsTutorAddressInformationCollected(CancellationToken cancellationToken)
     {
@@ -268,7 +269,7 @@ public class PaymentsController : ApiController
         return Ok(response);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpGet]
     public async Task<ActionResult<bool>> GetIsTutorPersonalInformationCollected(CancellationToken cancellationToken)
     {
@@ -295,7 +296,7 @@ public class PaymentsController : ApiController
         return Ok(response);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpGet]
     public async Task<ActionResult<bool>> GetIsTutorBankAccountInformationCollected(CancellationToken cancellationToken)
     {
@@ -322,7 +323,7 @@ public class PaymentsController : ApiController
         return Ok(response);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Student)]
     [HttpPost]
     public async Task<ActionResult<CreateChargeResponse>> CreateCharge(CreateChargeRequest request, CancellationToken cancellationToken)
     {
@@ -354,7 +355,7 @@ public class PaymentsController : ApiController
         return BadRequest(responseErrorMessage);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpGet]
     public async Task<ActionResult<GetTransfersForTutorResponse>> GetTransfersForTutor(CancellationToken cancellationToken)
     {

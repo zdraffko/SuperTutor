@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using SuperTutor.ApiGateways.Web.Constants;
 using SuperTutor.ApiGateways.Web.Models.Schedule.AddTutorAvailability;
 using SuperTutor.ApiGateways.Web.Models.Schedule.CompleteLesson;
 using SuperTutor.ApiGateways.Web.Models.Schedule.GetScheduledLessonsForStudent;
@@ -35,7 +36,7 @@ public class ScheduleController : ApiController
         this.httpContextAccessor = httpContextAccessor;
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpPost]
     public async Task<ActionResult> AddTutorAvailability(AddTutorAvailabilityRequest request, CancellationToken cancellationToken)
     {
@@ -80,7 +81,7 @@ public class ScheduleController : ApiController
         return BadRequest(responseErrorMessage);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpGet]
     public async Task<ActionResult<GetTutorTimeSlotsForWeekResponse>> GetTutorTimeSlotsForWeek([FromJsonQuery] GetTutorTimeSlotsForWeekRequest query, CancellationToken cancellationToken)
     {
@@ -107,7 +108,7 @@ public class ScheduleController : ApiController
         return Ok(response);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Student)]
     [HttpGet]
     public async Task<ActionResult<GetScheduledLessonsForStudentResponse>> GetScheduledLessonsForStudent(CancellationToken cancellationToken)
     {
@@ -133,7 +134,7 @@ public class ScheduleController : ApiController
         return Ok(response);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpGet]
     public async Task<ActionResult<GetScheduledLessonsForTutorResponse>> GetScheduledLessonsForTutor(CancellationToken cancellationToken)
     {

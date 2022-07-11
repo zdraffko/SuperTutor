@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using SuperTutor.ApiGateways.Web.Constants;
 using SuperTutor.ApiGateways.Web.Models.Classrooms.GetActiveClassroomForStudent;
 using SuperTutor.ApiGateways.Web.Models.Classrooms.GetActiveClassroomForTutor;
 using SuperTutor.ApiGateways.Web.Options;
@@ -22,7 +23,7 @@ public class ClassroomsController : ApiController
         ClassroomsApiUrl = apiUrlsOptions.Value.Classrooms;
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Tutor)]
     [HttpGet]
     public async Task<ActionResult<GetActiveClassroomForTutorResponse>> GetActiveClassroomForTutor(CancellationToken cancellationToken)
     {
@@ -44,7 +45,7 @@ public class ClassroomsController : ApiController
         return Ok(response);
     }
 
-    [Authorize]
+    [Authorize(Roles = Roles.Student)]
     [HttpGet]
     public async Task<ActionResult<GetActiveClassroomForStudentResponse>> GetActiveClassroomForStudent(CancellationToken cancellationToken)
     {

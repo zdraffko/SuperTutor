@@ -23,6 +23,7 @@ const TutorProfilesListItem: React.FC<TutorProfilesListItemProps> = ({ tutorProf
     const tutoringSubjectName = tutoringSubjects.find(tutoringSubject => tutoringSubject.value === tutorProfile.tutoringSubject)?.name;
     const tutoringGradeNames = tutorProfile.tutoringGrades.map(tutoringGradeValue => tutoringGrades.find(tutoringGrade => tutoringGrade.value === tutoringGradeValue)?.name);
     const isProfileForRedaction = tutorProfile.status === "ForRedaction";
+    const isProfileActive = tutorProfile.status === "Active";
     const [isEditModalOpened, setIsEditModalOpened] = useState(false);
 
     const updateAboutForm = useForm({
@@ -126,9 +127,11 @@ const TutorProfilesListItem: React.FC<TutorProfilesListItemProps> = ({ tutorProf
         updateTutorProfileAboutErrorMessage
     ]);
 
+    const profileBorderColor = isProfileForRedaction ? "red" : "cyan";
+
     return (
         <>
-            <Paper m="xl" p="xl" withBorder={isProfileForRedaction} style={{ borderColor: "red" }}>
+            <Paper m="xl" p="xl" withBorder={isProfileForRedaction || isProfileActive} style={{ borderColor: profileBorderColor }}>
                 <Group position="apart">
                     <Group>
                         <Avatar radius="lg" size="xl" />
