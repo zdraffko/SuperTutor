@@ -37,60 +37,84 @@ export const ScheduledLessons: React.FC<ScheduledLessonsProps> = ({ scheduledLes
 
     return (
         <>
-            {scheduledLessons.map(scheduledLesson => (
-                <>
-                    <Group key={scheduledLesson.id} mt="xl" grow pl="xl">
-                        <Stack>
-                            <Group>
-                                <Text weight="bold">Учител: </Text>
-                                <Text>Тест Учител</Text>
-                            </Group>
-                            <Group>
-                                <Text weight="bold">Предмет: </Text>
-                                <Text>{scheduledLesson.subject}</Text>
-                            </Group>
-                            <Group>
-                                <Text weight="bold">Клас: </Text>
-                                <Text>{scheduledLesson.grade}</Text>
-                            </Group>
-                        </Stack>
-                        <Stack>
-                            <Group>
-                                <Text weight="bold">Дата: </Text>
-                                <Text>{scheduledLesson.date}</Text>
-                            </Group>
-                            <Group>
-                                <Text weight="bold">Час: </Text>
-                                <Text>{scheduledLesson.startTime}</Text>
-                            </Group>
-                            <Group>
-                                <Text weight="bold">Продължителност: </Text>
-                                <Text>{scheduledLesson.duration}</Text>
-                            </Group>
-                        </Stack>
-                        <Stack>
-                            <Group>
-                                <Text weight="bold">Тип на урока: </Text>
-                                <Text>{scheduledLesson.type}</Text>
-                            </Group>
-                            <Group>
-                                <Text weight="bold">Статус: </Text>
-                                <Text>{scheduledLesson.status}</Text>
-                            </Group>
-                            <Group>
-                                <Text weight="bold">Статус на плащането: </Text>
-                                <Text>{scheduledLesson.paymentStatus}</Text>
-                            </Group>
-                        </Stack>
-                        {scheduledLesson.status === "Приключил" && (
-                            <Button onClick={async () => await completeLesson({ lessonId: scheduledLesson.id })} loading={isCompleteLessonLoading}>
-                                Потвърди урокът
-                            </Button>
-                        )}
-                    </Group>
-                    <Divider style={{ width: "100%" }} />
-                </>
-            ))}
+            {scheduledLessons
+                .sort((firstLesson, secondLesson) => {
+                    const firstLessonDateInfo = firstLesson.date.split("/");
+                    const secondLessonDateInfo = secondLesson.date.split("/");
+                    const firstLessonTimeInfo = firstLesson.startTime.split(":");
+                    const secondLessonTimeInfo = secondLesson.startTime.split(":");
+
+                    const firstLessonDate = new Date(
+                        parseInt(firstLessonDateInfo[2]),
+                        parseInt(firstLessonDateInfo[1]),
+                        parseInt(firstLessonDateInfo[0]),
+                        parseInt(firstLessonTimeInfo[0]),
+                        parseInt(firstLessonTimeInfo[1])
+                    );
+
+                    const secondLessonDate = new Date(
+                        parseInt(secondLessonDateInfo[2]),
+                        parseInt(secondLessonDateInfo[1]),
+                        parseInt(secondLessonDateInfo[0]),
+                        parseInt(secondLessonTimeInfo[0]),
+                        parseInt(secondLessonTimeInfo[1])
+                    );
+                    return firstLessonDate.getTime() - secondLessonDate.getTime();
+                })
+                .map(scheduledLesson => (
+                    <>
+                        <Group key={scheduledLesson.id} mt="xl" grow pl="xl">
+                            <Stack>
+                                <Group>
+                                    <Text weight="bold">Учител: </Text>
+                                    <Text>Тест Учител</Text>
+                                </Group>
+                                <Group>
+                                    <Text weight="bold">Предмет: </Text>
+                                    <Text>{scheduledLesson.subject}</Text>
+                                </Group>
+                                <Group>
+                                    <Text weight="bold">Клас: </Text>
+                                    <Text>{scheduledLesson.grade}</Text>
+                                </Group>
+                            </Stack>
+                            <Stack>
+                                <Group>
+                                    <Text weight="bold">Дата: </Text>
+                                    <Text>{scheduledLesson.date}</Text>
+                                </Group>
+                                <Group>
+                                    <Text weight="bold">Час: </Text>
+                                    <Text>{scheduledLesson.startTime}</Text>
+                                </Group>
+                                <Group>
+                                    <Text weight="bold">Продължителност: </Text>
+                                    <Text>{scheduledLesson.duration}</Text>
+                                </Group>
+                            </Stack>
+                            <Stack>
+                                <Group>
+                                    <Text weight="bold">Тип на урока: </Text>
+                                    <Text>{scheduledLesson.type}</Text>
+                                </Group>
+                                <Group>
+                                    <Text weight="bold">Статус: </Text>
+                                    <Text>{scheduledLesson.status}</Text>
+                                </Group>
+                                <Group>
+                                    <Text weight="bold">Статус на плащането: </Text>
+                                    <Text>{scheduledLesson.paymentStatus}</Text>
+                                </Group>
+                            </Stack>
+                            {scheduledLesson.status === "Приключил" && (
+                                <Button onClick={async () => await completeLesson({ lessonId: scheduledLesson.id })} loading={isCompleteLessonLoading}>
+                                    Потвърди урокът
+                                </Button>
+                            )}
+                        </Group>
+                        <Divider style={{ width: "100%" }} />
+                    </>
+                ))}
         </>
     );
 };

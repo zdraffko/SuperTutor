@@ -25,21 +25,24 @@ const CalendarBodyColumn: React.FC<CalendarBodyColumn> = ({ date, selectedRedact
                         timeSlotsForHour={timeSlotsForDate.filter(
                             timeSlot => timeSlot.startTime === DayJs().hour(hour).minute(0).format("HH:mm:00") || timeSlot.startTime === DayJs().hour(hour).minute(30).format("HH:mm:00")
                         )}
-                        scheduledLessonForHour={scheduledLessonsForDate.find(
-                            lesson =>
-                                lesson.startTime === DayJs().hour(hour).minute(0).format("HH:mm:00") ||
-                                lesson.startTime === DayJs().hour(hour).minute(30).format("HH:mm:00") ||
-                                lesson.startTime ===
-                                    DayJs()
-                                        .hour(hour - 1)
-                                        .minute(0)
-                                        .format("HH:mm:00") ||
-                                lesson.startTime ===
-                                    DayJs()
-                                        .hour(hour - 1)
-                                        .minute(30)
-                                        .format("HH:mm:00")
-                        )}
+                        scheduledLessonForHour={scheduledLessonsForDate
+                            .sort((a, b) => a.startTime.localeCompare(b.startTime))
+                            .find(
+                                lesson =>
+                                    lesson.startTime === DayJs().hour(hour).minute(0).format("HH:mm:00") ||
+                                    lesson.startTime === DayJs().hour(hour).minute(30).format("HH:mm:00") ||
+                                    ((lesson.startTime ===
+                                        DayJs()
+                                            .hour(hour - 1)
+                                            .minute(0)
+                                            .format("HH:mm:00") ||
+                                        lesson.startTime ===
+                                            DayJs()
+                                                .hour(hour - 1)
+                                                .minute(30)
+                                                .format("HH:mm:00")) &&
+                                        !scheduledLessonsForDate.some(lesson => lesson.startTime === DayJs().hour(hour).minute(0).format("HH:mm:00")))
+                            )}
                     />
                 ))}
             </Grid>

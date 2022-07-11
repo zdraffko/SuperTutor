@@ -1,4 +1,4 @@
-import { Center, Container, Loader, Text } from "@mantine/core";
+import { Center, Container, Loader, Text, useMantineTheme } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { Dayjs } from "dayjs";
 import { CellColors, RedactionModeColors } from "modules/calendar/constants";
@@ -21,6 +21,7 @@ const CalendarBodyColumnCellHalf: React.FC<CalendarBodyColumnCellHalfProps> = ({
     const formattedDate = date.format("DD/MM/YYYY");
     const formattedTime = DayJs().hour(hour).minute(minute).format("HH:mm:00");
     const { addAvailability, isAddAvailabilityFailed, isAddAvailabilityLoading, addAvailabilityErrorMessage, resetAddAvailabilityRequestState } = useAddAvailability();
+    const theme = useMantineTheme();
 
     useEffect(() => {
         if (isAddAvailabilityFailed) {
@@ -54,17 +55,32 @@ const CalendarBodyColumnCellHalf: React.FC<CalendarBodyColumnCellHalfProps> = ({
         );
     }
 
+    let scheduledLessonColor = theme.colors.teal[5];
+
+    if (scheduledLesson?.status === "Започнал") {
+        scheduledLessonColor = theme.colors.orange[5];
+    }
+
+    if (scheduledLesson?.status === "Приключил") {
+        scheduledLessonColor = theme.colors.red[5];
+    }
+
+    if (scheduledLesson?.status === "Завършен") {
+        scheduledLessonColor = theme.colors.gray[5];
+    }
+
     return timeSlot ? (
         <Container
             style={{ height: "50px", padding: "1px" }}
             sx={theme => ({
-                backgroundColor: scheduledLesson ? theme.colors.teal[5] : theme.colors[CellColors[timeSlot.type]][2]
+                backgroundColor: scheduledLesson ? scheduledLessonColor : theme.colors[CellColors[timeSlot.type]][2]
             })}
         >
             {scheduledLesson && scheduledLesson.startTime === timeSlot.startTime && (
                 <>
                     <Text size="xs">Предмет: {scheduledLesson?.subject}</Text>
                     <Text size="xs">Клас: {scheduledLesson?.grade}</Text>
+                    <Text size="xs">Статус: {scheduledLesson?.status}</Text>
                 </>
             )}
         </Container>

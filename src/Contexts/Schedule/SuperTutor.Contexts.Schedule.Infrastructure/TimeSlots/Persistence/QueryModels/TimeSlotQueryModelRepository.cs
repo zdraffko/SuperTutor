@@ -49,7 +49,7 @@ internal class TimeSlotQueryModelRepository : ITimeSlotQueryModelRepository
             .AsNoTracking()
             .Where(timeSlot
                 => timeSlot.TutorId == query.TutorId
-                && timeSlot.Date >= DateTime.UtcNow
+                && timeSlot.Date >= DateTime.UtcNow.AddHours(3) // TODO - Fix the timezones
                 && timeSlot.Type == "Availability"
                 && timeSlot.Status == "Unassigned")
             .ToListAsync(cancellationToken);

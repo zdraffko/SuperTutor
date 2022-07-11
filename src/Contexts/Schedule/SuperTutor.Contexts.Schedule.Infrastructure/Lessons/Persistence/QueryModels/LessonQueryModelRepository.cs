@@ -73,7 +73,12 @@ internal class LessonQueryModelRepository : ILessonQueryModelRepository
         var databaseQueryResult = await scheduleDbContext.Lessons
             .AsNoTracking()
             //.Where(lesson => lesson.StudentId == query.StudentId && lesson.Status == LessonStatus.Scheduled.Name && lesson.Date >= DateTime.UtcNow.AddHours(3)) TODO - Refactor this. This is just a dirty quick way to get the required functionality working on time
-            .Where(lesson => lesson.TutorId == query.TutorId && lesson.Status == LessonStatus.Scheduled.Name)
+            .Where(lesson => lesson.TutorId == query.TutorId &&
+                    lesson.Status == LessonStatus.Scheduled.Name ||
+                    lesson.Status == LessonStatus.Started.Name ||
+                    lesson.Status == LessonStatus.Ended.Name ||
+                    lesson.Status == LessonStatus.Completed.Name
+                    )
             .ToListAsync();
 
         return databaseQueryResult.Select(lesson => new GetScheduledLessonsForTutorQueryPayload.ScheduledLesson(
